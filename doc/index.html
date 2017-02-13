@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DATABASE - Littera</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="jquery-ui.js" type="text/javascript"></script>
+    <script src="rotate.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+<!--
+   *
+   *
+   *
+   *USERS
+   *
+   *
+   *
+-->
+    <div class="collection">
+        <table class="collection"  border="0" cellspacing="0" cellpadding="0">
+            <caption>users</caption>
+            <thead>
+                <tr>
+                    <th>campo</th>
+                    <th>tipo</th>
+                    <th>required</th>
+                    <th>default</th>
+                    <th>obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>_id</td>
+                    <td>ObjectId</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>username</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>unico</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>email</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>gender</td>
+                    <td>number</td>
+                    <td>NÃO</td>
+                    <td>0</td>
+                    <td>0 - Homen 1 - Mulher</td>
+                </tr>
+                <tr>
+                    <td>dob</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>date_modified</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>bool</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>profile_img</td>
+                    <td>String</td>
+                    <td>NÃO</td>
+                    <td></td>
+                    <td>somente o path para a imagem</td>
+                </tr>
+                <tr>
+                    <td>average_stars</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 quando não há avaliações ainda</td>
+                </tr>
+                <tr>
+                    <td>acepted_terms</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 - Não aceitou os termos 1 - Aceitou os termos</td>
+                </tr>
+
+
+<!--
+   *
+   *
+   *
+   *RANKING
+   *
+   *
+   *
+-->
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>ranking []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>stars</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>1</td>
+                                <td>1 - min 5 - max</td>
+                            </tr>
+                            <tr>
+                                <td>date_modified</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>comment</td>
+                                <td>String</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS COMMENTS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div4" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>comments []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_modified</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS TAGS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>tags []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_modified</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS PAYMENT
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..1</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>payment</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>payment_id</td>
+                                <td>String</td>
+                                <td>NÃO</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS FACEBOOK
+   *
+   *
+   *
+-->
+<!--
+                <tr>
+                    <td class="cardinality">1..1</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>facebook</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>token</td>
+                                <td>String</td>
+                                <td>NÃO</td>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>String</td>
+                                <td>NÃO</td>
+                            </tr>
+                            <tr>
+                                <td>username</td>
+                                <td>String</td>
+                                <td>NÃO</td>
+                            </tr>
+                            <tr>
+                                <td>profile_url</td>
+                                <td>String</td>
+                                <td>NÃO</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tr>
+-->
+<!--
+   *
+   *
+   *
+   *USERS FOLLOWERS
+   *
+   *
+   *
+-->
+
+                <tr >
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>followers []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user_follow</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_followed</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS FOLLOWING
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>following []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user_follow</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_followed</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS WISHLIST
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div3" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>wishlist []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_book</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_saved</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS LIBRARY
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div3" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>library []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_book</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_saved</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>favorite</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>0</td>
+                                <td>0 - livro não favoritado  de 1  a 10 lista dos Livros favoritados (limitado a no max. 10 deve atualizar automaticamente)</td>
+                            </tr>
+                             <tr>
+                                 <td>visible</td>
+                                 <td>Number</td>
+                                 <td>SIM</td>
+                                 <td>0</td>
+                                 <td>0 - Público 1 - Seguidores 2 - Oculto</td>
+                             </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *USERS BOOKS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div1" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>books []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_book</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+
+<!--
+   *
+   *
+   *
+   *BOOKS
+   *
+   *
+   *
+-->
+
+    <div class="collection" >
+        <table id="div2" class="collection"  border="0" cellspacing="0" cellpadding="0">
+            <caption>books</caption>
+            <thead>
+                <tr>
+                    <th>campo</th>
+                    <th>tipo</th>
+                    <th>required</th>
+                    <th>default</th>
+                    <th>obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>_id</td>
+                    <td>ObjectId</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>cover_image</td>
+                    <td>String</td>
+                    <td>NÃO</td>
+                    <td></td>
+                    <td>somente o path para a imagem</td>
+                </tr>
+                <tr>
+                    <td>title</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>synopsis</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>content</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>somente o path para o livro salvo em pdf</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 - Completo 1 - em progresso</td>
+                </tr>
+                <tr>
+                    <td>percentage</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 - min. 100 - max.</td>
+                </tr>
+                <tr>
+                    <td>esbn</td>
+                    <td>String</td>
+                    <td>NÃO</td>
+                </tr>
+                <tr>
+                    <td>date_published</td>
+                    <td>date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>visible</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 - Público 1 - Seguidores 2 - Oculto</td>
+                </tr>
+                <tr>
+                    <td>language</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td>pt-br</td>
+                </tr>
+                <tr>
+                    <td>average_stars</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 quando não há avaliações ainda</td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *BOOKS PRICE
+   *
+   *
+   *
+-->
+
+                 <tr >
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>price []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>price_min</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>price_sug</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>date_begin</td>
+                                <td>Date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>date_end</td>
+                                <td>Date</td>
+                                <td>NÃO</td>
+                                <td>null</td>
+                                <td>Somente deve ser preenchido quando for promoção</td>
+                            </tr>
+                            <tr>
+                                <td>type</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>0</td>
+                                <td>0 - preco padrão 1- promoção</td>
+                            </tr>
+                        </tbody>
+                       </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *BOOKS FORUMS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div3" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>forums []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_created</td>
+                                <td>Date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>spoiler</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>0</td>
+                                <td>0 - Não é um spoiler 1 - É spoiler</td>
+                            </tr>
+<!--
+   *
+   *
+   *
+   *BOOKS FORMS COMMENTS
+   *
+   *
+   *
+-->
+                            <tr>
+                                <td class="cardinality">1..n</td>
+                                <td class="collection-child">
+                                    <table id="div3" class="collection" border="0" cellspacing="0" cellpadding="0">
+                                    <caption>comments []</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>campo</th>
+                                            <th>tipo</th>
+                                            <th>required</th>
+                                            <th>default</th>
+                                            <th>obs.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>_id</td>
+                                            <td>ObjectId</td>
+                                            <td>SIM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>_id_user</td>
+                                            <td>ObjectId</td>
+                                            <td>SIM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>content</td>
+                                            <td>String</td>
+                                            <td>SIM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>date_created</td>
+                                            <td>Date</td>
+                                            <td>SIM</td>
+                                            <td>sysdate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>spoiler</td>
+                                            <td>Number</td>
+                                            <td>SIM</td>
+                                            <td>0</td>
+                                            <td>0 - Não é um spoiler 1 - É spoiler</td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *BOOKS RANKINGS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>ranking []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>stars</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>1</td>
+                                <td>1 - min 5 - max</td>
+                            </tr>
+                            <tr>
+                                <td>date_modified</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>comment</td>
+                                <td>String</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *BOOKS TAGS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>tags []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_modified</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+<!--
+   *
+   *
+   *
+   *BOOKS COMMENTS
+   *
+   *
+   *
+-->
+
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div4" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>comments []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>_id_user</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>date_modified</td>
+                                <td>date</td>
+                                <td>SIM</td>
+                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+<!--
+   *
+   *
+   *
+   *SALES
+   *
+   *
+   *
+-->
+
+    <div class="collection">
+        <table class="collection"  border="0" cellspacing="0" cellpadding="0">
+            <caption>sales</caption>
+            <thead>
+                <tr>
+                    <th>campo</th>
+                    <th>tipo</th>
+                    <th>required</th>
+                    <th>default</th>
+                    <th>obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>_id</td>
+                    <td>ObjectId</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>_id_user</td>
+                    <td>ObjectId</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>date_created</td>
+                    <td>date</td>
+                    <td>SIM</td>
+                    <td>Sysdate</td>
+                </tr>
+                <tr>
+                    <td>transaction_id</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td>Sysdate</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 - Pendente 1- Aguardando Pagamento 2 - Confirmado 3 - Cancelado</td>
+                </tr>
+                <tr>
+                    <td class="cardinality">1..n</td>
+                    <td class="collection-child">
+                        <table id="div4" class="collection" border="0" cellspacing="0" cellpadding="0">
+                        <caption>books []</caption>
+                        <thead>
+                            <tr>
+                                <th>campo</th>
+                                <th>tipo</th>
+                                <th>required</th>
+                                <th>default</th>
+                                <th>obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>_id</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+
+                            <tr>
+                                <td>_id_book</td>
+                                <td>ObjectId</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>Number</td>
+                                <td>SIM</td>
+                                <td>0</td>
+                            </tr>
+                          </tbody>
+                          </table>
+                       </td>
+                      </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+<!--
+   *
+   *
+   *
+   *TERMS
+   *
+   *
+   *
+-->
+
+    <div class="collection">
+        <table class="collection"  border="0" cellspacing="0" cellpadding="0">
+            <caption>terms</caption>
+            <thead>
+                <tr>
+                    <th>campo</th>
+                    <th>tipo</th>
+                    <th>required</th>
+                    <th>default</th>
+                    <th>obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>_id</td>
+                    <td>ObjectId</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>content</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>date_modified</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>Number</td>
+                    <td>SIM</td>
+                    <td>0</td>
+                    <td>0 - Inativo 1 - Ativo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<!--
+   *
+   *
+   *
+   *TAGS
+   *
+   *
+   *
+-->
+
+    <div class="collection">
+       <table class="collection"  border="0" cellspacing="0" cellpadding="0">
+            <caption>tags</caption>
+            <thead>
+                <tr>
+                    <th>campo</th>
+                    <th>tipo</th>
+                    <th>required</th>
+                    <th>default</th>
+                    <th>obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>_id</td>
+                    <td>ObjectId</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>tag</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>date_modified</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script type="text/javascript">
+    var cols = document.getElementsByClassName('collection-child');
+    var colscard =  document.getElementsByClassName('cardinality');
+    for (var i = 0; i < cols.length; i++) {
+        cols[i].colSpan = '4';
+    }
+
+    for (var i = 0; i < colscard.length; i++) {
+        colscard[i].style.border = '1px solid #333333';
+    }
+
+
+
+   /*function connect(d1, d2, color, thickness) {
+        var off1 = getOffset(d1);
+        var off2 = getOffset(d2);
+        // bottom right
+        var x1 = off1.left + off1.width;
+        var y1 = off1.top;
+        // top right
+        var x2 = off2.left;
+        var y2 = off2.top;
+        // distance
+        var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+        // center
+        var cx = ((x1 + x2) / 2) - (length / 2);
+        var cy = ((y1 + y2) / 2) - (thickness / 2);
+        // angle
+        var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+        // make hr
+        var htmlLine = "<div style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' ></div>";
+        //
+        document.body.innerHTML += htmlLine; 
+    }
+
+    function getOffset( el ) {
+    var rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + window.pageXOffset,
+        top: rect.top + window.pageYOffset,
+        width: rect.width || el.offsetWidth,
+        height: rect.height || el.offsetHeight
+    };
+}
+
+    
+
+    window.testIt = function() {
+        var div1 = document.getElementById('div1');
+        var div2 = document.getElementById('div2');
+
+        var div3 = document.getElementById('div3');
+        var div4 = document.getElementById('div4');
+
+        
+        //connect(div1, div2, "#000", 3);
+        connect(div3, div4, "#000", 3);
+    }
+
+    window.testIt();*/
+</script>
+</html>

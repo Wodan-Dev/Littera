@@ -1,0 +1,130 @@
+USERS: {
+	"_ID": {
+		"type": "ObjectId",
+		"required": true
+	},
+	"USERNAME": {
+		"type": "String",
+		"required": true
+	},
+	"NAME": {
+		"type": "String",
+		"required": true
+	},
+	"EMAIL": {
+	 	"type": "String",
+		"required": true
+	},
+	"PASSWORD": {
+	 	"type": "String",
+		"required": true
+	},
+	"GENDER": {
+		"type": "NUMBER"
+	},
+	"DOB": {
+		"type": "DATE",
+		"required": true,
+		"default": true
+	},
+	"DATE_MODIFIED": {
+		"type": "Date",
+		"required": true,
+		"default": "sysdate"
+	},
+	"STATUS": {
+		"type": "Boolean",
+		"required": true,
+		"default": true
+	},
+	"PROFILEIMG": {
+		"type": "imageField"
+	},
+	"FOLLOWERS": [{
+		"_id_follow": {
+                "type": "ObjectId",
+                "required": true,
+            },
+            "date_followed": {
+                "type": "date",
+                "required": true,
+                "default": "sysdate"
+            }
+		// id dos usuários
+	}],
+	"FOLLOWING": {
+		"_id_follow": {
+                "type": "ObjectId",
+                "required": true,
+            },
+            "date_followed": {
+                "type": "date",
+                "required": true,
+                "default": "sysdate"
+            }
+		// id dos usuários
+	},
+	"LIBRARY": {
+		"type": "List"
+		// id do livros
+	},
+	"BOOKS": {
+		"type": "List"
+		// id do livros
+	}
+}
+
+BOOKS: {
+	"_ID": {
+		"type": "ObjectId",
+	},
+	"TITLE": {
+
+	},
+	"SYNOPSIS": {
+
+	},
+	"CHAPTER": {
+
+	},
+	"STATUS": {
+		"TYPE": "Number",
+		"required": true,
+		"default": 0 // 0 completo 1 em progresso
+	},
+	"PERCENTAGE": {
+		"type": "Number",
+		"required": true
+	},
+	"ESBN": {
+
+	},
+	"LANGUAGE": {
+		"type": "String",
+		"required": true
+	},
+	"COMMENTS": [
+		{
+			"_ID": {
+
+			},
+			"USER_ID": {
+
+			},
+			"DATE_MODIFIED": {
+
+			},
+			"CONTENT": {
+
+			}
+		}
+	]
+
+	
+}
+
+
+
+
+
+
