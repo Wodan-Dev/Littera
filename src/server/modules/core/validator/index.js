@@ -105,6 +105,19 @@ function stringField(required) {
 }
 
 /**
+ * Field Number
+ * @param  {Boolean} required is required
+ * @return {Object}          joi instance
+ */
+function numberField(required) {
+  let joi = Joi.number();
+  if (required)
+    joi = joi.required();
+
+  return joi;
+}
+
+/**
  * Field Boolean
  * @param  {Boolean} required is required
  * @return {Object}          joi instance
@@ -145,6 +158,7 @@ function nestedArray(required, schema) {
 
 const models = {
   stringField: stringField,
+  numberField: numberField,
   booleanField: booleanField,
   dateField: dateField,
   nestedArray: nestedArray

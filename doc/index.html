@@ -63,9 +63,9 @@
                 <tr>
                     <td>gender</td>
                     <td>number</td>
-                    <td>NÃO</td>
+                    <td>SIM</td>
                     <td>0</td>
-                    <td>0 - Homen 1 - Mulher</td>
+                    <td>0 - Não especificado 1 - Homen 2 - Mulher</td>
                 </tr>
                 <tr>
                     <td>dob</td>
@@ -73,7 +73,13 @@
                     <td>SIM</td>
                 </tr>
                 <tr>
-                    <td>date_modified</td>
+                    <td>create_at</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>modified_at</td>
                     <td>Date</td>
                     <td>SIM</td>
                     <td>sysdate</td>
@@ -103,6 +109,13 @@
                     <td>SIM</td>
                     <td>0</td>
                     <td>0 - Não aceitou os termos 1 - Aceitou os termos</td>
+                </tr>
+                <tr>
+                    <td>checksum</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>Hash Md5 para com o resultado do registro</td>
                 </tr>
 
 
@@ -1244,7 +1257,7 @@
         // make hr
         var htmlLine = "<div style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' ></div>";
         //
-        document.body.innerHTML += htmlLine; 
+        document.body.innerHTML += htmlLine;
     }
 
     function getOffset( el ) {
@@ -1257,7 +1270,7 @@
     };
 }
 
-    
+
 
     window.testIt = function() {
         var div1 = document.getElementById('div1');
@@ -1266,7 +1279,7 @@
         var div3 = document.getElementById('div3');
         var div4 = document.getElementById('div4');
 
-        
+
         //connect(div1, div2, "#000", 3);
         connect(div3, div4, "#000", 3);
     }

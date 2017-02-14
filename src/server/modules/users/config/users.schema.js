@@ -1,13 +1,13 @@
 'use strict';
-/**
- * Module authentication
- */
 
+/**
+ * Module users
+ */
 
 /**
  * Dependencies
  */
-const core = require('../../core');
+const core = require('core');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
@@ -18,50 +18,34 @@ const schema = core.validator.schema;
  * @type {Schema}
  */
 const usersSchema = new db.mongoose.Schema({
-  username: {
+  name: {
     type: String,
-    unique: true,
     required: true,
     index: true
   },
-  email: {
-    type: String,
+  gender: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  dob: {
+    type: Date,
+    required: true,
+    index: true
+  },
+  profile_img: {
+    type: String
+  },
+  average_stars: {
+    type: Number,
     required: true,
     index: true,
-    unique: true
+    default: 0
   },
-  password: {
-    type: String,
+  acepted_terms: {
+    type: Number,
     required: true,
-    bcrypt: true
-  },
-  last_login: {
-    type: Date
-  },
-  create_at: {
-    type: Date,
-    required: true,
-    default: date.getDateUTC()
-  },
-  modified_at: {
-    type: Date,
-    required: true,
-    default: date.getDateUTC()
-  },
-  status: {
-    type: Boolean,
-    required: true,
-    default: true
-  },
-  is_staff: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  checksum: {
-    type: String,
-    required: true,
-    default: '-'
+    default: 0
   }
 });
 
@@ -72,10 +56,12 @@ usersSchema.plugin(db.mongoosePaginate);
  * @type {Object}
  */
 const usersCreateSchema = schema({
-  username: models.stringField(true).min(5).max(30),
-  email: models.stringField(true).email(),
-  password: models.stringField(true).min(8),
-  passwordbis: models.stringField(true).min(8)
+  name: models.stringField(true).min(5).max(100),
+  gender: models.numberField(true).integer().min(0).max(2),
+  dob: models.dateField(true),
+  profile_img: models.stringField(),
+  average_stars: models.numberField(true).min(0).max(5),
+  acepted_terms: models.numberField(true).min(0).max(1)
 });
 
 /**
@@ -83,8 +69,12 @@ const usersCreateSchema = schema({
  * @type {Object}
  */
 const usersUpdateSchema = schema({
-  _id: models.stringField(true),
-  password: models.stringField(true)
+  name: models.stringField(true).min(5).max(100),
+  gender: models.numberField(true).integer().min(0).max(2),
+  dob: models.dateField(true),
+  profile_img: models.stringField(),
+  average_stars: models.numberField(true).min(0).max(5),
+  acepted_terms: models.numberField(true).min(0).max(1)
 });
 
 /**
