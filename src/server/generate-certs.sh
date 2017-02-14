@@ -9,9 +9,9 @@ then
 fi
 
 echo "Generating self-signed certificates..."
-mkdir -p ../../certificates/ssl
-openssl genrsa -out ../../certificates/ssl/prkey.pem 4096
-openssl req -new -key ../../certificates/ssl/prkey.pem -out ../../certificates/ssl/pukey.pem
-openssl x509 -req -days 365 -in ../../certificates/ssl/pukey.pem -signkey ../../certificates/ssl/prkey.pem -out ../../certificates/ssl/cert.pem
-# rm ../../certificates/ssl/pukey.pem
-chmod 600 ../../certificates/ssl/prkey.pem ../../certificates/ssl/cert.pem
+mkdir -p ../../certificate/ssl
+openssl genrsa -out ../../certificate/ssl/prkey.pem 4096
+openssl req -new -key ../../certificate/ssl/prkey.pem -out ../../certificate/ssl/pukey.pem
+openssl x509 -req -days 365 -in ../../certificate/ssl/pukey.pem -signkey ../../certificate/ssl/prkey.pem -out ../../certificate/ssl/cert.pem
+# rm ../../certificate/ssl/pukey.pem
+chmod 600 ../../certificate/ssl/prkey.pem ../../certificate/ssl/cert.pem

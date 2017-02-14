@@ -123,7 +123,7 @@ build/
 
 # End of https://www.gitignore.io/api/node,jetbrains,bower,grunt
 
-certificates/
+certificate/
 *.env
 
 old

@@ -8,8 +8,8 @@
  * Dependencies
  */
 const core = require('../../core');
-const date = core.date;
 const db = core.connection;
+const date = core.date;
 const models = core.validator.models;
 const schema = core.validator.schema;
 

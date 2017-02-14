@@ -7,7 +7,8 @@
 /**
  * Dependencies
  */
-const core = require('core');
+const core = require('../../core');
+const rankingSchema = require('./ranking.schema');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
@@ -46,7 +47,10 @@ const usersSchema = new db.mongoose.Schema({
     type: Number,
     required: true,
     default: 0
-  }
+  },
+  ranking: [
+    rankingSchema.rankingSchema
+  ]
 });
 
 usersSchema.plugin(db.mongoosePaginate);
@@ -69,6 +73,7 @@ const usersCreateSchema = schema({
  * @type {Object}
  */
 const usersUpdateSchema = schema({
+  _id: models.stringField(true),
   name: models.stringField(true).min(5).max(100),
   gender: models.numberField(true).integer().min(0).max(2),
   dob: models.dateField(true),
