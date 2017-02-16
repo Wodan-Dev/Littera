@@ -1,9 +1,12 @@
 'use strict';
 
 /**
- * Module books
+ * Module Books
  */
 
+/**
+ * Dependencies
+ */
 const core = require('../../core');
 const priceSchema = require('./price.Schema');
 const forumsSchema = require('./forums.Schema');
@@ -12,6 +15,10 @@ const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
+/**
+ * Books Schema Definition
+ * @type {Schema}
+ */
 const booksSchema = new db.mongoose.Schema({
   cover_image: {
     type: String
@@ -23,8 +30,7 @@ const booksSchema = new db.mongoose.Schema({
   },
   synopsis: {
     type: String,
-    required: true,
-    index: true
+    required: true
   },
   content: {
     type: String,

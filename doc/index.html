@@ -705,6 +705,23 @@
                     <td>0</td>
                     <td>0 quando não há avaliações ainda</td>
                 </tr>
+                <tr>
+                    <td>checksum</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>Hash Md5 para com o resultado do registro</td>
+                </tr>
+                <tr>
+                    <td>created_at</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                </tr>
+                <tr>
+                    <td>modified_at</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                </tr>
 
 <!--
    *
@@ -720,7 +737,7 @@
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
                         <table class="collection" border="0" cellspacing="0" cellpadding="0">
-                        <caption>price []</caption>
+                        <caption>prices []</caption>
                         <thead>
                             <tr>
                                 <th>campo</th>
@@ -767,6 +784,16 @@
                                 <td>SIM</td>
                                 <td>0</td>
                                 <td>0 - preco padrão 1- promoção</td>
+                            </tr>
+                            <tr>
+                                <td>created_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>modified_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
                             </tr>
                         </tbody>
                        </table>
@@ -819,17 +846,21 @@
                                 <td>SIM</td>
                             </tr>
                             <tr>
-                                <td>date_created</td>
-                                <td>Date</td>
-                                <td>SIM</td>
-                                <td>sysdate</td>
-                            </tr>
-                            <tr>
                                 <td>spoiler</td>
                                 <td>Number</td>
                                 <td>SIM</td>
                                 <td>0</td>
                                 <td>0 - Não é um spoiler 1 - É spoiler</td>
+                            </tr>
+                            <tr>
+                                <td>created_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>modified_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
                             </tr>
 <!--
    *
@@ -844,7 +875,7 @@
                                 <td class="cardinality">1..n</td>
                                 <td class="collection-child">
                                     <table id="div3" class="collection" border="0" cellspacing="0" cellpadding="0">
-                                    <caption>comments []</caption>
+                                    <caption>posts []</caption>
                                     <thead>
                                         <tr>
                                             <th>campo</th>
@@ -871,17 +902,21 @@
                                             <td>SIM</td>
                                         </tr>
                                         <tr>
-                                            <td>date_created</td>
-                                            <td>Date</td>
-                                            <td>SIM</td>
-                                            <td>sysdate</td>
-                                        </tr>
-                                        <tr>
                                             <td>spoiler</td>
                                             <td>Number</td>
                                             <td>SIM</td>
                                             <td>0</td>
                                             <td>0 - Não é um spoiler 1 - É spoiler</td>
+                                        </tr>
+                                        <tr>
+                                            <td>created_at</td>
+                                            <td>Date</td>
+                                            <td>SIM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>modified_at</td>
+                                            <td>Date</td>
+                                            <td>SIM</td>
                                         </tr>
                                     </tbody>
                                     </table>
@@ -935,14 +970,18 @@
                                 <td>1 - min 5 - max</td>
                             </tr>
                             <tr>
-                                <td>date_modified</td>
-                                <td>date</td>
-                                <td>SIM</td>
-                                <td>sysdate</td>
-                            </tr>
-                            <tr>
                                 <td>comment</td>
                                 <td>String</td>
+                            </tr>
+                            <tr>
+                                <td>created_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>modified_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
                             </tr>
                         </tbody>
                         </table>
@@ -963,7 +1002,7 @@
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
                         <table class="collection" border="0" cellspacing="0" cellpadding="0">
-                        <caption>tags []</caption>
+                        <caption>keywords []</caption>
                         <thead>
                             <tr>
                                 <th>campo</th>
@@ -985,10 +1024,14 @@
                                 <td>SIM</td>
                             </tr>
                             <tr>
-                                <td>date_modified</td>
-                                <td>date</td>
+                                <td>created_at</td>
+                                <td>Date</td>
                                 <td>SIM</td>
-                                <td>sysdate</td>
+                            </tr>
+                            <tr>
+                                <td>modified_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
                             </tr>
                         </tbody>
                         </table>
@@ -1031,14 +1074,18 @@
                                 <td>SIM</td>
                             </tr>
                             <tr>
-                                <td>date_modified</td>
-                                <td>date</td>
-                                <td>SIM</td>
-                                <td>sysdate</td>
-                            </tr>
-                            <tr>
                                 <td>content</td>
                                 <td>String</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>created_at</td>
+                                <td>Date</td>
+                                <td>SIM</td>
+                            </tr>
+                            <tr>
+                                <td>modified_at</td>
+                                <td>Date</td>
                                 <td>SIM</td>
                             </tr>
                         </tbody>

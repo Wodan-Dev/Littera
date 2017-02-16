@@ -1,16 +1,23 @@
 'use strict';
 
 /**
- * Modulo price
+ * Modulo Prices
  */
 
+/**
+ * Dependencies
+ */
 const core = require('../../core');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
-const priceSchema = db.mongoose.Schema({
+/**
+ * Prices Schema
+ * @type {Schema}
+ */
+const pricesSchema = db.mongoose.Schema({
   price_min: {
     type: Number,
     required: true,
@@ -46,4 +53,4 @@ const priceSchema = db.mongoose.Schema({
   }
 });
 
-module.exports = priceSchema;
+module.exports = pricesSchema;

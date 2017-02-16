@@ -1,11 +1,22 @@
 'use strict';
 
+/**
+ * Module Forums
+ */
+
+/**
+ * Dependencies
+ */
 const core = require('../../core');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
+/**
+ * Forums Schema
+ * @type {Schema}
+ */
 const forumsSchema = db.mongoose.Schema({
   _id_user: {
     type: db.types.ObjectId,

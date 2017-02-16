@@ -18,7 +18,7 @@ const schema = core.validator.schema;
  * Rankings Schema Definition
  * @type {Schema}
  */
-const rankingSchema = new db.mongoose.Schema({
+const rankingsSchema = new db.mongoose.Schema({
   _id_user: {
     type: db.types.ObjectId,
     ref: 'users',
