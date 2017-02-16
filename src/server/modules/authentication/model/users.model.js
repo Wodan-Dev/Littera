@@ -106,7 +106,7 @@ function list(page) {
   let pageSize = parseInt(config.getPageSize());
   return usersModel.paginate(
     {
-      active: true
+      //  active: true
     },
     {
       page: page,
