@@ -123,7 +123,7 @@
    *
    *
    *
-   *RANKING
+   *OPINIONS
    *
    *
    *
@@ -132,7 +132,7 @@
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
                         <table class="collection" border="0" cellspacing="0" cellpadding="0">
-                        <caption>ranking []</caption>
+                        <caption>opinions []</caption>
                         <thead>
                             <tr>
                                 <th>campo</th>
@@ -190,7 +190,7 @@
    *
    *
 -->
-
+<!--
                 <tr>
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
@@ -237,7 +237,7 @@
                         </table>
                     </td>
                 </tr>
-
+-->
 <!--
    *
    *
@@ -252,7 +252,7 @@
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
                         <table class="collection" border="0" cellspacing="0" cellpadding="0">
-                        <caption>tags []</caption>
+                        <caption>choices []</caption>
                         <thead>
                             <tr>
                                 <th>campo</th>
@@ -580,7 +580,7 @@
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
                         <table id="div1" class="collection" border="0" cellspacing="0" cellpadding="0">
-                        <caption>books []</caption>
+                        <caption>written_books []</caption>
                         <thead>
                             <tr>
                                 <th>campo</th>
@@ -1084,10 +1084,16 @@
                     <td>SIM</td>
                 </tr>
                 <tr>
-                    <td>date_created</td>
-                    <td>date</td>
+                    <td>create_at</td>
+                    <td>Date</td>
                     <td>SIM</td>
-                    <td>Sysdate</td>
+                    <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>modified_at</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
                 </tr>
                 <tr>
                     <td>transaction_id</td>
@@ -1103,10 +1109,17 @@
                     <td>0 - Pendente 1- Aguardando Pagamento 2 - Confirmado 3 - Cancelado</td>
                 </tr>
                 <tr>
+                    <td>checksum</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>Hash Md5 para com o resultado do registro</td>
+                </tr>
+                <tr>
                     <td class="cardinality">1..n</td>
                     <td class="collection-child">
                         <table id="div4" class="collection" border="0" cellspacing="0" cellpadding="0">
-                        <caption>books []</caption>
+                        <caption>items []</caption>
                         <thead>
                             <tr>
                                 <th>campo</th>
@@ -1189,6 +1202,13 @@
                     <td>0</td>
                     <td>0 - Inativo 1 - Ativo</td>
                 </tr>
+                <tr>
+                    <td>checksum</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>Hash Md5 para com o resultado do registro</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -1226,11 +1246,25 @@
                     <td>String</td>
                     <td>SIM</td>
                 </tr>
+
                 <tr>
-                    <td>date_modified</td>
+                    <td>create_at</td>
                     <td>Date</td>
                     <td>SIM</td>
                     <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>modified_at</td>
+                    <td>Date</td>
+                    <td>SIM</td>
+                    <td>sysdate</td>
+                </tr>
+                <tr>
+                    <td>checksum</td>
+                    <td>String</td>
+                    <td>SIM</td>
+                    <td></td>
+                    <td>Hash Md5 para com o resultado do registro</td>
                 </tr>
             </tbody>
         </table>

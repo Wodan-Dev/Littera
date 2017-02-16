@@ -105,6 +105,16 @@ function put(req, res) {
 }
 
 /**
+ * Method Delete in route /:id
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function remove(req, res) {
+  http.render(res, 'Not Allowed',
+    http.HTTP_STATUS.HTTP_405_METHOD_NOT_ALLOWED);
+}
+
+/**
  * Create Instance to router object
  * @param  {Object} express Express
  * @return {Router}         router object with the routes
@@ -116,6 +126,7 @@ function router(express) {
   routes.get('/:id', getById);
   routes.post('/', post);
   routes.put('/', put);
+  routes.delete('/:id', remove);
 
   return routes;
 }

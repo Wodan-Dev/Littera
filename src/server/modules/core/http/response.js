@@ -40,8 +40,6 @@ function isSuccess(code) {
 function render(res, data, responseCode) {
   let resultData = data || {};
   let code = responseCode || statusCode.HTTP_200_OK;
-  console.log('data');
-  console.log(data);
   return res.status(code)
             .json({
               status: code,
