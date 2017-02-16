@@ -1,10 +1,10 @@
 'use strict';
 /**
- * Module autentication
+ * Module books
  */
 
 /**
- * Create instance to Autentication Module
+ * Create instance to Books Module
  * @param  {Object} app     Express App instance
  * @param  {Object} express Express
  * @param  {String} url     Path url which module will work
