@@ -8,7 +8,13 @@
  * Dependencies
  */
 const core = require('../../core');
-const rankingSchema = require('./ranking.schema');
+const opinionsSchema = require('./opinions.schema');
+const choicesSchema = require('./choices.schema');
+const followersSchema = require('./followers.schema');
+const followingSchema = require('./following.schema');
+const wishlistSchema = require('./wishlist.schema');
+const librarySchema = require('./library.schema');
+const written_booksSchema = require('./written_books.schema');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
@@ -48,8 +54,31 @@ const usersSchema = new db.mongoose.Schema({
     required: true,
     default: 0
   },
-  ranking: [
-    rankingSchema.rankingSchema
+  payment: {
+    payment_id: {
+      type: String
+    }
+  },
+  opinions: [
+    opinionsSchema.opinionsSchema
+  ],
+  choices: [
+    choicesSchema.choicesSchema
+  ],
+  followers: [
+    followersSchema.followersSchema
+  ],
+  following: [
+    followingSchema.followingSchema
+  ],
+  wishlist: [
+    wishlistSchema.wishListSchema
+  ],
+  library: [
+    librarySchema.librarySchema
+  ],
+  written_books: [
+    written_booksSchema.written_booksSchema
   ]
 });
 

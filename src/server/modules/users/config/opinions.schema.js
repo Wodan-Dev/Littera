@@ -15,10 +15,10 @@ const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Rankings Schema Definition
+ * Opinions Schema Definition
  * @type {Schema}
  */
-const rankingsSchema = new db.mongoose.Schema({
+const opinionsSchema = new db.mongoose.Schema({
   _id_user: {
     type: db.types.ObjectId,
     ref: 'users',
@@ -27,10 +27,7 @@ const rankingsSchema = new db.mongoose.Schema({
   },
   stars: {
     type: Number,
-    required: true,
-    index: true,
-    enum: [0, 1, 2, 3, 4, 5],
-    default: 0
+    index: true
   },
   create_at: {
     type: Date,
@@ -50,26 +47,29 @@ const rankingsSchema = new db.mongoose.Schema({
   }
 });
 
+
 /**
- * Rankings Schema create validation
+ * Opinions Schema create validation
  * @type {Object}
  */
-const rankingCreateSchema = schema({
+const opinionsCreateSchema = schema({
   _id_user: models.stringField(true),
-  stars: models.numberField(true).integer().min(0).max(5),
-  date_modified: models.dateField(true),
+  stars: models.numberField().integer(),
+  create_at: models.dateField(true),
+  modified_at: models.dateField(true),
   comment: models.stringField(true).max(1000)
 });
 
 /**
- * Rankings Schema update validation
+ * Opinions Schema update validation
  * @type {Object}
  */
-const rankingUpdateSchema = schema({
+const opinionsUpdateSchema = schema({
   _id: models.stringField(true),
   _id_user: models.stringField(true),
-  stars: models.numberField(true).integer().min(0).max(5),
-  date_modified: models.dateField(true),
+  stars: models.numberField().integer(),
+  create_at: models.dateField(true),
+  modified_at: models.dateField(true),
   comment: models.stringField(true).max(1000)
 });
 
@@ -79,7 +79,7 @@ const rankingUpdateSchema = schema({
  * @type {Object}
  */
 module.exports = {
-  rankingSchema: rankingSchema,
-  rankingCreateSchema: rankingCreateSchema,
-  rankingUpdateSchema: rankingUpdateSchema
+  opinionsSchema: opinionsSchema,
+  opinionsCreateSchema: opinionsCreateSchema,
+  opinionsUpdateSchema: opinionsUpdateSchema
 };

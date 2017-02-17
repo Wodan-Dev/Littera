@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /**
  * Module Books
@@ -15,6 +15,6 @@ const schema = core.validator.schema;
 
 const forums_comments = new db.mongoose.Schema({
 
-  
+
 
 });
