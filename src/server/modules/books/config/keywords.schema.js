@@ -8,31 +8,20 @@
  * Dependencies
  */
 const core = require('../../core');
-const postsSchema =require('./posts.schema');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Forums Schema Definition
+ * Keywords Schema Definition
  * @type {Schema}
  */
-const forumsSchema = new db.mongoose.Schema({
-  _id_user: {
-    type: db.types.ObjectId,
-    ref: 'users',
-    required: true,
-    index: true
-  },
-  title: {
-    type: String,
-    required: true,
-    index: true
-  },
+const keywordsSchema = new db.mongoose.Schema({
   content: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   created_at: {
     type: Date,
@@ -43,28 +32,23 @@ const forumsSchema = new db.mongoose.Schema({
     type: Date,
     required: true,
     default: date.getDateUTC()
-  },
-  postsSchema: [
-    postsSchema
-  ]
+  }
 });
 
 /**
- * Forums Schema create validation
+ * Keywords Schema create validation
  * @type {Object}
  */
-const forumsCreateSchema = schema({
-  title: models.stringField(true),
+const keywordsCreateSchema = schema({
   content: models.stringField(true).max(1000)
 });
 
 /**
- * Forums Schema create validation
+ * Keywords Schema update validation
  * @type {Object}
  */
-const forumsUpdateSchema = schema({
+const keywordsUpdateSchema = schema({
   _id: models.stringField(true),
-  title: models.stringField(true),
   content: models.stringField(true).max(1000)
 });
 
@@ -73,7 +57,7 @@ const forumsUpdateSchema = schema({
  * @type {Object}
  */
 module.exports = {
-  forumsSchema: forumsSchema,
-  forumsCreateSchema: forumsCreateSchema,
-  forumsUpdateSchema: forumsUpdateSchema
+  keywordsSchema: keywordsSchema,
+  keywordsCreateSchema: keywordsCreateSchema,
+  keywordsUpdateSchema: keywordsUpdateSchema
 };

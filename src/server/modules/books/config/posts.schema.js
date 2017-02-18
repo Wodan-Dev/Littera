@@ -5,34 +5,33 @@
  */
 
 /**
- * Dependencies
- */
+* Dependencies
+*/
 const core = require('../../core');
-const postsSchema =require('./posts.schema');
-const date = core.date;
 const db = core.connection;
+const date = core.date;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Forums Schema Definition
+ * Forums Schema
  * @type {Schema}
  */
-const forumsSchema = new db.mongoose.Schema({
+const postsSchema = new db.mongoose.Schema({
   _id_user: {
     type: db.types.ObjectId,
     ref: 'users',
     required: true,
     index: true
   },
-  title: {
-    type: String,
-    required: true,
-    index: true
-  },
   content: {
     type: String,
     required: true
+  },
+  spoiler: {
+    type: Number,
+    required: true,
+    default: 0
   },
   created_at: {
     type: Date,
@@ -43,37 +42,35 @@ const forumsSchema = new db.mongoose.Schema({
     type: Date,
     required: true,
     default: date.getDateUTC()
-  },
-  postsSchema: [
-    postsSchema
-  ]
+  }
 });
 
 /**
- * Forums Schema create validation
+ * Post Schema create validation
  * @type {Object}
  */
-const forumsCreateSchema = schema({
-  title: models.stringField(true),
-  content: models.stringField(true).max(1000)
+const postsCreateSchema = schema({
+  _id_user: models.stringField(true),
+  content: models.stringField(true).max(100)
 });
 
 /**
- * Forums Schema create validation
+ * Post Schema update validation
  * @type {Object}
  */
-const forumsUpdateSchema = schema({
+const postsUpdateSchema = schema({
   _id: models.stringField(true),
-  title: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  _id_user: models.stringField(true),
+  content: models.stringField(true).max(100)
 });
+
 
 /**
  * Module exports
  * @type {Object}
  */
 module.exports = {
-  forumsSchema: forumsSchema,
-  forumsCreateSchema: forumsCreateSchema,
-  forumsUpdateSchema: forumsUpdateSchema
+  postsSchema: postsSchema,
+  postsCreateSchema: postsCreateSchema,
+  postsUpdateSchema: postsUpdateSchema
 };

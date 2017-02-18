@@ -8,29 +8,29 @@
  * Dependencies
  */
 const core = require('../../core');
-const postsSchema =require('./posts.schema');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Forums Schema Definition
+ * Ranking Schema Definition
  * @type {Schema}
  */
-const forumsSchema = new db.mongoose.Schema({
+const rankingsSchema = new db.mongoose.Schema({
   _id_user: {
     type: db.types.ObjectId,
     ref: 'users',
     required: true,
     index: true
   },
-  title: {
-    type: String,
+  stars: {
+    type: Number,
     required: true,
-    index: true
+    min: 0,
+    max: 5
   },
-  content: {
+  comment: {
     type: String,
     required: true
   },
@@ -43,29 +43,26 @@ const forumsSchema = new db.mongoose.Schema({
     type: Date,
     required: true,
     default: date.getDateUTC()
-  },
-  postsSchema: [
-    postsSchema
-  ]
+  }
 });
 
 /**
- * Forums Schema create validation
+ * Rankings Schema create validation
  * @type {Object}
  */
-const forumsCreateSchema = schema({
-  title: models.stringField(true),
-  content: models.stringField(true).max(1000)
+const rankingsCreateSchema = schema({
+  stars: models.numberField(true).min(0).max(5),
+  comment: models.stringField(true)
 });
 
 /**
- * Forums Schema create validation
+ * Rankings Schema update validation
  * @type {Object}
  */
-const forumsUpdateSchema = schema({
+const rankingsUpdateSchema = schema({
   _id: models.stringField(true),
-  title: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  stars: models.numberField(true).min(0).max(5),
+  comment: models.stringField(true)
 });
 
 /**
@@ -73,7 +70,7 @@ const forumsUpdateSchema = schema({
  * @type {Object}
  */
 module.exports = {
-  forumsSchema: forumsSchema,
-  forumsCreateSchema: forumsCreateSchema,
-  forumsUpdateSchema: forumsUpdateSchema
+  rankingsSchema: rankingsSchema,
+  rankingsCreateSchema: rankingsCreateSchema,
+  rankingsUpdateSchema: rankingsUpdateSchema
 };
