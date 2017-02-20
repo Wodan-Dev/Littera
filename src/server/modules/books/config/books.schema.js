@@ -52,7 +52,8 @@ const booksSchema = new db.mongoose.Schema({
     max: 100
   },
   esbn: {
-    type: String
+    type: String,
+    required: false
   },
   date_published: {
     type: Date,
@@ -111,12 +112,12 @@ booksSchema.plugin(db.mongoosePaginate);
  */
 const booksCreateSchema = schema({
   title: models.stringField(true),
-  synospis: models.stringField(true),
+  synopsis: models.stringField(true),
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),
   percentage: models.numberField(true).integer().min(0).max(100),
-  esbn: models.stringField(false),
-  date_published: models.dateField(false),
+  esbn: models.stringField(false).allow(null),
+  date_published: models.dateField(false).allow(null),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
   average_star: models.numberField().min(0).max(100)
@@ -129,7 +130,7 @@ const booksCreateSchema = schema({
 const booksUpdateSchema = schema({
   _id: models.stringField(true),
   title: models.stringField(true),
-  synospis: models.stringField(true),
+  synopsis: models.stringField(true),
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),
   percentage: models.numberField(true).integer().min(0).max(100),

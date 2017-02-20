@@ -11,7 +11,7 @@ const booksModel = require('../model/books.model');
 //const booksCtrl = require('../controller/books.controller');
 const http = core.http;
 const utils = core.utils;
-const renderError = core.http.renderError;//connection.handlers.renderHttpError;
+const renderError = core.http.renderError;
 
 /**
  * Method Get in route /
@@ -38,7 +38,7 @@ function post(req, res) {
 
   let book = {
     title: req.body.title || '',
-    synopsis: req.body.synospis || '',
+    synopsis: req.body.synopsis || '',
     content: req.body.content || '',
     status: req.body.status || '',
     percentage: req.body.percentage || '',
@@ -48,6 +48,8 @@ function post(req, res) {
     language: req.body.language || '',
     average_stars: req.body.average_stars || ''
   };
+
+  console.log(book);
 
   booksModel.validateCreate(book)
     .then(function (result) {

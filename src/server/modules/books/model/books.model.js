@@ -17,13 +17,19 @@ const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = db.database.model('books', booksSchema.booksSchema);
 
+/**
+ * Insert book
+ * @param  {Object} book Book object
+ * @return {Promise}      Resolve/Reject
+ */
 function insert(book) {
   return new booksModel(book).save();
 }
 
 /**
- * List all register in DB
- * @return {Promise} Resolve/Reject
+ * List all books
+ * @param  {Number} page Page number
+ * @return {Promise}      Resolve/Reject
  */
 function list(page) {
   let pageSize = parseInt(config.getPageSize());
@@ -40,11 +46,16 @@ function list(page) {
     });
 }
 
+/**
+ * Validate create
+ * @param  {Object} book Book object
+ * @return {Promise}      Resolve/Reject
+ */
 function validateCreate(book){
   book.title = checkField.trim(checkField.escape(book.title));
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
   book.content = checkField.trim(checkField.escape(book.content));
-  book.esbn = checkField.trim(checkField.escape(book.esbn));
+  //book.esbn = checkField.trim(checkField.escape(book.esbn));
   book.language = checkField.trim(checkField.escape(book.language));
 
   return validator.validateSchema(book, booksSchema.booksCreateSchema);

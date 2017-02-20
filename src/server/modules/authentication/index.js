@@ -13,5 +13,4 @@ module.exports = function (app, express, url, auth) {
 
   app.use(url + '/auth', require('./routes/authentication.routes.js')(express, auth));
   app.use(url + '/users', require('./routes/users.routes.js')(express, auth));
-  app.use(url + '/books', require('./../books/routes/books.routes.js')(express, auth));
 };

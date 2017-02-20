@@ -11,6 +11,6 @@
  */
 module.exports = function (app, express, url, auth) {
 
-  app.use(url + '/books', require('./routes/books.routes.js')(express, auth));
+  app.use(url, require('./routes/books.routes.js')(express, auth));
 
 };

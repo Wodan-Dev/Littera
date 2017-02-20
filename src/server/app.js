@@ -18,6 +18,10 @@ require('./modules/authentication')(app, express, '/mordor', function (req, res,
   next();
 });
 
+require('./modules/books')(app, express, '/books', function (req, res, next) {
+  next();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
