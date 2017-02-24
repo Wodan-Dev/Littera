@@ -49,9 +49,12 @@ function post(req, res) {
     language: req.body.language || '',
     average_star: req.body.average_star || 0
   };
+  console.log('book');
+  console.log(book);
 
   booksModel.validateCreate(book)
     .then(function (result) {
+      console.log('validou ok');
       return booksModel.insert(result.value);
     })
     .then(function (result) {
