@@ -55,7 +55,7 @@ function validateCreate(book){
   book.title = checkField.trim(checkField.escape(book.title));
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
   book.content = checkField.trim(checkField.escape(book.content));
-  //book.esbn = checkField.trim(checkField.escape(book.esbn));
+  book.esbn = checkField.trim(checkField.escape(book.esbn));
   book.language = checkField.trim(checkField.escape(book.language));
 
   return validator.validateSchema(book, booksSchema.booksCreateSchema);

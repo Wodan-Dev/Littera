@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Module authentication
+ * Module Books
  */
 
 /**
@@ -10,6 +10,7 @@ const core = require('../../core');
 const booksModel = require('../model/books.model');
 //const booksCtrl = require('../controller/books.controller');
 const http = core.http;
+const date = core.date;
 const utils = core.utils;
 const renderError = core.http.renderError;
 
@@ -40,20 +41,18 @@ function post(req, res) {
     title: req.body.title || '',
     synopsis: req.body.synopsis || '',
     content: req.body.content || '',
-    status: req.body.status || '',
-    percentage: req.body.percentage || '',
+    status: req.body.status || 0,
+    percentage: req.body.percentage || 0,
     esbn: req.body.esbn || '',
-    date_published: req.body.date_published || '',
-    visible: req.body.visible || '',
+    date_published: req.body.date_published || date.getDateUTC(),
+    visible: req.body.visible || 0,
     language: req.body.language || '',
-    average_stars: req.body.average_stars || ''
+    average_star: req.body.average_star || 0
   };
-
-  console.log(book);
 
   booksModel.validateCreate(book)
     .then(function (result) {
-      return booksModel.insert(result);
+      return booksModel.insert(result.value);
     })
     .then(function (result) {
       http.render(res, result);
@@ -61,7 +60,6 @@ function post(req, res) {
     .catch(function (err) {
       renderError(res, book, err);
     });
-
 }
 
 /**

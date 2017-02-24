@@ -74,7 +74,7 @@ const booksSchema = new db.mongoose.Schema({
     type: Number,
     required: true,
     min: 0,
-    max: 100
+    max: 5
   },
   created_at: {
     type: Date,
@@ -116,11 +116,11 @@ const booksCreateSchema = schema({
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),
   percentage: models.numberField(true).integer().min(0).max(100),
-  esbn: models.stringField(false).allow(null),
-  date_published: models.dateField(false).allow(null),
+  esbn: models.stringField(false),
+  date_published: models.dateField(false),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
-  average_star: models.numberField().min(0).max(100)
+  average_star: models.numberField().min(0).max(5)
 });
 
 /**
@@ -138,7 +138,7 @@ const booksUpdateSchema = schema({
   date_published: models.dateField(false),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
-  average_star: models.numberField().min(0).max(100)
+  average_star: models.numberField().min(0).max(5)
 });
 
 /**
