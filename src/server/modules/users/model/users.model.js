@@ -70,7 +70,7 @@ function insert(user) {
 /**
  * Update in DB
  * @param  {ObjectId} id id which has to be updated
- * @param  {Object} enterprise Enterprise object
+ * @param  {Object} user User object
  * @return {Promise}        Resolve/Reject
  */
 function update(id, user) {

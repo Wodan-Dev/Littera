@@ -160,7 +160,13 @@ function validateUpdate(user) {
 
 function validateId(id) {
   return new Promise(function (resolve, reject) {
-    resolve(checkField.trim(id));
+    if (checkField.isMongoId(id)) {
+      resolve(checkField.trim(id));
+    }
+    else {
+      let err = validator.createErrItem('_id', 'Id is invalid.');
+      reject(validator.invalidResult(id, err));
+    }
   });
 }
 
