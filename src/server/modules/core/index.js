@@ -12,5 +12,6 @@ module.exports = {
   certificates: require('./certificates'),
   validator: require('./validator'),
   http: require('./http'),
+  authentication: require('./authentication'),
   utils: require('./utils')
 };

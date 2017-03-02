@@ -12,6 +12,7 @@ const mongoosePaginate = require('mongoose-paginate');
 const config     = require('../config');
 const date       = require('../date');
 const handlers   = require('./handlers');
+const crypto     = require('../crypto');
 
 /**
  * Mongoose Config
@@ -20,29 +21,51 @@ const handlers   = require('./handlers');
 mongoose.Promise = global.Promise;
 
 /**
+ * Generate checksum of object
+ * @param  {Object} obj Object to generate checksum
+ * @return {String}     checksum value
+ */
+function generateChecksum(obj) {
+  return crypto.generateMd5(JSON.stringify(obj));
+}
+
+/**
  * Before execution of bd operations
  * @type {[type]}
  */
-mongoose.plugin(function(schema, options) {
+/*mongoose.plugin(function(schema, options) {
+
+  schema.pre('validate', function() {
+    console.log(arguments);
+    console.log('this gets printed first');
+  });
 
   schema.pre('save', function (next) {
+    console.log('arguments');
+    console.log(arguments);
     if (this.modified)
       this.modified = date.getDateUTC();
     if (this.create_at)
       this.create_at = date.getDateUTC();
     // TODO: Create checksum and md5 function
-    //if (this.checksum)
-    //  this.checksum =
+    if (this.checksum)
+      this.checksum = generateChecksum(JSON.parse(JSON.stringify(this)));
 
     next();
   });
 
-  schema.pre('update', function (next) {
+  schema.pre('findOneAndUpdate', function (next) {
+    console.log('update');
+
+    console.log(this._collection.collection);
     if (this.modified)
       this.modified = date.getDateUTC();
+
+    if (this.checksum)
+      this.checksum = generateChecksum(JSON.parse(JSON.stringify(this)));
     next();
   });
-});
+});*/
 
 /**
  * Open Connection
@@ -83,5 +106,6 @@ module.exports = {
   open: open,
   database: mongoose.connection,
   getObjectId: getObjectId,
-  handlers: handlers
+  handlers: handlers,
+  generateChecksum: generateChecksum
 };

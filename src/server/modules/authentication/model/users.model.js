@@ -18,53 +18,19 @@ const checkField = core.validator.validator;
 const usersModel = db.database.model('users', usersSchema.usersSchema);
 
 /**
- * Change modified_at field before save
- * @param  {model}   model Model which has to be updated
- * @param  {Function} next  next operation save/update
- */
-function preUpdate(model, next) {
-  model.modified_at = date.getDateUTC();
-
-  // TODO: Create a valid checksum for object
-  console.log('model a');
-  console.log(model);
-  model.checksum = 'ooooo';
-  console.log('model n');
-  console.log(model);
-  crypto.encrypt(model.password)
-    .then(function (hash) {
-      model.password = hash;
-
-      next();
-
-    })
-    .catch(function (err) {
-      next(err);
-    });
-}
-
-/**
- * Exec before save
- */
-usersSchema.usersSchema.pre('save', function (next) {
-  preUpdate(this, next);
-});
-
-/**
- * Exec before update
- */
-usersSchema.usersSchema.pre('update', function (next) {
-  preUpdate(this._update.$set, next);
-});
-
-/**
  * Insert in DB
  * @param  {Object} enterprise Enterprise object
  * @return {Promise}        Resolve/Reject
  */
 function insert(user) {
-  return new usersModel(user)
-    .save();
+  user.create_at = date.getDateUTC();
+  user.modified_at = date.getDateUTC();
+  crypto.encrypt(user.password)
+    .then(function (hash) {
+      user.password = hash;
+      return new usersModel(user)
+        .save();
+    });
 }
 
 /**
@@ -74,6 +40,8 @@ function insert(user) {
  * @return {Promise}        Resolve/Reject
  */
 function update(id, user) {
+  user.modified_at = date.getDateUTC();
+
   let query = {
     _id: id
   };
@@ -83,9 +51,15 @@ function update(id, user) {
     new: true
   };
 
-  return usersModel
-    .findOneAndUpdate(query, user, opt)
-    .exec();
+  crypto.encrypt(user.password)
+    .then(function (hash) {
+      user.password = hash;
+      return usersModel
+        .findOneAndUpdate(query, user, opt)
+        .exec();
+    });
+
+
 }
 
 /**
@@ -115,6 +89,24 @@ function list(page) {
         'create_at': 'descending'
       }
     });
+}
+
+/**
+ * get user by username
+ * @param  {ObjectId} username username which has to be loaded
+ * @return {Promise}        Resolve/Reject
+ */
+function findByUserName(username) {
+  return usersModel.findOne({ username: username }).exec();
+}
+
+/**
+ * get user by email
+ * @param  {ObjectId} email email which has to be loaded
+ * @return {Promise}        Resolve/Reject
+ */
+function findByUserEmail(email) {
+  return usersModel.findOne({ email: email }).exec();
 }
 
 /**
@@ -149,11 +141,9 @@ function validateCreate(user) {
  */
 function validateUpdate(user) {
 
-  user.username = checkField.trim(checkField.escape(user.username));
-  user.email = checkField.trim(checkField.escape(user.email));
   user.password = checkField.trim(checkField.escape(user.password));
+  user.passwordbis = checkField.trim(checkField.escape(user.passwordbis));
   user.last_login = checkField.trim(checkField.escape(user.last_login));
-  user.checksum = checkField.trim(checkField.escape(user.checksum));
 
   return validator.validateSchema(user, usersSchema.usersUpdateSchema);
 }
@@ -182,5 +172,7 @@ module.exports = {
   update: update,
   remove: remove,
   list: list,
-  findById: findById
+  findById: findById,
+  findByUserName: findByUserName,
+  findByUserEmail: findByUserEmail
 };

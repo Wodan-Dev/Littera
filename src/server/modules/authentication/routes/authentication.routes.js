@@ -3,6 +3,16 @@
  * Module authentication
  */
 
+/**
+ * Dependencies
+ */
+const core = require('../../core');
+const usersModel = require('../model/users.model');
+const authModel = require('../model/authentication.model');
+const authCtrl = require('../controller/authentication.controller');
+const http = core.http;
+const auth = core.authentication;
+const renderError = core.http.renderError;
 
 /**
  * Method Get in route /
@@ -11,9 +21,49 @@
  * @param  {Function} next next operation
  */
 function get(req, res) {
-  res.json({
-    'name': 'name'
-  });
+  console.log(auth.getUserSession);
+
+  auth.getUserSession(req)
+    .then(function (user) {
+      res.json({
+        'name': user.value
+      });
+    })
+    .catch(function (err) {
+      res.json({
+        'err': err
+      });
+    });
+}
+
+function postAuth(req, res) {
+  let user = {
+    username: req.body.username || '',
+    email: req.body.email || '',
+    password: req.body.password || ''
+  };
+
+  authModel.validateUser(user)
+    .then(function(ruser) {
+      return authCtrl.loadUser(ruser.value);
+    })
+    .then(function(ruser) {
+      return authCtrl.validatePassword(ruser.value, user.password);
+    })
+    .then(function(ruser) {
+
+      return auth.authenticate({
+        _id: ruser.value._id,
+        username: ruser.value.username,
+        email: ruser.value.email
+      });
+    })
+    .then(function(ruser) {
+      http.render(res, ruser);
+    })
+    .catch(function(err) {
+      renderError(res, user, err);
+    });
 }
 
 /**
@@ -24,6 +74,7 @@ function get(req, res) {
 function router(express) {
   let routes = express.Router();
 
+  routes.post('/authenticate', postAuth);
   routes.get('/', get);
 
   return routes;

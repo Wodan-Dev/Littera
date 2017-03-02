@@ -1,0 +1,55 @@
+/**
+ * Created by jonathan on 28/02/17.
+ */
+'use strict';
+/**
+ * Module authentication.model
+ */
+
+/**
+ * Dependencies
+ */
+const core = require('../../core');
+const validator = core.validator;
+const checkField = core.validator.validator;
+
+/**
+ * Validate user
+ * @param  {Object} user user object
+ * @return {Promise}      Resolve/Reject
+ */
+function validateUser(user) {
+  return new Promise(function (resolve, reject) {
+    user.username = checkField.trim(checkField.escape(user.username));
+    user.email = checkField.trim(checkField.escape(user.email));
+    user.password = checkField.trim(checkField.escape(user.password));
+    let lstErrors = [];
+
+    if (checkField.isEmpty(user.username) && checkField.isEmpty(user.email)) {
+      lstErrors.push(validator.createErrItem('username', 'valor nulo não permitido.'));
+      lstErrors.push(validator.createErrItem('email', 'valor nulo não permitido.'));
+    }
+
+    if (!checkField.isEmpty(user.email) &&
+      !checkField.isEmail(user.email)) {
+      lstErrors.push(validator.createErrItem('email', 'valor informado não é válido.'));
+    }
+
+    if (checkField.isEmpty(user.password))
+      lstErrors.push(validator.createErrItem('password', 'valor nulo não permitido.'));
+
+    if (lstErrors.length)
+      reject(validator.invalidResult('login', lstErrors));
+    else
+      resolve(validator.validResult(user));
+  });
+}
+
+
+/**
+ * Module Export
+ * @type {Object}
+ */
+module.exports = {
+  validateUser: validateUser
+};

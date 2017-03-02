@@ -23,7 +23,7 @@ function getRoot() {
  */
 function getPublic() {
   return new Promise(function (resolve, reject) {
-    fs.readFile(getRoot() + '/certificates/ssl/pukey.pem', function (err, cert) {
+    fs.readFile(getRoot() + '/certificate/ssl/pukey.pub', function (err, cert) {
       if (err)
         reject({'err': 'certificado não encontrado.'});
       else
@@ -38,7 +38,7 @@ function getPublic() {
  */
 function getPrivate() {
   return new Promise(function (resolve, reject) {
-    fs.readFile(getRoot() + '/certificates/ssl/prkey.pem', function (err, cert) {
+    fs.readFile(getRoot() + '/certificate/ssl/prkey.pem', function (err, cert) {
       if (err)
         reject({ 'err': 'certificado não encontrado.' });
       else

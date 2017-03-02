@@ -12,6 +12,7 @@ echo "Generating self-signed certificates..."
 mkdir -p ../../certificate/ssl
 openssl genrsa -out ../../certificate/ssl/prkey.pem 4096
 openssl req -new -key ../../certificate/ssl/prkey.pem -out ../../certificate/ssl/pukey.pem
+openssl rsa -in ../../certificate/ssl/prkey.pem -pubout > ../../certificate/ssl/pukey.pub
 openssl x509 -req -days 365 -in ../../certificate/ssl/pukey.pem -signkey ../../certificate/ssl/prkey.pem -out ../../certificate/ssl/cert.pem
 # rm ../../certificate/ssl/pukey.pem
 chmod 600 ../../certificate/ssl/prkey.pem ../../certificate/ssl/cert.pem

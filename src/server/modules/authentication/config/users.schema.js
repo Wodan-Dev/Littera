@@ -10,6 +10,7 @@
 const core = require('../../core');
 const db = core.connection;
 const date = core.date;
+const crypto = core.crypto;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
@@ -64,6 +65,50 @@ const usersSchema = new db.mongoose.Schema({
     default: '-'
   }
 });
+/*
+function preUpdate(model, next) {
+  model.modified_at = date.getDateUTC();
+
+  crypto.encrypt(model.password)
+    .then(function (hash) {
+      model.password = hash;
+      next();
+    })
+    .catch(function (err) {
+      next(err);
+    });
+
+  next();
+}*/
+
+/**
+ * Before save new object
+*/
+/*usersSchema.pre('save', function (next) {
+  this.create_at = date.getDateUTC();
+
+  preUpdate(this, next);
+});
+
+usersSchema.pre('findOneAndUpdate', function (next) {
+  let model = this._update;
+
+  model.modified_at = date.getDateUTC();
+
+  preUpdate(model, next);
+});
+
+usersSchema.pre('update', function (next) {
+  let model = this._update.$set;
+  model.modified_at = date.getDateUTC();
+
+  preUpdate(model, next);
+});*/
+
+usersSchema.post('save', function (doc, next) {
+  console.log('pos save');
+  next();
+});
 
 usersSchema.plugin(db.mongoosePaginate);
 
@@ -84,7 +129,8 @@ const usersCreateSchema = schema({
  */
 const usersUpdateSchema = schema({
   _id: models.stringField(true),
-  password: models.stringField(true)
+  password: models.stringField(true),
+  last_login: models.dateField(true)
 });
 
 /**

@@ -11,6 +11,7 @@ const usersModel = require('../model/users.model');
 const usersCtrl = require('../controller/users.controller');
 const http = core.http;
 const utils = core.utils;
+const date = core.date;
 const renderError = core.http.renderError;//connection.handlers.renderHttpError;
 
 /**
@@ -40,12 +41,9 @@ function getById(req, res) {
   usersModel.validateId(id)
     .then(usersModel.findById)
     .then(function (result) {
-      console.log(result);
       http.render(res, result);
     })
     .catch(function (err) {
-      console.log('err');
-      console.log(err);
       renderError(res, {}, err);
     });
 }
@@ -72,6 +70,8 @@ function post(req, res) {
       return usersModel.insert(result);
     })
     .then(function (result) {
+      console.log('result');
+      console.log(result);
       http.render(res, result);
     })
     .catch(function (err) {
@@ -89,12 +89,13 @@ function put(req, res) {
   let user = {
     _id: req.body._id || '',
     password: req.body.password || '',
-    last_login: req.body.last_login || ''
+    passwordbis:req.body.passwordbis || (req.body.password || ''),
+    last_login: req.body.last_login || date.getDateUTC()
   };
 
   usersModel.validateUpdate(user)
     .then(function (ruser) {
-      return usersModel.update(ruser._id, user);
+      return usersModel.update(ruser.value._id, ruser.value);
     })
     .then(function (result) {
       http.render(res, result);
@@ -119,14 +120,14 @@ function remove(req, res) {
  * @param  {Object} express Express
  * @return {Router}         router object with the routes
  */
-function router(express) {
+function router(express, auth) {
   let routes = express.Router();
 
-  routes.get('/', get);
-  routes.get('/:id', getById);
+  routes.get('/', auth, get);
+  routes.get('/:id', auth, getById);
   routes.post('/', post);
-  routes.put('/', put);
-  routes.delete('/:id', remove);
+  routes.put('/', auth, put);
+  routes.delete('/:id', auth, remove);
 
   return routes;
 }

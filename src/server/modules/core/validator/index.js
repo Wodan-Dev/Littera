@@ -73,7 +73,6 @@ function validResult(value) {
 function validateSchema(obj, schema) {
   return new Promise(function (resolve, reject) {
     Joi.validate(obj, schema, optionsJoi, function (err, value) {
-      console.log(err);
       if (err) {
         let lstErrors = [];
         let regField = new RegExp('((?!\").*(?=\"))');

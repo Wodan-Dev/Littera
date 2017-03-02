@@ -105,6 +105,22 @@ function loadEnv() {
 }
 
 /**
+ * return redis url
+ * @return {String} Path to redis
+ */
+function getRedisHost() {
+  return process.env.REDIS_HOST || 'localhost';
+}
+
+/**
+ * return redis port
+ * @return {String} redis port
+ */
+function getRedisPort() {
+  return process.env.REDIS_PORT || 6379;
+}
+
+/**
  * Module Export
  * @type {Object}
  */
@@ -117,5 +133,7 @@ module.exports = {
   getSecret: getSecret,
   getLocale: getLocale,
   getPageMaxSize: getPageMaxSize,
-  getPageSize: getPageSize
+  getPageSize: getPageSize,
+  getRedisHost: getRedisHost,
+  getRedisPort: getRedisPort
 };
