@@ -73,8 +73,6 @@ function post(req, res) {
       return usersModel.insert(result);
     })
     .then(function (result) {
-      console.log('result');
-      console.log(result);
       http.render(res, result);
     })
     .catch(function (err) {

@@ -33,15 +33,10 @@ app.use(session({
 
 
 
-require('./modules/authentication')(app, express, '/mordor', auth.ensureAuthenticated);/*function (req, res, next) {
-//  next();
-//});*/
-
+require('./modules/authentication')(app, express, '/mordor', auth.ensureAuthenticated);
+require('./modules/sales')(app, express, '/sales', auth.ensureAuthenticated);
 require('./modules/users')(app, express, '/users', auth.ensureAuthenticated);
-
-require('./modules/books')(app, express, '/books', function (req, res, next) {
-  next();
-});
+require('./modules/books')(app, express, '/books', auth.ensureAuthenticated);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

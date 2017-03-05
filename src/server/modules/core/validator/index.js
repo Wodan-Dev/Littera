@@ -47,8 +47,6 @@ function createErrItem(field, message) {
  * @return {Object}       object formated for result
  */
 function invalidResult(value, err) {
-  console.log('err');
-  console.log(err);
   return {
     value: value,
     err: err

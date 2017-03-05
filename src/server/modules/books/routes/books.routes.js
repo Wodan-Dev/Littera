@@ -41,12 +41,9 @@ function getById(req, res) {
   booksModel.validateId(id)
     .then(booksModel.findById)
     .then(function (result) {
-      console.log(result);
       http.render(res, result);
     })
     .catch(function (err) {
-      console.log('err');
-      console.log(err);
       renderError(res, {}, err);
     });
 }
@@ -73,7 +70,6 @@ function post(req, res) {
 
   booksModel.validateCreate(book)
     .then(function (result) {
-      console.log('validou ok');
       return booksModel.insert(result.value);
     })
     .then(function (result) {

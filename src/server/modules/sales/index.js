@@ -1,18 +1,18 @@
 /**
- * Created by jonathan on 02/03/17.
+ * Created by jonathan on 05/03/17.
  */
 'use strict';
 /**
- * Module users
+ * Module Sales
  */
 
 /**
- * Create instance to Users Module
+ * Create instance to Sales Module
  * @param  {Object} app     Express App instance
  * @param  {Object} express Express
  * @param  {String} url     Path url which module will work
  */
 module.exports = function (app, express, url, auth) {
 
-  app.use(url, require('./routes/users.routes')(express, auth));
+  app.use(url, require('./routes/sales.routes')(express, auth));
 };
