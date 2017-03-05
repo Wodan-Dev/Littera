@@ -7,7 +7,7 @@
 /**
  * Dependencies
  */
-const core = require('../../core');
+const core = require('../../../modules/core');
 const pricesSchema = require('./prices.schema');
 const forumsSchema = require('./forums.schema');
 const rankingsSchema = require('./rankings.schema');

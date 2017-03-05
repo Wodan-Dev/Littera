@@ -1,6 +1,9 @@
+/**
+ * Created by jonathan on 02/03/17.
+ */
 'use strict';
 /**
- * Module authentication
+ * Module users
  */
 
 /**
@@ -88,9 +91,15 @@ function put(req, res) {
 
   let user = {
     _id: req.body._id || '',
-    password: req.body.password || '',
-    passwordbis:req.body.passwordbis || (req.body.password || ''),
-    last_login: req.body.last_login || date.getDateUTC()
+    name: req.body.name || '',
+    gender: req.body.gender || '0',
+    dob: req.body.dob || '',
+    profile_img: req.body.profile_img || '',
+    average_stars: req.body.average_stars || '0',
+    acepted_terms: req.body.acepted_terms || '0',
+    payment: {
+      payment_id: req.body.payment || ''
+    }
   };
 
   usersModel.validateUpdate(user)

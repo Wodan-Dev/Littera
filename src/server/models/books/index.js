@@ -1,14 +1,16 @@
-'use strict';
-
 /**
- * Module Books
+ * Created by jonathan on 04/03/17.
+ */
+'use strict';
+/**
+ * Model Books
  */
 
 /**
  * Dependencies
  */
-const core = require('../../core');
-const booksSchema = require('../config/books.schema');
+const core = require('../../modules/core');
+const booksSchema = require('./config/books.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;

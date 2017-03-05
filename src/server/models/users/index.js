@@ -1,14 +1,16 @@
+/**
+ * Created by jonathan on 04/03/17.
+ */
 'use strict';
 /**
- * Module authentication
+ * Model users
  */
-
 
 /**
  * Dependencies
  */
-const core = require('../../core');
-const usersSchema = require('../config/users.schema');
+const core = require('../../modules/core');
+const usersSchema = require('./config/users.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -25,7 +27,7 @@ const usersModel = db.database.model('users', usersSchema.usersSchema);
 function insert(user) {
   user.create_at = date.getDateUTC();
   user.modified_at = date.getDateUTC();
-  crypto.encrypt(user.password)
+  return crypto.encrypt(user.password)
     .then(function (hash) {
       user.password = hash;
       return new usersModel(user)
@@ -36,12 +38,11 @@ function insert(user) {
 /**
  * Update in DB
  * @param  {ObjectId} id id which has to be updated
- * @param  {Object} enterprise Enterprise object
+ * @param  {Object} user User object
  * @return {Promise}        Resolve/Reject
  */
 function update(id, user) {
   user.modified_at = date.getDateUTC();
-
   let query = {
     _id: id
   };
@@ -51,15 +52,13 @@ function update(id, user) {
     new: true
   };
 
-  crypto.encrypt(user.password)
+  return crypto.encrypt(user.password)
     .then(function (hash) {
       user.password = hash;
       return usersModel
         .findOneAndUpdate(query, user, opt)
         .exec();
     });
-
-
 }
 
 /**
@@ -92,6 +91,16 @@ function list(page) {
 }
 
 /**
+ * List the record in the DB that has the specified ObjectId
+ * @param  {ObjectId} id id which has to be listed
+ * @return {Promise} Resolve/Reject
+ */
+function findById(id) {
+  return usersModel.findById(id)
+    .exec();
+}
+
+/**
  * get user by username
  * @param  {ObjectId} username username which has to be loaded
  * @return {Promise}        Resolve/Reject
@@ -110,16 +119,6 @@ function findByUserEmail(email) {
 }
 
 /**
- * List the record in the DB that has the specified ObjectId
- * @param  {ObjectId} id id which has to be listed
- * @return {Promise} Resolve/Reject
- */
-function findById(id) {
-  return usersModel.findById(id)
-    .exec();
-}
-
-/**
  * Validate create
  * @param  {Object} user user object
  * @return {Promise}      Resolve/Reject
@@ -131,8 +130,9 @@ function validateCreate(user) {
   user.password = checkField.trim(checkField.escape(user.password));
   user.passwordbis = checkField.trim(checkField.escape(user.passwordbis));
 
-  return validator.validateSchema(user, usersSchema.usersCreateSchema);
+  return validator.validateSchema(user, usersSchema.newUsersCreateSchema);
 }
+
 
 /**
  * Validate create
@@ -141,9 +141,12 @@ function validateCreate(user) {
  */
 function validateUpdate(user) {
 
-  user.password = checkField.trim(checkField.escape(user.password));
-  user.passwordbis = checkField.trim(checkField.escape(user.passwordbis));
-  user.last_login = checkField.trim(checkField.escape(user.last_login));
+  user.name = checkField.trim(checkField.escape(user.name));
+  user.gender = checkField.trim(checkField.escape(user.gender));
+  user.dob = checkField.trim(checkField.escape(user.dob));
+  user.profile_img = checkField.trim(checkField.escape(user.profile_img));
+  user.average_stars = checkField.trim(checkField.escape(user.average_stars));
+  user.acepted_terms = checkField.trim(checkField.escape(user.acepted_terms));
 
   return validator.validateSchema(user, usersSchema.usersUpdateSchema);
 }
@@ -154,8 +157,7 @@ function validateId(id) {
       resolve(checkField.trim(id));
     }
     else {
-      let err = validator.createErrItem('_id', 'Id is invalid.');
-      reject(validator.invalidResult(id, err));
+      reject(validator.invalidResult(id, 'Id is invalid.'));
     }
   });
 }
@@ -176,3 +178,4 @@ module.exports = {
   findByUserName: findByUserName,
   findByUserEmail: findByUserEmail
 };
+

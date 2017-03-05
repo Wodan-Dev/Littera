@@ -24,12 +24,20 @@ function hasErrorList(err) {
  * @return {Number}     http status error converted
  */
 function httpErrorStatus(err) {
-  if (('code' in err && 'errmsg' in err) ||
-      (err.name === 'ValidationError') ||
-      (err.name === 'CastError') ||
-      (hasErrorList(err))) {
+
+  if ((err instanceof Object) &&
+    (('code' in err && 'errmsg' in err) ||
+    (err.name === 'ValidationError') ||
+    (err.name === 'CastError') ||
+    (hasErrorList(err)))) {
     return httpStatus.HTTP_400_BAD_REQUEST;
   }
+  else if (err instanceof Number){
+    console.log('number');
+    return err;
+  }
+  console.log('httpErrorStatus');
+
 
   return httpStatus.HTTP_200_OK;
 }
@@ -40,18 +48,21 @@ function httpErrorStatus(err) {
  * @return {Object}     return normalized error
  */
 function normalizeError(value, err) {
-  if ('code' in err && 'errmsg' in err) {
-    switch (err.code) {
-    case 11000:
-      return mongoHandlers.E11000(value, err.errmsg);
+  if (err instanceof Object) {
+    if ('code' in err && 'errmsg' in err) {
+      switch (err.code) {
+      case 11000:
+        return mongoHandlers.E11000(value, err.errmsg);
+      }
+    }
+    else if (err.name === 'ValidationError') {
+      return mongoHandlers.validationError(value, err);
+    }
+    else if (err.name === 'CastError') {
+      return mongoHandlers.castError(value, err);
     }
   }
-  else if (err.name === 'ValidationError') {
-    return mongoHandlers.validationError(value, err);
-  }
-  else if (err.name === 'CastError') {
-    return mongoHandlers.castError(value, err);
-  }
+
 
 
   return err;

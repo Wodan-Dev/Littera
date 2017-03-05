@@ -7,8 +7,7 @@
  * Dependencies
  */
 const core = require('../../core');
-const usersModel = require('../model/users.model');
-const authModel = require('../model/authentication.model');
+const usersModel = require('../../../models/users');
 const authCtrl = require('../controller/authentication.controller');
 const http = core.http;
 const auth = core.authentication;
@@ -36,6 +35,11 @@ function get(req, res) {
     });
 }
 
+/**
+ * Method Post in route /authenticate
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
 function postAuth(req, res) {
   let user = {
     username: req.body.username || '',
@@ -43,7 +47,7 @@ function postAuth(req, res) {
     password: req.body.password || ''
   };
 
-  authModel.validateUser(user)
+  authCtrl.validateUser(user)
     .then(function(ruser) {
       return authCtrl.loadUser(ruser.value);
     })
@@ -62,7 +66,7 @@ function postAuth(req, res) {
       http.render(res, ruser);
     })
     .catch(function(err) {
-      renderError(res, user, err);
+      renderError(res, user, err, http.HTTP_STATUS.HTTP_400_BAD_REQUEST);
     });
 }
 

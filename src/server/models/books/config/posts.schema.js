@@ -5,19 +5,19 @@
  */
 
 /**
- * Dependencies
- */
-const core = require('../../core');
-const date = core.date;
+* Dependencies
+*/
+const core = require('../../../modules/core');
 const db = core.connection;
+const date = core.date;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Comments Schema Definition
+ * Forums Schema
  * @type {Schema}
  */
-const commentsSchema = new db.mongoose.Schema({
+const postsSchema = new db.mongoose.Schema({
   _id_user: {
     type: db.types.ObjectId,
     ref: 'users',
@@ -27,6 +27,11 @@ const commentsSchema = new db.mongoose.Schema({
   content: {
     type: String,
     required: true
+  },
+  spoiler: {
+    type: Number,
+    required: true,
+    default: 0
   },
   created_at: {
     type: Date,
@@ -41,30 +46,31 @@ const commentsSchema = new db.mongoose.Schema({
 });
 
 /**
- * Comments Schema create validation
+ * Post Schema create validation
  * @type {Object}
  */
-const commentsCreateSchema = schema({
+const postsCreateSchema = schema({
   _id_user: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  content: models.stringField(true).max(100)
 });
 
 /**
- * Comments Schema update validation
+ * Post Schema update validation
  * @type {Object}
  */
-const commentsUpdateSchema = schema({
+const postsUpdateSchema = schema({
   _id: models.stringField(true),
   _id_user: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  content: models.stringField(true).max(100)
 });
+
 
 /**
  * Module exports
  * @type {Object}
  */
 module.exports = {
-  commentsSchema: commentsSchema,
-  commentsCreateSchema: commentsCreateSchema,
-  commentsUpdateSchema: commentsUpdateSchema
+  postsSchema: postsSchema,
+  postsCreateSchema: postsCreateSchema,
+  postsUpdateSchema: postsUpdateSchema
 };

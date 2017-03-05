@@ -34,8 +34,10 @@ app.use(session({
 
 
 require('./modules/authentication')(app, express, '/mordor', auth.ensureAuthenticated);/*function (req, res, next) {
-  next();
-});*/
+//  next();
+//});*/
+
+require('./modules/users')(app, express, '/users', auth.ensureAuthenticated);
 
 require('./modules/books')(app, express, '/books', function (req, res, next) {
   next();

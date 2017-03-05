@@ -7,8 +7,8 @@
 /**
  * Dependencies
  */
-const core = require('../../core');
-const opinionsSchema = require('./opinions.schema');
+const core = require('../../../modules/core');
+const reviewsSchema = require('./reviews.schema');
 const choicesSchema = require('./choices.schema');
 const followersSchema = require('./followers.schema');
 const followingSchema = require('./following.schema');
@@ -25,9 +25,28 @@ const schema = core.validator.schema;
  * @type {Schema}
  */
 const usersSchema = new db.mongoose.Schema({
-  name: {
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    index: true
+  },
+  email: {
     type: String,
     required: true,
+    index: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true,
+    bcrypt: true
+  },
+  last_login: {
+    type: Date
+  },
+  name: {
+    type: String,
     index: true
   },
   gender: {
@@ -37,7 +56,6 @@ const usersSchema = new db.mongoose.Schema({
   },
   dob: {
     type: Date,
-    required: true,
     index: true
   },
   profile_img: {
@@ -59,8 +77,34 @@ const usersSchema = new db.mongoose.Schema({
       type: String
     }
   },
-  opinions: [
-    opinionsSchema.opinionsSchema
+  status: {
+    type: Boolean,
+
+    required: true,
+    default: true
+  },
+  is_staff: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  create_at:	{
+    type: Date,
+    required: true,
+    default: date.getDateUTC()
+  },
+  modified_at:	{
+    type: Date,
+    required: true,
+    default: date.getDateUTC()
+  },
+  checksum: {
+    type: String,
+    required: true,
+    default: '-'
+  },
+  reviews: [
+    reviewsSchema.reviewsSchema
   ],
   choices: [
     choicesSchema.choicesSchema
@@ -112,11 +156,23 @@ const usersUpdateSchema = schema({
 });
 
 /**
+ * Users Schema create validation
+ * @type {Object}
+ */
+const newUsersCreateSchema = schema({
+  username: models.stringField(true).min(5).max(30),
+  email: models.stringField(true).email(),
+  password: models.stringField(true).min(8),
+  passwordbis: models.stringField(true).min(8)
+});
+
+/**
  * Module Export
  * @type {Object}
  */
 module.exports = {
   usersSchema: usersSchema,
   usersCreateSchema: usersCreateSchema,
-  usersUpdateSchema: usersUpdateSchema
+  usersUpdateSchema: usersUpdateSchema,
+  newUsersCreateSchema: newUsersCreateSchema
 };

@@ -42,6 +42,7 @@ module.exports = function(grunt) {
           src: [
             'server/*.js',
             'server/modules/**',
+            'server/models/**',
             'server/bin/www',
             'server/{,*/}*.js',
             'server/.env'

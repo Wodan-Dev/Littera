@@ -7,7 +7,7 @@
  * Dependencies
  */
 const core = require('../../core');
-const booksModel = require('../model/books.model');
+const booksModel = require('../../../models/books');
 //const booksCtrl = require('../controller/books.controller');
 const http = core.http;
 const date = core.date;

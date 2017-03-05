@@ -7,7 +7,7 @@
 /**
  * Dependencies
  */
-const core = require('../../core');
+const core = require('../../../modules/core');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;

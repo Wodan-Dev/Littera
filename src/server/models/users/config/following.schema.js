@@ -8,35 +8,35 @@
  * Dependencies
  */
 
-const core = require('../../core');
+const core = require('../../../modules/core');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * wishList Schema Definition
+ * Following Schema Definition
  * @type {Schema}
  */
-const wishListSchema = new db.mongoose.Schema({
-  _id_book: {
+const followingSchema = new db.mongoose.Schema({
+  _id_user_follow: {
     type: db.types.ObjectId,
-    ref: 'books',
+    ref: 'users',
     required: true,
     index: true
   },
-  date_saved: {
+  date_followed: {
     type: Date,
     required: true
   }
 });
 
 /**
- * wishList Schema create validation
+ * Following Schema create validation
  * @type {Object}
  */
-const wishListCreateSchema = schema({
-  _id_book: models.stringField(true)
+const followingCreateSchema = schema({
+  _id_user_follow: models.stringField(true)
 });
 
 /**
@@ -44,6 +44,6 @@ const wishListCreateSchema = schema({
  * @type {Object}
  */
 module.exports = {
-  wishListSchema: wishListSchema,
-  wishListCreateSchema: wishListCreateSchema
+  followingSchema: followingSchema,
+  followingCreateSchema: followingCreateSchema
 };

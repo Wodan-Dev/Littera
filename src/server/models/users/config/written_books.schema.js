@@ -8,35 +8,31 @@
  * Dependencies
  */
 
-const core = require('../../core');
+const core = require('../../../modules/core');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Followers Schema Definition
+ * Written_books Schema Definition
  * @type {Schema}
  */
-const followersSchema = new db.mongoose.Schema({
-  _id_user_follow: {
+const written_booksSchema = new db.mongoose.Schema({
+  _id_book: {
     type: db.types.ObjectId,
     ref: 'users',
     required: true,
     index: true
-  },
-  date_followed: {
-    type: Date,
-    required: true
   }
 });
 
 /**
- * Followers Schema create validation
+ * Written_books Schema create validation
  * @type {Object}
  */
-const followersCreateSchema = schema({
-  _id_user_follow: models.stringField(true)
+const written_booksCreateSchema = schema({
+  _id_book: models.stringField(true)
 });
 
 /**
@@ -44,6 +40,6 @@ const followersCreateSchema = schema({
  * @type {Object}
  */
 module.exports = {
-  followersSchema: followersSchema,
-  followersCreateSchema: followersCreateSchema
+  written_booksSchema: written_booksSchema,
+  written_booksCreateSchema: written_booksCreateSchema
 };

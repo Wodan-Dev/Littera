@@ -53,10 +53,16 @@ function render(res, data, responseCode) {
  * @param  {Object} res response object
  * @param  {Object} value value error
  * @param  {Object} err mongo error
+ * @param  {Object} status http Status
  * @return {Object}     response error object
  */
-function renderHttpError(res, value, err) {
-  return render(res, httpHandlers.normalizeError(value, err), httpHandlers.httpErrorStatus(err));
+function renderHttpError(res, value, err, status) {
+
+  let statusCode = ((status) ? status :
+      httpHandlers.httpErrorStatus(err)) ||
+    statusCode.HTTP_200_OK;
+
+  return render(res, httpHandlers.normalizeError(value, err), statusCode);
 }
 
 

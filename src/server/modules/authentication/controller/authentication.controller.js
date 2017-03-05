@@ -12,7 +12,8 @@
 const core = require('../../core');
 const validator = core.validator;
 const crypto = core.crypto;
-const userModel = require('../model/users.model');
+const checkField = validator.validator;
+const userModel = require('../../../models/users');
 
 /**
  * load user data
@@ -30,15 +31,23 @@ function loadUser(user) {
 
     prot(value)
       .then(function (ruser) {
+        if (!ruser)
+          throw new Error('Usuário não encontrado.');
+
         resolve(validator.validResult(ruser));
       })
-      .catch(function (err) {
-        reject(validator.invalidResult('load', err));
+      .catch(function () {
+        reject(validator.invalidResult(user, 'Usuário não encontrado.'));
       });
   });
 }
 
-
+/**
+ * Compare password in db
+ * @param {Object} user User to check
+ * @param {String} pass Password
+ * @returns {Promise} Resolve/Reject
+ */
 function validatePassword(user, pass) {
   return new Promise(function (resolve, reject) {
     crypto.compare(pass, user.password)
@@ -54,10 +63,43 @@ function validatePassword(user, pass) {
 }
 
 /**
+ * Validate user
+ * @param  {Object} user user object
+ * @return {Promise}      Resolve/Reject
+ */
+function validateUser(user) {
+  return new Promise(function (resolve, reject) {
+    user.username = checkField.trim(checkField.escape(user.username));
+    user.email = checkField.trim(checkField.escape(user.email));
+    user.password = checkField.trim(checkField.escape(user.password));
+    let lstErrors = [];
+
+    if (checkField.isEmpty(user.username) && checkField.isEmpty(user.email)) {
+      lstErrors.push(validator.createErrItem('username', 'valor nulo não permitido.'));
+      lstErrors.push(validator.createErrItem('email', 'valor nulo não permitido.'));
+    }
+
+    if (!checkField.isEmpty(user.email) &&
+      !checkField.isEmail(user.email)) {
+      lstErrors.push(validator.createErrItem('email', 'valor informado não é válido.'));
+    }
+
+    if (checkField.isEmpty(user.password))
+      lstErrors.push(validator.createErrItem('password', 'valor nulo não permitido.'));
+
+    if (lstErrors.length)
+      reject(validator.invalidResult('login', lstErrors));
+    else
+      resolve(validator.validResult(user));
+  });
+}
+
+/**
  * Module Export
  * @type {Object}
  */
 module.exports = {
   loadUser: loadUser,
-  validatePassword: validatePassword
+  validatePassword: validatePassword,
+  validateUser: validateUser
 };

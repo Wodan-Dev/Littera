@@ -1,6 +1,9 @@
+/**
+ * Created by jonathan on 02/03/17.
+ */
 'use strict';
 /**
- * Module autentication
+ * Module users
  */
 
 /**
@@ -11,5 +14,5 @@
  */
 module.exports = function (app, express, url, auth) {
 
-  app.use(url + '/auth', require('./routes/authentication.routes.js')(express, auth));
+  app.use(url, require('./routes/users.routes')(express, auth));
 };

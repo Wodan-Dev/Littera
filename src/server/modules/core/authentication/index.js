@@ -63,8 +63,7 @@ function generateToken(pValue, pcert) {
       options,
       function(err, result) {
         if(err) {
-          let errmsg = validator.createErrItem('auth', err.message);
-          reject(validator.invalidResult('auth', errmsg));
+          reject(validator.invalidResult('auth', err.message));
         }
         else
           resolve(result);
@@ -153,8 +152,7 @@ function authenticate(user) {
       .catch(function (err) {
         console.log('err');
         console.log(err);
-        let errmsg = validator.createErrItem('auth', err.err);
-        reject(validator.invalidResult('auth', errmsg));
+        reject(validator.invalidResult('auth', err.err));
       });
   });
 }

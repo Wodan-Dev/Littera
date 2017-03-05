@@ -7,21 +7,32 @@
 /**
  * Dependencies
  */
-const core = require('../../core');
+const core = require('../../../modules/core');
+const postsSchema =require('./posts.schema');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
 /**
- * Keywords Schema Definition
+ * Forums Schema Definition
  * @type {Schema}
  */
-const keywordsSchema = new db.mongoose.Schema({
-  content: {
+const forumsSchema = new db.mongoose.Schema({
+  _id_user: {
+    type: db.types.ObjectId,
+    ref: 'users',
+    required: true,
+    index: true
+  },
+  title: {
     type: String,
     required: true,
     index: true
+  },
+  content: {
+    type: String,
+    required: true
   },
   created_at: {
     type: Date,
@@ -32,23 +43,28 @@ const keywordsSchema = new db.mongoose.Schema({
     type: Date,
     required: true,
     default: date.getDateUTC()
-  }
+  },
+  postsSchema: [
+    postsSchema
+  ]
 });
 
 /**
- * Keywords Schema create validation
+ * Forums Schema create validation
  * @type {Object}
  */
-const keywordsCreateSchema = schema({
+const forumsCreateSchema = schema({
+  title: models.stringField(true),
   content: models.stringField(true).max(1000)
 });
 
 /**
- * Keywords Schema update validation
+ * Forums Schema create validation
  * @type {Object}
  */
-const keywordsUpdateSchema = schema({
+const forumsUpdateSchema = schema({
   _id: models.stringField(true),
+  title: models.stringField(true),
   content: models.stringField(true).max(1000)
 });
 
@@ -57,7 +73,7 @@ const keywordsUpdateSchema = schema({
  * @type {Object}
  */
 module.exports = {
-  keywordsSchema: keywordsSchema,
-  keywordsCreateSchema: keywordsCreateSchema,
-  keywordsUpdateSchema: keywordsUpdateSchema
+  forumsSchema: forumsSchema,
+  forumsCreateSchema: forumsCreateSchema,
+  forumsUpdateSchema: forumsUpdateSchema
 };
