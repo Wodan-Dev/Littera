@@ -7,8 +7,7 @@
  * Dependencies
  */
 const core = require('../../core');
-const booksModel = require('../../../models/books');
-//const booksCtrl = require('../controller/books.controller');
+const booksModel = require('../../../models/books/books.model.js');
 const http = core.http;
 const date = core.date;
 const utils = core.utils;
@@ -127,14 +126,14 @@ function remove(req, res) {
  * @param  {Object} express Express
  * @return {Router}         router object with the routes
  */
-function router(express) {
+function router(express, auth) {
   let routes = express.Router();
 
-  routes.get('/', get);
-  routes.get('/:id', getById);
-  routes.post('/', post);
-  routes.put('/', put);
-  routes.delete('/:id', remove);
+  routes.get('/', auth, get);
+  routes.get('/:id', auth, getById);
+  routes.post('/', auth, post);
+  routes.put('/', auth, put);
+  routes.delete('/:id', auth, remove);
 
   return routes;
 }
