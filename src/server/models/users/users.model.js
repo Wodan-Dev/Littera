@@ -176,6 +176,7 @@ module.exports = {
   list: list,
   findById: findById,
   findByUserName: findByUserName,
-  findByUserEmail: findByUserEmail
+  findByUserEmail: findByUserEmail,
+  model: usersModel
 };
 

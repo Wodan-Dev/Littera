@@ -21,8 +21,6 @@ function generateTransactionId(sale) {
 
     let key = uid(24);
     sale.transaction_id= key;
-    console.log('key');
-    console.log(sale);
     resolve(sale);
   });
 }

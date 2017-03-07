@@ -7,7 +7,7 @@
  * Dependencies
  */
 const core = require('../../core');
-const usersModel = require('../../../models/users');
+const usersModel = require('../../../models/users/users.model');
 const authCtrl = require('../controller/authentication.controller');
 const http = core.http;
 const auth = core.authentication;

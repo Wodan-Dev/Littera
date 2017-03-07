@@ -13,7 +13,7 @@ const core = require('../../core');
 const validator = core.validator;
 const crypto = core.crypto;
 const checkField = validator.validator;
-const userModel = require('../../../models/users');
+const userModel = require('../../../models/users/users.model');
 
 /**
  * load user data
