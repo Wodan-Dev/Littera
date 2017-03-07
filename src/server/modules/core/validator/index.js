@@ -72,6 +72,8 @@ function validResult(value) {
  */
 function validateSchema(obj, schema) {
   return new Promise(function (resolve, reject) {
+    console.log('schema - ');
+    console.log(schema);
     Joi.validate(obj, schema, optionsJoi, function (err, value) {
       if (err) {
         let lstErrors = [];
@@ -158,6 +160,22 @@ function nestedArray(required, schema) {
   return joi;
 }
 
+/**
+ * Validate ID
+ * @param  {Object} id Id which has to be validated
+ * @return {Promise}    Resolve/Reject
+ */
+function validateId(id) {
+  return new Promise(function (resolve, reject) {
+    if (validator.isMongoId(id)) {
+      resolve(validator.trim(id));
+    }
+    else {
+      reject(validator.invalidResult(id, 'Id is invalid.'));
+    }
+  });
+}
+
 const models = {
   stringField: stringField,
   numberField: numberField,
@@ -178,6 +196,6 @@ module.exports = {
   schema: Joi.object,
   createErrItem: createErrItem,
   invalidResult: invalidResult,
-  validResult: validResult
+  validResult: validResult,
+  validateId: validateId
 };
-

@@ -11,6 +11,7 @@
  */
 const core = require('../../modules/core');
 const booksSchema = require('./config/books.schema');
+const forumsSchema = require('./config/forums.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -121,30 +122,12 @@ function validateUpdate(book){
 }
 
 /**
- * Validate ID
- * @param  {Object} id Id which has to be validated
- * @return {Promise}    Resolve/Reject
- */
-function validateId(id) {
-  return new Promise(function (resolve, reject) {
-    if (checkField.isMongoId(id)) {
-      resolve(checkField.trim(id));
-    }
-    else {
-      let err = validator.createErrItem('_id', 'Id is invalid.');
-      reject(validator.invalidResult(id, err));
-    }
-  });
-}
-
-/**
  * Module Export
  * @type {Object}
  */
 module.exports = {
   validateCreate: validateCreate,
   validateUpdate: validateUpdate,
-  validateId: validateId,
   insert: insert,
   update: update,
   remove: remove,

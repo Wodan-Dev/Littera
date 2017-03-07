@@ -33,10 +33,8 @@ function httpErrorStatus(err) {
     return httpStatus.HTTP_400_BAD_REQUEST;
   }
   else if (err instanceof Number){
-    console.log('number');
     return err;
   }
-  console.log('httpErrorStatus');
 
 
   return httpStatus.HTTP_200_OK;

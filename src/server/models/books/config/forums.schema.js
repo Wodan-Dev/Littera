@@ -8,7 +8,7 @@
  * Dependencies
  */
 const core = require('../../../modules/core');
-const postsSchema =require('./posts.schema');
+const postsSchema = require('./posts.schema');
 const date = core.date;
 const db = core.connection;
 const models = core.validator.models;
@@ -44,8 +44,8 @@ const forumsSchema = new db.mongoose.Schema({
     required: true,
     default: date.getDateUTC()
   },
-  postsSchema: [
-    postsSchema
+  posts: [
+    postsSchema.postsSchema
   ]
 });
 
@@ -54,6 +54,7 @@ const forumsSchema = new db.mongoose.Schema({
  * @type {Object}
  */
 const forumsCreateSchema = schema({
+  _id_user: models.stringField(true),
   title: models.stringField(true),
   content: models.stringField(true).max(1000)
 });
@@ -64,6 +65,7 @@ const forumsCreateSchema = schema({
  */
 const forumsUpdateSchema = schema({
   _id: models.stringField(true),
+  _id_user: models.stringField(true),
   title: models.stringField(true),
   content: models.stringField(true).max(1000)
 });
