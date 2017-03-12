@@ -13,5 +13,10 @@ module.exports = function (app, express, url, auth) {
 
   app.use(url, require('./routes/books.routes')(express, auth));
   app.use(url, require('./routes/forums.routes')(express, auth));
+  app.use(url, require('./routes/posts.routes')(express, auth));
+  app.use(url, require('./routes/prices.routes')(express, auth));
+  app.use(url, require('./routes/comments.routes')(express, auth));
+  app.use(url, require('./routes/keywords.routes')(express, auth));
+  app.use(url, require('./routes/rankings.routes')(express, auth));
 
 };

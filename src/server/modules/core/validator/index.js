@@ -72,8 +72,6 @@ function validResult(value) {
  */
 function validateSchema(obj, schema) {
   return new Promise(function (resolve, reject) {
-    console.log('schema - ');
-    console.log(schema);
     Joi.validate(obj, schema, optionsJoi, function (err, value) {
       if (err) {
         let lstErrors = [];
@@ -171,7 +169,7 @@ function validateId(id) {
       resolve(validator.trim(id));
     }
     else {
-      reject(validator.invalidResult(id, 'Id is invalid.'));
+      reject(invalidResult(id, 'Id is invalid.'));
     }
   });
 }

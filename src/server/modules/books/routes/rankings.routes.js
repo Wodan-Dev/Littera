@@ -8,7 +8,7 @@
  */
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
-const forumsModel = require('../../../models/books/forums.model');
+const rankingsModel = require('../../../models/books/rankings.model');
 const http = core.http;
 const date = core.date;
 const utils = core.utils;
@@ -30,7 +30,7 @@ function get(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums);
+      http.render(res, result.rankings);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -42,6 +42,7 @@ function get(req, res) {
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
  */
+
 function getById(req, res) {
 
   let id_book = req.params.id_book || '';
@@ -58,7 +59,7 @@ function getById(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums.id(id));
+      http.render(res, result.rankings.id(id));
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -74,25 +75,28 @@ function post(req, res) {
 
   let id_book = req.body._id_book || '';
 
-  let forum = {
+  let ranking = {
     _id_user: req.body._id_user || '',
-    title: req.body.title || '',
-    content: req.body.content || ''
+    comment: req.body.comment || '',
+    stars: req.body.stars || 0
   };
+
+  console.log('ranking');
+  console.log(ranking);
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return forumsModel.validateForumCreate(forum);
+      return rankingsModel.validateRankingCreate(ranking);
     })
     .then(function(result) {
-      return forumsModel.insert(id_book, result.value);
+      return rankingsModel.insert(id_book, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, ranking, err);
     });
 }
 
@@ -105,30 +109,33 @@ function put(req, res) {
 
   let id_book = req.body._id_book || '';
 
-  let forum = {
+  let ranking = {
     _id: req.body._id || '',
     _id_user: req.body._id_user || '',
-    title: req.body.title || '',
-    content: req.body.content || ''
+    comment: req.body.comment || '',
+    stars: req.body.stars || 0
   };
+
+  console.log('ranking');
+  console.log(ranking);
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return validator.validateId(forum._id);
+      return validator.validateId(ranking._id);
     })
     .then(function (rId) {
-      forum._id = rId;
-      return forumsModel.validateForumUpdate(forum);
+      ranking._id = rId;
+      return rankingsModel.validateRankingUpdate(ranking);
     })
     .then(function(result) {
-      return forumsModel.update(id_book, result.value);
+      return rankingsModel.update(id_book, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, ranking, err);
     });
 }
 
@@ -140,24 +147,24 @@ function put(req, res) {
 function remove(req, res) {
 
   let id_book = req.params.id_book || '';
-  let forum = {
+  let ranking = {
     _id: req.params.id || ''
   };
 
   validator.validateId(id_book)
     .then(function(rBookId) {
       id_book = rBookId;
-      return validator.validateId(forum._id);
+      return validator.validateId(ranking._id);
     })
     .then(function(rId) {
-      forum._id = rId;
-      return forumsModel.remove(id_book, forum._id);
+      ranking._id = rId;
+      return rankingsModel.remove(id_book, ranking._id);
     })
     .then(function(result) {
       http.render(res, result);
     })
     .catch(function(err) {
-      renderError(res, forum, err);
+      renderError(res, ranking, err);
     });
 }
 
@@ -169,11 +176,11 @@ function remove(req, res) {
 function router(express) {
   let routes = express.Router();
 
-  routes.get('/:id_book/forums', get);
-  routes.get('/:id_book/forums/:id', getById);
-  routes.post('/forums', post);
-  routes.put('/forums', put);
-  routes.delete('/:id_book/forums/:id', remove);
+  routes.get('/:id_book/rankings', get);
+  routes.get('/:id_book/rankings/:id', getById);
+  routes.post('/rankings', post);
+  routes.put('/rankings', put);
+  routes.delete('/:id_book/rankings/:id', remove);
 
   return routes;
 }

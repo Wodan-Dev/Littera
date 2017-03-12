@@ -61,7 +61,7 @@ const pricesCreateSchema = schema({
   price_min: models.numberField(true),
   price_sug: models.numberField(true),
   date_begin: models.dateField(true),
-  date_end: models.dateField(),
+  date_end: models.dateField().allow(''),
   type: models.numberField(true).min(0).max(1)
 });
 
@@ -74,7 +74,7 @@ const pricesUpdateSchema = schema({
   price_min: models.numberField(true),
   price_sug: models.numberField(true),
   date_begin: models.dateField(true),
-  date_end: models.dateField(),
+  date_end: models.dateField().allow(''),
   type: models.numberField(true).min(0).max(1)
 });
 

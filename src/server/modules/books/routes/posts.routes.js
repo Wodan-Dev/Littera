@@ -9,6 +9,7 @@
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const forumsModel = require('../../../models/books/forums.model');
+const postsModel = require('../../../models/books/posts.model');
 const http = core.http;
 const date = core.date;
 const utils = core.utils;
@@ -22,15 +23,20 @@ const renderError = core.http.renderError;
  */
 function get(req, res) {
   let id_book = req.params.id_book || '';
+  let id_forum = req.params.id_forum || '';
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
       id_book = rIdBook;
+      return validator.validateId(id_forum);
+    })
+    .then(function (rIdForum) {
+      id_forum = rIdForum;
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums);
+      http.render(res, result.forums.id(id_forum).posts);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -45,12 +51,17 @@ function get(req, res) {
 function getById(req, res) {
 
   let id_book = req.params.id_book || '';
-  let id = req.params.id || '';
+  let id_forum = req.params.id_forum || '';
+  let id = req.param.id || '';
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
       id_book = rIdBook;
+      return validator.validateId(id_forum);
+    })
+    .then(function (rIdForum) {
+      id_forum = rIdForum;
       return validator.validateId(id);
     })
     .then(function (rId) {
@@ -58,7 +69,7 @@ function getById(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums.id(id));
+      http.render(res, result.forums.id(id_forum).posts.id(id));
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -73,26 +84,32 @@ function getById(req, res) {
 function post(req, res) {
 
   let id_book = req.body._id_book || '';
+  let id_forum = req.body._id_forum || '';
 
-  let forum = {
+  let data = {
     _id_user: req.body._id_user || '',
-    title: req.body.title || '',
-    content: req.body.content || ''
+    content: req.body.content || '',
+    spoiler: req.body.spoiler || 0
   };
 
   validator.validateId(id_book)
-    .then(function (rIdBook) {
+    .then(function(rIdBook) {
       id_book = rIdBook;
-      return forumsModel.validateForumCreate(forum);
+      return validator.validateId(id_forum);
+    })
+    .then(function (rIdForum) {
+      id_forum = rIdForum;
+      return postsModel.validatePostCreate(data);
     })
     .then(function(result) {
-      return forumsModel.insert(id_book, result.value);
+      return postsModel.insert(id_book, id_forum, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      console.log(err);
+      renderError(res, data, err);
     });
 }
 
@@ -104,31 +121,41 @@ function post(req, res) {
 function put(req, res) {
 
   let id_book = req.body._id_book || '';
+  let id_forum = req.body._id_forum || '';
 
-  let forum = {
+  let post = {
     _id: req.body._id || '',
     _id_user: req.body._id_user || '',
-    title: req.body.title || '',
-    content: req.body.content || ''
+    content: req.body.content || '',
+    spoiler: req.body.spoiler || 0
   };
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
+      console.log('validou idbook');
       id_book = rIdBook;
-      return validator.validateId(forum._id);
+      return validator.validateId(id_forum);
+    })
+    .then(function (rIdForum) {
+      console.log('validou idforum');
+      id_forum = rIdForum;
+      return validator.validateId(post._id);
     })
     .then(function (rId) {
-      forum._id = rId;
-      return forumsModel.validateForumUpdate(forum);
+      console.log('validou id');
+      post._id = rId;
+      return postsModel.validatePostUpdate(post);
     })
     .then(function(result) {
-      return forumsModel.update(id_book, result.value);
+      console.log('validou update');
+      return postsModel.update(id_book, id_forum, result.value);
     })
     .then(function (result) {
+      console.log('update');
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, post, err);
     });
 }
 
@@ -140,18 +167,25 @@ function put(req, res) {
 function remove(req, res) {
 
   let id_book = req.params.id_book || '';
+  let id_forum = req.params.id_forum || '';
+  let id = req.params.id || '';
+
   let forum = {
-    _id: req.params.id || ''
+    _id: req.body._id
   };
 
   validator.validateId(id_book)
-    .then(function(rBookId) {
-      id_book = rBookId;
-      return validator.validateId(forum._id);
+    .then(function(rIdBook) {
+      id_book = rIdBook;
+      return validator.validateId(id_forum);
+    })
+    .then(function(rIdForum) {
+      id_forum = rIdForum;
+      return validator.validateId(id);
     })
     .then(function(rId) {
-      forum._id = rId;
-      return forumsModel.remove(id_book, forum._id);
+      id = rId;
+      return postsModel.remove(id_book, id_forum, id);
     })
     .then(function(result) {
       http.render(res, result);
@@ -169,11 +203,11 @@ function remove(req, res) {
 function router(express) {
   let routes = express.Router();
 
-  routes.get('/:id_book/forums', get);
-  routes.get('/:id_book/forums/:id', getById);
-  routes.post('/forums', post);
-  routes.put('/forums', put);
-  routes.delete('/:id_book/forums/:id', remove);
+  routes.get('/:id_book/forums/:id_forum/posts', get);
+  routes.get('/:id_book/forums/:id_forum/posts/:id', getById);
+  routes.post('/forums/posts', post);
+  routes.put('/forums/posts', put);
+  routes.delete('/:id_book/forums/:id_forum/posts/:id', remove);
 
   return routes;
 }

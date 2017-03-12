@@ -1,5 +1,5 @@
 /**
- * Created by César on 04/03/17.
+ * Created by César on 12/03/17.
  */
 'use strict';
 /**
@@ -10,7 +10,7 @@
  * Dependencies
  */
 const core = require('../../modules/core');
-const forumsSchema = require('./config/forums.schema');
+const pricesSchema = require('./config/prices.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -20,40 +20,33 @@ const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
 
 /**
- * Validate forum create
- * @param  {Object} book Forum object
+ * Validate price create
+ * @param  {Object} book Price object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumCreate(forum){
-  forum._id_user = checkField.trim(checkField.escape(forum._id_user));
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
-
-  return validator.validateSchema(forum, forumsSchema.forumsCreateSchema);
+function validatePriceCreate(price){
+  return validator.validateSchema(price, pricesSchema.pricesCreateSchema);
 }
 
 /**
- * Validate forum update
- * @param  {Object} book Forum object
+ * Validate price update
+ * @param  {Object} book Price object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumUpdate(forum){
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
-
-  return validator.validateSchema(forum, forumsSchema.forumsUpdateSchema);
+function validatePriceUpdate(price){
+  return validator.validateSchema(price, pricesSchema.pricesUpdateSchema);
 }
 
 /**
- * Insert forum in DB
+ * Insert price in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} price price object
  * @return {Promise}        Resolve/Reject
  */
-function insert(id_book, forum) {
+function insert(id_book, price) {
 
-  forum.create_at = date.getDateUTC();
-  forum.modified_at = date.getDateUTC();
+  price.create_at = date.getDateUTC();
+  price.modified_at = date.getDateUTC();
 
   let query = {
     _id: id_book
@@ -61,7 +54,7 @@ function insert(id_book, forum) {
 
   let data = {
     $push: {
-      forums: forum
+      prices: price
     }
   };
 
@@ -77,24 +70,26 @@ function insert(id_book, forum) {
 }
 
 /**
- * Update forum in DB
+ * Update price in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} price price object
  * @return {Promise}        Resolve/Reject
  */
-function update(id_book, forum) {
+function update(id_book, price) {
 
   let query = {
     '_id': id_book,
-    'forums._id': forum._id
+    'prices._id': price._id
   };
 
   let data = {
     '$set': {
-      'forums.$._id_user': forum._id_user,
-      'forums.$.title': forum.title,
-      'forums.$.content': forum.content,
-      'forums.$.modified_at': date.getDateUTC()
+      'prices.$.price_min': price.price_min,
+      'prices.$.price_sug': price.price_sug,
+      'prices.$.date_begin': price.date_begin,
+      'prices.$.date_end': price.date_end,
+      'prices.$.type': price.type,
+      'prices.$.modified_at': date.getDateUTC()
     }
   };
 
@@ -110,9 +105,9 @@ function update(id_book, forum) {
 }
 
 /**
- * Remove forum in DB
+ * Remove price in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} price price object
  * @return {Promise}        Resolve/Reject
  */
 function remove(id_book, id) {
@@ -122,7 +117,7 @@ function remove(id_book, id) {
 
   let data = {
     $pull: {
-      forums: {
+      prices: {
         _id: id
       }
     }
@@ -144,8 +139,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateForumCreate: validateForumCreate,
-  validateForumUpdate: validateForumUpdate,
+  validatePriceCreate: validatePriceCreate,
+  validatePriceUpdate: validatePriceUpdate,
   insert: insert,
   update: update,
   remove: remove

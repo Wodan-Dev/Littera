@@ -8,7 +8,7 @@
  */
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
-const forumsModel = require('../../../models/books/forums.model');
+const keywordsModel = require('../../../models/books/keywords.model');
 const http = core.http;
 const date = core.date;
 const utils = core.utils;
@@ -30,7 +30,7 @@ function get(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums);
+      http.render(res, result.keywords);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -42,6 +42,7 @@ function get(req, res) {
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
  */
+
 function getById(req, res) {
 
   let id_book = req.params.id_book || '';
@@ -58,7 +59,7 @@ function getById(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums.id(id));
+      http.render(res, result.keywords.id(id));
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -74,25 +75,23 @@ function post(req, res) {
 
   let id_book = req.body._id_book || '';
 
-  let forum = {
-    _id_user: req.body._id_user || '',
-    title: req.body.title || '',
+  let keyword = {
     content: req.body.content || ''
   };
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return forumsModel.validateForumCreate(forum);
+      return keywordsModel.validateKeywordCreate(keyword);
     })
     .then(function(result) {
-      return forumsModel.insert(id_book, result.value);
+      return keywordsModel.insert(id_book, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, keyword, err);
     });
 }
 
@@ -105,30 +104,28 @@ function put(req, res) {
 
   let id_book = req.body._id_book || '';
 
-  let forum = {
+  let keyword = {
     _id: req.body._id || '',
-    _id_user: req.body._id_user || '',
-    title: req.body.title || '',
     content: req.body.content || ''
   };
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return validator.validateId(forum._id);
+      return validator.validateId(keyword._id);
     })
     .then(function (rId) {
-      forum._id = rId;
-      return forumsModel.validateForumUpdate(forum);
+      keyword._id = rId;
+      return keywordsModel.validateKeywordUpdate(keyword);
     })
     .then(function(result) {
-      return forumsModel.update(id_book, result.value);
+      return keywordsModel.update(id_book, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, keyword, err);
     });
 }
 
@@ -140,24 +137,24 @@ function put(req, res) {
 function remove(req, res) {
 
   let id_book = req.params.id_book || '';
-  let forum = {
+  let keyword = {
     _id: req.params.id || ''
   };
 
   validator.validateId(id_book)
     .then(function(rBookId) {
       id_book = rBookId;
-      return validator.validateId(forum._id);
+      return validator.validateId(keyword._id);
     })
     .then(function(rId) {
-      forum._id = rId;
-      return forumsModel.remove(id_book, forum._id);
+      keyword._id = rId;
+      return keywordsModel.remove(id_book, keyword._id);
     })
     .then(function(result) {
       http.render(res, result);
     })
     .catch(function(err) {
-      renderError(res, forum, err);
+      renderError(res, keyword, err);
     });
 }
 
@@ -169,11 +166,11 @@ function remove(req, res) {
 function router(express) {
   let routes = express.Router();
 
-  routes.get('/:id_book/forums', get);
-  routes.get('/:id_book/forums/:id', getById);
-  routes.post('/forums', post);
-  routes.put('/forums', put);
-  routes.delete('/:id_book/forums/:id', remove);
+  routes.get('/:id_book/keywords', get);
+  routes.get('/:id_book/keywords/:id', getById);
+  routes.post('/keywords', post);
+  routes.put('/keywords', put);
+  routes.delete('/:id_book/keywords/:id', remove);
 
   return routes;
 }

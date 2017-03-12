@@ -56,7 +56,8 @@ const forumsSchema = new db.mongoose.Schema({
 const forumsCreateSchema = schema({
   _id_user: models.stringField(true),
   title: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  content: models.stringField(true).max(1000)/*,
+  posts: models.nestedArray(false, postsSchema.postsCreateSchema)*/
 });
 
 /**
@@ -67,7 +68,8 @@ const forumsUpdateSchema = schema({
   _id: models.stringField(true),
   _id_user: models.stringField(true),
   title: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  content: models.stringField(true).max(1000)/*,
+  posts: models.nestedArray(false, postsSchema.postsUpdateSchema)*/
 });
 
 /**
