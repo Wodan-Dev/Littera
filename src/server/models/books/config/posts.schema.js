@@ -51,7 +51,8 @@ const postsSchema = new db.mongoose.Schema({
  */
 const postsCreateSchema = schema({
   _id_user: models.stringField(true),
-  content: models.stringField(true).max(100)
+  content: models.stringField(true).max(100),
+  spoiler: models.numberField(true).min(0).max(1)
 });
 
 /**
@@ -61,7 +62,8 @@ const postsCreateSchema = schema({
 const postsUpdateSchema = schema({
   _id: models.stringField(true),
   _id_user: models.stringField(true),
-  content: models.stringField(true).max(100)
+  content: models.stringField(true).max(100),
+  spoiler: models.numberField(true).min(0).max(1)
 });
 
 

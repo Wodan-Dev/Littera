@@ -26,6 +26,8 @@ const booksModel = db.database.model('books', booksSchema.booksSchema);
  * @return {Promise}      Resolve/Reject
  */
 function insert(book) {
+  book.create_at = date.getDateUTC();
+  book.modified_at = date.getDateUTC();
   return new booksModel(book).save();
 }
 
@@ -36,6 +38,9 @@ function insert(book) {
  * @return {Promise}        Resolve/Reject
  */
 function update(id, book) {
+
+  book.modified_at = date.getDateUTC();
+
   let query = {
     _id: id
   };
@@ -132,5 +137,6 @@ module.exports = {
   update: update,
   remove: remove,
   list: list,
-  findById: findById
+  findById: findById,
+  model: booksModel
 };

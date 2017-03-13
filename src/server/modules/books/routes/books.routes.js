@@ -11,6 +11,7 @@ const booksModel = require('../../../models/books/books.model.js');
 const http = core.http;
 const date = core.date;
 const utils = core.utils;
+const validator = core.validator;
 const renderError = core.http.renderError;
 
 /**
@@ -35,9 +36,10 @@ function get(req, res) {
  * @param  {Object}   res  response object
  */
 function getById(req, res) {
-  let id = req.params.id;
 
-  booksModel.validateId(id)
+  let id = req.params.id || '';
+
+  validator.validateId(id)
     .then(booksModel.findById)
     .then(function (result) {
       http.render(res, result);
@@ -61,7 +63,7 @@ function post(req, res) {
     status: req.body.status || 0,
     percentage: req.body.percentage || 0,
     esbn: req.body.esbn || '',
-    date_published: req.body.date_published || date.getDateUTC(),
+    date_published: req.body.date_published || '',
     visible: req.body.visible || 0,
     language: req.body.language || '',
     average_star: req.body.average_star || 0
@@ -94,7 +96,7 @@ function put(req, res) {
     status: req.body.status || 0,
     percentage: req.body.percentage || 0,
     esbn: req.body.esbn || '',
-    date_published: req.body.date_published || date.getDateUTC(),
+    date_published: req.body.date_published,
     visible: req.body.visible || 0,
     language: req.body.language || '',
     average_star: req.body.average_star || 0

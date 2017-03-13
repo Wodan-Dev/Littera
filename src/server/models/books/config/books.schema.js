@@ -86,7 +86,7 @@ const booksSchema = new db.mongoose.Schema({
     required: true,
     default: date.getDateUTC()
   },
-  price: [
+  prices: [
     pricesSchema.pricesSchema
   ],
   forums: [
@@ -117,10 +117,15 @@ const booksCreateSchema = schema({
   status: models.numberField(true).integer().min(0).max(1),
   percentage: models.numberField(true).integer().min(0).max(100),
   esbn: models.stringField(false),
-  date_published: models.dateField(false),
+  date_published: models.dateField(false).allow(''),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
-  average_star: models.numberField().min(0).max(5)
+  average_star: models.numberField().min(0).max(5)/*,
+  prices: models.nestedArray(false, pricesSchema.pricesSchema),
+  forums: models.nestedArray(false, forumsSchema.forumsSchema),
+  rankings: models.nestedArray(false, rankingsSchema.rankingsSchema),
+  keywords: models.nestedArray(false, keywordsSchema.keywordsSchema),
+  comments: models.nestedArray(false, commentsSchema.commentsSchema)*/
 });
 
 /**
@@ -135,10 +140,15 @@ const booksUpdateSchema = schema({
   status: models.numberField(true).integer().min(0).max(1),
   percentage: models.numberField(true).integer().min(0).max(100),
   esbn: models.stringField(false),
-  date_published: models.dateField(false),
+  date_published: models.dateField(false).allow(''),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
-  average_star: models.numberField().min(0).max(5)
+  average_star: models.numberField().min(0).max(5)/*,
+  prices: models.nestedArray(false, pricesSchema.pricesSchema),
+  forums: models.nestedArray(false, forumsSchema.forumsSchema),
+  rankings: models.nestedArray(false, rankingsSchema.rankingsSchema),
+  keywords: models.nestedArray(false, keywordsSchema.keywordsSchema),
+  comments: models.nestedArray(false, commentsSchema.commentsSchema)*/
 });
 
 /**

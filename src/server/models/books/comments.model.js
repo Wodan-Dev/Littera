@@ -1,5 +1,5 @@
 /**
- * Created by César on 04/03/17.
+ * Created by César on 12/03/17.
  */
 'use strict';
 /**
@@ -10,7 +10,7 @@
  * Dependencies
  */
 const core = require('../../modules/core');
-const forumsSchema = require('./config/forums.schema');
+const commentsSchema = require('./config/comments.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -20,40 +20,40 @@ const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
 
 /**
- * Validate forum create
- * @param  {Object} book Forum object
+ * Validate comment create
+ * @param  {Object} book Comment object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumCreate(forum){
-  forum._id_user = checkField.trim(checkField.escape(forum._id_user));
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
+function validateCommentCreate(comment){
+  comment._id_user = checkField.trim(checkField.escape(comment._id_user));
+  comment.content = checkField.trim(checkField.escape(comment.content));
 
-  return validator.validateSchema(forum, forumsSchema.forumsCreateSchema);
+  return validator.validateSchema(comment, commentsSchema.commentsCreateSchema);
 }
 
 /**
- * Validate forum update
- * @param  {Object} book Forum object
+ * Validate comment update
+ * @param  {Object} book Comment object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumUpdate(forum){
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
+function validateCommentUpdate(comment){
+  comment._id = checkField.trim(checkField.escape(comment._id));
+  comment._id_user = checkField.trim(checkField.escape(comment._id_user));
+  comment.content = checkField.trim(checkField.escape(comment.content));
 
-  return validator.validateSchema(forum, forumsSchema.forumsUpdateSchema);
+  return validator.validateSchema(comment, commentsSchema.commentsUpdateSchema);
 }
 
 /**
- * Insert forum in DB
+ * Insert comment in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} comment comment object
  * @return {Promise}        Resolve/Reject
  */
-function insert(id_book, forum) {
+function insert(id_book, comment) {
 
-  forum.create_at = date.getDateUTC();
-  forum.modified_at = date.getDateUTC();
+  comment.create_at = date.getDateUTC();
+  comment.modified_at = date.getDateUTC();
 
   let query = {
     _id: id_book
@@ -61,7 +61,7 @@ function insert(id_book, forum) {
 
   let data = {
     $push: {
-      forums: forum
+      comments: comment
     }
   };
 
@@ -77,24 +77,23 @@ function insert(id_book, forum) {
 }
 
 /**
- * Update forum in DB
+ * Update comment in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} comment comment object
  * @return {Promise}        Resolve/Reject
  */
-function update(id_book, forum) {
+function update(id_book, comment) {
 
   let query = {
     '_id': id_book,
-    'forums._id': forum._id
+    'comments._id': comment._id
   };
 
   let data = {
     '$set': {
-      'forums.$._id_user': forum._id_user,
-      'forums.$.title': forum.title,
-      'forums.$.content': forum.content,
-      'forums.$.modified_at': date.getDateUTC()
+      'comments.$._id_user': comment._id_user,
+      'comments.$.content': comment.content,
+      'comments.$.modified_at': date.getDateUTC()
     }
   };
 
@@ -110,9 +109,9 @@ function update(id_book, forum) {
 }
 
 /**
- * Remove forum in DB
+ * Remove comment in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} comment comment object
  * @return {Promise}        Resolve/Reject
  */
 function remove(id_book, id) {
@@ -122,7 +121,7 @@ function remove(id_book, id) {
 
   let data = {
     $pull: {
-      forums: {
+      comments: {
         _id: id
       }
     }
@@ -144,8 +143,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateForumCreate: validateForumCreate,
-  validateForumUpdate: validateForumUpdate,
+  validateCommentCreate: validateCommentCreate,
+  validateCommentUpdate: validateCommentUpdate,
   insert: insert,
   update: update,
   remove: remove

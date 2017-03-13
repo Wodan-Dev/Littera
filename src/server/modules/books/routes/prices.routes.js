@@ -8,7 +8,7 @@
  */
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
-const forumsModel = require('../../../models/books/forums.model');
+const pricesModel = require('../../../models/books/prices.model');
 const http = core.http;
 const date = core.date;
 const utils = core.utils;
@@ -30,7 +30,7 @@ function get(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums);
+      http.render(res, result.prices);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -42,6 +42,7 @@ function get(req, res) {
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
  */
+
 function getById(req, res) {
 
   let id_book = req.params.id_book || '';
@@ -58,7 +59,7 @@ function getById(req, res) {
       return booksModel.findById(id_book);
     })
     .then(function (result) {
-      http.render(res, result.forums.id(id));
+      http.render(res, result.prices.id(id));
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -74,25 +75,27 @@ function post(req, res) {
 
   let id_book = req.body._id_book || '';
 
-  let forum = {
-    _id_user: req.body._id_user || '',
-    title: req.body.title || '',
-    content: req.body.content || ''
+  let price = {
+    price_min: req.body.price_min || 0,
+    price_sug: req.body.price_sug || 0,
+    date_begin: req.body.date_begin || '',
+    date_end: req.body.date_end || '',
+    type: req.body.date_end || 0,
   };
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return forumsModel.validateForumCreate(forum);
+      return pricesModel.validatePriceCreate(price);
     })
     .then(function(result) {
-      return forumsModel.insert(id_book, result.value);
+      return pricesModel.insert(id_book, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, price, err);
     });
 }
 
@@ -105,30 +108,32 @@ function put(req, res) {
 
   let id_book = req.body._id_book || '';
 
-  let forum = {
+  let price = {
     _id: req.body._id || '',
-    _id_user: req.body._id_user || '',
-    title: req.body.title || '',
-    content: req.body.content || ''
+    price_min: req.body.price_min || 0,
+    price_sug: req.body.price_sug || 0,
+    date_begin: req.body.date_begin || '',
+    date_end: req.body.date_end || '',
+    type: req.body.date_end || 0,
   };
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return validator.validateId(forum._id);
+      return validator.validateId(price._id);
     })
     .then(function (rId) {
-      forum._id = rId;
-      return forumsModel.validateForumUpdate(forum);
+      price._id = rId;
+      return pricesModel.validatePriceUpdate(price);
     })
     .then(function(result) {
-      return forumsModel.update(id_book, result.value);
+      return pricesModel.update(id_book, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, forum, err);
+      renderError(res, price, err);
     });
 }
 
@@ -140,24 +145,24 @@ function put(req, res) {
 function remove(req, res) {
 
   let id_book = req.params.id_book || '';
-  let forum = {
+  let price = {
     _id: req.params.id || ''
   };
 
   validator.validateId(id_book)
     .then(function(rBookId) {
       id_book = rBookId;
-      return validator.validateId(forum._id);
+      return validator.validateId(price._id);
     })
     .then(function(rId) {
-      forum._id = rId;
-      return forumsModel.remove(id_book, forum._id);
+      price._id = rId;
+      return pricesModel.remove(id_book, price._id);
     })
     .then(function(result) {
       http.render(res, result);
     })
     .catch(function(err) {
-      renderError(res, forum, err);
+      renderError(res, price, err);
     });
 }
 
@@ -169,11 +174,11 @@ function remove(req, res) {
 function router(express) {
   let routes = express.Router();
 
-  routes.get('/:id_book/forums', get);
-  routes.get('/:id_book/forums/:id', getById);
-  routes.post('/forums', post);
-  routes.put('/forums', put);
-  routes.delete('/:id_book/forums/:id', remove);
+  routes.get('/:id_book/prices', get);
+  routes.get('/:id_book/prices/:id', getById);
+  routes.post('/prices', post);
+  routes.put('/prices', put);
+  routes.delete('/:id_book/prices/:id', remove);
 
   return routes;
 }

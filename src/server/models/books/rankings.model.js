@@ -1,5 +1,5 @@
 /**
- * Created by César on 04/03/17.
+ * Created by César on 12/03/17.
  */
 'use strict';
 /**
@@ -10,7 +10,7 @@
  * Dependencies
  */
 const core = require('../../modules/core');
-const forumsSchema = require('./config/forums.schema');
+const rankingsSchema = require('./config/rankings.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -20,40 +20,39 @@ const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
 
 /**
- * Validate forum create
- * @param  {Object} book Forum object
+ * Validate ranking create
+ * @param  {Object} book Ranking object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumCreate(forum){
-  forum._id_user = checkField.trim(checkField.escape(forum._id_user));
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
+function validateRankingCreate(ranking){
+  ranking._id_user = checkField.trim(checkField.escape(ranking._id_user));
+  ranking.comment = checkField.trim(checkField.escape(ranking.comment));
 
-  return validator.validateSchema(forum, forumsSchema.forumsCreateSchema);
+  return validator.validateSchema(ranking, rankingsSchema.rankingsCreateSchema);
 }
 
 /**
- * Validate forum update
- * @param  {Object} book Forum object
+ * Validate ranking update
+ * @param  {Object} book Ranking object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumUpdate(forum){
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
+function validateRankingUpdate(ranking){
+  ranking._id_user = checkField.trim(checkField.escape(ranking._id_user));
+  ranking.comment = checkField.trim(checkField.escape(ranking.comment));
 
-  return validator.validateSchema(forum, forumsSchema.forumsUpdateSchema);
+  return validator.validateSchema(ranking, rankingsSchema.rankingsUpdateSchema);
 }
 
 /**
- * Insert forum in DB
+ * Insert ranking in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} ranking ranking object
  * @return {Promise}        Resolve/Reject
  */
-function insert(id_book, forum) {
+function insert(id_book, ranking) {
 
-  forum.create_at = date.getDateUTC();
-  forum.modified_at = date.getDateUTC();
+  ranking.create_at = date.getDateUTC();
+  ranking.modified_at = date.getDateUTC();
 
   let query = {
     _id: id_book
@@ -61,7 +60,7 @@ function insert(id_book, forum) {
 
   let data = {
     $push: {
-      forums: forum
+      rankings: ranking
     }
   };
 
@@ -77,24 +76,24 @@ function insert(id_book, forum) {
 }
 
 /**
- * Update forum in DB
+ * Update ranking in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} ranking ranking object
  * @return {Promise}        Resolve/Reject
  */
-function update(id_book, forum) {
+function update(id_book, ranking) {
 
   let query = {
     '_id': id_book,
-    'forums._id': forum._id
+    'rankings._id': ranking._id
   };
 
   let data = {
     '$set': {
-      'forums.$._id_user': forum._id_user,
-      'forums.$.title': forum.title,
-      'forums.$.content': forum.content,
-      'forums.$.modified_at': date.getDateUTC()
+      'rankings.$._id_user': ranking._id_user,
+      'rankings.$.comment': ranking.comment,
+      'rankings.$.stars': ranking.stars,
+      'rankings.$.modified_at': date.getDateUTC()
     }
   };
 
@@ -110,9 +109,9 @@ function update(id_book, forum) {
 }
 
 /**
- * Remove forum in DB
+ * Remove ranking in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} ranking ranking object
  * @return {Promise}        Resolve/Reject
  */
 function remove(id_book, id) {
@@ -122,7 +121,7 @@ function remove(id_book, id) {
 
   let data = {
     $pull: {
-      forums: {
+      rankings: {
         _id: id
       }
     }
@@ -144,8 +143,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateForumCreate: validateForumCreate,
-  validateForumUpdate: validateForumUpdate,
+  validateRankingCreate: validateRankingCreate,
+  validateRankingUpdate: validateRankingUpdate,
   insert: insert,
   update: update,
   remove: remove

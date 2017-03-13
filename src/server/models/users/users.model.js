@@ -179,4 +179,3 @@ module.exports = {
   findByUserEmail: findByUserEmail,
   model: usersModel
 };
-

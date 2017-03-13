@@ -1,5 +1,5 @@
 /**
- * Created by César on 04/03/17.
+ * Created by César on 12/03/17.
  */
 'use strict';
 /**
@@ -10,7 +10,7 @@
  * Dependencies
  */
 const core = require('../../modules/core');
-const forumsSchema = require('./config/forums.schema');
+const keywordsSchema = require('./config/keywords.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -20,40 +20,37 @@ const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
 
 /**
- * Validate forum create
- * @param  {Object} book Forum object
+ * Validate keyword create
+ * @param  {Object} book Keyword object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumCreate(forum){
-  forum._id_user = checkField.trim(checkField.escape(forum._id_user));
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
+function validateKeywordCreate(keyword){
+  keyword.content = checkField.trim(checkField.escape(keyword.content));
 
-  return validator.validateSchema(forum, forumsSchema.forumsCreateSchema);
+  return validator.validateSchema(keyword, keywordsSchema.keywordsCreateSchema);
 }
 
 /**
- * Validate forum update
- * @param  {Object} book Forum object
+ * Validate keyword update
+ * @param  {Object} book Keyword object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumUpdate(forum){
-  forum.title = checkField.trim(checkField.escape(forum.title));
-  forum.content = checkField.trim(checkField.escape(forum.content));
+function validateKeywordUpdate(keyword){
+  keyword.content = checkField.trim(checkField.escape(keyword.content));
 
-  return validator.validateSchema(forum, forumsSchema.forumsUpdateSchema);
+  return validator.validateSchema(keyword, keywordsSchema.keywordsUpdateSchema);
 }
 
 /**
- * Insert forum in DB
+ * Insert keyword in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} keyword keyword object
  * @return {Promise}        Resolve/Reject
  */
-function insert(id_book, forum) {
+function insert(id_book, keyword) {
 
-  forum.create_at = date.getDateUTC();
-  forum.modified_at = date.getDateUTC();
+  keyword.create_at = date.getDateUTC();
+  keyword.modified_at = date.getDateUTC();
 
   let query = {
     _id: id_book
@@ -61,7 +58,7 @@ function insert(id_book, forum) {
 
   let data = {
     $push: {
-      forums: forum
+      keywords: keyword
     }
   };
 
@@ -77,24 +74,22 @@ function insert(id_book, forum) {
 }
 
 /**
- * Update forum in DB
+ * Update keyword in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} keyword keyword object
  * @return {Promise}        Resolve/Reject
  */
-function update(id_book, forum) {
+function update(id_book, keyword) {
 
   let query = {
     '_id': id_book,
-    'forums._id': forum._id
+    'keywords._id': keyword._id
   };
 
   let data = {
     '$set': {
-      'forums.$._id_user': forum._id_user,
-      'forums.$.title': forum.title,
-      'forums.$.content': forum.content,
-      'forums.$.modified_at': date.getDateUTC()
+      'keywords.$.content': keyword.content,
+      'keywords.$.modified_at': date.getDateUTC()
     }
   };
 
@@ -110,9 +105,9 @@ function update(id_book, forum) {
 }
 
 /**
- * Remove forum in DB
+ * Remove keyword in DB
  * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} forum forum object
+ * @param  {Object} keyword keyword object
  * @return {Promise}        Resolve/Reject
  */
 function remove(id_book, id) {
@@ -122,7 +117,7 @@ function remove(id_book, id) {
 
   let data = {
     $pull: {
-      forums: {
+      keywords: {
         _id: id
       }
     }
@@ -144,8 +139,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateForumCreate: validateForumCreate,
-  validateForumUpdate: validateForumUpdate,
+  validateKeywordCreate: validateKeywordCreate,
+  validateKeywordUpdate: validateKeywordUpdate,
   insert: insert,
   update: update,
   remove: remove

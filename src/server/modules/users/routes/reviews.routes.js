@@ -189,4 +189,3 @@ function router(express, auth) {
  * @type {Object}
  */
 module.exports = router;
-

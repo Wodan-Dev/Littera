@@ -51,6 +51,7 @@ const rankingsSchema = new db.mongoose.Schema({
  * @type {Object}
  */
 const rankingsCreateSchema = schema({
+  _id_user: models.stringField(true),
   stars: models.numberField(true).min(0).max(5),
   comment: models.stringField(true)
 });
@@ -61,6 +62,7 @@ const rankingsCreateSchema = schema({
  */
 const rankingsUpdateSchema = schema({
   _id: models.stringField(true),
+  _id_user: models.stringField(true),
   stars: models.numberField(true).min(0).max(5),
   comment: models.stringField(true)
 });

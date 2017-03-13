@@ -40,7 +40,7 @@ const keywordsSchema = new db.mongoose.Schema({
  * @type {Object}
  */
 const keywordsCreateSchema = schema({
-  content: models.stringField(true).max(1000)
+  content: models.stringField(true).max(30)
 });
 
 /**
@@ -49,7 +49,7 @@ const keywordsCreateSchema = schema({
  */
 const keywordsUpdateSchema = schema({
   _id: models.stringField(true),
-  content: models.stringField(true).max(1000)
+  content: models.stringField(true).max(30)
 });
 
 /**
