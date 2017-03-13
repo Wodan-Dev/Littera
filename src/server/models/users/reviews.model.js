@@ -146,7 +146,7 @@ function listByUser(user, page) {
   console.log(usersModel);
   return usersModel.paginate(
     {
-      'reviews._id_user': user
+      'username': user
     },
     {
       page: page,
@@ -154,9 +154,11 @@ function listByUser(user, page) {
       sort: {
         'create_at': 'descending'
       },
+      populate: 'reviews._id_user',
+      select: 'reviews'/*,
       select: {
-        'reviews': 1
-      }
+        'reviews.$': 1
+      }*/
     });
 }
 

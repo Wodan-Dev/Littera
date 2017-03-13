@@ -25,21 +25,12 @@ const renderError = core.http.renderError;
  */
 function get(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
-  console.log(req.params);
   let username = req.params.username || '-';
-  console.log(username);
 
-  usersModel.findByUserName(username)
-    .then(function (user) {
-      //console.log(user);
-      //return reviewsModel.listByUser(user._id, pageNum);
-      http.render(res, user.reviews);
-    })
-    /*.then(function (result) {
-      console.log('result');
-      console.log(result);
+  reviewsModel.listByUser(username, pageNum)
+    .then(function (result) {
       http.render(res, result);
-    })*/
+    })
     .catch(function (err) {
       console.log(err);
       renderError(res, {}, err);
@@ -55,8 +46,6 @@ function getById(req, res) {
 
   let username = req.params.username || '-';
   let id = req.params.id || '-';
-
-  console.log(req.params);
 
   usersModel.validateId(id)
     .then(function (rId) {
@@ -103,6 +92,7 @@ function post(req, res) {
       return reviewsModel.validateCreate(review);
     })
     .then(function (result) {
+      console.log('result');
       return reviewsModel.insert(result.value);
     })
     .then(function (result) {
