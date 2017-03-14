@@ -32,14 +32,12 @@ const reviewsSchema = new db.mongoose.Schema({
   create_at: {
     type: Date,
     required: true,
-    default: date.getDateUTC(),
-    index: true
+    default: date.getDateUTC()
   },
   modified_at: {
     type: Date,
     required: true,
-    default: date.getDateUTC(),
-    index: true
+    default: date.getDateUTC()
   },
   comment: {
     type: String,
@@ -55,8 +53,6 @@ const reviewsSchema = new db.mongoose.Schema({
 const reviewsCreateSchema = schema({
   _id_user: models.stringField(true),
   stars: models.numberField().integer(),
-  create_at: models.dateField(true),
-  modified_at: models.dateField(true),
   comment: models.stringField(true).max(1000)
 });
 
@@ -65,11 +61,9 @@ const reviewsCreateSchema = schema({
  * @type {Object}
  */
 const reviewsUpdateSchema = schema({
-  _id: models.stringField(true),
+  _id_review: models.stringField(true),
   _id_user: models.stringField(true),
   stars: models.numberField().integer(),
-  create_at: models.dateField(true),
-  modified_at: models.dateField(true),
   comment: models.stringField(true).max(1000)
 });
 

@@ -1,5 +1,5 @@
 /**
- * Created by jonathan on 06/03/17.
+ * Created by jonathan on 14/03/17.
  */
 'use strict';
 /**
@@ -11,11 +11,12 @@
  */
 
 const core = require('../../core');
-const reviewsModel = require('../../../models/users/reviews.model');
+const choicesModel = require('../../../models/users/choices.model');
 const usersModel = require('../../../models/users/users.model');
 const http = core.http;
 const utils = core.utils;
 const date = core.date;
+const validator = core.validator;
 const renderError = core.http.renderError;
 
 /**
@@ -27,9 +28,9 @@ function get(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
   let username = req.params.username || '-';
 
-  reviewsModel.listByUser(username, pageNum)
+  choicesModel.listByUser(username, pageNum)
     .then(function (result) {
-      http.render(res, result.reviews);
+      http.render(res, result.choices);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -46,18 +47,18 @@ function getById(req, res) {
   let username = req.params.username || '-';
   let id = req.params.id || '-';
 
-  usersModel.validateId(id)
+  validator.validateId(id)
     .then(function (rId) {
       id = rId;
       return usersModel.findByUserName(username);
     })
     .then(function (user) {
-      let review = {
+      let choice = {
         _id: user._id,
-        _idReview: id
+        _idChoice: id
       };
 
-      return reviewsModel.listByUser(review._id, review);
+      return choicesModel.findById(choice);
     })
     .then(function (result) {
       http.render(res, result);
@@ -74,30 +75,24 @@ function getById(req, res) {
  */
 function post(req, res) {
 
-  let _id = req.body._id_user_comment || '';
-  let review = {
-    _id_user: req.body._id_user || '',
-    stars: (req.body.stars || 0).toString(),
-    comment: req.body.comment || ''
+  let _id = req.body._id_user_choice || '';
+  let choice = {
+    content: req.body.content || ''
   };
 
-  reviewsModel.validateId(_id)
+  validator.validateId(_id)
     .then(function (rId) {
       _id = rId;
-      return reviewsModel.validateId(review._id_user);
-    })
-    .then(function (rId) {
-      review._id_user = rId;
-      return reviewsModel.validateCreate(review);
+      return choicesModel.validateCreate(choice);
     })
     .then(function (result) {
-      return reviewsModel.insert(_id, result.value);
+      return choicesModel.insert(_id, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, review, err);
+      renderError(res, choice, err);
     });
 }
 
@@ -109,36 +104,30 @@ function post(req, res) {
 function put(req, res) {
 
 
-  let _id = req.body._id_user_comment || '';
+  let _id = req.body._id_user_choice || '';
 
-  let review = {
-    _id_user: req.body._id_user || '',
-    _id_review: req.body._id_review || '',
-    stars: (req.body.stars || 0).toString(),
-    comment: req.body.comment || ''
+  let choice = {
+    _id: req.body._id_choice || '',
+    content: req.body.content || ''
   };
 
-  reviewsModel.validateId(_id)
+  validator.validateId(_id)
     .then(function (rId) {
       _id = rId;
-      return reviewsModel.validateId(review._id_review);
+      return validator.validateId(choice._id);
     })
     .then(function (rId) {
-      review._id_review = rId;
-      return reviewsModel.validateId(review._id_user);
-    })
-    .then(function (rId) {
-      review._id_user = rId;
-      return reviewsModel.validateUpdate(review);
+      choice._id = rId;
+      return choicesModel.validateUpdate(choice);
     })
     .then(function (result) {
-      return reviewsModel.update(_id, result.value);
+      return choicesModel.update(_id, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, review, err);
+      renderError(res, choice, err);
     });
 }
 
@@ -149,40 +138,41 @@ function put(req, res) {
  */
 function remove(req, res) {
   let username = req.params.username || '';
-  let review = {
-    _idReview: req.params.id || ''
+  let choice = {
+    _idChoice: req.params.id || ''
   };
 
-  reviewsModel.validateId(review._idReview)
+  validator.validateId(choice._idChoice)
     .then(function (rId) {
-      review._idReview = rId;
+      choice._idChoice = rId;
       return usersModel.findByUserName(username);
     })
     .then(function (user) {
-      review._id = user._id;
-      return reviewsModel.remove(review);
+      choice._id = user._id;
+      return choicesModel.remove(choice);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, review, err);
+      renderError(res, choice, err);
     });
 }
 
 /**
  * Create Instance to router object
  * @param  {Object} express Express
+ * @param  {Function} auth authentication
  * @return {Router}         router object with the routes
  */
 function router(express, auth) {
   let routes = express.Router();
 
-  routes.get('/:username/reviews/', auth, get);
-  routes.get('/:username/reviews/:id', auth, getById);
-  routes.post('/:username/reviews/', auth, post);
-  routes.put('/:username/reviews/', auth, put);
-  routes.delete('/:username/reviews/:id', auth, remove);
+  routes.get('/:username/choices/', auth, get);
+  routes.get('/:username/choices/:id', auth, getById);
+  routes.post('/:username/choices/', auth, post);
+  routes.put('/:username/choices/', auth, put);
+  routes.delete('/:username/choices/:id', auth, remove);
 
   return routes;
 }

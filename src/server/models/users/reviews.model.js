@@ -25,10 +25,10 @@ const checkField = core.validator.validator;
  * @param  {Object} review Enterprise object
  * @return {Promise}        Resolve/Reject
  */
-function insert(review) {
+function insert(id, review) {
 
   let query = {
-    _id: review._id
+    _id: db.getObjectId(id)
   };
 
   let data = {
@@ -59,10 +59,10 @@ function insert(review) {
  * @param  {Object} user review object
  * @return {Promise}        Resolve/Reject
  */
-function update(review) {
+function update(id, review) {
   let query = {
-    _id: review._id,
-    'reviews._id': review._idReview
+    _id: id,
+    'reviews._id': review._id_review
   };
 
   let data = {
@@ -142,24 +142,97 @@ function list(page) {
  */
 function listByUser(user, page) {
   let pageSize = parseInt(config.getPageSize());
-  console.log('usersModel');
-  console.log(usersModel);
-  return usersModel.paginate(
+
+  return usersModel.findOne({username: user})
+    .populate('reviews._id_user', 'username email')
+    .select('reviews reviews.created_at')
+    .select('reviews.stars reviews.comment')
+    .select('reviews._id_user reviews.modified_at')
+    .exec();
+
+  /* funciona
+  return usersModel.aggregate([
     {
-      'username': user
+      '$project': {
+        'username': '$username',
+        'reviews.stars': 1,
+        'reviews._id_user': 1,
+        'reviews.comment': 1
+      }
     },
     {
-      page: page,
-      limit: pageSize,
-      sort: {
-        'create_at': 'descending'
-      },
-      populate: 'reviews._id_user',
-      select: 'reviews'/*,
-      select: {
-        'reviews.$': 1
-      }*/
-    });
+      $unwind: '$reviews'
+    },
+    {
+      $match: {
+        'username': user
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'user'
+      }
+    }
+
+  ])
+    .exec();*/
+
+
+  //return usersModel.aggregate([
+  //  /*{
+  //    $project: {
+  //      '$reviews': {
+  //        'stars': 1,
+  //        'comment': 1,
+  //        '_id_user': 1
+  //      }
+  //    }
+  //  },*/
+  //  {
+  //    $unwind: '$reviews'
+  //  }/*,
+  //  {
+  //    $match: {
+  //      username: user
+  //    }
+  //  }*/
+  //])
+  //  .populate('reviews._id_user')
+  //  .exec();
+
+  /*
+   {
+   $match: {'children.age': {$gte: 18}}
+   }, {
+   $unwind: '$children'
+   }, {
+   $match: {'children.age': {$gte: 18}}
+   }, {
+   $project: {
+   name: '$children.name',
+   age:'$children.age'
+   }
+   })  * */
+
+  //return usersModel.paginate(
+  //  {
+  //    'username': user
+  //  },
+  //  {
+  //    page: page,
+  //    limit: pageSize,
+  //    sort: {
+  //      'create_at': 'descending'
+  //    },
+  //    populate: 'reviews._id_user',
+  //    select: 'reviews'/*,
+  //    select: {
+  //      'reviews.$': 1
+  //    }*/
+  //  });
 }
 
 /**
@@ -200,7 +273,7 @@ function validateCreate(review) {
  */
 function validateUpdate(review) {
 
-  review._id = checkField.trim(checkField.escape(review._id));
+  review._id_review = checkField.trim(checkField.escape(review._id_review));
   review._id_user = checkField.trim(checkField.escape(review._id_user));
   review.stars = checkField.trim(checkField.escape(review.stars));
   review.comment = checkField.trim(checkField.escape(review.comment));
