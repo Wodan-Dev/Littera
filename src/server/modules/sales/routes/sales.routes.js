@@ -10,7 +10,6 @@ const core = require('../../core');
 const salesModel = require('../../../models/sales/sales.model');
 const salesCtrl = require('../controller/sales.controller');
 const http = core.http;
-const date = core.date;
 const utils = core.utils;
 const renderError = core.http.renderError;
 
@@ -188,6 +187,7 @@ function removeBook(req, res) {
 /**
  * Create Instance to router object
  * @param  {Object} express Express
+ * @param  {Function} auth authentication function
  * @return {Router}         router object with the routes
  */
 function router(express, auth) {

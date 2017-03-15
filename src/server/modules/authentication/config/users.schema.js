@@ -10,7 +10,6 @@
 const core = require('../../core');
 const db = core.connection;
 const date = core.date;
-const crypto = core.crypto;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
@@ -106,7 +105,6 @@ usersSchema.pre('update', function (next) {
 });*/
 
 usersSchema.post('save', function (doc, next) {
-  console.log('pos save');
   next();
 });
 

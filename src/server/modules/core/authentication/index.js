@@ -135,23 +135,17 @@ function authenticate(user) {
       sessionId: sessionId,
       date: date.getDateUTC()
     };
-    console.log('user');
-    console.log(user);
 
     certificates.getPrivate()
       .then(function (certificate) {
-        console.log('1');
         return generateToken(tokenValue, certificate);
       })
       .then(function (token) {
-        console.log('2');
         redisdb.setValue('auth:' + sessionId, JSON.stringify(user));
 
         resolve(token);
       })
       .catch(function (err) {
-        console.log('err');
-        console.log(err);
         reject(validator.invalidResult('auth', err.err));
       });
   });

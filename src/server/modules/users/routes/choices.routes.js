@@ -15,7 +15,6 @@ const choicesModel = require('../../../models/users/choices.model');
 const usersModel = require('../../../models/users/users.model');
 const http = core.http;
 const utils = core.utils;
-const date = core.date;
 const validator = core.validator;
 const renderError = core.http.renderError;
 

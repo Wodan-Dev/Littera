@@ -15,7 +15,6 @@ const reviewsModel = require('../../../models/users/reviews.model');
 const usersModel = require('../../../models/users/users.model');
 const http = core.http;
 const utils = core.utils;
-const date = core.date;
 const renderError = core.http.renderError;
 
 /**

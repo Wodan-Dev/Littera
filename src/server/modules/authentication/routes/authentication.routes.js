@@ -7,7 +7,6 @@
  * Dependencies
  */
 const core = require('../../core');
-const usersModel = require('../../../models/users/users.model');
 const authCtrl = require('../controller/authentication.controller');
 const http = core.http;
 const auth = core.authentication;
@@ -20,7 +19,6 @@ const renderError = core.http.renderError;
  * @param  {Function} next next operation
  */
 function get(req, res) {
-  console.log(auth.getUserSession);
 
   auth.getUserSession(req)
     .then(function (user) {

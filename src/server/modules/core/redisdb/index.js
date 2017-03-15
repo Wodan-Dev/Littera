@@ -10,7 +10,6 @@
  * Dependencies
  */
 const config = require('../config');
-const validator = require('../validator');
 const redis = require('redis');
 const client = redis.createClient({
   host: config.getRedisHost(),

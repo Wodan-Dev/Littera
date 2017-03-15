@@ -14,7 +14,6 @@ const usersModel = require('../../../models/users/users.model');
 const usersCtrl = require('../controller/users.controller');
 const http = core.http;
 const utils = core.utils;
-const date = core.date;
 const renderError = core.http.renderError;
 
 /**

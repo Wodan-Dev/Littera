@@ -13,9 +13,7 @@ const core = require('../../modules/core');
 const salesSchema = require('./config/sales.schema');
 const itemsSchema = require('./config/items.schema');
 const db = core.connection;
-const date = core.date;
 const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const salesModel = db.database.model('sales', salesSchema.salesSchema);
@@ -52,8 +50,7 @@ function update(id, sale) {
 
 /**
  * Remove item from sale
- * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} sale Sale object
+ * @param  {Object} saleItem Sale object
  * @return {Promise}        Resolve/Reject
  */
 function updateItem(saleItem) {
@@ -121,8 +118,7 @@ function remove(id) {
 
 /**
  * Remove item from sale
- * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} sale Sale object
+ * @param  {Object} saleItem Sale Item object
  * @return {Promise}        Resolve/Reject
  */
 function removeItem(saleItem) {
@@ -182,6 +178,7 @@ function findById(id) {
 /**
  * List all sales of user id
  * @param  {ObjectId} id Id which has to be listed
+ * @param  {Number} page page number
  * @return {Promise} Resolve/Reject
  */
 function findByUserId(id, page) {
@@ -214,7 +211,7 @@ function validateCreate(sale){
 
 /**
  * Validate create
- * @param  {Object} sale Sale object
+ * @param  {Object} saleItem Sale item object
  * @return {Promise}      Resolve/Reject
  */
 function validateItemCreate(saleItem){
