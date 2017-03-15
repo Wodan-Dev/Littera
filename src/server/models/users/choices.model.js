@@ -15,15 +15,14 @@ const choicesSchema = require('./config/choices.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 
 
-
 /**
  * Insert in DB
- * @param  {Object} review Enterprise object
+ * @param  {ObjectId} id choice id
+ * @param  {Object} choice choice object
  * @return {Promise}        Resolve/Reject
  */
 function insert(id, choice) {
@@ -55,7 +54,8 @@ function insert(id, choice) {
 
 /**
  * Update in DB
- * @param  {Object} user review object
+ * @param  {ObjectId} id choice id
+ * @param  {Object} choice choice object
  * @return {Promise}        Resolve/Reject
  */
 function update(id, choice) {
@@ -84,7 +84,7 @@ function update(id, choice) {
 
 /**
  * Delete in DB
- * @param  {Object} review review which has to be deleted
+ * @param  {Object} choice choice which has to be deleted
  * @return {Promise}        Resolve/Reject
  */
 function remove(choice) {
@@ -113,6 +113,7 @@ function remove(choice) {
 
 /**
  * List all register in DB
+ * @param  {Number} page number of page
  * @return {Promise} Resolve/Reject
  */
 function list(page) {
@@ -136,6 +137,8 @@ function list(page) {
 
 /**
  * List all register in DB
+ * @param  {String} user username
+ * @param  {Number} page number of page
  * @return {Promise} Resolve/Reject
  */
 function listByUser(user, page) {
@@ -147,7 +150,7 @@ function listByUser(user, page) {
 
 /**
  * List the record in the DB that has the specified ObjectId
- * @param  {ObjectId} id id which has to be listed
+ * @param  {ObjectId} choice choice which has to be listed
  * @return {Promise} Resolve/Reject
  */
 function findById(choice) {

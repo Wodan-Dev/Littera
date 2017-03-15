@@ -61,8 +61,6 @@ function normalizeError(value, err) {
     }
   }
 
-
-
   return err;
 }
 
