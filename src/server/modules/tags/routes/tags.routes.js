@@ -1,26 +1,26 @@
 'use strict';
 /**
- * Module Books
+ * Module Tags
  */
 
 /**
  * Dependencies
  */
 const core = require('../../core');
-const booksModel = require('../../../models/books/books.model.js');
+const tagsModel = require('../../../models/tags/tags.model.js');
 const http = core.http;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
-
 /**
+
  * Method Get in route /
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
  */
 function get(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
-  booksModel.list(pageNum)
+  tagsModel.list(pageNum)
     .then(function (result) {
       http.render(res, result);
     })
@@ -39,7 +39,7 @@ function getById(req, res) {
   let id = req.params.id || '';
 
   validator.validateId(id)
-    .then(booksModel.findById)
+    .then(tagsModel.findById)
     .then(function (result) {
       http.render(res, result);
     })
@@ -55,33 +55,19 @@ function getById(req, res) {
  */
 function post(req, res) {
 
-  let book = {
-    title: req.body.title || '',
-    synopsis: req.body.synopsis || '',
-    content: req.body.content || '',
-    status: req.body.status || 0,
-    percentage: req.body.percentage || 0,
-    esbn: req.body.esbn || '',
-    date_published: req.body.date_published || '',
-    visible: req.body.visible || 0,
-    language: req.body.language || '',
-    average_star: req.body.average_star || 0,
-    prices: req.body.prices || [],
-    forums: req.body.forums || [],
-    rankings: req.body.rankings || [],
-    keywords: req.body.keywords || [],
-    comments: req.body.comments || []
+  let tag = {
+    tag: req.body.tag || ''
   };
 
-  booksModel.validateCreate(book)
+  tagsModel.validateCreate(tag)
     .then(function (result) {
-      return booksModel.insert(result.value);
+      return tagsModel.insert(result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, book, err);
+      renderError(res, tag, err);
     });
 }
 
@@ -91,35 +77,8 @@ function post(req, res) {
  * @param  {Object}   res  response object
  */
 function put(req, res) {
-
-  let book = {
-    _id: req.body._id || '',
-    title: req.body.title || '',
-    synopsis: req.body.synopsis || '',
-    content: req.body.content || '',
-    status: req.body.status || 0,
-    percentage: req.body.percentage || 0,
-    esbn: req.body.esbn || '',
-    date_published: req.body.date_published,
-    visible: req.body.visible || 0,
-    language: req.body.language || '',
-    average_star: req.body.average_star || 0,
-    prices: req.body.prices || [],
-    forums: req.body.forums || [],
-    rankings: req.body.rankings || [],
-    keywords: req.body.keywords || [],
-    comments: req.body.comments || []
-  };
-  booksModel.validateUpdate(book)
-    .then(function (rbook) {
-      return booksModel.update(rbook.value._id, rbook.value);
-    })
-    .then(function (result) {
-      http.render(res, result);
-    })
-    .catch(function (err) {
-      renderError(res, book, err);
-    });
+  http.render(res, 'Not Allowed',
+    http.HTTP_STATUS.HTTP_405_METHOD_NOT_ALLOWED);
 }
 
 /**

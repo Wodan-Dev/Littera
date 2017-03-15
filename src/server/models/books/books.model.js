@@ -11,11 +11,9 @@
  */
 const core = require('../../modules/core');
 const booksSchema = require('./config/books.schema');
-const forumsSchema = require('./config/forums.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = db.database.model('books', booksSchema.booksSchema);
@@ -68,7 +66,7 @@ function remove(id) {
 /**
  * List all books
  * @param  {Number} page Page number
- * @return {Promise}      Resolve/Reject
+  * @return {Promise}      Resolve/Reject
  */
 function list(page) {
   let pageSize = parseInt(config.getPageSize());

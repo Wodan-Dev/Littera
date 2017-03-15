@@ -8,10 +8,8 @@
  */
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
-const forumsModel = require('../../../models/books/forums.model');
 const postsModel = require('../../../models/books/posts.model');
 const http = core.http;
-const date = core.date;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -24,7 +22,7 @@ const renderError = core.http.renderError;
 function get(req, res) {
   let id_book = req.params.id_book || '';
   let id_forum = req.params.id_forum || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -53,7 +51,7 @@ function getById(req, res) {
   let id_book = req.params.id_book || '';
   let id_forum = req.params.id_forum || '';
   let id = req.param.id || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -108,7 +106,6 @@ function post(req, res) {
       http.render(res, result);
     })
     .catch(function (err) {
-      console.log(err);
       renderError(res, data, err);
     });
 }
@@ -132,26 +129,21 @@ function put(req, res) {
 
   validator.validateId(id_book)
     .then(function (rIdBook) {
-      console.log('validou idbook');
       id_book = rIdBook;
       return validator.validateId(id_forum);
     })
     .then(function (rIdForum) {
-      console.log('validou idforum');
       id_forum = rIdForum;
       return validator.validateId(post._id);
     })
     .then(function (rId) {
-      console.log('validou id');
       post._id = rId;
       return postsModel.validatePostUpdate(post);
     })
     .then(function(result) {
-      console.log('validou update');
       return postsModel.update(id_book, id_forum, result.value);
     })
     .then(function (result) {
-      console.log('update');
       http.render(res, result);
     })
     .catch(function (err) {

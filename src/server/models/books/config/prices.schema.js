@@ -34,7 +34,7 @@ const pricesSchema = new db.mongoose.Schema({
   },
   date_end: {
     type: Date,
-    required: true
+    required: false
   },
   type: {
     type: Number,

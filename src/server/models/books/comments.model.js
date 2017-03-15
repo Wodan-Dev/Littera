@@ -11,10 +11,7 @@
  */
 const core = require('../../modules/core');
 const commentsSchema = require('./config/comments.schema');
-const db = core.connection;
 const date = core.date;
-const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
@@ -24,7 +21,7 @@ const booksModel = require('./books.model').model;
  * @param  {Object} book Comment object
  * @return {Promise}      Resolve/Reject
  */
-function validateCommentCreate(comment){
+function validateCreate(comment){
   comment._id_user = checkField.trim(checkField.escape(comment._id_user));
   comment.content = checkField.trim(checkField.escape(comment.content));
 
@@ -36,7 +33,7 @@ function validateCommentCreate(comment){
  * @param  {Object} book Comment object
  * @return {Promise}      Resolve/Reject
  */
-function validateCommentUpdate(comment){
+function validateUpdate(comment){
   comment._id = checkField.trim(checkField.escape(comment._id));
   comment._id_user = checkField.trim(checkField.escape(comment._id_user));
   comment.content = checkField.trim(checkField.escape(comment.content));
@@ -143,8 +140,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateCommentCreate: validateCommentCreate,
-  validateCommentUpdate: validateCommentUpdate,
+  validateCreate: validateCreate,
+  validateUpdate: validateUpdate,
   insert: insert,
   update: update,
   remove: remove

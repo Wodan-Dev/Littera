@@ -10,7 +10,6 @@ const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const commentsModel = require('../../../models/books/comments.model');
 const http = core.http;
-const date = core.date;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -22,7 +21,7 @@ const renderError = core.http.renderError;
  */
 function get(req, res) {
   let id_book = req.params.id_book || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -47,7 +46,7 @@ function getById(req, res) {
 
   let id_book = req.params.id_book || '';
   let id = req.params.id || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -83,7 +82,7 @@ function post(req, res) {
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return commentsModel.validateCommentCreate(comment);
+      return commentsModel.validateCreate(comment);
     })
     .then(function(result) {
       return commentsModel.insert(id_book, result.value);
@@ -118,7 +117,7 @@ function put(req, res) {
     })
     .then(function (rId) {
       comment._id = rId;
-      return commentsModel.validateCommentUpdate(comment);
+      return commentsModel.validateUpdate(comment);
     })
     .then(function(result) {
       return commentsModel.update(id_book, result.value);

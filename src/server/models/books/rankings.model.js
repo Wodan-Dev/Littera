@@ -11,10 +11,7 @@
  */
 const core = require('../../modules/core');
 const rankingsSchema = require('./config/rankings.schema');
-const db = core.connection;
 const date = core.date;
-const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
@@ -24,7 +21,7 @@ const booksModel = require('./books.model').model;
  * @param  {Object} book Ranking object
  * @return {Promise}      Resolve/Reject
  */
-function validateRankingCreate(ranking){
+function validateCreate(ranking){
   ranking._id_user = checkField.trim(checkField.escape(ranking._id_user));
   ranking.comment = checkField.trim(checkField.escape(ranking.comment));
 
@@ -36,7 +33,7 @@ function validateRankingCreate(ranking){
  * @param  {Object} book Ranking object
  * @return {Promise}      Resolve/Reject
  */
-function validateRankingUpdate(ranking){
+function validateUpdate(ranking){
   ranking._id_user = checkField.trim(checkField.escape(ranking._id_user));
   ranking.comment = checkField.trim(checkField.escape(ranking.comment));
 
@@ -143,8 +140,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateRankingCreate: validateRankingCreate,
-  validateRankingUpdate: validateRankingUpdate,
+  validateCreate: validateCreate,
+  validateUpdate: validateUpdate,
   insert: insert,
   update: update,
   remove: remove

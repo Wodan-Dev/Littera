@@ -14,8 +14,6 @@ const booksSchema = require('./config/books.schema');
 const postsSchema = require('./config/posts.schema');
 const db = core.connection;
 const date = core.date;
-const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = db.database.model('books', booksSchema.booksSchema);
@@ -75,11 +73,6 @@ function insert(id_book, id_forum, post) {
     safe: true
   };
 
-  console.log('query');
-  console.log(query);
-  console.log('data');
-  console.log(data);
-
   return booksModel
     .findOneAndUpdate(query, data, opt)
     .exec();
@@ -97,8 +90,7 @@ function update(id_book, id_forum, post) {
     'forums._id': id_forum,
     'forums.posts._id': post._id
   };
-  console.log('query');
-  console.log(query);
+
   let data = {
     '$set': {
       'posts.$._id_user': post._id_user,
@@ -108,7 +100,6 @@ function update(id_book, id_forum, post) {
     }
   };
 
-  console.log(data);
 
   let opt = {
     upsert: false,

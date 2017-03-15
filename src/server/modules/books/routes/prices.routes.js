@@ -10,7 +10,6 @@ const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const pricesModel = require('../../../models/books/prices.model');
 const http = core.http;
-const date = core.date;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -22,7 +21,6 @@ const renderError = core.http.renderError;
  */
 function get(req, res) {
   let id_book = req.params.id_book || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -47,8 +45,7 @@ function getById(req, res) {
 
   let id_book = req.params.id_book || '';
   let id = req.params.id || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
-
+  
   validator.validateId(id_book)
     .then(function(rIdBook) {
       id_book = rIdBook;
@@ -86,7 +83,7 @@ function post(req, res) {
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return pricesModel.validatePriceCreate(price);
+      return pricesModel.validateCreate(price);
     })
     .then(function(result) {
       return pricesModel.insert(id_book, result.value);
@@ -124,7 +121,7 @@ function put(req, res) {
     })
     .then(function (rId) {
       price._id = rId;
-      return pricesModel.validatePriceUpdate(price);
+      return pricesModel.validateUpdate(price);
     })
     .then(function(result) {
       return pricesModel.update(id_book, result.value);

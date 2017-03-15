@@ -1,26 +1,26 @@
 'use strict';
 /**
- * Module Books
+ * Module Terms
  */
 
 /**
  * Dependencies
  */
 const core = require('../../core');
-const booksModel = require('../../../models/books/books.model.js');
+const termsModel = require('../../../models/terms/terms.model.js');
 const http = core.http;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
-
 /**
+
  * Method Get in route /
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
  */
 function get(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
-  booksModel.list(pageNum)
+  termsModel.list(pageNum)
     .then(function (result) {
       http.render(res, result);
     })
@@ -39,7 +39,7 @@ function getById(req, res) {
   let id = req.params.id || '';
 
   validator.validateId(id)
-    .then(booksModel.findById)
+    .then(termsModel.findById)
     .then(function (result) {
       http.render(res, result);
     })
@@ -55,33 +55,20 @@ function getById(req, res) {
  */
 function post(req, res) {
 
-  let book = {
-    title: req.body.title || '',
-    synopsis: req.body.synopsis || '',
+  let term = {
     content: req.body.content || '',
-    status: req.body.status || 0,
-    percentage: req.body.percentage || 0,
-    esbn: req.body.esbn || '',
-    date_published: req.body.date_published || '',
-    visible: req.body.visible || 0,
-    language: req.body.language || '',
-    average_star: req.body.average_star || 0,
-    prices: req.body.prices || [],
-    forums: req.body.forums || [],
-    rankings: req.body.rankings || [],
-    keywords: req.body.keywords || [],
-    comments: req.body.comments || []
+    status: req.body.status || 0
   };
 
-  booksModel.validateCreate(book)
+  termsModel.validateCreate(term)
     .then(function (result) {
-      return booksModel.insert(result.value);
+      return termsModel.insert(result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, book, err);
+      renderError(res, term, err);
     });
 }
 
@@ -92,33 +79,21 @@ function post(req, res) {
  */
 function put(req, res) {
 
-  let book = {
+  let term = {
     _id: req.body._id || '',
-    title: req.body.title || '',
-    synopsis: req.body.synopsis || '',
     content: req.body.content || '',
-    status: req.body.status || 0,
-    percentage: req.body.percentage || 0,
-    esbn: req.body.esbn || '',
-    date_published: req.body.date_published,
-    visible: req.body.visible || 0,
-    language: req.body.language || '',
-    average_star: req.body.average_star || 0,
-    prices: req.body.prices || [],
-    forums: req.body.forums || [],
-    rankings: req.body.rankings || [],
-    keywords: req.body.keywords || [],
-    comments: req.body.comments || []
+    status: req.body.status || 0
   };
-  booksModel.validateUpdate(book)
-    .then(function (rbook) {
-      return booksModel.update(rbook.value._id, rbook.value);
+
+  termsModel.validateUpdate(term)
+    .then(function (result) {
+      return termsModel.update(result.value._id, result.value);
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, book, err);
+      renderError(res, term, err);
     });
 }
 

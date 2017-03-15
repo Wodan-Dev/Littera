@@ -120,12 +120,12 @@ const booksCreateSchema = schema({
   date_published: models.dateField(false).allow(''),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
-  average_star: models.numberField().min(0).max(5)/*,
-  prices: models.nestedArray(false, pricesSchema.pricesSchema),
-  forums: models.nestedArray(false, forumsSchema.forumsSchema),
-  rankings: models.nestedArray(false, rankingsSchema.rankingsSchema),
-  keywords: models.nestedArray(false, keywordsSchema.keywordsSchema),
-  comments: models.nestedArray(false, commentsSchema.commentsSchema)*/
+  average_star: models.numberField().min(0).max(5),
+  prices: models.nestedArray(false, pricesSchema.pricesCreateSchema),
+  forums: models.nestedArray(false, forumsSchema.forumsCreateSchema),
+  rankings: models.nestedArray(false, rankingsSchema.rankingsCreateSchema),
+  keywords: models.nestedArray(false, keywordsSchema.keywordsCreateSchema),
+  comments: models.nestedArray(false, commentsSchema.commentsCreateSchema)
 });
 
 /**
@@ -143,12 +143,12 @@ const booksUpdateSchema = schema({
   date_published: models.dateField(false).allow(''),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
-  average_star: models.numberField().min(0).max(5)/*,
-  prices: models.nestedArray(false, pricesSchema.pricesSchema),
-  forums: models.nestedArray(false, forumsSchema.forumsSchema),
-  rankings: models.nestedArray(false, rankingsSchema.rankingsSchema),
-  keywords: models.nestedArray(false, keywordsSchema.keywordsSchema),
-  comments: models.nestedArray(false, commentsSchema.commentsSchema)*/
+  average_star: models.numberField().min(0).max(5),
+  prices: models.nestedArray(false, pricesSchema.pricesUpdateSchema),
+  forums: models.nestedArray(false, forumsSchema.forumsUpdateSchema),
+  rankings: models.nestedArray(false, rankingsSchema.rankingsUpdateSchema),
+  keywords: models.nestedArray(false, keywordsSchema.keywordsUpdateSchema),
+  comments: models.nestedArray(false, commentsSchema.commentsUpdateSchema)
 });
 
 /**

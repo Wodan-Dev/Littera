@@ -3,7 +3,7 @@
  */
 'use strict';
 /**
- * Model Books
+ * Model Keywords
  */
 
 /**
@@ -11,20 +11,17 @@
  */
 const core = require('../../modules/core');
 const keywordsSchema = require('./config/keywords.schema');
-const db = core.connection;
 const date = core.date;
-const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
 
 /**
  * Validate keyword create
- * @param  {Object} book Keyword object
+ * @param  {Object} keyword Keyword object
  * @return {Promise}      Resolve/Reject
  */
-function validateKeywordCreate(keyword){
+function validateCreate(keyword){
   keyword.content = checkField.trim(checkField.escape(keyword.content));
 
   return validator.validateSchema(keyword, keywordsSchema.keywordsCreateSchema);
@@ -32,10 +29,10 @@ function validateKeywordCreate(keyword){
 
 /**
  * Validate keyword update
- * @param  {Object} book Keyword object
+ * @param  {Object} keyword Keyword object
  * @return {Promise}      Resolve/Reject
  */
-function validateKeywordUpdate(keyword){
+function validateUpdate(keyword){
   keyword.content = checkField.trim(checkField.escape(keyword.content));
 
   return validator.validateSchema(keyword, keywordsSchema.keywordsUpdateSchema);
@@ -139,8 +136,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateKeywordCreate: validateKeywordCreate,
-  validateKeywordUpdate: validateKeywordUpdate,
+  validateCreate: validateCreate,
+  validateUpdate: validateUpdate,
   insert: insert,
   update: update,
   remove: remove

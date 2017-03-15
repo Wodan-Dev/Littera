@@ -10,7 +10,6 @@ const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const rankingsModel = require('../../../models/books/rankings.model');
 const http = core.http;
-const date = core.date;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -22,7 +21,7 @@ const renderError = core.http.renderError;
  */
 function get(req, res) {
   let id_book = req.params.id_book || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -47,7 +46,7 @@ function getById(req, res) {
 
   let id_book = req.params.id_book || '';
   let id = req.params.id || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -81,13 +80,10 @@ function post(req, res) {
     stars: req.body.stars || 0
   };
 
-  console.log('ranking');
-  console.log(ranking);
-
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return rankingsModel.validateRankingCreate(ranking);
+      return rankingsModel.validateCreate(ranking);
     })
     .then(function(result) {
       return rankingsModel.insert(id_book, result.value);
@@ -116,9 +112,6 @@ function put(req, res) {
     stars: req.body.stars || 0
   };
 
-  console.log('ranking');
-  console.log(ranking);
-
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
@@ -126,7 +119,7 @@ function put(req, res) {
     })
     .then(function (rId) {
       ranking._id = rId;
-      return rankingsModel.validateRankingUpdate(ranking);
+      return rankingsModel.validateUpdate(ranking);
     })
     .then(function(result) {
       return rankingsModel.update(id_book, result.value);

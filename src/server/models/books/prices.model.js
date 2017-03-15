@@ -11,12 +11,8 @@
  */
 const core = require('../../modules/core');
 const pricesSchema = require('./config/prices.schema');
-const db = core.connection;
 const date = core.date;
-const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
-const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
 
 /**
@@ -24,7 +20,7 @@ const booksModel = require('./books.model').model;
  * @param  {Object} book Price object
  * @return {Promise}      Resolve/Reject
  */
-function validatePriceCreate(price){
+function validateCreate(price){
   return validator.validateSchema(price, pricesSchema.pricesCreateSchema);
 }
 
@@ -33,7 +29,7 @@ function validatePriceCreate(price){
  * @param  {Object} book Price object
  * @return {Promise}      Resolve/Reject
  */
-function validatePriceUpdate(price){
+function validateUpdate(price){
   return validator.validateSchema(price, pricesSchema.pricesUpdateSchema);
 }
 
@@ -139,8 +135,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validatePriceCreate: validatePriceCreate,
-  validatePriceUpdate: validatePriceUpdate,
+  validateCreate: validateCreate,
+  validateUpdate: validateUpdate,
   insert: insert,
   update: update,
   remove: remove

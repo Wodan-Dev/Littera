@@ -11,10 +11,7 @@
  */
 const core = require('../../modules/core');
 const forumsSchema = require('./config/forums.schema');
-const db = core.connection;
 const date = core.date;
-const config = core.config;
-const crypto = core.crypto;
 const validator = core.validator;
 const checkField = core.validator.validator;
 const booksModel = require('./books.model').model;
@@ -24,7 +21,7 @@ const booksModel = require('./books.model').model;
  * @param  {Object} book Forum object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumCreate(forum){
+function validateCreate(forum){
   forum._id_user = checkField.trim(checkField.escape(forum._id_user));
   forum.title = checkField.trim(checkField.escape(forum.title));
   forum.content = checkField.trim(checkField.escape(forum.content));
@@ -37,7 +34,7 @@ function validateForumCreate(forum){
  * @param  {Object} book Forum object
  * @return {Promise}      Resolve/Reject
  */
-function validateForumUpdate(forum){
+function validateUpdate(forum){
   forum.title = checkField.trim(checkField.escape(forum.title));
   forum.content = checkField.trim(checkField.escape(forum.content));
 
@@ -144,8 +141,8 @@ function remove(id_book, id) {
  * @type {Object}
  */
 module.exports = {
-  validateForumCreate: validateForumCreate,
-  validateForumUpdate: validateForumUpdate,
+  validateCreate: validateCreate,
+  validateUpdate: validateUpdate,
   insert: insert,
   update: update,
   remove: remove

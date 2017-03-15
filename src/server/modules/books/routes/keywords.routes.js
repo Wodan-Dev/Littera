@@ -10,7 +10,6 @@ const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const keywordsModel = require('../../../models/books/keywords.model');
 const http = core.http;
-const date = core.date;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -22,7 +21,7 @@ const renderError = core.http.renderError;
  */
 function get(req, res) {
   let id_book = req.params.id_book || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -35,6 +34,8 @@ function get(req, res) {
     .catch(function (err) {
       renderError(res, {}, err);
     });
+    // FIXME: teste
+    // IDEA: vamo
 }
 
 /**
@@ -47,7 +48,7 @@ function getById(req, res) {
 
   let id_book = req.params.id_book || '';
   let id = req.params.id || '';
-  let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
+  //let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
 
   validator.validateId(id_book)
     .then(function(rIdBook) {
@@ -82,7 +83,7 @@ function post(req, res) {
   validator.validateId(id_book)
     .then(function (rIdBook) {
       id_book = rIdBook;
-      return keywordsModel.validateKeywordCreate(keyword);
+      return keywordsModel.validateCreate(keyword);
     })
     .then(function(result) {
       return keywordsModel.insert(id_book, result.value);
@@ -101,32 +102,8 @@ function post(req, res) {
  * @param  {Object}   res  response object
  */
 function put(req, res) {
-
-  let id_book = req.body._id_book || '';
-
-  let keyword = {
-    _id: req.body._id || '',
-    content: req.body.content || ''
-  };
-
-  validator.validateId(id_book)
-    .then(function (rIdBook) {
-      id_book = rIdBook;
-      return validator.validateId(keyword._id);
-    })
-    .then(function (rId) {
-      keyword._id = rId;
-      return keywordsModel.validateKeywordUpdate(keyword);
-    })
-    .then(function(result) {
-      return keywordsModel.update(id_book, result.value);
-    })
-    .then(function (result) {
-      http.render(res, result);
-    })
-    .catch(function (err) {
-      renderError(res, keyword, err);
-    });
+  http.render(res, 'Not Allowed',
+    http.HTTP_STATUS.HTTP_405_METHOD_NOT_ALLOWED);
 }
 
 /**
