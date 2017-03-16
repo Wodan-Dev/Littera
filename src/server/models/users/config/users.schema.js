@@ -12,7 +12,7 @@ const reviewsSchema = require('./reviews.schema');
 const choicesSchema = require('./choices.schema');
 const followersSchema = require('./followers.schema');
 const followingSchema = require('./following.schema');
-const wishlistSchema = require('./wishlist.schema');
+const wishListSchema = require('./wishlist.schema');
 const librarySchema = require('./library.schema');
 const written_booksSchema = require('./written_books.schema');
 const date = core.date;
@@ -116,7 +116,7 @@ const usersSchema = new db.mongoose.Schema({
     followingSchema.followingSchema
   ],
   wishlist: [
-    wishlistSchema.wishListSchema
+    wishListSchema.wishListSchema
   ],
   library: [
     librarySchema.librarySchema

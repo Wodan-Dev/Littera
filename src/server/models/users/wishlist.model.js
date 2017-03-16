@@ -1,10 +1,9 @@
 /**
- * Created by jonathan on 15/03/17.
+ * Created by jonathan on 16/03/17.
  */
 'use strict';
 /**
  * Model users
- *
  */
 
 /**
@@ -12,7 +11,7 @@
  */
 const core = require('../../modules/core');
 const usersModel = require('./users.model').model;
-const followingSchema = require('./config/following.schema');
+const wishListSchema = require('./config/wishlist.schema');
 const db = core.connection;
 const date = core.date;
 const config = core.config;
@@ -23,10 +22,10 @@ const checkField = core.validator.validator;
 /**
  * Insert in DB
  * @param  {ObjectId} id user id
- * @param  {Object} follower follower object
+ * @param  {Object} book book object
  * @return {Promise}        Resolve/Reject
  */
-function insert(id, follower) {
+function insert(id, book) {
 
   let query = {
     _id: db.getObjectId(id)
@@ -34,9 +33,9 @@ function insert(id, follower) {
 
   let data = {
     $push: {
-      following: {
-        _id_user_follow: follower._id_user_follow,
-        date_followed: date.getDateUTC()
+      wishlist: {
+        _id_book: book._id_book,
+        date_saved: date.getDateUTC()
       }
     }
   };
@@ -54,18 +53,18 @@ function insert(id, follower) {
 
 /**
  * Delete in DB
- * @param  {Object} follower follower which has to be deleted
+ * @param  {Object} book book which has to be deleted
  * @return {Promise}        Resolve/Reject
  */
-function remove(follower) {
+function remove(book) {
   let query = {
-    _id: follower._id
+    _id: book._id
   };
 
   let data = {
     $pull: {
-      following: {
-        _id_user_follow: follower._id_follow
+      wishlist: {
+        _id_book: book._id_book
       }
     }
   };
@@ -91,7 +90,7 @@ function listByUser(user, page) {
   let pageSize = parseInt(config.getPageSize());
 
   return usersModel.findOne({ username: user })
-    .populate('following._id_user_follow', 'username email')
+    .populate('wishlist._id_book', 'cover_image title')
     .exec();
 }
 
@@ -99,13 +98,13 @@ function listByUser(user, page) {
 /**
  * Update in DB
  * @param  {ObjectId} idUser user id
- * @param  {ObjectId} idFollow user id
+ * @param  {ObjectId} idBook book id
  * @return {Promise}        Resolve/Reject
  */
-function alreadyFollowed(idUser, idFollow) {
+function alreadyWished(idUser, idBook) {
   let query = {
     _id: idUser,
-    'following._id_user_follow': idFollow
+    'wishlist._id_book': idBook
   };
 
   return usersModel
@@ -115,14 +114,14 @@ function alreadyFollowed(idUser, idFollow) {
 
 /**
  * Validate create
- * @param  {Object} follower follower object
+ * @param  {Object} book book object
  * @return {Promise}      Resolve/Reject
  */
-function validateCreate(follower) {
+function validateCreate(book) {
 
-  follower._id_user_follow = checkField.trim(checkField.escape(follower._id_user_follow));
+  book._id_book = checkField.trim(checkField.escape(book._id_book));
 
-  return validator.validateSchema(follower, followingSchema.followingCreateSchema);
+  return validator.validateSchema(book, wishListSchema.wishListCreateSchema);
 }
 
 
@@ -135,6 +134,5 @@ module.exports = {
   insert: insert,
   remove: remove,
   listByUser: listByUser,
-  alreadyFollowed: alreadyFollowed
+  alreadyWished: alreadyWished
 };
-

@@ -1,5 +1,5 @@
 /**
- * Created by jonathan on 15/03/17.
+ * Created by jonathan on 16/03/17.
  */
 'use strict';
 /**
@@ -9,11 +9,10 @@
 /**
  * Dependencies
  */
-
 const core = require('../../core');
-const followingModel = require('../../../models/users/following.model');
+const wishListModel = require('../../../models/users/wishlist.model');
 const usersModel = require('../../../models/users/users.model');
-const followingCtrl = require('../controller/following.controller');
+const wishListCtrl = require('../controller/wishlist.controller');
 const http = core.http;
 const validator = core.validator;
 const utils = core.utils;
@@ -28,9 +27,9 @@ function getById(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
   let username = req.params.username || '-';
 
-  followingModel.listByUser(username, pageNum)
+  wishListModel.listByUser(username, pageNum)
     .then(function (result) {
-      http.render(res, result.following);
+      http.render(res, result.wishlist);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -46,25 +45,25 @@ function post(req, res) {
 
   let username = req.params.username || '-';
 
-  let userFollow = {
-    _id_user_follow: req.body._id_user_follow || ''
+  let userWish = {
+    _id_book: req.body._id_book || ''
   };
 
 
-  validator.validateId(userFollow._id_user_follow)
+  validator.validateId(userWish._id_book)
     .then(function (rId) {
-      userFollow._id_user_follow = rId;
-      return followingModel.validateCreate(userFollow);
+      userWish._id_book = rId;
+      return wishListModel.validateCreate(userWish);
     })
     .then(function (result) {
-      userFollow = result.value;
+      userWish = result.value;
       return usersModel.findByUserName(username);
     })
     .then(function (user) {
-      return followingCtrl.validateFollower(user._id, userFollow._id_user_follow);
+      return wishListCtrl.validateWish(user._id, userWish._id_book);
     })
     .then(function (id) {
-      return followingModel.insert(id, userFollow);
+      return wishListModel.insert(id, userWish);
     })
     .then(function (result) {
       http.render(res, result);
@@ -82,20 +81,20 @@ function post(req, res) {
 function remove(req, res) {
   let username = req.params.username || '-';
 
-  let userFollow = {
-    _id_follow: req.params.id || ''
+  let userWish = {
+    _id_book: req.params.id || ''
   };
 
 
-  validator.validateId(userFollow._id_follow)
+  validator.validateId(userWish._id_book)
     .then(function (rId) {
-      userFollow._id_follow = rId;
+      userWish._id_book = rId;
       return usersModel.findByUserName(username);
     })
     .then(function (user) {
-      userFollow._id = user._id;
+      userWish._id = user._id;
 
-      return followingModel.remove(userFollow);
+      return wishListModel.remove(userWish);
     })
     .then(function (result) {
       http.render(res, result);
@@ -114,9 +113,9 @@ function remove(req, res) {
 function router(express, auth) {
   let routes = express.Router();
 
-  routes.get('/:username/following/', auth, getById);
-  routes.post('/:username/following/', auth, post);
-  routes.delete('/:username/following/:id', auth, remove);
+  routes.get('/:username/wish/', auth, getById);
+  routes.post('/:username/wish/', auth, post);
+  routes.delete('/:username/wish/:id', auth, remove);
 
   return routes;
 }

@@ -11,6 +11,7 @@
  * @param  {Object} app     Express App instance
  * @param  {Object} express Express
  * @param  {String} url     Path url which module will work
+ * @param  {Function} auth     Authentication Function
  */
 module.exports = function (app, express, url, auth) {
 
@@ -19,4 +20,5 @@ module.exports = function (app, express, url, auth) {
   app.use(url, require('./routes/choices.routes')(express, auth));
   app.use(url, require('./routes/followers.routes')(express, auth));
   app.use(url, require('./routes/following.routes')(express, auth));
+  app.use(url, require('./routes/wishlist.routes')(express, auth));
 };
