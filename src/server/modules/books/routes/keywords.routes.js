@@ -10,7 +10,6 @@ const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const keywordsModel = require('../../../models/books/keywords.model');
 const http = core.http;
-const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
 

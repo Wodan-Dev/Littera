@@ -42,6 +42,19 @@ function validateUpdate(comment){
 }
 
 /**
+ * List all register in DB
+ * @return {Promise} Resolve/Reject
+ */
+function listByBook(id_book, page) {
+  //let pageSize = parseInt(config.getPageSize());
+
+  return booksModel.findById({_id: id_book})
+    .populate('comments._id_user', 'username email')
+    .exec();
+}
+
+
+/**
  * Insert comment in DB
  * @param  {ObjectId} id Id which has to be updated
  * @param  {Object} comment comment object
@@ -144,5 +157,6 @@ module.exports = {
   validateUpdate: validateUpdate,
   insert: insert,
   update: update,
-  remove: remove
+  remove: remove,
+  listByBook: listByBook
 };
