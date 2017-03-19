@@ -1,10 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<head lang="pt-br">
+  <meta charset="UTF-8">
+  <title>Página Inicial</title>
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1"> <!-- media="(device-height: 568px)">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <!--<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet">-->
+  <link rel="stylesheet" type="text/css" href="./static/css/main-style.css">
+  <link rel="stylesheet" type="text/css" href="./static/css/navigator.css">
+  <link rel="stylesheet" type="text/css" href="./static/css/feed.css">
+  <link rel="stylesheet" type="text/css" href="./static/css/utils.css">
+  <!-- endbuild -->
 </head>
-<body>
+<body ng-app="litteraApp" ng-controller="MainController as MainCtrl">
+<!--[if lte IE 8]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<div id="Modal" class="modal"
+     ng-if="__showModal"
+     ng-click="MainCtrl.btnHideModal()"></div>
+  <liheader></liheader>
+  <linav-Bar-User></linav-Bar-User>
+  <linav-Bar-Notify></linav-Bar-Notify>
+  <linav-Bar-Links></linav-Bar-Links>
+
+  <section class="feed" ng-view="ng-view">
+
+  </section><!---->
+
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID
+    <script>
+      !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+      (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+      r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+      }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-XXXXX-X');
+      ga('send', 'pageview');
+   </script>-->
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="./bower_modules/angular/angular.js"></script>
+<script src="./bower_modules/angular-animate/angular-animate.js"></script>
+<script src="./bower_modules/angular-resource/angular-resource.js"></script>
+<script src="./bower_modules/angular-route/angular-route.js"></script>
+<script src="./bower_modules/angular-sanitize/angular-sanitize.js"></script>
+<script src="./bower_modules/angular-css/angular-css.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<!--<script src="./static/js/navigator.js"></script>-->
+<script src="./modules/app.module.js"></script>
+<script src="./static/js/urls.js"></script>
+<script src="./components/header/header.module.js"></script>
+<script src="./components/header/header.controller.js"></script>
+<script src="./components/navBarLinks/navBarLinks.module.js"></script>
+<script src="./components/navBarLinks/navBarLinks.controller.js"></script>
+<script src="./components/navBarNotify/navBarNotify.module.js"></script>
+<script src="./components/navBarNotify/navBarNotify.controller.js"></script>
+<script src="./components/navBarUser/navBarUser.module.js"></script>
+<script src="./components/navBarUser/navBarUser.controller.js"></script>
+
+
+<script src="./modules/main/main.module.js"></script>
+<script src="./modules/main/main.controller.js"></script>
+<script src="./modules/feed/feed.module.js"></script>
+<script src="./modules/feed/feed.routes.js"></script>
+<script src="./modules/feed/feed.controller.js"></script>
+<script src="./modules/app.js"></script>
+
+<!-- endbuild -->
 
 </body>
 </html>
+

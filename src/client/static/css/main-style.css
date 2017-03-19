@@ -1,0 +1,229 @@
+@import url("reset.css");
+
+html, body {
+  height:100%;
+  margin:0;
+  padding:0;
+  overflow-x: hidden;
+}
+
+html {
+  font-family: "Arimo", tahoma, sans-serif;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: rgb(32,32,32);
+}
+
+a:hover {
+  color: rgb(32,32,32);
+
+}
+
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 0;
+  list-style: none;
+}
+
+body {
+  background: #FAFAFA;
+}
+
+body:before{
+  content:"";
+  width:100%;
+  height:100%;
+  background:red;
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 70;
+  padding-top: 6.25rem; /* 100px */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  transition: all 300ms ease;
+}
+
+header {
+  background: rgba(255,255,255,.95);
+  width: 100%;
+  text-align:center;
+  height: 2.8125rem; /* 45px */
+  position: fixed;
+  z-index: 1;
+  border-bottom: solid 1px #DADADA;
+}
+
+header div {
+  height: 100%;
+}
+
+header .nav-button {
+  float: left;
+  width: 2.8125rem; /* 45px */
+  box-sizing: content-box;
+  border-right: solid 1px #DADADA;
+  transition:all 400ms ease;
+}
+.nav-button:hover{
+  background: rgb(245,245,245);
+  cursor: pointer;
+}
+
+a.menu-button {
+  text-align: center;
+  vertical-align: middle;
+  box-sizing: content-box;
+  width: 2.8125rem; /* 45px */
+  line-height: 2.8125rem; /* 45px */
+}
+
+a.menu-button i {
+  width: 2.8125rem; /* 45px */
+  height: 1.25rem; /* 20px; */
+}
+
+header .nav-center {
+  margin:0 auto;
+  display:inline-block;
+}
+
+.nav-center p {
+  line-height: 2.8125rem; /* 45px; */
+  text-align: center;
+  vertical-align: middle;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+}
+
+header .nav-user {
+  width: 15.625rem; /* 250px; */
+  float: right;
+  border-left: solid .0625rem /* 1px */ #DADADA;
+  transition: all 300ms ease;
+}
+.nav-user .nav-user-config {
+  float: left;
+  width: 1.875rem; /* 30px; */
+  box-sizing: content-box;
+  height: 2.8125rem; /* 45px;*/
+  transition: all 100ms ease;
+}
+
+.nav-user .nav-user-config:hover {
+  background: rgb(245,245,245);
+}
+
+.nav-user-config .btn-search {
+  cursor: pointer;
+  float: left;
+  margin-left: .5rem; /* 8px; */
+  line-height: 2.8125rem; /* 45px; */
+  margin-right: .9375rem; /* 15px; */
+}
+
+.nav-user .nav-user-desc {
+  float: left;
+  height: 2.8125rem; /* 45px; */
+  width: 9.375rem; /* 150px; */
+  transition: all 300ms ease;
+}
+.nav-user-desc:hover{
+  background: rgb(245,245,245);
+  cursor: pointer;
+}
+
+.nav-user-desc p {
+  padding-right: .25rem; /* 4px; */
+  padding-left: .25rem; /* 4px; */
+  height: 2.8125rem; /* 45px; */
+  line-height: 2.8125rem; /* 45px; */
+  text-align: center;
+  vertical-align: middle;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(32,32,32);
+}
+
+.nav-user-desc  input#txtSearch {
+  width: 18.75rem; /* 300px; */
+  padding-top: 0;
+  font-size: 1.5rem;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 2.625rem; /* 42px; */
+  display: block;
+  transition: all 300ms ease;
+  border:none;
+  border-bottom: solid .125rem /* 2px */ #DADADA;
+  outline: none
+}
+
+.nav-user .nav-user-picture {
+  float: right;
+  width: 3.125rem; /* 50px; */
+  box-sizing: content-box;
+  height: 2.8125rem; /* 45px; */
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.nav-user .nav-user-picture:hover {
+  background: rgb(245,245,245);
+}
+
+.nav-user-picture .notify {
+  background: rgb(29,233,182);
+  top: .125rem; /* 2px */
+  width: .9375rem; /* 15px; */
+  height: .9375rem; /* 15px; */
+  border-radius: .625rem; /* 10px; */
+  position: absolute;
+}
+
+.nav-user-picture img {
+  margin-top: .125rem; /* 2px */
+  margin-right: .125rem; /* 2px */
+  border-radius: 1.25rem; /* 20px; */
+  width: 2.5rem; /* 40px; */
+  height: 2.5rem; /* 40px; */
+  box-sizing: border-box;
+}
+
+.nav-user-picture img:hover {
+  border: solid .125rem /* 2px */ rgb(29,233,182);
+}
+
+.divisor {
+  width: 100%;
+  height: .125rem; /* 2px */
+  display: block;
+  box-sizing: border-box;
+  border-bottom: solid .0625rem /* 1px */ #DADADA;
+}
+
+
+@media only screen and (max-width: 37.5rem /* 600px */ ) {
+  header .nav-center {
+    display: none;
+  }
+}
+

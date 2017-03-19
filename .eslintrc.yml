@@ -20,4 +20,7 @@ rules:
     - warn
   no-console:
     - warn
-  
+globals:
+  angular: true
+  litteraApp: true
+

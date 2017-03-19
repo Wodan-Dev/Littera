@@ -57,7 +57,21 @@ module.exports = function(grunt) {
           dest: '<%= appcfg.build %>',
           src: [
             'client/*.html',
+            'client/components/**',
+            'client/modules/**',
+            'client/static/**',
             'client/{,*/}*.html'
+          ]
+        }]
+      },
+      dependence: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: './bower_modules',
+          dest: '<%= appcfg.build %>/client/bower_modules',
+          src: [
+            '**',
           ]
         }]
       }
@@ -92,7 +106,7 @@ module.exports = function(grunt) {
         src: [
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
         ]
-      },
+      }
     },
     // code style
     eslint: {
@@ -115,8 +129,9 @@ module.exports = function(grunt) {
         src: [
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
         ]
-      },
+      }
     }
+
   };
 
   grunt.initConfig(file);
@@ -139,6 +154,7 @@ module.exports = function(grunt) {
     'eslint:client',
     'clean:client',
     'copy:client',
+    'copy:dependence',
     'wiredep'
   ]);
 

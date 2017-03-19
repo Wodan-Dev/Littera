@@ -1,0 +1,177 @@
+.feed {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.feed .feed-notices {
+  width: 60%;
+  height: auto;
+  float: left;
+  padding-right: .625rem;/* 10px */
+  padding-left: .625rem;/* 10px */
+  box-sizing: border-box;
+
+}
+
+.feed .user-feed {
+  float: left;
+  width: 40%;
+  height: 25rem;/* 400px */
+  display: block;
+  padding-right: .625rem;/* 10px */
+  padding-left: .625rem;/* 10px */
+  box-sizing: border-box;
+}
+
+.user-feed .feed-profile {
+  width: 100%;
+  height: auto;
+  max-width: 20rem;/* 320px */
+  margin: auto;
+  padding: .625rem;/* 10px */
+  display: table;
+  box-sizing: border-box;
+}
+
+.user-feed .feed-profile .feed-profile-picture {
+  width: 7.5rem;/* 120px */
+  height: 7.5rem;/* 120px */
+  display: block;
+  float: left;
+  margin: auto;
+  border-radius: .25rem;/* 4px */
+  background: #FFFFFF;
+  border:solid .0625rem/* 1px */#DADADA;
+  box-sizing: border-box;
+}
+.user-feed .feed-profile .feed-profile-picture img {
+  width: 6.875rem;/* 110px */
+  height: 6.875rem;/* 110px */
+  margin: .25rem;/* 4px */
+  border-radius: .125rem;/* 2px */
+}
+
+.user-feed .feed-profile .feed-profile-username {
+  float: left;
+  box-sizing: border-box;
+  display: block;
+  margin-left: .625rem;/* 10px */
+}
+.user-feed .feed-profile .feed-profile-username p {
+  color: #555555;
+  margin-top: .625rem;/* 10px */
+}
+
+.user-feed .feed-profile .feed-profile-username p.name {
+  font-weight: bolder;
+}
+
+.user-feed .feed-profile .feed-profile-options {
+  float: left;
+  box-sizing: border-box;
+  display: block;
+  width: 10rem;/* 160px */
+  padding-top: .625rem;/* 10px */
+  margin-left: .625rem;/* 10px */
+}
+.user-feed .feed-profile .feed-profile-options a.btn-following,
+.user-feed .feed-profile .feed-profile-options a.btn-followers {
+  font-weight: 400;
+  color: #555555;
+  display: block;
+  padding-top: .3125rem;/* 5px */
+  font-size: .7em;
+}
+
+.user-feed .feed-profile .feed-profile-options a.btn-following:hover,
+.user-feed .feed-profile .feed-profile-options a.btn-followers:hover {
+  color: rgb(10,10,10);
+  font-weight: 500;
+}
+
+.user-feed .feed-profile .feed-profile-options a.btn-follow {
+  margin-top: .9375rem;/* 15px */
+  width: 4.6875rem;/* 75px */
+}
+
+.user-feed .feed-profile-controls {
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: .625rem;/* 10px */
+}
+
+.user-feed .feed-profile-controls ul li{
+  width: 100%;
+}
+
+.user-feed .feed-profile-controls ul li a {
+  color: rgb(32,32,32);
+  display:block;
+  padding-left: 1.25rem;/* 20px */
+  text-align: left;
+  line-height: 2.1875rem;/* 35px */
+  transition: all 300ms ease;
+}
+
+.user-feed .feed-profile-controls ul li a:hover {
+  color: #1F9963;
+}
+
+.user-feed .feed-profile-controls ul li a.active {
+  color: #1F9963;
+}
+
+@media only screen and (max-width: 37.5rem /* 600px */) {
+
+  .feed .feed-notices {
+    width: 100%;
+    float: none;
+    order: 2;
+  }
+
+  .feed .user-feed  {
+    order: 1;
+    width: 100%;
+    float: none;
+  }
+
+  .user-feed .feed-profile .feed-profile-picture {
+    float: none;
+    margin: auto;
+  }
+
+  .user-feed .feed-profile .feed-profile-username {
+    width: 100%;
+    float: none;
+    margin: auto;
+  }
+
+  .user-feed .feed-profile .feed-profile-options {
+    float: none;
+    margin: auto;
+  }
+
+  .user-feed .feed-profile .feed-profile-username p {
+    color: #555555;
+    margin-top: .625rem;/* 10px */
+    text-align: center;
+  }
+
+  .user-feed .feed-profile .feed-profile-options a.btn-following,
+  .user-feed .feed-profile .feed-profile-options a.btn-followers {
+    margin: auto;
+    text-align: center;
+  }
+
+  .user-feed .feed-profile .feed-profile-options a.btn-follow {
+    float: none;
+    margin: .625rem auto auto;
+  }
+
+  .user-feed .feed-profile-controls ul li a{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding:0;
+  }
+}

@@ -1,12 +1,14 @@
-<section class="navigator" id="NavLeft" ng-controller="NavBarUserController as NavBarUserCtrl">
+<section class="navigator" id="NavLeft"
+         ng-style="$root.__showUserMenu ? { 'left': 0 } : { 'left': '-15.625rem'}"
+  >
   <div class="header">
     <div class="header-user">
       <div class="header-user-picture">
-        <img src="../../images/image (11).jpg" />
+        <img ng-src="{{$ctrl.User.picture}}" />
       </div>
       <div class="header-user-desc">
-        <p class="user">Jonathan</p>
-        <p class="username">@JonathanH</p>
+        <p class="user" ng-bind="$ctrl.User.name"></p>
+        <p class="username" ng-bind="$ctrl.User.username"></p>
       </div>
     </div>
   </div>

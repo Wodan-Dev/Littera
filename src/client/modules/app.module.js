@@ -1,11 +1,17 @@
 /**
  * Created by jonathan on 17/03/17.
  */
-'use strict'
-/**
- * Module app.module
- */
+'use strict';
+(function (window) {
 
-/**
- * Dependencies
- */
+  var litteraApp = window.litteraApp = window.litteraApp || {};
+
+  litteraApp.modules = {
+    app: {
+      name: 'litteraApp'
+    }
+  };
+
+  litteraApp.components = {};
+  litteraApp.URLS = {};
+}(window));

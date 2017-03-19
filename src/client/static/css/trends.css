@@ -1,0 +1,66 @@
+
+.feed .trends {
+  float: left;
+  width: 40%;
+  height: auto;
+  display: block;
+  padding-right: .625rem;/* 10px */
+  padding-left: .625rem;/* 10px */
+  box-sizing: border-box;
+}
+
+.trends .trend-block {
+  box-sizing: border-box;
+  margin-top: .625rem;/* 10px */
+  margin-bottom: .625rem;/* 10px */
+  font-size: .9rem;
+}
+
+.trends .trend-block h4 {
+  font-weight: 500;
+  color: #555555;
+}
+
+.trends .trend-item {
+  width: 100%;
+  height: 2.8125rem;/* 45px */
+}
+
+.trends .trend-item .trend-picture {
+  width: 2.8125rem;/* 45px */
+  height: 2.8125rem;/* 45px */
+  display: block;
+  float: left;
+  margin-top: 0;
+}
+
+.trends .trend-item .trend-picture img {
+  margin: .3125rem;/* 5px */
+  width: 2.1875rem;/* 35px */
+  height: 2.1875rem;/* 35px */
+  border-radius: 2.5rem;/* 40px */
+  box-sizing: border-box;
+}
+
+.trends .trend-item .trend-content {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  margin-left: .3125rem;/* 5px */
+  margin-top: .25rem;/* 4px */
+}
+
+.trends .trend-item .trend-content a {
+  float: left;
+}
+
+.trends .trend-item .trend-content a.username {
+  margin-top: .375rem; /* 6px */
+}
+
+@media only screen and (max-width: 37.5rem/* 600px */) {
+
+  .feed .trends {
+    display: none;
+  }
+}

@@ -6,30 +6,22 @@
 (function (angular, litteraApp) {
   litteraApp.components.navBarUser = {
     name: 'litteraApp.navBarUser',
-    controllers: {
-      navBar: {
-        name: 'NavBarUserController',
-        nameas: 'NavBarUserCtrl'
-      }
+    component: 'linavBarUser',
+    controller: {
+      name: 'NavBarUserController',
+      nameas: 'NavBarUserCtrl'
     },
-    routes: {
-
-    },
-    factories: {
-
-    },
-    templates: {
-      navBar: {
-        url: 'navBarUser.tpl.html'
-      }
-    },
+    template: './components/navBarUser/navBarUser.tpl.html',
     imports: {
 
     }
   };
 
-  angular.module(litteraApp.components.navBarUser.name, [
-    'ngRoute'
-  ]);
+  angular.module(litteraApp.components.navBarUser.name, [])
+    .component(litteraApp.components.navBarUser.component,
+    {
+      templateUrl: litteraApp.components.navBarUser.template,
+      controller: litteraApp.components.navBarUser.controller.name
+    });
 
 }(angular, litteraApp));

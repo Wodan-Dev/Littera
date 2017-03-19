@@ -1,0 +1,49 @@
+<header>
+  <div class="nav-button" id="btnMenu">
+    <a class="menu-button" ng-click="$ctrl.btnShowUserMenu()">
+      <i class="fa fa-bars fa-lg" aria-hidden="true" style="color: rgb(32,32,32)"></i>
+    </a>
+  </div>
+  <div class="nav-center">
+    <p ng-bind="$ctrl.actualPage"></p>
+  </div>
+  <div class="nav-user"
+       id="navDescUser"
+       ng-style="$ctrl.showSearch ? { 'width': $ctrl.navSize() } : { 'width': '15.625rem'}"
+    >
+    <div class="nav-user-config" id="nav-user-config">
+      <a class="btn-search"
+         id="btnSearch"
+         ng-click="$ctrl.btnSearch()" >
+        <i class="fa fa-search"
+           ng-class="{ 'fa fa-times' : $ctrl.showSearch,
+                       'fa fa-search': !$ctrl.showSearch}"
+           id="icoSearch" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <!--ng-style="myObject.value === 'ok' ? { 'width':'100%', color:'green' } : { 'width': '0%' }"-->
+    <div class="nav-user-desc"
+         id="btnUser"
+         ng-click="$ctrl.btnShowLinks()"
+         ng-style="$ctrl.showSearch ? { 'width': $ctrl.btnUserSize() } : { 'width': '9.375rem'}"
+      >
+      <input ng-show="$ctrl.showSearch"
+             ng-style="$ctrl.showSearch ? { 'width': $ctrl.txtSearchSize } : { 'width': '9.375rem'}"
+             id="txtSearch"
+             name="txtSearch"
+             type="text"
+             placeholder="Pesquisar" />
+      <p ng-show="!$ctrl.showSearch"
+         id="txtUsername"
+         ng-bind="$ctrl.User.name"></p>
+    </div>
+    <div class="nav-user-picture"
+         id="btnUserPic"
+         ng-click="$ctrl.btnUserNotify()"
+      >
+      <div class="notify">&nbsp;</div>
+      <img ng-src="{{$ctrl.User.picture}}" />
+    </div>
+  </div>
+</header>

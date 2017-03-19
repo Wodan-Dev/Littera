@@ -1,0 +1,41 @@
+
+.feed-notices .follow-grid {
+  width: 100%;
+  display: table;
+  margin: auto;
+  padding-left: .625rem;/* 10px */
+  padding-right: .625rem;/* 10px */
+  box-sizing: border-box;
+}
+
+.feed-notices .follow-grid ul {
+  margin: 0 auto;
+  float: none;
+  text-align: center;
+}
+
+.feed-notices .follow-grid ul li {
+  margin: .125rem;/* 2px */
+  display: inline-block;
+}
+
+.feed-notices .follow-item {
+  display: table-cell;
+  height: 7.5rem;/* 120px */
+  min-width: 7.5rem;/* 120px */
+  float: left;
+}
+
+.feed-notices .follow-item .follow-user p {
+  margin-top: .625rem;/* 10px */
+}
+
+.follow-item .follow-user img {
+  position: relative;
+  margin: .4375rem;/* 7px */
+  width: 2.8125rem;/* 45px */
+  height: 2.8125rem;/* 45px */
+  border-radius: 2.5rem;/* 40px */
+  box-sizing: border-box;
+}
+

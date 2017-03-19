@@ -1,0 +1,128 @@
+.btn {
+  line-height: 1.375rem;/* 22px */
+  text-align: center;
+  display: block;
+  border-radius: 1.25rem;/* 20px */
+  font-size: .8rem;
+  transition: all 300ms ease;
+}
+
+.btn-primary {
+  color: #00AB6B;
+  border: solid .125rem /* 2px */#00AB6B;
+}
+
+.btn-primary.active,
+.btn-primary:hover {
+  color: #FFFFFF;
+  background: #1F9963;
+  border-color:  #1F9963;
+}
+
+.btn-default {
+  color: #333333;
+  border: solid .125rem /* 2px */#adadad;
+}
+
+.btn-default.active,
+.btn-default:hover {
+  color: #333333;
+  background: rgb(230, 230, 230);
+  border-color: rgb(230, 230, 230);
+}
+
+.btn-success {
+  color: rgb(67,160,71);
+  border: solid .125rem /* 2px */rgb(67,160,71);
+}
+
+.btn-success.active,
+.btn-success:hover {
+  color: #FFFFFF;
+  background: rgb(46,125,50);
+  border-color: rgb(46,125,50);
+}
+
+.btn-info {
+  color: rgb(30,136,229);
+  border: solid .125rem /* 2px */rgb(30,136,229);
+}
+
+.btn-info.active,
+.btn-info:hover {
+  color: #FFFFFF;
+  background: rgb(21,101,192);
+  border-color: rgb(21,101,192);
+}
+
+.btn-warning {
+  color: rgb(255,179,0);
+  border: solid .125rem /* 2px */rgb(255,179,0);
+}
+
+.btn-warning.active,
+.btn-warning:hover {
+  color: #FFFFFF;
+  background: rgb(255,143,0);
+  border-color: rgb(255,143,0);
+}
+
+.btn-danger {
+  color: rgb(229,57,53);
+  border: solid .125rem /* 2px */rgb(229,57,53);
+}
+
+.btn-danger.active,
+.btn-danger:hover {
+  color: #FFFFFF;
+  background: rgb(198,40,40);
+  border-color: rgb(198,40,40);
+}
+
+.btn-link {
+  color: #333333;
+}
+
+.btn-link.active,
+.btn-link:hover {
+  color: #1F9963;
+}
+
+.link-default {
+  color: #00AB6B; /*#B1DEDA;*//*#00AB6B;*/
+  transition: all 300ms ease;
+}
+
+.link-default:hover {
+  color: #009688;/*#F1765B;*//* #1F9963;*/
+  text-decoration: underline;
+}
+
+.link-tiny {
+  transition: all 300ms ease;
+  font-size: .8em;
+  color: rgb(120,120,120);
+}
+
+.link-tiny:hover {
+  font-size: .8em;
+  font-weight: 500;
+  color: rgb(90,90,90);
+  text-decoration: underline;
+}
+
+.link-title {
+  color: #555555;
+  font-size: 1.5rem;
+  font-weight: 500;
+  transition: all 300ms ease;
+}
+
+.link-title:hover {
+  color: #009688;/*#1F9963;*/
+}
+
+.no-decoration:hover {
+  text-decoration: none;
+}
+

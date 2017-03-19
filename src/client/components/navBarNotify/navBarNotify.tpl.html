@@ -1,10 +1,183 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<section class="navigator"
+         id="NavUser"
+         ng-style="$root.__showNotify ? { 'right': 0 } : { 'right': '-15.625rem'}">
+  <h4>
+    <a href="#" class="link-default">Notificações</a>
+  </h4>
+  <div class="divisor">
 
-</body>
-</html>
+  </div>
+  <ul>
+    <li ng-repeat="item in $ctrl.lstNotify">
+      <a ng-href="item.url">
+        <div class="item-notify">
+          <div class="user-picture">
+            <img ng-src="item.picture">
+          </div>
+          <div class="user-name">
+            <p class="name" ng-bind="item.name"></p>
+            <p class="content" ng-bind="item.content"></p>
+            <p class="time" ng-bind="item.time"></p>
+          </div>
+        </div>
+      </a>
+    </li>
+    <!--
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (4).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Alice Braga</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (3).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Mario Filho</p>
+          <p class="content">Classificou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (10).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Mário Quintana</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (10).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Mário Quintana</p>
+          <p class="content">Adiquiriu seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (9).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Ana Maria</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (8).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Felipe Mello</p>
+          <p class="content">Criou um forum sobre seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (5).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Rafael Rodrigues</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (1).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Mario Tadeu</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (4).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Alice Braga</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (3).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Mario Filho</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (5).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Rafael Rodrigues</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>
+    <li><a href="#">
+      <div class="item-notify">
+        <div class="user-picture">
+          <img src="images/image (9).jpg">
+        </div>
+        <div class="user-name">
+          <p class="name">Ana Maria</p>
+          <p class="content">Comentou seu livro</p>
+          <p class="time">Dom, 10 de Jul 17:02</p>
+        </div>
+      </div>
+    </a>
+    </li>-->
+  </ul>
+</section>
