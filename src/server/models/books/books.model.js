@@ -94,6 +94,75 @@ function findById(id) {
 }
 
 /**
+ * Get the actual price of the book
+ * @param  {ObjectId} id Id of the book
+ * @return {Promise} Resolve/Reject
+ */
+/*
+function findPrice(id) {
+  let query = {
+    $and: [
+      { _id: id },
+      { $or: [ {'prices.date_begin': {$lt: date.getDateUTC()} }, {'prices.date_begin': date.getDateUTC()} ] },
+      { $or: [ {'prices.date_end': {$gt: date.getDateUTC()} }, {$and: [{'prices.date_end': null}, {'prices.type': 0}] } ] }
+    ]
+  };
+
+  let sort = {
+    'prices.date_begin': -1
+  };
+
+  return booksModel
+    .find(query)
+    .sort(sort)
+    .limit(1)
+    .exec();
+}
+*/
+
+function findPrice(id) {
+
+  let query = {
+    $and: [
+      { _id: db.getObjectId(id) },
+      { 'prices.date_begin': { $lte: date.getDateTimeNowMongo() } },
+      { $or:
+        [ {'prices.date_end': {$gte: date.getDateTimeNowMongo()} }, {$and: [{'prices.date_end': null}, {'prices.type': 0}] } ] }
+    ]
+  };
+
+  let sort = {
+    'prices.date_begin': -1
+  };
+
+  return booksModel.aggregate([
+    {
+      '$project': {
+        'prices': {
+          '_id': 1,
+          'date_begin': 1,
+          'date_end': 1,
+          'price_min': 1,
+          'price_sug': 1,
+          'type': 1
+        }
+      }
+    },
+    {
+      $unwind: '$prices'
+    },
+    {
+      $match: query
+    },
+    {
+      $sort: sort
+    }
+  ])
+  .limit(1)
+  .exec();
+}
+
+/**
  * Validate create
  * @param  {Object} book Book object
  * @return {Promise}      Resolve/Reject
@@ -136,5 +205,6 @@ module.exports = {
   remove: remove,
   list: list,
   findById: findById,
+  findPrice: findPrice,
   model: booksModel
 };

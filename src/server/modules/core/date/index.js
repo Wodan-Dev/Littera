@@ -65,6 +65,14 @@ function getDateNow() {
   return moment().format(config.getDateFormat());
 }
 
+/**
+ * return actual Date Time for mongo's query
+ * @return {DateTime} actual Date Time
+ */
+function getDateTimeNowMongo() {
+  return new Date(moment().format(config.getDateTimeMongo()));
+}
+
 function isNumber(pnum) {
   return (!isNaN(parseFloat(pnum)) && isFinite(pnum));
 }
@@ -101,6 +109,7 @@ function getDateUTC() {
 module.exports = {
   getDateNow: getDateNow,
   getDateTimeNow: getDateTimeNow,
+  getDateTimeNowMongo: getDateTimeNowMongo,
   getDateUTC: getDateUTC,
   formatDate: formatDate,
   MONTHS: MONTHS

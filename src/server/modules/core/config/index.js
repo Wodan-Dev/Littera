@@ -27,7 +27,7 @@ function getPort() {
  * @return {String} Path to Mongo
  */
 function getDbUrl() {
-  return process.env.MONGO_DB || 'mongodb://localhost:27017/salesforce';
+  return process.env.MONGO_DB || 'mongodb://localhost:27017/littera';
 }
 
 /**
@@ -44,6 +44,14 @@ function getDateFormat() {
  */
 function getDateTimeFormat() {
   return process.env.DATE_TIME_FORMAT || 'DD/MM/YYYY HH:mm:ss';
+}
+
+/**
+ * return mongo date time format
+ * @return {String} DateTime format
+ */
+function getDateTimeMongo() {
+  return process.env.DATE_TIME_MONGO || 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
 }
 
 /**
@@ -130,6 +138,7 @@ module.exports = {
   getDbUrl: getDbUrl,
   getDateFormat: getDateFormat,
   getDateTimeFormat: getDateTimeFormat,
+  getDateTimeMongo: getDateTimeMongo,
   getSecret: getSecret,
   getLocale: getLocale,
   getPageMaxSize: getPageMaxSize,

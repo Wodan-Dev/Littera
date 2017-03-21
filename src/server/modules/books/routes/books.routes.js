@@ -12,6 +12,7 @@ const http = core.http;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
+const date = core.date;
 
 /**
  * Method Get in route /
@@ -58,11 +59,18 @@ function getPrice(req, res) {
   let id = req.params.id || '';
 
   validator.validateId(id)
-    .then(booksModel.findOne())
+    .then(function(rId) {
+      id = rId;
+      return booksModel.findPrice(id);
+    })
     .then(function (result) {
+      console.log('log1');
+      console.log(result);
       http.render(res, result);
     })
     .catch(function (err) {
+      console.log('log2');
+      console.log(err);
       renderError(res, {}, err);
     });
 }
@@ -162,7 +170,7 @@ function router(express, auth) {
 
   routes.get('/', auth, get);
   routes.get('/:id', auth, getById);
-  routes.get('/:id/price', auth, getPrice);
+  routes.get('/:id/pricing', auth, getPrice);
   routes.post('/', auth, post);
   routes.put('/', auth, put);
   routes.delete('/:id', auth, remove);
