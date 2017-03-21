@@ -41,6 +41,18 @@ function validateUpdate(ranking){
 }
 
 /**
+ * List all register in DB
+ * @return {Promise} Resolve/Reject
+ */
+function listByBook(id_book, page) {
+  //let pageSize = parseInt(config.getPageSize());
+
+  return booksModel.findById({_id: id_book})
+    .populate('rankings._id_user', 'username email')
+    .exec();
+}
+
+/**
  * Insert ranking in DB
  * @param  {ObjectId} id Id which has to be updated
  * @param  {Object} ranking ranking object
@@ -142,6 +154,7 @@ function remove(id_book, id) {
 module.exports = {
   validateCreate: validateCreate,
   validateUpdate: validateUpdate,
+  listByBook: listByBook,
   insert: insert,
   update: update,
   remove: remove

@@ -49,6 +49,26 @@ function getById(req, res) {
 }
 
 /**
+ * Method Get in route /:id
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function getPrice(req, res) {
+
+  let id = req.params.id || '';
+
+  validator.validateId(id)
+    .then(booksModel.findOne())
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+    });
+}
+
+
+/**
  * Method Post in route /
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
@@ -142,6 +162,7 @@ function router(express, auth) {
 
   routes.get('/', auth, get);
   routes.get('/:id', auth, getById);
+  routes.get('/:id/price', auth, getPrice);
   routes.post('/', auth, post);
   routes.put('/', auth, put);
   routes.delete('/:id', auth, remove);

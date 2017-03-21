@@ -46,6 +46,18 @@ function validatePostUpdate(post){
 }
 
 /**
+ * List all register in DB
+ * @return {Promise} Resolve/Reject
+ */
+function listByBook(id_book, page) {
+  //let pageSize = parseInt(config.getPageSize());
+
+  return booksModel.findById({_id: id_book})
+    .populate('forums.posts._id_user', 'username email')
+    .exec();
+}
+
+/**
  * Insert forum in DB
  * @param  {ObjectId} id Id which has to be updated
  * @param  {Object} sale forum object
@@ -153,6 +165,7 @@ function remove(id_book, id_forum, id) {
 module.exports = {
   validatePostCreate: validatePostCreate,
   validatePostUpdate: validatePostUpdate,
+  listByBook: listByBook,
   insert: insert,
   update: update,
   remove: remove

@@ -10,7 +10,6 @@ const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const pricesModel = require('../../../models/books/prices.model');
 const http = core.http;
-const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
 
@@ -45,7 +44,7 @@ function getById(req, res) {
 
   let id_book = req.params.id_book || '';
   let id = req.params.id || '';
-  
+
   validator.validateId(id_book)
     .then(function(rIdBook) {
       id_book = rIdBook;

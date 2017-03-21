@@ -7,10 +7,8 @@
  * Dependencies
  */
 const core = require('../../core');
-const booksModel = require('../../../models/books/books.model');
 const forumsModel = require('../../../models/books/forums.model');
 const http = core.http;
-const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
 
@@ -26,7 +24,7 @@ function get(req, res) {
   validator.validateId(id_book)
     .then(function(rIdBook) {
       id_book = rIdBook;
-      return booksModel.findById(id_book);
+      return forumsModel.listByBook(id_book);
     })
     .then(function (result) {
       http.render(res, result.forums);
@@ -54,7 +52,7 @@ function getById(req, res) {
     })
     .then(function (rId) {
       id = rId;
-      return booksModel.findById(id_book);
+      return forumsModel.listByBook(id_book);
     })
     .then(function (result) {
       http.render(res, result.forums.id(id));
