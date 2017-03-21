@@ -3,8 +3,15 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function runApp($rootScope)
-  {
+  function configApp($routeProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
+    $locationProvider.html5Mode({
+      enabled: false,
+      requireBase: false
+    });
+  }
+
+  function runApp($rootScope) {
     $rootScope.__showModal = false;
     $rootScope.__showUserMenu = false;
     $rootScope.__showLinks = false;
@@ -33,6 +40,7 @@
 
   }
 
+  configApp.$inject = ['$routeProvider', '$locationProvider'];
   runApp.$inject = ['$rootScope'];
 
   angular.module(litteraApp.modules.app.name, [
@@ -41,11 +49,16 @@
     litteraApp.components.navBarUser.name,
     litteraApp.components.navBarNotify.name,
     litteraApp.modules.main.name,
-    litteraApp.modules.feed.name
+    litteraApp.modules.feed.name,
+    litteraApp.core.name,
+    'angularCSS'
   ]).constant('BASEURLS', {
-    BASE: 'http://portal.com',
-    BASE_API: 'http://portal.com/api',
+    BASE: 'http://littera.pub',
+    BASE_API: 'http://littera.pub/api',
     URLS: litteraApp.URLS
+  }).constant('LOCALNAME', {
+    USER_TOKEN: 'User-Token'
   })
+    .config(configApp)
     .run(runApp);
 }(angular, litteraApp));

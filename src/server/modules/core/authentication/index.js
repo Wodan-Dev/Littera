@@ -113,7 +113,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
       })
       .catch(function (err) {
-        render(res, { 'err': err.err }, err.status);
+        render(res, err.err , http.HTTP_STATUS.HTTP_401_UNAUTHORIZED);
       });
   }
   else {

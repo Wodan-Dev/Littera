@@ -15,18 +15,29 @@
       feed: litteraApp.URLS.HOME()
     },
     factories: {
+
+    },
+    services: {
+      feed: 'feedService'
+    },
+    templates: {
       feed: {
         url: 'views/feed.view.html'
       }
     },
-    templates: {
-    },
     imports: {
+      localSave: litteraApp.core.factories.localSave,
+      request: litteraApp.core.services.request
     }
   };
 
+  console.log('sd');
+  console.log(litteraApp.modules.feed);
+
   angular.module(litteraApp.modules.feed.name, [
-    'ngRoute'
+    litteraApp.core.name,
+    'ngRoute',
+    'ngResource',
   ]);
 
 }(angular, litteraApp));

@@ -26,7 +26,7 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <div id="Modal" class="modal"
-     ng-if="__showModal"
+     ng-show="__showModal"
      ng-click="MainCtrl.btnHideModal()"></div>
   <liheader></liheader>
   <linav-Bar-User></linav-Bar-User>
@@ -35,7 +35,7 @@
 
   <section class="feed" ng-view="ng-view">
 
-  </section><!---->
+  </section>
 
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID
@@ -74,6 +74,9 @@
 <script src="./components/navBarUser/navBarUser.controller.js"></script>
 
 
+<script src="./modules/core/core.module.js"></script>
+<script src="./modules/core/factories/localsave.factory.js"></script>
+<script src="./modules/core/services/request.service.js"></script>
 <script src="./modules/main/main.module.js"></script>
 <script src="./modules/main/main.controller.js"></script>
 <script src="./modules/feed/feed.module.js"></script>

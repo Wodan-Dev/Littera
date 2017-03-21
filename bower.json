@@ -46,7 +46,7 @@
     },
     "moment": {
       "main": [
-        "moment.min.js"
+        "min/moment.min.js"
       ]
     },
     "font-awesome": {
