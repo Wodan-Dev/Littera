@@ -9,7 +9,7 @@
       return new Promise(function (resolve, reject) {
         let requiresLogin = false;
 
-        if (next.access != undefined &&
+        if (next.access !== undefined &&
           next.access.hasOwnProperty('requiresLogin')) {
           requiresLogin = next.access.requiresLogin;
         }

@@ -30,7 +30,7 @@
 
        })
        .catch(function (url) {
-          $location.path(url);
+         $location.path(url);
        });
     });
 
