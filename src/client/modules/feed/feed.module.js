@@ -31,9 +31,6 @@
     }
   };
 
-  console.log('sd');
-  console.log(litteraApp.modules.feed);
-
   angular.module(litteraApp.modules.feed.name, [
     litteraApp.core.name,
     'ngRoute',

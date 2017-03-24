@@ -6,6 +6,29 @@
   litteraApp.URLS = {
     HOME: function () {
       return '/';
+    },
+    LOGIN: function (next) {
+      let n = '?next=' + next;
+      return '/mordor/login';
+    },
+    MORDOR: {
+      AUTHENTICATION: function () {
+        return '/mordor/authenticate';
+      },
+      ME: function () {
+        return '/mordor/me';
+      }
+    },
+    NOTAUTHORIZED: function() {
+      return '/not-authorized';
+    },
+    SERVERERROR: function() {
+      return function (code) {
+        if (code)
+          return '/server-error/' + code;
+        else
+          return '/server-error/:errorCode';
+      };
     }
   };
 }(litteraApp));
