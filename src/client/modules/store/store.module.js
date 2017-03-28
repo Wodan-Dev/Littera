@@ -1,0 +1,40 @@
+/**
+ * Created by jonathan on 28/03/17.
+ */
+'use strict';
+(function (angular, litteraApp) {
+  litteraApp.modules.store = {
+    name: 'litteraApp.store',
+    controllers: {
+      store: {
+        name: 'StoreController',
+        nameas: 'StoreCtrl'
+      }
+    },
+    routes: {
+      store: litteraApp.URLS.HOME()
+    },
+    factories: {
+
+    },
+    services: {
+
+    },
+    templates: {
+      store: {
+        url: 'views/book-store.view.html'
+      }
+    },
+    imports: {
+      localSave: litteraApp.core.factories.localSave,
+      request: litteraApp.core.services.request
+    }
+  };
+
+  angular.module(litteraApp.modules.store.name, [
+    litteraApp.core.name,
+    'ngRoute',
+    'ngResource',
+  ]);
+
+}(angular, litteraApp));

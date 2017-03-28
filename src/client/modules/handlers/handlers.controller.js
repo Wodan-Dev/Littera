@@ -4,31 +4,31 @@
 'use strict';
 
 (function (angular, litteraApp) {
-  function notAuthorizedCtrl($location) {
+  function notAuthorizedCtrl($location, $window) {
     var vm = this;
     vm.goBack = function () {
-      $location.path('/');
+      $window.history.back();
     };
   }
 
-  function notFoundCtrl($location) {
+  function notFoundCtrl($location, $window) {
     var vm = this;
     vm.goBack = function () {
-      $location.path('/');
+      $window.history.back();
     };
   }
 
-  function serverErrorCtrl($location, $routeParams) {
+  function serverErrorCtrl($location, $routeParams, $window) {
     var vm = this;
     vm.errorCode = $routeParams.errorCode;
     vm.goBack = function () {
-      $location.path('/');
+      $window.history.back();
     };
   }
 
-  notAuthorizedCtrl.$inject = ['$location'];
-  notFoundCtrl.$inject = ['$location'];
-  serverErrorCtrl.$inject = ['$location', '$routeParams'];
+  notAuthorizedCtrl.$inject = ['$location', '$window'];
+  notFoundCtrl.$inject = ['$location', '$window'];
+  serverErrorCtrl.$inject = ['$location', '$routeParams', '$window'];
 
 
   angular.module(litteraApp.modules.handlers.name)
