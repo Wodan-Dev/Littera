@@ -1,0 +1,140 @@
+<div class="feed-notices">
+  <div class="notice" ng-repeat="r in FeedCtrl.feedItems">
+
+
+    <div class="notice-image">
+      <a ng-href="{{ r.post_url }}">
+        <img ng-src="{{ r.post_cover }}">
+      </a>
+    </div>
+    <div class="notice-user">
+      <div class="user-picture">
+        <a ng-href="{{ r.user_url }}">
+          <img ng-src="{{ r.user_picture }}">
+        </a>
+      </div>
+      <div class="user-name">
+        <a ng-href="{{r.user_url}}"
+           class="name link-default"
+           ng-bind="r.name"></a>
+
+        <p class="time"
+           ng-bind="r.create_at"></p>
+      </div>
+      <div class="user-options">
+
+        <a ng-href="{{ r.bookmark }}">
+          <i class="fa fa-bookmark fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    <div class="notice-content">
+      <h1 class="title">
+        <a ng-href="{{ r.post_url }}"
+           class="link-title"
+           ng-bind="r.post_title"></a>
+      </h1>
+      <p class="text">
+        <a ng-href="{{ r.post_url }}"
+           ng-bind="r.post_content"></a>
+      </p>
+    </div>
+    <div class="notice-options">
+      <a ng-href="{{r.post_ranking_url }}"
+         class="btn-like">
+        <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+        {{ r.post_average_starts }}
+      </a>
+      <a href="#" class="btn-comment">
+        <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+        {{ r.post_ranking_comment }}
+      </a>
+    </div>
+  </div>
+</div>
+<div class="trends" data-scroll="dock">
+  <div class="trend-block">
+    <h4>Em alta</h4>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (10).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Mário Quintana</a> <br />
+      <a href="#" class="username link-tiny">@MarioQ</a>
+    </div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (9).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Ana Maria</a> <br />
+      <a href="#" class="username link-tiny">@AnaMary</a>
+    </div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (6).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Marcos Henrique</a> <br />
+      <a href="#" class="username link-tiny">@Marc</a>
+    </div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (4).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Alice Braga</a> <br />
+      <a href="#" class="username link-tiny">@AlB</a>
+    </div>
+  </div>
+  <div class="trend-block">
+    <h4>Leituras</h4>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (1).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Mario Tadeu</a> <br />
+      <a href="#" class="username link-tiny">@MarioTadeu</a>
+    </div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (7).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Marcela Lima</a> <br />
+      <a href="#" class="username link-tiny">@Ma</a>
+    </div>
+  </div>
+  <div class="trend-item">
+    <div class="trend-picture">
+      <a href="#">
+        <img src="./static/images/image (10).jpg">
+      </a>
+    </div>
+    <div class="trend-content">
+      <a href="#" class="name link-default">Mário Quintana</a> <br />
+      <a href="#" class="username link-tiny">@MarioQ</a>
+    </div>
+  </div>
+
+</div>

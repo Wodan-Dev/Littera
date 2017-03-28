@@ -168,9 +168,9 @@ function remove(req, res) {
 function router(express, auth) {
   let routes = express.Router();
 
-  routes.get('/', auth, get);
-  routes.get('/:id', auth, getById);
-  routes.get('/:id/pricing', auth, getPrice);
+  routes.get('/', get);
+  routes.get('/:id', getById);
+  routes.get('/:id/pricing', getPrice);
   routes.post('/', auth, post);
   routes.put('/', auth, put);
   routes.delete('/:id', auth, remove);
