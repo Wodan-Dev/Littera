@@ -12,7 +12,7 @@
       }
     },
     routes: {
-      feed: litteraApp.URLS.HOME()
+      feed: litteraApp.URLS.FEED()
     },
     factories: {
 

@@ -77,7 +77,7 @@ function router(express) {
   let routes = express.Router();
 
   routes.post('/authenticate', postAuth);
-  routes.get('/', get);
+  routes.get('/me', get);
 
   return routes;
 }

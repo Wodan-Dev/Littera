@@ -9,7 +9,7 @@
     var vm = this;
 
     vm.lstNotify = [{
-      picture: '../../static/images/image (4).jpg',
+      picture: './static/images/image (4).jpg',
       name: 'Alice Braga',
       content: 'Comentou seu livro',
       time: 'Dom, 10 de Jul 17:02',

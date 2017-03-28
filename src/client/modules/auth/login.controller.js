@@ -13,6 +13,7 @@
     vm.btnAuthenticate = function () {
       authFactory.authenticate(vm.user.username, vm.user.pass)
         .then(function (data) {
+          authFactory.setToken(data.data.data);
           console.log(data.data);
         })
         .catch(function (data) {

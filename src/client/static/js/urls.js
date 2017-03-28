@@ -7,6 +7,9 @@
     HOME: function () {
       return '/';
     },
+    FEED: function () {
+      return '/feed';
+    },
     LOGIN: function (next) {
       let n = '?next=' + next;
       return '/mordor/login';
@@ -29,6 +32,9 @@
         else
           return '/server-error/:errorCode';
       };
+    },
+    NOTFOUND: function () {
+      return '/not-found';
     }
   };
 }(litteraApp));

@@ -12,7 +12,9 @@
           controller:  litteraApp.modules.auth.controllers.login.name,
           controllerAs:  litteraApp.modules.auth.controllers.login.nameas,
           templateUrl: litteraApp.modules.auth.templates.login.url,
-          css: 'static/css/trends.css',
+          //css: 'static/css/trends.css',
+          //css: [ //'static/css/trends.css',
+          //  /*'static/css/notice.css'*/],
           access: {
             requiresLogin: false
           }

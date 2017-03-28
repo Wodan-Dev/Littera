@@ -3,11 +3,23 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function configApp($routeProvider, $locationProvider) {
+  function configApp($httpProvider, $routeProvider, $locationProvider) {
+
     $locationProvider.hashPrefix('');
     $locationProvider.html5Mode({
       enabled: false,
       requireBase: false
+    });
+
+    $httpProvider.interceptors.push(
+      litteraApp.modules.handlers.factories.notFound);
+    $httpProvider.interceptors.push(
+      litteraApp.modules.handlers.factories.notAuthorized);
+    $httpProvider.interceptors.push(
+      litteraApp.modules.handlers.factories.serverError);
+
+    $routeProvider.otherwise({
+      redirectTo: litteraApp.URLS.NOTFOUND()
     });
   }
 
@@ -40,7 +52,7 @@
 
   }
 
-  configApp.$inject = ['$routeProvider', '$locationProvider'
+  configApp.$inject = ['$httpProvider', '$routeProvider', '$locationProvider'
   ];
   runApp.$inject = ['$rootScope',
     litteraApp.modules.auth.factories.authorization, '$location'];
@@ -50,6 +62,7 @@
     litteraApp.components.navBarLinks.name,
     litteraApp.components.navBarUser.name,
     litteraApp.components.navBarNotify.name,
+    litteraApp.modules.handlers.name,
     litteraApp.modules.main.name,
     litteraApp.modules.feed.name,
     litteraApp.modules.auth.name,
