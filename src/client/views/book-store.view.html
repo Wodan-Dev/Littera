@@ -7,7 +7,7 @@
 
             <a href="#/notice">
               <div class="shop-image-box">
-                <img class="shop-cover" ng-src="{{ r.cover }}" />
+                <img class="shop-cover" ng-src="{{ r.cover_image }}" />
                 <a ng-click="StoreCtrl.btnShowDetail(r)" class="shop-more">
                   <i class="fa fa-eye" aria-hidden="true"></i>
                 </a>
@@ -23,7 +23,7 @@
         </div>
         <div class="shop-book-detail"
              ng-show="__showModal"
-             id="book-{{r._id.$oid}}">
+             id="book-{{r._id}}">
           <div class="notice-user">
             <div class="user-picture">
               <a href="#">
@@ -38,7 +38,7 @@
               </a>
             </div>
             <div class="user-options">
-              <a ng-click="StoreCtrl.btnCloseDetail(r._id.$oid)">
+              <a ng-click="StoreCtrl.btnCloseDetail(r._id)">
                 <i class="fa fa-times fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
               </a>
             </div>

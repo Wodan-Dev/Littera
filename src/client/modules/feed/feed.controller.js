@@ -5,6 +5,8 @@
 (function (angular, litteraApp) {
   function FeedCtrl($rootScope, $window, request) {
     var vm = this;
+
+
     vm.feedItems = [
       {
         post_id: 1,
@@ -39,7 +41,7 @@
       });
   }
 
-  FeedCtrl.$inject = ['$rootScope', '$window',
+  FeedCtrl.$inject = [ '$rootScope', '$window',
     litteraApp.modules.feed.imports.request];
 
   angular.module(litteraApp.modules.feed.name)

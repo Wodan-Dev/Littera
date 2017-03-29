@@ -15,7 +15,12 @@
           css: 'static/css/book-store.css',
           access: {
             requiresLogin: true
-          }
+          }/*,
+          resolve: {
+            bookStoreData: function (storeFactory) {
+              return storeFactory.getBooks();
+            }
+          }*/
         });
     });
 

@@ -3,26 +3,37 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function StoreCtrl($rootScope, $window, request) {
+  function StoreCtrl($rootScope, $window, storeFactory) {
     var vm = this;
+    vm.books = [];
+
+    storeFactory.getBooks()
+      .then(function (data) {
+        console.log(data);
+        vm.books = data.data.docs;
+        console.log(vm.books);
+      })
+      .catch(function (er) {
+        console.log(er);
+      });
 
     vm.book = {
       _id: '',
       title: '',
       username: '',
-      cover: '',
+      cover_image: '',
       synopsis: ''
     };
 
 
     vm.btnShowDetail = function(book) {
       $rootScope.__showModal = true;
-      vm.book._id = book._id.$oid;
+      vm.book._id = book._id;
       vm.book.title = book.title;
       vm.book.username = book.username;
-      vm.book.cover = book.cover;
+      vm.book.cover_image = book.cover_image;
       vm.book.synopsis = book.synopsis;
-      document.getElementById('book-'+book._id.$oid).style.display = 'block';
+      document.getElementById('book-'+ book._id).style.display = 'block';
     };
 
     vm.showItemDetail = function (id) {
@@ -32,15 +43,13 @@
     vm.btnCloseDetail = function (id) {
 
       document.getElementById('book-'+id).style.display = 'none';
-      console.log('c');
+
       vm.book._id = '-';
       vm.showDetail = false;
       $rootScope.__showModal = false;
     };
 
-    vm.showDetail = false;
-
-
+/*
     vm.books = [{
       '_id': {
         '$oid': '58d9b570fc13ae3e7200028e'
@@ -202,10 +211,14 @@
       'cover': 'http://dummyimage.com/170x221.png/dddddd/000000',
       'synopsis': 'tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod'
     }];
+  */
   }
 
-  StoreCtrl.$inject = ['$rootScope', '$window',
-    litteraApp.modules.store.imports.request];
+  StoreCtrl.$inject = [
+    '$rootScope',
+    '$window',
+    litteraApp.modules.store.factories.store
+  ];
 
   angular.module(litteraApp.modules.store.name)
     .controller(litteraApp.modules.store.controllers.store.name, StoreCtrl);

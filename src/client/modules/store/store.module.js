@@ -12,10 +12,11 @@
       }
     },
     routes: {
-      store: litteraApp.URLS.HOME()
+      store: litteraApp.URLS.HOME(),
+      books: litteraApp.URLS.BOOKS()
     },
     factories: {
-
+      store: 'storeFactory'
     },
     services: {
 

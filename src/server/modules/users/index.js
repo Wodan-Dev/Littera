@@ -21,4 +21,5 @@ module.exports = function (app, express, url, auth) {
   app.use(url, require('./routes/followers.routes')(express, auth));
   app.use(url, require('./routes/following.routes')(express, auth));
   app.use(url, require('./routes/wishlist.routes')(express, auth));
+  app.use(url, require('./routes/written_books.routes')(express, auth));
 };

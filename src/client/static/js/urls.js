@@ -7,6 +7,14 @@
     HOME: function () {
       return '/';
     },
+    BOOKS: function() {
+      return function (id) {
+        if (id)
+          return '/books/' + id;
+        else
+          return '/books';
+      };
+    },
     FEED: function () {
       return '/feed';
     },
