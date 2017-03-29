@@ -27,6 +27,8 @@ const checkField = core.validator.validator;
  */
 function insert(id, book) {
 
+  console.log('book');
+  console.log(book);
   let query = {
     _id: db.getObjectId(id)
   };
@@ -34,7 +36,7 @@ function insert(id, book) {
   let data = {
     $push: {
       written_books: {
-        _id_book: book._id_book
+        _id_book: db.getObjectId(book._id_book)
       }
     }
   };

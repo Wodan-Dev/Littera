@@ -29,7 +29,7 @@ function getById(req, res) {
 
   writtenBooksModel.listByUser(username, pageNum)
     .then(function (result) {
-      http.render(res, result.wishlist);
+      http.render(res, result.written_books);
     })
     .catch(function (err) {
       renderError(res, {}, err);

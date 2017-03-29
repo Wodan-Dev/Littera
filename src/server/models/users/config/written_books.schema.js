@@ -21,7 +21,7 @@ const schema = core.validator.schema;
 const written_booksSchema = new db.mongoose.Schema({
   _id_book: {
     type: db.types.ObjectId,
-    ref: 'users',
+    ref: 'books',
     required: true,
     index: true
   }

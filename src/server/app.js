@@ -50,6 +50,7 @@ require('./modules/users')(app, express, '/users', auth.ensureAuthenticated);
 require('./modules/books')(app, express, '/books', auth.ensureAuthenticated);
 require('./modules/terms')(app, express, '/terms', auth.ensureAuthenticated);
 require('./modules/tags')(app, express, '/tags', auth.ensureAuthenticated);
+require('./modules/feeds')(app, express, '/feed', auth.ensureAuthenticated);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

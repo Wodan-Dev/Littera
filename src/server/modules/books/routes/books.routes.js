@@ -8,6 +8,8 @@
  */
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model.js');
+const feedModel = require('../../../models/feeds/feed.model');
+const writtenBooksModel = require('../../../models/users/written_books.model');
 const http = core.http;
 const utils = core.utils;
 const validator = core.validator;
@@ -64,8 +66,6 @@ function getPrice(req, res) {
       return booksModel.findPrice(id);
     })
     .then(function (result) {
-      console.log('log1');
-      console.log(result);
       http.render(res, result);
     })
     .catch(function (err) {
@@ -82,6 +82,10 @@ function getPrice(req, res) {
  * @param  {Object}   res  response object
  */
 function post(req, res) {
+
+  let user ={
+    _id_user: req.body._id_user || ''
+  };
 
   let book = {
     title: req.body.title || '',
@@ -106,7 +110,23 @@ function post(req, res) {
       return booksModel.insert(result.value);
     })
     .then(function (result) {
-      http.render(res, result);
+      console.log('writte');
+      console.log(result);
+      book = result;
+      console.log('writtenBooksModel');
+      console.log(writtenBooksModel.insert);
+      return writtenBooksModel.insert(user._id_user, { _id_book: book._id });
+    })
+    .then(function () {
+      console.log('feed');
+      return feedModel.insert({
+        _id_user: user._id_user,
+        _id_book: book._id,
+        type_feed: 0
+      });
+    })
+    .then(function () {
+      http.render(res, book);
     })
     .catch(function (err) {
       renderError(res, book, err);
