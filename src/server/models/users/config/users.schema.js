@@ -45,6 +45,9 @@ const usersSchema = new db.mongoose.Schema({
   last_login: {
     type: Date
   },
+  cover_image: {
+    type: String
+  },
   name: {
     type: String,
     index: true
@@ -135,6 +138,7 @@ usersSchema.plugin(db.mongoosePaginate);
 const usersCreateSchema = schema({
   name: models.stringField(true).min(5).max(100),
   gender: models.numberField(true).integer().min(0).max(2),
+  cover_image: models.stringField(false),
   dob: models.dateField(true),
   profile_img: models.stringField(),
   average_stars: models.numberField(true).min(0).max(5),
@@ -149,6 +153,7 @@ const usersUpdateSchema = schema({
   _id: models.stringField(true),
   name: models.stringField(true).min(5).max(100),
   gender: models.numberField(true).integer().min(0).max(2),
+  cover_image: models.stringField(false),
   dob: models.dateField(true),
   profile_img: models.stringField(),
   average_stars: models.numberField(true).min(0).max(5),

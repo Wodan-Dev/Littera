@@ -100,7 +100,8 @@ function post(req, res) {
     forums: req.body.forums || [],
     rankings: req.body.rankings || [],
     keywords: req.body.keywords || [],
-    comments: req.body.comments || []
+    comments: req.body.comments || [],
+    cover_image: req.body.cover_image || ''
   };
 
   booksModel.validateCreate(book)
@@ -149,7 +150,8 @@ function put(req, res) {
     forums: req.body.forums || [],
     rankings: req.body.rankings || [],
     keywords: req.body.keywords || [],
-    comments: req.body.comments || []
+    comments: req.body.comments || [],
+    cover_image: req.body.cover_image || ''
   };
   booksModel.validateUpdate(book)
     .then(function (rbook) {

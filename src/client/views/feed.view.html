@@ -1,51 +1,51 @@
 <div class="feed-notices">
   <div class="notice" ng-repeat="r in FeedCtrl.feedItems">
     <div class="notice-image">
-      <a ng-href="{{ r.post_url }}">
-        <img ng-src="{{ r.post_cover }}">
+      <a ng-href="#/book/{{ r._id_book._id }}">
+        <img ng-src="{{ r._id_book.cover_image }}">
       </a>
     </div>
     <div class="notice-user">
       <div class="user-picture">
-        <a ng-href="{{ r.user_url }}">
-          <img ng-src="{{ r.user_picture }}">
+        <a ng-href="#/user/{{ r._id_user.username }}">
+          <img ng-src="{{ r._id_user.cover_image }}">
         </a>
       </div>
       <div class="user-name">
-        <a ng-href="{{r.user_url}}"
+        <a ng-href="#/user/{{ r._id_user.username }}"
            class="name link-default"
-           ng-bind="r.name"></a>
+           ng-bind="r._id_user.name"></a>
 
         <p class="time"
            ng-bind="r.create_at"></p>
       </div>
       <div class="user-options">
 
-        <a ng-href="{{ r.bookmark }}">
+        <a ng-href="#/bookmark">
           <i class="fa fa-bookmark fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
         </a>
       </div>
     </div>
     <div class="notice-content">
       <h1 class="title">
-        <a ng-href="{{ r.post_url }}"
+        <a ng-href="#/book/{{ r._id_book._id }}"
            class="link-title"
-           ng-bind="r.post_title"></a>
+           ng-bind="r._id_book.title"></a>
       </h1>
       <p class="text">
-        <a ng-href="{{ r.post_url }}"
-           ng-bind="r.post_content"></a>
+        <a ng-href="#/book/{{ r._id_book._id }}"
+           ng-bind="r._id_book.synopsis"></a>
       </p>
     </div>
     <div class="notice-options">
-      <a ng-href="{{r.post_ranking_url }}"
+      <a ng-href="#/book/{{ r._id_book._id }}"
          class="btn-like">
         <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-        {{ r.post_average_starts }}
+        {{ r._id_book.average_star }}
       </a>
       <a href="#" class="btn-comment">
         <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-        {{ r.post_ranking_comment }}
+        {{ r._id_book.comments.length }}
       </a>
     </div>
   </div>
@@ -54,3 +54,5 @@
      ng-include="'views/trends.view.html'">
 
 </div>
+<!--
+

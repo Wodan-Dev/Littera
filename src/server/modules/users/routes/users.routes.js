@@ -94,6 +94,7 @@ function put(req, res) {
     profile_img: req.body.profile_img || '',
     average_stars: req.body.average_stars || '0',
     acepted_terms: req.body.acepted_terms || '0',
+    cover_image: req.body.cover_image || '',
     payment: {
       payment_id: req.body.payment || ''
     }
