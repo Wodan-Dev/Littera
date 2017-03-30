@@ -85,6 +85,32 @@ function list(page) {
 }
 
 /**
+ * List all feeds that user follow
+ * @param  {Array}  follows User followed
+ * @param  {Number} page Page number
+ * @return {Promise}      Resolve/Reject
+ */
+function findByUser(follows, page) {
+  let pageSize = parseInt(config.getPageSize());
+
+  return feedModel.paginate(
+    {
+      _id_user: {
+        $in: follows
+
+      }
+    },
+    {
+      page: page,
+      limit: pageSize,
+      sort: {
+        'created_at': 'descending'
+      },
+      populate: '_id_book _id_user'
+    });
+}
+
+/**
  * List the record in the DB that has the specified ObjectId
  * @param  {ObjectId} id Id which has to be listed
  * @return {Promise} Resolve/Reject
@@ -103,8 +129,7 @@ function validateCreate(feed){
   feed._id_user = checkField.trim(checkField.escape(feed._id_user));
   feed._id_book = checkField.trim(checkField.escape(feed._id_book));
   feed.type_feed = checkField.trim(checkField.escape(feed.type_feed));
-  console.log('feed');
-  console.log(feed);
+
   return validator.validateSchema(feed, feedSchema.feedCreateSchema);
 }
 
@@ -119,5 +144,6 @@ module.exports = {
   remove: remove,
   list: list,
   findById: findById,
+  findByUser: findByUser,
   model: feedModel
 };

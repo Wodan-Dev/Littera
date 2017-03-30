@@ -30,7 +30,10 @@ function get(req, res) {
     .catch(function (err) {
       renderError(res, {}, err);
     });
+
+
 }
+
 
 /**
  * Method Get in route /:id
@@ -64,12 +67,8 @@ function post(req, res) {
     _id_book: req.body._id_book || '',
     type_feed: req.body.type_feed || '0'
   };
-  console.log('feedItem');
-  console.log(feedItem);
   feedsModel.validateCreate(feedItem)
     .then(function (result) {
-      console.log('result');
-      console.log(result);
 
       return feedsModel.insert(result.value);
     })

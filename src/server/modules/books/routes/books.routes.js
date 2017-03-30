@@ -69,8 +69,6 @@ function getPrice(req, res) {
       http.render(res, result);
     })
     .catch(function (err) {
-      console.log('log2');
-      console.log(err);
       renderError(res, {}, err);
     });
 }
@@ -110,15 +108,10 @@ function post(req, res) {
       return booksModel.insert(result.value);
     })
     .then(function (result) {
-      console.log('writte');
-      console.log(result);
       book = result;
-      console.log('writtenBooksModel');
-      console.log(writtenBooksModel.insert);
       return writtenBooksModel.insert(user._id_user, { _id_book: book._id });
     })
     .then(function () {
-      console.log('feed');
       return feedModel.insert({
         _id_user: user._id_user,
         _id_book: book._id,
