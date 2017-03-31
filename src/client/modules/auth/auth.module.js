@@ -13,6 +13,7 @@
     },
     routes: {
       login: litteraApp.URLS.LOGIN(),
+      loginNext: litteraApp.URLS.LOGINNEXT(),
       authenticate: litteraApp.URLS.MORDOR.AUTHENTICATION(),
       me: litteraApp.URLS.MORDOR.ME(),
       notAuthorized: litteraApp.URLS.NOTAUTHORIZED(),

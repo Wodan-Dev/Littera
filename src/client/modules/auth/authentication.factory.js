@@ -3,7 +3,7 @@
  */
 'use strict';
 (function(angular, litteraApp) {
-  function authenticationFactory(LOCALNAME, request, localSave) {
+  function authenticationFactory(LOCALNAME, request, localSave, $interval) {
     function authenticate(usr, pass) {
       let user = {
         username: usr,
@@ -13,7 +13,18 @@
     }
 
     function setToken(value) {
-      localSave.setValueLS(LOCALNAME.USER_TOKEN, value);
+      console.log(localSave);
+      return new Promise(function (resolve, reject) {
+
+        let i = $interval(function(){
+          console.log('pp');
+          localSave.setValueLS(LOCALNAME.USER_TOKEN, value);
+          $interval.cancel(i);
+          resolve();
+        }, 2000);
+      });
+
+
     }
 
     function credential() {
@@ -38,8 +49,12 @@
     };
   }
 
-  authenticationFactory.$inject = ['LOCALNAME', litteraApp.modules.auth.imports.request,
-    litteraApp.modules.auth.imports.localSave];
+  authenticationFactory.$inject = [
+    'LOCALNAME',
+    litteraApp.modules.auth.imports.request,
+    litteraApp.modules.auth.imports.localSave,
+    '$interval'
+  ];
 
   angular.module(litteraApp.modules.auth.name)
     .factory(litteraApp.modules.auth.factories.authentication, authenticationFactory);

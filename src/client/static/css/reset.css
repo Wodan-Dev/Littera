@@ -16,7 +16,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section, summary,
+footer, header, menu, nav, section, summary,
 time, mark, audio, video {
   margin:0;
   padding:0;
@@ -31,8 +31,30 @@ body {
   line-height:1;
 }
 
+/*
+body,
+input,
+select,
+textarea,
+body * {
+  font-family: 'Tinos', sans-serif;
+  box-sizing: border-box;
+}
+*/
+body::after, body::before,
+input::after,
+input::before,
+select::after,
+select::before,
+textarea::after,
+textarea::before,
+body *::after,
+body *::before {
+  box-sizing: border-box;
+}
+
 article,aside,details,figcaption,figure,
-footer,header,hgroup,menu,nav,section {
+footer,header,menu,nav,section {
   display:block;
 }
 
@@ -100,3 +122,5 @@ hr {
 input, select {
   vertical-align:middle;
 }
+
+

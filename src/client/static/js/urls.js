@@ -18,9 +18,14 @@
     FEED: function () {
       return '/feed';
     },
-    LOGIN: function (next) {
-      let n = '?next=' + next;
+    LOGIN: function () {
       return '/mordor/login';
+    },
+    LOGINNEXT: function () {
+      return function () {
+        return '/mordor/login/:next';
+      };
+
     },
     MORDOR: {
       AUTHENTICATION: function () {
