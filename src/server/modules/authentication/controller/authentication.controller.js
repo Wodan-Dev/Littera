@@ -81,11 +81,11 @@ function validateUser(user) {
 
     if (!checkField.isEmpty(user.email) &&
       !checkField.isEmail(user.email)) {
-      lstErrors.push(validator.createErrItem('email', 'Senha deve ser informada.'));
+      lstErrors.push(validator.createErrItem('email', 'E-mail informado não é válido.'));
     }
 
     if (checkField.isEmpty(user.password))
-      lstErrors.push(validator.createErrItem('password', 'valor nulo não permitido.'));
+      lstErrors.push(validator.createErrItem('password', 'Senha deve ser informada.'));
 
     if (lstErrors.length)
       reject(validator.invalidResult('login', lstErrors));

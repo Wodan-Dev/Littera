@@ -1,17 +1,18 @@
 /**
- * Created by jonathan on 20/03/17.
+ * Created by jonathan on 01/04/17.
  */
 'use strict';
 (function (angular, litteraApp) {
-  function LoginCtrl($rootScope, $scope, $routeParams, $location, authFactory, has_error) {
+  function RegisterCtrl($rootScope, $scope, $routeParams, $location, authFactory, has_error) {
     let vm = this;
     vm.user = {
       username: '',
-      pass: ''
+      email: '',
+      password: '',
+      passwordbis: ''
     };
 
     vm.init = function () {
-      has_error.clearError();
       authFactory.logOut();
     };
 
@@ -24,19 +25,19 @@
     };
 
     vm.btnCreate = function () {
-      $location.path(litteraApp.modules.auth.routes.register);
-    };
-
-    vm.btnAuthenticate = function () {
       has_error.clearError();
       $rootScope.__showLoad = true;
 
 
-      authFactory.authenticate(vm.user.username, vm.user.pass)
+      authFactory.register(vm.user)
+        .then(function () {
+          return authFactory.authenticate(vm.user.username, vm.user.password);
+        })
         .then(function (data) {
           authFactory.setToken(data.data.data.toString())
             .then(function () {
               $scope.$apply(function () {
+
                 let uri = $routeParams.next || '/feed';
 
                 if (uri[0] !== '/')
@@ -48,6 +49,7 @@
 
         })
         .catch(function (data) {
+
           let lst = data.data.data.err;
           $scope.$apply(function () {
             if (lst instanceof Array) {
@@ -65,7 +67,7 @@
     };
   }
 
-  LoginCtrl.$inject = [
+  RegisterCtrl.$inject = [
     '$rootScope',
     '$scope',
     '$routeParams',
@@ -75,5 +77,5 @@
   ];
 
   angular.module(litteraApp.modules.auth.name)
-    .controller(litteraApp.modules.auth.controllers.login.name, LoginCtrl);
+    .controller(litteraApp.modules.auth.controllers.register.name, RegisterCtrl);
 }(angular, litteraApp));

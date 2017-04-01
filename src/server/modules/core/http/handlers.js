@@ -32,6 +32,17 @@ function httpErrorStatus(err) {
     (hasErrorList(err)))) {
     return httpStatus.HTTP_400_BAD_REQUEST;
   }
+  else if (err instanceof Array) {
+    for (var i = 0; i < err.length; i++) {
+      if (err[i].err)
+        return httpStatus.HTTP_400_BAD_REQUEST;
+
+    }
+  }
+  else if (err instanceof Object) {
+    if (err.err)
+      return httpStatus.HTTP_400_BAD_REQUEST;
+  }
   else if (err instanceof Number){
     return err;
   }

@@ -66,7 +66,13 @@ function post(req, res) {
 
   usersModel.validateCreate(user)
     .then(function (result) {
-      return usersCtrl.validatePassword(result.value);
+      return usersCtrl.validateUserName(result.value);
+    })
+    .then(function (result) {
+      return usersCtrl.validateEmail(result);
+    })
+    .then(function (result) {
+      return usersCtrl.validatePassword(result);
     })
     .then(function (result) {
       return usersModel.insert(result);

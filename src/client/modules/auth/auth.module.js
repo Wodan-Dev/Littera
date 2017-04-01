@@ -9,15 +9,21 @@
       login: {
         name: 'LoginController',
         nameas: 'LoginCtrl'
+      },
+      register: {
+        name: 'RegisterController',
+        nameas: 'RegisterCtrl'
       }
     },
     routes: {
       login: litteraApp.URLS.LOGIN(),
+      register: litteraApp.URLS.REGISTER(),
       loginNext: litteraApp.URLS.LOGINNEXT(),
       authenticate: litteraApp.URLS.MORDOR.AUTHENTICATION(),
       me: litteraApp.URLS.MORDOR.ME(),
       notAuthorized: litteraApp.URLS.NOTAUTHORIZED(),
-      serverError: litteraApp.URLS.SERVERERROR()
+      serverError: litteraApp.URLS.SERVERERROR(),
+      user: litteraApp.URLS.USER()
     },
     factories: {
       authentication: 'authenticationFactory',
@@ -28,11 +34,16 @@
     templates: {
       login: {
         url: 'views/login.view.html'
+      },
+      register: {
+        url: 'views/register.view.html'
       }
     },
     imports: {
       localSave: litteraApp.core.factories.localSave,
-      request: litteraApp.core.services.request
+      request: litteraApp.core.services.request,
+      message: litteraApp.core.services.messages,
+      has_error: litteraApp.core.services.has_error
     }
   };
 

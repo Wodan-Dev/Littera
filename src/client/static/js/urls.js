@@ -18,8 +18,14 @@
     FEED: function () {
       return '/feed';
     },
+    USER: function () {
+      return '/users';
+    },
     LOGIN: function () {
       return '/mordor/login';
+    },
+    REGISTER: function () {
+      return '/mordor/register';
     },
     LOGINNEXT: function () {
       return function () {

@@ -24,6 +24,10 @@
 
     }
 
+    function register(user) {
+      return request._post(litteraApp.modules.auth.routes.user, user);
+    }
+
     function credential() {
       return request._get(litteraApp.modules.auth.routes.me);
     }
@@ -42,7 +46,8 @@
       setToken: setToken,
       credential: credential,
       logOut: logOut,
-      isAuthenticated: isAuthenticated
+      isAuthenticated: isAuthenticated,
+      register: register
     };
   }
 

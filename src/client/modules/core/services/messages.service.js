@@ -5,7 +5,7 @@
 
 (function(angular, litteraApp) {
 
-  function messagesFactory() {
+  function messagesService() {
 
 
     /**
@@ -15,29 +15,36 @@
      * @return {Promise}      Resolve/Reject
      */
     function notification(type, text) {
-      noty({
-        text        : text,
-        type        : type,
-        dismissQueue: true,
-        layout      : 'topRight',
-        closeWith   : ['click'],
-        theme       : 'relax',
-        progressBar : true,
-        timeout     : 8000,
-        maxVisible  : 10,
-        animation   : {
-          open  : 'animated bounceInRight',
-          close : 'animated zoomOutRight',
-          easing: 'swing',
-          speed : 500
-        }
+      return new Promise(function (resolve) {
+        let n = noty({
+          text        : text,
+          type        : type,
+          dismissQueue: true,
+          layout      : 'topRight',
+          closeWith   : ['click'],
+          theme       : 'relax',
+          progressBar : true,
+          timeout     : 8000,
+          maxVisible  : 10,
+          animation   : {
+            open  : 'animated bounceInRight',
+            close : 'animated zoomOutRight',
+            easing: 'swing',
+            speed : 500
+          }
+        });
+
+        $('#'+ n.options.id).click(function () {
+          resolve();
+        });
+
       });
+
     }
 
     /**
-     * Display notification
-     * @param  {String} type user object
-     * @param  {String} text user object
+     * Display a confirmation box
+     * @param  {String} text text to confirm
      * @return {Promise}      Resolve/Reject
      */
     function confirm(text) {
@@ -77,9 +84,9 @@
     };
   }
 
-  messagesFactory.$inject = [
+  messagesService.$inject = [
   ];
 
   angular.module(litteraApp.core.name)
-    .service(litteraApp.core.services.messages, messagesFactory);
+    .service(litteraApp.core.services.messages, messagesService);
 }(angular, litteraApp));

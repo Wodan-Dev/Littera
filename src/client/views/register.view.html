@@ -1,0 +1,71 @@
+<div class="feed-notices" ng-init="RegisterCtrl.init()">
+  <div class="notice container">
+    <form class="form-container" novalidate>
+      <h1>Junte-se a nós</h1>
+      <div class="form-group"
+           ng-class="{ 'has-error': RegisterCtrl.hasError('username') }">
+        <input type="text"
+               ng-model="RegisterCtrl.user.username"
+               name="txtUserName"
+               id="txtUserName"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': RegisterCtrl.hasError('username') }"
+               for="txtUserName">Username
+        </label><i class="bar"></i>
+        <p class="field-err" ng-if="RegisterCtrl.hasError('username')" >{{RegisterCtrl.getErrorMessage('username')}}</p>
+      </div>
+
+      <div class="form-group"
+           ng-class="{ 'has-error': RegisterCtrl.hasError('email') }">
+        <input type="text"
+               ng-model="RegisterCtrl.user.email"
+               name="txtEmail"
+               id="txtEmail"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': RegisterCtrl.hasError('email') }"
+               for="txtEmail">E-mail
+        </label><i class="bar"></i>
+        <p class="field-err" ng-if="RegisterCtrl.hasError('email')" >{{RegisterCtrl.getErrorMessage('email')}}</p>
+      </div>
+
+      <div class="form-group"
+           ng-class="{ 'has-error': RegisterCtrl.hasError('password') }">
+        <input type="password"
+               ng-model="RegisterCtrl.user.password"
+               name="txtPass"
+               id="txtPassword"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': RegisterCtrl.hasError('password') }"
+               for="txtPassword">Senha
+        </label><i class="bar"></i>
+        <p class="field-err"  ng-if="RegisterCtrl.hasError('password')" >{{RegisterCtrl.getErrorMessage('password')}}</p>
+      </div>
+      <div class="form-group"
+           ng-class="{ 'has-error': RegisterCtrl.hasError('passwordbis') }">
+        <input type="password"
+               ng-model="RegisterCtrl.user.passwordbis"
+               name="txtPasswordbis"
+               id="txtPasswordbis"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': RegisterCtrl.hasError('passwordbis') }"
+               for="txtPasswordbis">Confirmação de Senha
+        </label><i class="bar"></i>
+        <p class="field-err"  ng-if="RegisterCtrl.hasError('passwordbis')" >{{RegisterCtrl.getErrorMessage('passwordbis')}}</p>
+      </div>
+      <div class="button-group">
+        <button
+          class="btn full btn-info-inverted"
+          ng-click="RegisterCtrl.btnCreate()" >Cadastrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="trends" data-scroll="dock"
+     ng-include="'views/trends.view.html'">
+
+</div>
+

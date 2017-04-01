@@ -8,7 +8,8 @@
     name: 'litteraApp.core',
     services: {
       request: 'requestService',
-      messages: 'messagesService'
+      messages: 'messagesService',
+      has_error: 'has_errorService'
     },
     factories: {
       localSave: 'localSaveFactory'
