@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="pt-br">
+  <base href="/">
   <meta charset="UTF-8">
   <title>Página Inicial</title>
   <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1"> <!-- media="(device-height: 568px)">-->
@@ -13,8 +14,9 @@
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
-  <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet">
+  <!--<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet">-->
+  <link rel="stylesheet" type="text/css" href="./static/css/animate.css">
   <link rel="stylesheet" type="text/css" href="./static/css/main-style.css">
   <link rel="stylesheet" type="text/css" href="./static/css/navigator.css">
   <link rel="stylesheet" type="text/css" href="./static/css/feed.css">
@@ -29,8 +31,15 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <div id="Modal" class="modal"
-     ng-show="__showModal"
-     ng-click="MainCtrl.btnHideModal()"></div>
+     ng-show="__showLoad||__showModal"
+     ng-click="MainCtrl.btnHideModal()">
+  <div class="cssload-thecube" ng-show="__showLoad">
+    <div class="cssload-cube cssload-c1"></div>
+    <div class="cssload-cube cssload-c2"></div>
+    <div class="cssload-cube cssload-c4"></div>
+    <div class="cssload-cube cssload-c3"></div>
+  </div>
+</div>
   <liheader></liheader>
   <linav-Bar-User></linav-Bar-User>
   <linav-Bar-Notify></linav-Bar-Notify>

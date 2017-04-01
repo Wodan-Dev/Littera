@@ -13,6 +13,8 @@
   "validthis": true,
   "globals": {
     "angular": false,
-    "litteraApp": false
+    "litteraApp": false,
+    "$": false,
+    "noty": false
   }
 }

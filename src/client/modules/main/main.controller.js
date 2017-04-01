@@ -17,11 +17,14 @@
     });
 
     vm.btnHideModal = function () {
-      vm.showModal = false;
-      $rootScope.__showModal = false;
-      $rootScope.__showLinks = false;
-      $rootScope.__showUserMenu = false;
-      $rootScope.__showNotify = false;
+      if (!$rootScope.__showLoad) {
+        vm.showModal = false;
+        $rootScope.__showModal = false;
+        $rootScope.__showLinks = false;
+        $rootScope.__showUserMenu = false;
+        $rootScope.__showNotify = false;
+      }
+
     };
   }
 

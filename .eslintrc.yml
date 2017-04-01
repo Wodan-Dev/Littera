@@ -23,4 +23,6 @@ rules:
 globals:
   angular: true
   litteraApp: true
+  $: true
+  noty: true
 

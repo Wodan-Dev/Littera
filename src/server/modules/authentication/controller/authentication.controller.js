@@ -37,7 +37,7 @@ function loadUser(user) {
         resolve(validator.validResult(ruser));
       })
       .catch(function () {
-        reject(validator.invalidResult(user, 'Usuário não encontrado.'));
+        reject(validator.invalidResult('username', 'Usuário não encontrado.'));
       });
   });
 }
@@ -75,13 +75,13 @@ function validateUser(user) {
     let lstErrors = [];
 
     if (checkField.isEmpty(user.username) && checkField.isEmpty(user.email)) {
-      lstErrors.push(validator.createErrItem('username', 'valor nulo não permitido.'));
-      lstErrors.push(validator.createErrItem('email', 'valor nulo não permitido.'));
+      lstErrors.push(validator.createErrItem('username', 'Usuário/E-mail deve ser informado.'));
+      //lstErrors.push(validator.createErrItem('email', 'valor nulo não permitido.'));
     }
 
     if (!checkField.isEmpty(user.email) &&
       !checkField.isEmail(user.email)) {
-      lstErrors.push(validator.createErrItem('email', 'valor informado não é válido.'));
+      lstErrors.push(validator.createErrItem('email', 'Senha deve ser informada.'));
     }
 
     if (checkField.isEmpty(user.password))

@@ -3,8 +3,11 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function FeedCtrl($rootScope, $scope, $window, request) {
+  function FeedCtrl($rootScope, $scope, $location, request) {
     var vm = this;
+
+    $location.search('next', null);
+    console.log('feed');
     request._get('/users/req.body36/feed')
       .then(function (data) {
         $scope.$apply(function () {
@@ -157,7 +160,7 @@
       });*/
   }
 
-  FeedCtrl.$inject = [ '$rootScope', '$scope', '$window',
+  FeedCtrl.$inject = [ '$rootScope', '$scope', '$location',
     litteraApp.modules.feed.imports.request];
 
   angular.module(litteraApp.modules.feed.name)

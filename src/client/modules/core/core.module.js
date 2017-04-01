@@ -7,7 +7,8 @@
   litteraApp.core = {
     name: 'litteraApp.core',
     services: {
-      request: 'requestService'
+      request: 'requestService',
+      messages: 'messagesService'
     },
     factories: {
       localSave: 'localSaveFactory'

@@ -83,8 +83,12 @@
     };
   }
 
-  requestFactory.$inject = ['BASEURLS', 'LOCALNAME',
-    litteraApp.core.factories.localSave, '$http'];
+  requestFactory.$inject = [
+    'BASEURLS',
+    'LOCALNAME',
+    litteraApp.core.factories.localSave,
+    '$http'
+  ];
 
   angular.module(litteraApp.core.name)
     .service(litteraApp.core.services.request, requestFactory);

@@ -13,11 +13,8 @@
     }
 
     function setToken(value) {
-      console.log(localSave);
       return new Promise(function (resolve, reject) {
-
-        let i = $interval(function(){
-          console.log('pp');
+        var i = $interval(function(){
           localSave.setValueLS(LOCALNAME.USER_TOKEN, value);
           $interval.cancel(i);
           resolve();

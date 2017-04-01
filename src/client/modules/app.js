@@ -23,23 +23,24 @@
     });
   }
 
-  function runApp($rootScope, authorization, $location) {
+  function runApp($rootScope, authorization, $location, $interval) {
     $rootScope.__showModal = false;
     $rootScope.__showUserMenu = false;
     $rootScope.__showLinks = false;
     $rootScope.__showNotify = false;
+    $rootScope.__showLoad = false;
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
       $rootScope.__showModal = false;
       $rootScope.__showLinks = false;
       $rootScope.__showUserMenu = false;
       $rootScope.__showNotify = false;
+      $rootScope.__showLoad = true;
     });
 
     $rootScope.$on('$routeChangeSuccess', function (event, next) {
       authorization.authorize(next)
        .then(function (url) {
-
        })
        .catch(function (url) {
          $location.path(url);
@@ -47,15 +48,26 @@
     });
 
     $rootScope.$on('$viewContentLoaded', function(){
+      var i = $interval(function () {
+        $rootScope.__showLoad = false;
+        $interval.cancel(i);
+      }, 1300);
 
     });
 
   }
 
-  configApp.$inject = ['$httpProvider', '$routeProvider', '$locationProvider'
+  configApp.$inject = [
+    '$httpProvider',
+    '$routeProvider',
+    '$locationProvider'
   ];
-  runApp.$inject = ['$rootScope',
-    litteraApp.modules.auth.factories.authorization, '$location'];
+  runApp.$inject = [
+    '$rootScope',
+    litteraApp.modules.auth.factories.authorization,
+    '$location',
+    '$interval'
+  ];
 
   angular.module(litteraApp.modules.app.name, [
     litteraApp.components.header.name,
