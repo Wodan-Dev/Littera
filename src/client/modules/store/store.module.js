@@ -28,7 +28,8 @@
     },
     imports: {
       localSave: litteraApp.core.factories.localSave,
-      request: litteraApp.core.services.request
+      request: litteraApp.core.services.request,
+      message: litteraApp.core.services.messages
     }
   };
 

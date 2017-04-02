@@ -13,6 +13,7 @@
   padding: .25rem .625rem .25rem;
   *margin-left: .3rem;
   min-width: 3.75rem;
+  box-sizing: border-box;
 }
 
 .btn:first-child {

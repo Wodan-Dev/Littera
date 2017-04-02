@@ -1,11 +1,11 @@
-<div class="feed-notices">
+<div class="feed-notices" ng-init="StoreCtrl.init()">
   <ul>
     <li ng-repeat="r in StoreCtrl.books">
       <div  class="column column-half">
         <div class="notice-image">
           <div class="shop-image-box">
             <img class="shop-cover" ng-src="{{ r.cover_image  || './static/images/no-image.png' }}" />
-            <a ng-click="StoreCtrl.btnShowDetail(r)" class="shop-more">
+            <a ng-click="StoreCtrl.btnShowDetail(r._id)" class="shop-more">
               <i class="fa fa-eye" aria-hidden="true"></i>
             </a>
           </div>
@@ -27,7 +27,7 @@
           </h3>
         </div>
         <div class="notice-shop">
-          <a class="btn btn-primary-inverted" ng-href="#/sales/{{ r.user._id }}">Comprar</a>
+          <a class="btn btn-primary-inverted full" ng-href="#/sales/{{ r.user._id }}">Comprar</a>
         </div>
       </div>
       <div class="shop-book-detail"
@@ -53,11 +53,15 @@
           </div>
         </div>
         <div class="synopsis">
-          <p ng-bind="r.date_published"></p>
+          <p ng-bind="r.synopsis"></p>
         </div>
       </div>
     </li>
   </ul>
+  <div class="column column-all more-data">
+    <a class="btn btn-default full" ng-click="StoreCtrl.btnLoadMore()">Mais</a>
+
+  </div>
 </div>
 <div class="trends" data-scroll="dock"
      ng-include="'views/trends.view.html'">
