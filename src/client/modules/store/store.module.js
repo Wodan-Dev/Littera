@@ -12,8 +12,8 @@
       }
     },
     routes: {
-      store: litteraApp.URLS.HOME(),
-      books: litteraApp.URLS.BOOKS()
+      home: litteraApp.URLS.HOME(),
+      store: litteraApp.URLS.STORE()
     },
     factories: {
       store: 'storeFactory'

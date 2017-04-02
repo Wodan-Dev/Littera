@@ -15,6 +15,15 @@
           return '/books';
       };
     },
+    STORE: function () {
+      return function (page) {
+        if (page)
+          return '/store?page=' + page;
+        else
+          return '/store';
+      };
+
+    },
     FEED: function () {
       return '/feed';
     },

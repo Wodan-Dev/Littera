@@ -2,13 +2,13 @@
   <div class="notice" ng-repeat="r in FeedCtrl.feedItems">
     <div class="notice-image">
       <a ng-href="#/book/{{ r._id_book._id }}">
-        <img ng-src="{{ r._id_book.cover_image }}">
+        <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
       </a>
     </div>
     <div class="notice-user">
       <div class="user-picture">
         <a ng-href="#/user/{{ r._id_user.username }}">
-          <img ng-src="{{ r._id_user.cover_image }}">
+          <img ng-src="{{ r._id_user.cover_image || './static/images/no-image.png' }}">
         </a>
       </div>
       <div class="user-name">

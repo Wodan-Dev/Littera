@@ -7,10 +7,10 @@
     var vm = this;
     vm.books = [];
 
-    storeFactory.getBooks()
+    storeFactory.getBooks(1)
       .then(function (data) {
         console.log(data);
-        vm.books = data.data.docs;
+        vm.books = data.data;
         console.log(vm.books);
       })
       .catch(function (er) {
@@ -24,7 +24,6 @@
       cover_image: '',
       synopsis: ''
     };
-
 
     vm.btnShowDetail = function(book) {
       $rootScope.__showModal = true;

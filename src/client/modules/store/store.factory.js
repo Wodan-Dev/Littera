@@ -10,9 +10,9 @@
       'x-access-token': localSave.getValueLS(LOCALNAME.USER_TOKEN)
     };
 
-    function getBooks() {
+    function getBooks(page) {
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.store.routes.books(), {},
+        litteraApp.modules.store.routes.store(page), {},
         {
           get: {
             headers: Headers

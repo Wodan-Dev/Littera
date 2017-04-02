@@ -8,13 +8,13 @@
     .config(
     function ($locationProvider, $routeProvider) {
       $routeProvider
-        .when(litteraApp.modules.store.routes.store, {
+        .when(litteraApp.modules.store.routes.home, {
           controller:  litteraApp.modules.store.controllers.store.name,
           controllerAs:  litteraApp.modules.store.controllers.store.nameas,
           templateUrl: litteraApp.modules.store.templates.store.url,
           css: 'static/css/book-store.css',
           access: {
-            requiresLogin: true
+            requiresLogin: false
           }/*,
           resolve: {
             bookStoreData: function (storeFactory) {
