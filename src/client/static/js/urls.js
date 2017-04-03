@@ -24,6 +24,11 @@
       };
 
     },
+    STOREDETAIL: function () {
+      return function (id) {
+        return '/store/' + id;
+      };
+    },
     FEED: function () {
       return '/feed';
     },

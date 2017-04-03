@@ -15,6 +15,7 @@ const http = core.http;
 const utils = core.utils;
 const validator = core.validator;
 const renderError = core.http.renderError;
+const HTTP_STATUS = core.http.HTTP_STATUS;
 const date = core.date;
 
 /**
@@ -27,6 +28,26 @@ function get(req, res) {
   booksModel.listStore(pageNum)
     .then(function (result) {
       http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+    });
+}
+
+/**
+ * Method Get in route /:id
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function getById(req, res) {
+  let id = req.params.id;
+  validator.validateId(id)
+    .then(booksModel.findByIdStore)
+    .then(function (result) {
+      if (!result.length)
+        renderError(res, {}, result, HTTP_STATUS.HTTP_404_NOT_FOUND);
+      else
+        http.render(res, result);
     })
     .catch(function (err) {
       renderError(res, {}, err);
@@ -52,6 +73,7 @@ function router(express, auth) {
   let routes = express.Router();
 
   routes.get('/', get);
+  routes.get('/:id', getById);
   routes.get('/', remove);
 
   return routes;

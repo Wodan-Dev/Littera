@@ -25,7 +25,7 @@
         return new Promise(function (resolve, reject) {
           if($location.url() !== litteraApp.modules.handlers.routes.login &&
             rejection.status === 401){
-            $location.path(litteraApp.modules.handlers.routes.notAuthorized);
+            $location.path(litteraApp.modules.handlers.routes.login);
           }
 
           return reject(rejection);

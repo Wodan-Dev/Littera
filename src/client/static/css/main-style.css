@@ -241,7 +241,7 @@ header .nav-user {
 
 .column {
   background: #FFFFFF;
-  display: table-cell;
+  display: block;/*table-cell;*/
   box-sizing: border-box;
   padding-bottom: .625rem; /* 10px */
   float: left;
@@ -371,6 +371,7 @@ header .nav-user {
   padding: 0;
   border: none;
 }
+
 
 @media only screen and (max-width: 950px) {
   .column-half {

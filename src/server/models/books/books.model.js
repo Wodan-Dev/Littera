@@ -149,6 +149,133 @@ function listStore(page) {
 }
 
 /**
+ * get book by id and join with user
+ * @param  {Number} page Page number
+ * @return {Promise}      Resolve/Reject
+ */
+function findByIdStore(id) {
+  return booksModel.aggregate([
+    {
+      $match: {
+        '_id': db.getObjectId(id.toString())
+      }
+    },
+    {
+      $unwind: {
+        path: '$rankings',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'rankings._id_user',
+        foreignField: '_id',
+        as: 'ranking_user'
+      }
+    },
+    {
+      $unwind: {
+        path: '$ranking_user',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $group:{
+        _id: '$_id',
+        title: {
+          $first: '$title'
+        },
+        synopsis: {
+          $first: '$synopsis'
+        },
+        percentage: {
+          $first: '$percentage'
+        },
+        esbn: {
+          $first: '$esbn'
+        },
+        date_published: {
+          $first: '$date_published'
+        },
+        language: {
+          $first: '$language'
+        },
+        average_star: {
+          $first: '$average_star'
+        },
+        cover_image: {
+          $first: '$cover_image'
+        },
+        comments: {
+          $first: '$comments'
+        },
+        keywords: {
+          $first: '$keywords'
+        },
+        prices: {
+          $first: '$prices'
+        },
+        rankings: {
+          $push: {
+            _id_user: '$ranking_user._id',
+            username:  '$ranking_user.username',
+            name:  '$ranking_user.name',
+            email:  '$ranking_user.email',
+            followers:  '$ranking_user.followers',
+            following:  '$ranking_user.following',
+            cover_image:  '$ranking_user.cover_image',
+            reviews:  '$ranking_user.reviews',
+            _id:'$rankings._id',
+            comment: '$rankings.comment',
+            stars: '$rankings.stars'
+          }
+        }
+
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: 'written_books._id_book',
+        as: 'user'
+      }
+    },
+    {
+      $unwind:'$user'
+    },
+    {
+      $project: {
+        '_id': 1,
+        'title': 1,
+        'synopsis': 1,
+        'percentage': 1,
+        'esbn': 1,
+        'date_published': 1,
+        'language': 1,
+        'average_star': 1,
+        'cover_image': 1,
+        'comments': 1,
+        'keywords': 1,
+        'rankings': 1,
+        'prices': 1,
+        'user._id': 1,
+        'user.username': 1,
+        'user.email': 1,
+        'user.name': 1,
+        'user.average_stars': 1,
+        'user.reviews': 1,
+        'user.followers': 1,
+        'user.following': 1,
+        'user.cover_image': 1
+      }
+    }
+
+  ]).exec();
+}
+
+/**
  * List the record in the DB that has the specified ObjectId
  * @param  {ObjectId} id Id which has to be listed
  * @return {Promise} Resolve/Reject
@@ -184,15 +311,37 @@ function findPrice(id) {
     .exec();
 }
 */
-
 function findPrice(id) {
 
   let query = {
     $and: [
-      { _id: db.getObjectId(id) },
-      { 'prices.date_begin': { $lte: date.getDateTimeNowMongo() } },
-      { $or:
-        [ {'prices.date_end': {$gte: date.getDateTimeNowMongo()} }, {$and: [{'prices.date_end': null}, {'prices.type': 0}] } ] }
+      {
+        _id: db.getObjectId(id)
+      },
+      {
+        'prices.date_begin': {
+          $lte: date.getDateTimeNowMongo()
+        }
+      },
+      {
+        $or: [
+          {
+            'prices.date_end': {
+              $gte: date.getDateTimeNowMongo()
+            }
+          },
+          {
+            $and: [
+              {
+                'prices.date_end': null
+              },
+              {
+                'prices.type': 0
+              }
+            ]
+          }
+        ]
+      }
     ]
   };
 
@@ -271,6 +420,7 @@ module.exports = {
   list: list,
   listStore: listStore,
   findById: findById,
+  findByIdStore: findByIdStore,
   findPrice: findPrice,
   model: booksModel
 };

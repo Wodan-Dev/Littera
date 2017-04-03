@@ -79,6 +79,7 @@
     litteraApp.modules.feed.name,
     litteraApp.modules.auth.name,
     litteraApp.modules.store.name,
+    litteraApp.modules.books.name,
     litteraApp.core.name,
     'angularCSS'
   ]).constant('BASEURLS', {
