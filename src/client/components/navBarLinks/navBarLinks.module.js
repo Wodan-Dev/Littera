@@ -11,9 +11,12 @@
       name: 'NavBarLinksController',
       nameas: 'NavBarLinksCtrl'
     },
+    routes: {
+      home: litteraApp.URLS.HOME()
+    },
     template: './components/navBarLinks/navBarLinks.tpl.html',
     imports: {
-
+      authentication: litteraApp.modules.auth.factories.authentication
     }
   };
 

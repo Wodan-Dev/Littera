@@ -41,6 +41,7 @@
     $rootScope.$on('$routeChangeSuccess', function (event, next) {
       authorization.authorize(next)
        .then(function (url) {
+         $rootScope.$broadcast('evt_navBarUser_event', '');
        })
        .catch(function (url) {
          $location.path(url);

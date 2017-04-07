@@ -26,10 +26,14 @@
     <div class="nav-user-desc"
          id="btnUser"
          ng-click="$ctrl.btnShowLinks()"
-         ng-style="$ctrl.showSearch ? { 'width': $ctrl.btnUserSize() } : { 'width': '9.375rem'}"
+         ng-style="$ctrl.showSearch ? { 'width': $ctrl.btnUserSize() } : { 'width':
+            $ctrl.User._id == '-' ? '13.6rem' : '9.375rem'
+          }"
       >
       <input ng-show="$ctrl.showSearch"
-             ng-style="$ctrl.showSearch ? { 'width': $ctrl.txtSearchSize } : { 'width': '9.375rem'}"
+             ng-style="$ctrl.showSearch ? { 'width': $ctrl.txtSearchSize } : { 'width':
+            $ctrl.User._id == '-' ? '13.6rem' : '9.375rem'
+          }"
              id="txtSearch"
              name="txtSearch"
              type="text"
@@ -40,10 +44,10 @@
     </div>
     <div class="nav-user-picture"
          id="btnUserPic"
-         ng-click="$ctrl.btnUserNotify()"
-      >
+         ng-show="$ctrl.User._id !== '-'"
+         ng-click="$ctrl.btnUserNotify()">
       <div class="notify">&nbsp;</div>
-      <img ng-src="{{$ctrl.User.picture}}" />
+      <img ng-src="{{ $ctrl.User.cover_image }}" />
     </div>
   </div>
 </header>

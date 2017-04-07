@@ -2,37 +2,53 @@
          id="NavRight"
          ng-style="$root.__showLinks ? { 'right': 0 } : { 'right': '-15.625rem'}">
   <h4>
-    <a href="#/dashboard" class="link-default">{{ $ctrl.User.name }}</a>
+    <a href="#/dashboard"
+       class="link-default"
+       ng-show="$ctrl.User._id!=='-'">{{ $ctrl.User.name ||$ctrl.User.username }}</a>
+    <p class="link-default"
+       ng-show="$ctrl.User._id==='-'">Participe</p>
   </h4>
-  <div class="divisor">
+  <div class="divisor"
+       ng-show="$ctrl.User._id==='-'">
 
   </div>
-  <ul>
+  <ul ng-show="$ctrl.User._id==='-'">
+    <li><a href="#/mordor/login">Logar</a></li>
+    <li><a href="#/mordor/register">Cadastrar</a></li>
+  </ul>
+  <div class="divisor"
+       ng-show="$ctrl.User._id!=='-'">
+
+  </div>
+  <ul ng-show="$ctrl.User._id!=='-'">
     <li><a href="#/dashboard">Perfil</a></li>
     <li><a href="#/following">Seguindo</a></li>
     <li><a href="#/followers">Seguidores</a></li>
   </ul>
-  <div class="divisor">
+  <div class="divisor"
+       ng-show="$ctrl.User._id!=='-'">
 
   </div>
-  <ul>
+  <ul ng-show="$ctrl.User._id!=='-'">
     <li><a href="#/">Criar Página</a></li>
     <li><a href="#">Minhas Páginas</a></li>
   </ul>
-  <div class="divisor">
+  <div class="divisor"
+       ng-show="$ctrl.User._id!=='-'">
 
   </div>
-  <ul>
+  <ul ng-show="$ctrl.User._id!=='-'">
     <li><a href="#">Criar Grupo</a></li>
     <li><a href="#">Meus Grupos</a></li>
   </ul>
-  <div class="divisor">
+  <div class="divisor"
+       ng-show="$ctrl.User._id!=='-'">
 
   </div>
-  <ul>
+  <ul ng-show="$ctrl.User._id!=='-'">
     <li><a href="#">Preferências</a></li>
     <li><a href="#">Configurações</a></li>
-    <li><a href="#">Sair</a></li>
+    <li><a ng-click="$ctrl.btnLogOff()">Sair</a></li>
   </ul>
   <div class="divisor">
 

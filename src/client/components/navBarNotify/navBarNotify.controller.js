@@ -5,8 +5,14 @@
 
 (function (angular, litteraApp) {
 
-  function navBarNotifyController() {
+  function navBarNotifyController($rootScope) {
     var vm = this;
+    vm.User = {
+      _id: '',
+      name: '',
+      username: '',
+      cover_image: ''
+    };
 
     vm.lstNotify = [{
       picture: './static/images/image (4).jpg',
@@ -16,9 +22,17 @@
       url: '#'
     }];
 
+    $rootScope.$on('evt_navBarNotify_event', function(ev, user) {
+      console.log('evt_navBarNotify_event');
+      console.log(user);
+      vm.User = user;
+    });
+
   }
 
-  navBarNotifyController.$inject = [];
+  navBarNotifyController.$inject = [
+    '$rootScope'
+  ];
 
   angular.module(litteraApp.components.navBarNotify.name)
     .controller(litteraApp.components.navBarNotify.controller.name, navBarNotifyController);

@@ -165,6 +165,7 @@ const usersUpdateSchema = schema({
  * @type {Object}
  */
 const newUsersCreateSchema = schema({
+  name: models.stringField(true).min(5).max(100),
   username: models.stringField(true).min(5).max(30),
   email: models.stringField(true).email(),
   password: models.stringField(true).min(8),

@@ -3,9 +3,21 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function FeedService($resource) {
-    function getAll() {
+  function FeedService(BASEURLS, LOCALNAME, localSave, $resource) {
+    let Headers = {
+      'Content-Type': 'application/json',
+      'x-access-token': localSave.getValueLS(LOCALNAME.USER_TOKEN)
+    };
 
+    function getAll() {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.store.routes.feed, {},
+        {
+          get: {
+            headers: Headers
+          }
+        }
+      ).get({}).$promise;
 
     }
 
@@ -19,7 +31,12 @@
     };
   }
 
-  FeedService.$inject = ['$resource'];
+  FeedService.$inject = [
+    'BASEURLS',
+    'LOCALNAME',
+    litteraApp.modules.store.imports.localSave,
+    '$resource'
+  ];
 
   angular.module(litteraApp.modules.feed.name)
     .service(litteraApp.modules.feed.services.feed, FeedService);

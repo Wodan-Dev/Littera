@@ -8,6 +8,37 @@
   function headerController($rootScope, $window) {
     var vm = this;
     vm.showSearch = false;
+    vm.actualPage = 'page';
+    vm.User = {
+      _id: '',
+      name: '',
+      username: '',
+      cover_image: ''
+    };
+
+    $rootScope.$on('evt_header_event', function(ev, user) {
+      console.log('evt_header_event');
+      console.log(user);
+      if (user._id === '-') {
+        vm.User._id = '-';
+        vm.User.name = 'Participe';
+        vm.User.cover_image = './static/images/no-image.png';
+      }
+      else {
+        vm.User._id = user._id || '-';
+        vm.User.name = user.name;
+        vm.User.username = user.username;
+        vm.User.cover_image = user.cover_image || './static/images/no-image.png';
+      }
+
+
+      console.log(vm.User);
+      //vm.User = user;
+    });
+
+    vm.init = function () {
+
+    };
 
     vm.btnSearch = function () {
       vm.showSearch = !vm.showSearch;
@@ -21,12 +52,14 @@
 
     vm.btnUserSize = function () {
       return ($window.innerWidth >= 600) ?
-        '18.75rem' : '9.375rem';
+        '18.75rem' :  vm.User._id === '-' ? '13.6rem' : '9.375rem';
     };
+
+    //'13.6rem';
 
     vm.txtSearchSize = function () {
       return ($window.innerWidth >= 600) ?
-        '18.75rem' : '9.375rem';
+        '18.75rem' : vm.User._id === '-' ? '13.6rem' : '9.375rem';
     };
 
     vm.btnShowUserMenu = function () {
@@ -49,16 +82,14 @@
       $rootScope.__showNotify = !$rootScope.__showNotify;
     };
 
-    vm.actualPage = 'page';
-    vm.User = {
-      name: 'Jonathan Henrique do Vale',
-      username: '@JonathanH',
-      picture: './static/images/image (11).jpg'
-    };
+
 
   }
 
-  headerController.$inject = ['$rootScope', '$window'];
+  headerController.$inject = [
+    '$rootScope',
+    '$window'
+  ];
 
   angular.module(litteraApp.components.header.name)
     .controller(litteraApp.components.header.controller.name, headerController);

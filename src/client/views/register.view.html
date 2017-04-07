@@ -31,6 +31,20 @@
       </div>
 
       <div class="form-group"
+           ng-class="{ 'has-error': RegisterCtrl.hasError('name') }">
+        <input type="text"
+               ng-model="RegisterCtrl.user.name"
+               name="txtName"
+               id="txtName"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': RegisterCtrl.hasError('name') }"
+               for="txtName">Nome
+        </label><i class="bar"></i>
+        <p class="field-err" ng-if="RegisterCtrl.hasError('name')" >{{RegisterCtrl.getErrorMessage('name')}}</p>
+      </div>
+
+      <div class="form-group"
            ng-class="{ 'has-error': RegisterCtrl.hasError('password') }">
         <input type="password"
                ng-model="RegisterCtrl.user.password"

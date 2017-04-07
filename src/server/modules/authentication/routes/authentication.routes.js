@@ -22,14 +22,20 @@ function get(req, res) {
 
   auth.getUserSession(req)
     .then(function (user) {
-      res.json({
-        'name': user.value
-      });
+      console.log(user);
+      if (user.err)
+        renderError(res,
+          user.value.err.err,
+          user.value.err.err, http.HTTP_STATUS.HTTP_400_BAD_REQUEST);
+      else
+        http.render(res, user.value);
+      //res.json(user.value);
     })
     .catch(function (err) {
-      res.json({
+      renderError(res, err, err, http.HTTP_STATUS.HTTP_400_BAD_REQUEST);
+      /*res.json({
         'err': err
-      });
+      });*/
     });
 }
 
@@ -50,14 +56,28 @@ function postAuth(req, res) {
       return authCtrl.loadUser(ruser.value);
     })
     .then(function(ruser) {
+
       return authCtrl.validatePassword(ruser.value, user.password);
     })
     .then(function(ruser) {
-
       return auth.authenticate({
         _id: ruser.value._id,
         username: ruser.value.username,
-        email: ruser.value.email
+        email: ruser.value.email,
+        name: ruser.value.name,
+        cover_image: ruser.value.cover_image,
+        written_books:ruser.value.written_books,
+        library: ruser.value.library,
+        wishlist: ruser.value.wishlist,
+        following: ruser.value.following,
+        followers: ruser.value.followers,
+        choices: ruser.value.choices,
+        reviews: ruser.value.reviews,
+        is_staff: ruser.value.is_staff,
+        status: ruser.value.status,
+        acepted_terms: ruser.value.acepted_terms,
+        average_stars: ruser.value.average_stars,
+        gender: ruser.value.gender
       });
     })
     .then(function(ruser) {

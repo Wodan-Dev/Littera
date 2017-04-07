@@ -144,7 +144,8 @@ header .nav-user {
 .nav-user .nav-user-desc {
   float: left;
   height: 2.8125rem; /* 45px; */
-  width: 9.375rem; /* 150px; */
+  min-width: 9.375rem; /* 150px; */
+  width: 100%;
   transition: all 300ms ease;
 }
 .nav-user-desc:hover{

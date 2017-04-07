@@ -30,22 +30,24 @@
     vm.btnAuthenticate = function () {
       has_error.clearError();
       $rootScope.__showLoad = true;
-
+      let token = '';
 
       authFactory.authenticate(vm.user.username, vm.user.pass)
         .then(function (data) {
-          authFactory.setToken(data.data.data.toString())
-            .then(function () {
-              $scope.$apply(function () {
-                let uri = $routeParams.next || '/feed';
+          token = data.data.data.toString();
+          return authFactory.setToken(data.data.data.toString());
+        })
+        .then(function () {
 
-                if (uri[0] !== '/')
-                  uri = '/' + $routeParams.next;
+          $scope.$apply(function () {
+            let uri = $routeParams.next || '/feed';
 
-                $location.path(uri);
-              });
-            });
+            if (uri[0] !== '/')
+              uri = '/' + $routeParams.next;
 
+            $location.path(uri);
+            $rootScope.$broadcast('evt_navBarUser_event', token);
+          });
         })
         .catch(function (data) {
           let lst = data.data.data.err;

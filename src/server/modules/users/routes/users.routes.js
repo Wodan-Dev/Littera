@@ -58,6 +58,7 @@ function getById(req, res) {
 function post(req, res) {
 
   let user = {
+    name: req.body.name || '',
     username: req.body.username || '',
     email: req.body.email || '',
     password: req.body.password || '',

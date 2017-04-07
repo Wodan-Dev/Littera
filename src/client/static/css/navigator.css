@@ -104,6 +104,7 @@
 .nav-menu nav ul li a,
 .navigator#NavRight ul li a,
 .navigator#NavUser ul li a {
+  cursor: pointer;
   color: rgb(32,32,32);
   display:block;
   padding-left: 1.25rem; /*20px;*/
