@@ -34,8 +34,6 @@
     vm.init = function () {
       loadData()
         .then(function (data) {
-          console.log('data.data');
-          console.log(data.data);
           loadFields(data.data, false);
           $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
           $rootScope.$broadcast('evt_navBarNotify_event', vm.User);

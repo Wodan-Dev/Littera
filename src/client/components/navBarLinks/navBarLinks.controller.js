@@ -15,8 +15,6 @@
     };
 
     $rootScope.$on('evt_navBarLinks_event', function(ev, user) {
-      console.log('evt_navBarLinks_event');
-      console.log(user);
       if (user._id === '-') {
         vm.User.name = 'Participe';
         vm.User.cover_image = './static/images/no-image.png';
@@ -27,7 +25,6 @@
         vm.User.username = user.username;
         vm.User.cover_image = user.cover_image || './static/images/no-image.png';
       }
-      console.log(vm.User);
     });
 
     vm.btnLogOff = function () {

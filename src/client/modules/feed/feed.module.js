@@ -12,7 +12,8 @@
       }
     },
     routes: {
-      feed: litteraApp.URLS.FEED()
+      feed: litteraApp.URLS.FEED(),
+      feed_page: litteraApp.URLS.FEED_PAGE()
     },
     factories: {
 
@@ -27,7 +28,9 @@
     },
     imports: {
       localSave: litteraApp.core.factories.localSave,
-      request: litteraApp.core.services.request
+      request: litteraApp.core.services.request,
+      authentication: litteraApp.modules.auth.factories.authentication,
+      message: litteraApp.core.services.messages
     }
   };
 

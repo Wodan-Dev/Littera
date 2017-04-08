@@ -29,9 +29,6 @@
         return '/store/' + id;
       };
     },
-    FEED: function () {
-      return '/feed';
-    },
     USER: function () {
       return '/users';
     },
@@ -68,6 +65,14 @@
     },
     NOTFOUND: function () {
       return '/not-found';
+    },
+    FEED: function () {
+      return function (user) {
+        return '/users/' + user + '/feed';
+      };
+    },
+    FEED_PAGE: function () {
+      return '/feed';
     }
   };
 }(litteraApp));

@@ -4,17 +4,19 @@
 'use strict';
 (function (angular, litteraApp) {
   function FeedService(BASEURLS, LOCALNAME, localSave, $resource) {
-    let Headers = {
-      'Content-Type': 'application/json',
-      'x-access-token': localSave.getValueLS(LOCALNAME.USER_TOKEN)
-    };
+    function getHeader() {
+      return {
+        'Content-Type': 'application/json',
+        'x-access-token': localSave.getValueLS(LOCALNAME.USER_TOKEN)
+      };
+    }
 
-    function getAll() {
+    function getAll(user) {
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.store.routes.feed, {},
+        litteraApp.modules.feed.routes.feed(user), {},
         {
           get: {
-            headers: Headers
+            headers: getHeader()
           }
         }
       ).get({}).$promise;
@@ -34,7 +36,7 @@
   FeedService.$inject = [
     'BASEURLS',
     'LOCALNAME',
-    litteraApp.modules.store.imports.localSave,
+    litteraApp.modules.feed.imports.localSave,
     '$resource'
   ];
 

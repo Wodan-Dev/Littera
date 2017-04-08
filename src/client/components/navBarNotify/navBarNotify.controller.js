@@ -23,8 +23,7 @@
     }];
 
     $rootScope.$on('evt_navBarNotify_event', function(ev, user) {
-      console.log('evt_navBarNotify_event');
-      console.log(user);
+
       vm.User = user;
     });
 

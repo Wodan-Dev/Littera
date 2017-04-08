@@ -17,8 +17,6 @@
     };
 
     $rootScope.$on('evt_header_event', function(ev, user) {
-      console.log('evt_header_event');
-      console.log(user);
       if (user._id === '-') {
         vm.User._id = '-';
         vm.User.name = 'Participe';
@@ -30,10 +28,6 @@
         vm.User.username = user.username;
         vm.User.cover_image = user.cover_image || './static/images/no-image.png';
       }
-
-
-      console.log(vm.User);
-      //vm.User = user;
     });
 
     vm.init = function () {
