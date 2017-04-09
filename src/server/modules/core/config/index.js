@@ -128,6 +128,14 @@ function getRedisPort() {
   return process.env.REDIS_PORT || 6379;
 }
 
+function getPaypalAppId() {
+  return process.env.PAYPAL_APP_ID;
+}
+
+function getPayPalAppSecret() {
+  return process.env.PAYPAL_APP_SECRET;
+}
+
 /**
  * Module Export
  * @type {Object}
@@ -144,5 +152,7 @@ module.exports = {
   getPageMaxSize: getPageMaxSize,
   getPageSize: getPageSize,
   getRedisHost: getRedisHost,
-  getRedisPort: getRedisPort
+  getRedisPort: getRedisPort,
+  getPaypalAppId: getPaypalAppId,
+  getPayPalAppSecret: getPayPalAppSecret
 };
