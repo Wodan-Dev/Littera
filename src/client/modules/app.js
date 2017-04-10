@@ -81,7 +81,9 @@
     litteraApp.modules.auth.name,
     litteraApp.modules.store.name,
     litteraApp.modules.books.name,
+    litteraApp.modules.users.name,
     litteraApp.core.name,
+    'ngFileUpload',
     'angularCSS'
   ]).constant('BASEURLS', {
     BASE: 'http://littera.pub',

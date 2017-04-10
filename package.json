@@ -23,6 +23,7 @@
     "mongoose": "^4.7.2",
     "mongoose-paginate": "^5.0.0",
     "morgan": "~1.7.0",
+    "multer": "~0.1.6",
     "redis": "latest",
     "redis-server": "latest",
     "uid-safe": "~2.1.3",

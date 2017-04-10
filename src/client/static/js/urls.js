@@ -73,6 +73,14 @@
     },
     FEED_PAGE: function () {
       return '/feed';
+    },
+    USERS: function() {
+      return function (user) {
+        if (user)
+          return '/users/' + user;
+        else
+          return '/users';
+      };
     }
   };
 }(litteraApp));

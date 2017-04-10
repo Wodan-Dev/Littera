@@ -1,15 +1,17 @@
 'use strict';
 
-const express = require('express');
-const logger = require('morgan');
+const express    = require('express');
+const logger     = require('morgan');
 const bodyParser = require('body-parser');
-const core = require('./modules/core');
-const config = core.config;
+const core       = require('./modules/core');
+const config     = core.config;
 const auth       = core.authentication;
-const redis = require('redis');
+const redis      = require('redis');
 const session    = require('express-session');
 const redisStore = require('connect-redis')(session);
+//const multer     = require('multer');
 const client     = redis.createClient();
+
 
 
 var app = express();
@@ -17,6 +19,21 @@ app.use(logger('dev'));
 app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Handle file Uploads
+/*app.use(multer({
+  dest: getUploadPath(),
+  rename: function (fieldname, filename) {
+    return filename + Date.now();
+  },
+  onFileUploadStart: function (file) {
+    console.log(file.originalname + ' is starting ...');
+  },
+  onFileUploadComplete: function (file) {
+    console.log(file.fieldname + ' uploaded to  ' + file.path);
+    //done = true;
+  }
+}));*/
 
 app.use(session({
   secret: config.getSecret(),

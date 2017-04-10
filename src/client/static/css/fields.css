@@ -19,6 +19,11 @@ fieldset {
   border: none;
 }
 
+.form-image {
+  display: block;
+  height: 9.375rem;
+}
+
 .form-radio,
 .form-group {
   z-index:0;

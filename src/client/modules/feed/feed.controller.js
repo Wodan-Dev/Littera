@@ -24,8 +24,8 @@
       getData()
         .then(updateList)
         .catch(function (err) {
-          console.log('data init err');
-          console.log(err);
+          /*console.log('data init err');
+          console.log(err);*/
         });
     };
 
@@ -42,15 +42,18 @@
     function updateList(data) {
       let t = vm.feedItems.length;
 
-      for (let i = 0, len = data.data.docs.length; i < len; i++) {
-        vm.feedItems.push(data.data.docs[i]);
+      if (data.data) {
+        for (let i = 0, len = data.data.docs.length; i < len; i++) {
+          vm.feedItems.push(data.data.docs[i]);
+        }
+
+        if (t === vm.feedItems.length)
+          message.notification('information', 'No momento não temos mais posts para apresentar :(');
+
+
+        /*vm.feedItems = data.data.docs;*/
       }
 
-      if (t === vm.feedItems.length)
-        message.notification('information', 'No momento não temos mais posts para apresentar :(');
-
-
-      vm.feedItems = data.data.docs;
     }
 /*
     request._get('/users/req.body36/feed')

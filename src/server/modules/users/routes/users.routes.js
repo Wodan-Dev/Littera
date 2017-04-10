@@ -96,15 +96,12 @@ function put(req, res) {
   let user = {
     _id: req.body._id || '',
     name: req.body.name || '',
-    gender: req.body.gender || '0',
-    dob: req.body.dob || '',
-    profile_img: req.body.profile_img || '',
-    average_stars: req.body.average_stars || '0',
-    acepted_terms: req.body.acepted_terms || '0',
+    gender: (req.body.gender || '0').toString(),
+    dob: (req.body.dob || '').toString(),
+    average_stars: (req.body.average_stars || '0').toString(),
+    acepted_terms: (req.body.acepted_terms || '0').toString(),
     cover_image: req.body.cover_image || '',
-    payment: {
-      payment_id: req.body.payment || ''
-    }
+    payment: req.body.payment || ''
   };
 
   usersModel.validateUpdate(user)

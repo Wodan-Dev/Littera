@@ -61,9 +61,6 @@ const usersSchema = new db.mongoose.Schema({
     type: Date,
     index: true
   },
-  profile_img: {
-    type: String
-  },
   average_stars: {
     type: Number,
     required: true,
@@ -76,9 +73,7 @@ const usersSchema = new db.mongoose.Schema({
     default: 0
   },
   payment: {
-    payment_id: {
-      type: String
-    }
+    type: String
   },
   status: {
     type: Boolean,
@@ -140,10 +135,10 @@ const usersCreateSchema = schema({
   gender: models.numberField(true).integer().min(0).max(2),
   cover_image: models.stringField(false),
   dob: models.dateField(true),
-  profile_img: models.stringField(),
   average_stars: models.numberField(true).min(0).max(5),
   acepted_terms: models.numberField(true).min(0).max(1)
 });
+
 
 /**
  * Users Schema update validation
@@ -154,10 +149,10 @@ const usersUpdateSchema = schema({
   name: models.stringField(true).min(5).max(100),
   gender: models.numberField(true).integer().min(0).max(2),
   cover_image: models.stringField(false),
-  dob: models.dateField(true),
-  profile_img: models.stringField(),
+  dob: models.dateField(false),
   average_stars: models.numberField(true).min(0).max(5),
-  acepted_terms: models.numberField(true).min(0).max(1)
+  acepted_terms: models.numberField(true).min(0).max(1),
+  payment: models.stringField(false)
 });
 
 /**

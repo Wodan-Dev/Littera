@@ -52,13 +52,9 @@ function update(id, user) {
     new: true
   };
 
-  return crypto.encrypt(user.password)
-    .then(function (hash) {
-      user.password = hash;
-      return usersModel
-        .findOneAndUpdate(query, user, opt)
-        .exec();
-    });
+  return usersModel
+    .findOneAndUpdate(query, user, opt)
+    .exec();
 }
 
 /**
@@ -144,9 +140,10 @@ function validateUpdate(user) {
   user.name = checkField.trim(checkField.escape(user.name));
   user.gender = checkField.trim(checkField.escape(user.gender));
   user.dob = checkField.trim(checkField.escape(user.dob));
-  user.profile_img = checkField.trim(checkField.escape(user.profile_img));
+  user.cover_image = checkField.trim(user.cover_image);
   user.average_stars = checkField.trim(checkField.escape(user.average_stars));
   user.acepted_terms = checkField.trim(checkField.escape(user.acepted_terms));
+  user.payment = checkField.trim(user.payment);
 
   return validator.validateSchema(user, usersSchema.usersUpdateSchema);
 }

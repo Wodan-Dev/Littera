@@ -14,6 +14,11 @@
     factories: {
       localSave: 'localSaveFactory'
     },
+    components: {
+      fileInput: {
+        name: 'liFileInput'
+      }
+    },
     imports: {
 
     }

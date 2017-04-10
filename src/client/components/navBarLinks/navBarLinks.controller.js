@@ -8,20 +8,23 @@
     var vm = this;
 
     vm.User = {
-      _id: '',
+      _id: '-',
       name: '',
       username: '',
-      cover_image: ''
+      cover_image: '',
+      username_link: ''
     };
 
     $rootScope.$on('evt_navBarLinks_event', function(ev, user) {
       if (user._id === '-') {
+        vm.User._id = '-';
         vm.User.name = 'Participe';
         vm.User.cover_image = './static/images/no-image.png';
       }
       else {
         vm.User._id = user._id || '-';
         vm.User.name = user.name;
+        vm.User.username_link = user.username_link;
         vm.User.username = user.username;
         vm.User.cover_image = user.cover_image || './static/images/no-image.png';
       }

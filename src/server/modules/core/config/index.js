@@ -87,6 +87,16 @@ function getPageSize() {
 }
 
 /**
+ * Path to upload files
+ * @return {string}
+ */
+function getUploadPath() {
+  let path = require('path');
+  let local = path.dirname(module.parent.filename);
+  return path.resolve(path.join(local, '../../../')) + '/public/uploads';
+}
+
+/**
  * load env vars
  * @return {Promise} Resolve/Reject
  */
@@ -144,5 +154,6 @@ module.exports = {
   getPageMaxSize: getPageMaxSize,
   getPageSize: getPageSize,
   getRedisHost: getRedisHost,
-  getRedisPort: getRedisPort
+  getRedisPort: getRedisPort,
+  getUploadPath: getUploadPath
 };

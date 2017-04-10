@@ -5,17 +5,19 @@
 (function(angular, litteraApp) {
 
   function booksFactory(BASEURLS, LOCALNAME, localSave, $resource) {
-    let Headers = {
-      'Content-Type': 'application/json',
-      'x-access-token': localSave.getValueLS(LOCALNAME.USER_TOKEN)
-    };
+    function getHeader() {
+      return {
+        'Content-Type': 'application/json',
+        'x-access-token': localSave.getValueLS(LOCALNAME.USER_TOKEN)
+      };
+    }
 
     function getBooks(page) {
       return $resource(BASEURLS.BASE_API +
         litteraApp.modules.books.routes.books('?page=' + page), {},
         {
           get: {
-            headers: Headers
+            headers: getHeader()
           }
         }
       ).get({}).$promise;
@@ -26,7 +28,7 @@
         litteraApp.modules.books.routes.storeDetail(id), {},
         {
           get: {
-            headers: Headers
+            headers: getHeader()
           }
         }
       ).get({}).$promise;

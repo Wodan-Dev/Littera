@@ -8,6 +8,7 @@
  */
 const core = require('../../core');
 const authCtrl = require('../controller/authentication.controller');
+const userModel = require('../../../models/users/users.model');
 const http = core.http;
 const auth = core.authentication;
 const renderError = core.http.renderError;
@@ -22,20 +23,38 @@ function get(req, res) {
 
   auth.getUserSession(req)
     .then(function (user) {
-      console.log(user);
       if (user.err)
-        renderError(res,
-          user.value.err.err,
-          user.value.err.err, http.HTTP_STATUS.HTTP_400_BAD_REQUEST);
+        throw user.value.err.err;
       else
-        http.render(res, user.value);
-      //res.json(user.value);
+        return userModel.findById(user.value._id);
+    })
+    .then(function(ruser) {
+      let usr = {
+        _id: ruser._id,
+        username: ruser.username,
+        email: ruser.email,
+        name: ruser.name,
+        dob: ruser.dob,
+        cover_image: ruser.cover_image,
+        written_books:ruser.written_books,
+        library: ruser.library,
+        wishlist: ruser.wishlist,
+        following: ruser.following,
+        followers: ruser.followers,
+        choices: ruser.choices,
+        reviews: ruser.reviews,
+        is_staff: ruser.is_staff,
+        status: ruser.status,
+        acepted_terms: ruser.acepted_terms,
+        average_stars: ruser.average_stars,
+        gender: ruser.gender,
+        payment: ruser.payment
+      };
+
+      http.render(res, usr);
     })
     .catch(function (err) {
-      renderError(res, err, err, http.HTTP_STATUS.HTTP_400_BAD_REQUEST);
-      /*res.json({
-        'err': err
-      });*/
+      renderError(res, err, err, http.HTTP_STATUS.HTTP_401_UNAUTHORIZED);
     });
 }
 
@@ -65,6 +84,7 @@ function postAuth(req, res) {
         username: ruser.value.username,
         email: ruser.value.email,
         name: ruser.value.name,
+        dob: ruser.value.dob,
         cover_image: ruser.value.cover_image,
         written_books:ruser.value.written_books,
         library: ruser.value.library,

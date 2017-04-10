@@ -5,7 +5,7 @@
 
 (function (angular, litteraApp) {
 
-  function navBarUserController($rootScope, navBarUserFactory) {
+  function navBarUserController($rootScope, navBarUserFactory, authentication) {
     var vm = this;
 
     vm.User = {
@@ -16,35 +16,52 @@
     };
 
     $rootScope.$on('evt_navBarUser_event', function(ev, obj){
-      loadData()
-        .then(function (data) {
-          loadFields(data.data, false);
-          $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
-          $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
-          $rootScope.$broadcast('evt_header_event', vm.User);
-        })
-        .catch(function () {
-          loadFields({}, true);
-          $rootScope.$broadcast('evt_navBarLinks_event', {});
-          $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
-          $rootScope.$broadcast('evt_header_event', vm.User);
-        });
+      if(authentication.isAuthenticated()) {
+        loadData()
+          .then(function (data) {
+            loadFields(data.data, false);
+            $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
+            $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
+            $rootScope.$broadcast('evt_header_event', vm.User);
+          })
+          .catch(function () {
+            loadFields({}, true);
+            $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
+            $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
+            $rootScope.$broadcast('evt_header_event', vm.User);
+          });
+      }
+      else {
+        loadFields({}, true);
+        $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
+        $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
+        $rootScope.$broadcast('evt_header_event', vm.User);
+      }
+
     });
 
     vm.init = function () {
-      loadData()
-        .then(function (data) {
-          loadFields(data.data, false);
-          $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
-          $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
-          $rootScope.$broadcast('evt_header_event', vm.User);
-        })
-        .catch(function () {
-          loadFields({}, true);
-          $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
-          $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
-          $rootScope.$broadcast('evt_header_event', vm.User);
-        });
+      if(authentication.isAuthenticated()) {
+        loadData()
+          .then(function (data) {
+            loadFields(data.data, false);
+            $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
+            $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
+            $rootScope.$broadcast('evt_header_event', vm.User);
+          })
+          .catch(function () {
+            loadFields({}, true);
+            $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
+            $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
+            $rootScope.$broadcast('evt_header_event', vm.User);
+          });
+      }
+      else {
+        loadFields({}, true);
+        $rootScope.$broadcast('evt_navBarLinks_event', vm.User);
+        $rootScope.$broadcast('evt_navBarNotify_event', vm.User);
+        $rootScope.$broadcast('evt_header_event', vm.User);
+      }
 
     };
 
@@ -60,7 +77,8 @@
         vm.User = {
           _id: data._id,
           name: data.name,
-          username: '@' + data.username,
+          username_link: '@' + data.username,
+          username: data.username,
           cover_image: data.cover_image || './static/images/no-image.png'
         };
       }
@@ -74,7 +92,8 @@
 
   navBarUserController.$inject = [
     '$rootScope',
-    litteraApp.components.navBarUser.factories.navBarUserFactory
+    litteraApp.components.navBarUser.factories.navBarUserFactory,
+    litteraApp.components.navBarUser.imports.authentication
   ];
 
   angular.module(litteraApp.components.navBarUser.name)

@@ -2,7 +2,7 @@
          id="NavRight"
          ng-style="$root.__showLinks ? { 'right': 0 } : { 'right': '-15.625rem'}">
   <h4>
-    <a href="#/dashboard"
+    <a ng-href="#/users/{{ $ctrl.User.username }}"
        class="link-default"
        ng-show="$ctrl.User._id!=='-'">{{ $ctrl.User.name ||$ctrl.User.username }}</a>
     <p class="link-default"
@@ -21,7 +21,7 @@
 
   </div>
   <ul ng-show="$ctrl.User._id!=='-'">
-    <li><a href="#/dashboard">Perfil</a></li>
+    <li><a ng-href="#/users/{{ $ctrl.User.username }}">Perfil</a></li>
     <li><a href="#/following">Seguindo</a></li>
     <li><a href="#/followers">Seguidores</a></li>
   </ul>

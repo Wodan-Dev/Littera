@@ -146,6 +146,20 @@ function dateField(required) {
 }
 
 /**
+ * Field nested Object
+ * @param  {Boolean} required is required
+ * @return {Object}          joi instance
+ */
+function nestedObject(required, schema) {
+  let joi = Joi.object().keys(schema);
+  if (required)
+    joi = joi.required();
+
+  return joi;
+}
+
+
+/**
  * Field nested Array
  * @param  {Boolean} required is required
  * @return {Object}          joi instance
@@ -179,7 +193,8 @@ const models = {
   numberField: numberField,
   booleanField: booleanField,
   dateField: dateField,
-  nestedArray: nestedArray
+  nestedArray: nestedArray,
+  nestedObject: nestedObject
 };
 
 /**

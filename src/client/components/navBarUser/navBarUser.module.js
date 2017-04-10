@@ -20,7 +20,8 @@
     template: './components/navBarUser/navBarUser.tpl.html',
     imports: {
       request: litteraApp.core.services.request,
-      localSave: litteraApp.core.factories.localSave
+      localSave: litteraApp.core.factories.localSave,
+      authentication: litteraApp.modules.auth.factories.authentication
     }
   };
 

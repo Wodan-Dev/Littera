@@ -16,6 +16,7 @@
     "angular-resource": "^1.6.1",
     "angular-route": "^1.6.1",
     "angular-css": "^1.0.8",
+    "ng-file-upload": "*",
     "moment": "^2.17.1",
     "font-awesome": "^4.7.0",
     "jquery": "^1.7",
@@ -43,6 +44,11 @@
     "angular-css": {
       "main": [
         "angular-css.min.js"
+      ]
+    },
+    "ng-file-upload": {
+      "main": [
+        "ng-file-upload.min.js"
       ]
     },
     "moment": {

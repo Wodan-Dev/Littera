@@ -1,11 +1,5 @@
 <div class="feed-notices" ng-init="FeedCtrl.init()">
-  <div class="column column-all" ng-show="!FeedCtrl.feedItems.length">
-    <div class="notice-content">
-      <h3 class="title">
-        Não temos nada pra exibir aqui ainda :(
-      </h3>
-    </div>
-  </div>
+
   <div class="notice" ng-repeat="r in FeedCtrl.feedItems">
     <div class="notice-image">
       <a ng-href="#/book/{{ r._id_book._id }}">
@@ -54,6 +48,13 @@
         <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
         {{ r._id_book.comments.length }}
       </a>
+    </div>
+  </div>
+  <div class="column column-all" ng-show="!FeedCtrl.feedItems.length">
+    <div class="notice-content">
+      <h3 class="title">
+        Não temos nada pra exibir aqui ainda :(
+      </h3>
     </div>
   </div>
 

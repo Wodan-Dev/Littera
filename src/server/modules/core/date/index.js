@@ -6,7 +6,7 @@
 /**
  * Dependencies
  */
-const moment = require('moment');
+const date = require('moment');
 const config = require('../config');
 
 const MONTHS = {
@@ -54,7 +54,7 @@ const MONTHS = {
  * @return {DateTime} actual Date Time
  */
 function getDateTimeNow() {
-  return moment().format(config.getDateTimeFormat());
+  return date().format(config.getDateTimeFormat());
 }
 
 /**
@@ -62,7 +62,7 @@ function getDateTimeNow() {
  * @return {DateTime} actual Date
  */
 function getDateNow() {
-  return moment().format(config.getDateFormat());
+  return date().format(config.getDateFormat());
 }
 
 /**
@@ -70,7 +70,7 @@ function getDateNow() {
  * @return {DateTime} actual Date Time
  */
 function getDateTimeNowMongo() {
-  return new Date(moment().format(config.getDateTimeMongo()));
+  return new Date(date().format(config.getDateTimeMongo()));
 }
 
 function isNumber(pnum) {
@@ -91,7 +91,7 @@ function formatDate(date, format) {
   if (isNumber(date))
     date = new Date(date);
 
-  return moment(date, 'DD/MM/YYYY').format(format);
+  return date(date, 'DD/MM/YYYY').format(format);
 }
 
 /**
@@ -99,7 +99,7 @@ function formatDate(date, format) {
  * @return {DateTime} actual Date Time
  */
 function getDateUTC() {
-  return moment.utc().valueOf();
+  return date.utc().valueOf();
 }
 
 /**

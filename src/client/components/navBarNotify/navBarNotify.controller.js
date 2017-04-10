@@ -11,6 +11,7 @@
       _id: '',
       name: '',
       username: '',
+      username_link: '',
       cover_image: ''
     };
 
@@ -23,7 +24,6 @@
     }];
 
     $rootScope.$on('evt_navBarNotify_event', function(ev, user) {
-
       vm.User = user;
     });
 

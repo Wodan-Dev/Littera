@@ -13,7 +13,8 @@
       _id: '',
       name: '',
       username: '',
-      cover_image: ''
+      cover_image: '',
+      username_link: ''
     };
 
     $rootScope.$on('evt_header_event', function(ev, user) {
@@ -26,6 +27,7 @@
         vm.User._id = user._id || '-';
         vm.User.name = user.name;
         vm.User.username = user.username;
+        vm.User.username_link = user.username_link;
         vm.User.cover_image = user.cover_image || './static/images/no-image.png';
       }
     });

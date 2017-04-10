@@ -25,4 +25,5 @@ globals:
   litteraApp: true
   $: true
   noty: true
+  moment: true
 

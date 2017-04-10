@@ -11,9 +11,9 @@
       };
     }
 
-    function getAll(user) {
+    function getAll(user, page) {
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.feed.routes.feed(user), {},
+        litteraApp.modules.feed.routes.feed(user) + '?page=' + page, {},
         {
           get: {
             headers: getHeader()
