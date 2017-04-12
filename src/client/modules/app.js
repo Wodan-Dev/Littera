@@ -23,12 +23,13 @@
     });
   }
 
-  function runApp($rootScope, authorization, $location, $interval) {
+  function runApp($rootScope, authorization, $location, $interval, BASEURLS) {
     $rootScope.__showModal = false;
     $rootScope.__showUserMenu = false;
     $rootScope.__showLinks = false;
     $rootScope.__showNotify = false;
     $rootScope.__showLoad = false;
+    $rootScope.BASEURLS = BASEURLS;
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
       $rootScope.__showModal = false;
@@ -67,7 +68,8 @@
     '$rootScope',
     litteraApp.modules.auth.factories.authorization,
     '$location',
-    '$interval'
+    '$interval',
+    'BASEURLS'
   ];
 
   angular.module(litteraApp.modules.app.name, [

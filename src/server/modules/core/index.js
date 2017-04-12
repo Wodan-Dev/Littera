@@ -13,5 +13,6 @@ module.exports = {
   validator: require('./validator'),
   http: require('./http'),
   authentication: require('./authentication'),
-  utils: require('./utils')
+  utils: require('./utils'),
+  paypal: require('./paypal')
 };

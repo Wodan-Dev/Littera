@@ -75,6 +75,7 @@ function betweenEE(value, a, b) {
   return (value > a && value < b);
 }
 
+
 /**
  * Module Export
  * @type {Object}

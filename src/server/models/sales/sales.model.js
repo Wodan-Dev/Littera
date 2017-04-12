@@ -239,6 +239,59 @@ function validateId(id) {
 }
 
 /**
+ * Return a sale object for paypal api call
+ * @param  {Object} id Id which has to be validated
+ * @return {Promise}    Resolve/Reject
+ */
+function getSale(id) {
+  let query = {
+    _id: db.getObjectId(id)
+  };
+
+  return salesModel.aggregate([
+    {
+      $match: { _id: new db.getObjectId(id)}
+    },
+    {
+      $unwind: {
+        path: '$items',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $lookup: {
+        from: 'books',
+        localField: 'items._id_book',
+        foreignField: '_id',
+        as: 'book'
+      }
+    },
+    {
+      $unwind: '$book'
+    },
+    {
+      $group:
+      {
+        _id: '$_id',
+        totalsale: {
+          $sum: '$items.value'
+        },
+        items: {
+          $push: {
+            _id: '$items._id',
+            value: '$items.value',
+            _id_book: '$items._id_book',
+            title: '$book.title',
+            synopsis: '$book.synopsis'
+          }
+        }
+      }
+    }
+  ])
+  .exec();
+}
+
+/**
  * Module Export
  * @type {Object}
  */
@@ -254,5 +307,6 @@ module.exports = {
   removeItem: removeItem,
   list: list,
   findById: findById,
-  findByUserId: findByUserId
+  findByUserId: findByUserId,
+  getSale: getSale
 };

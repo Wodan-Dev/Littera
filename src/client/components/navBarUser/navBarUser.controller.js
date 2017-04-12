@@ -79,7 +79,7 @@
           name: data.name,
           username_link: '@' + data.username,
           username: data.username,
-          cover_image: data.cover_image || './static/images/no-image.png'
+          cover_image: data.cover_image + '?' + new Date().getTime()//|| './static/images/no-image.png'
         };
       }
     }

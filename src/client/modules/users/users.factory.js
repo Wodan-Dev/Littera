@@ -27,9 +27,15 @@
       return request._put(litteraApp.modules.users.routes.users(''), data);
     }
 
+    function updateImg(url, file) {
+      return request._upload(url, file);
+    }
+
+
     return {
       getUser: getUser,
-      update: update
+      update: update,
+      updateImg: updateImg
     };
   }
 

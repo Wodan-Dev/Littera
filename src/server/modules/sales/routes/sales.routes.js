@@ -12,6 +12,8 @@ const salesCtrl = require('../controller/sales.controller');
 const http = core.http;
 const utils = core.utils;
 const renderError = core.http.renderError;
+const validator = core.validator;
+const paypal = core.paypal;
 
 /**
  * Method Get in route /
@@ -185,6 +187,82 @@ function removeBook(req, res) {
 }
 
 /**
+ * Method Pay in route /pay
+ * Call Paypal API to post a payment
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function pay(req, res) {
+
+  let _id_sale = req.body._id_sale;
+
+  let paypal_sale = {
+    intent: 'sale',
+    payer: {
+      payment_method: 'paypal'
+    },
+    transactions: [],
+    note_to_payer: 'Em caso de dúvidas, contate o suporte do Littera.',
+    redirect_urls: {
+      return_url: 'www.littera.pub/purchases',
+      cancel_url: 'www.littera.pub/cart'
+    }
+  };
+
+  validator.validateId(_id_sale)
+    .then(function(rId) {
+      _id_sale = rId;
+      return salesModel.getSale(_id_sale);
+    })
+    .then(function (result) {
+      return new Promise(function (resolve, reject) {
+        let obj = {
+          amount: {
+            total: result[0].totalsale,
+            currency: 'BRL'
+          },
+          description: 'Compra de E-books no site Littera.',
+          custom: 'Cod. Venda: ' + _id_sale,
+          payment_options: {
+            allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+          },
+          soft_descriptor: 'Littera Ebooks',
+          item_list: {
+            items: []
+          }
+        };
+
+        for (let items of result[0].items) {
+          obj.item_list.items.push({
+            name: items.title,
+            description: items.synopsis,
+            quantity: '1',
+            price: items.value,
+            tax: 0,
+            currency: 'BRL'
+          });
+        }
+
+        paypal_sale.transactions.push(obj);
+
+        paypal.payment.create(paypal_sale, function (error, payment) {
+          if (error)
+            reject(validator.createErrItem('paypal', error));
+          else
+            resolve(payment);
+        });
+      });
+    })
+    .then(function (payment) {
+      http.render(res, payment);
+    })
+    .catch(function(err) {
+      renderError(res, {}, err);
+    });
+
+}
+
+/**
  * Create Instance to router object
  * @param  {Object} express Express
  * @param  {Function} auth authentication function
@@ -196,6 +274,7 @@ function router(express, auth) {
   routes.get('/', auth, get);
   routes.get('/:id', auth, getByUserId);
   routes.post('/', auth, post);
+  routes.post('/pay', pay);
   routes.post('/books', auth, postBook);
   routes.put('/books', auth, putBook);
   routes.delete('/:id', auth, remove);

@@ -6,17 +6,17 @@
       <div class="form-image">
         <div class="feed-profile">
           <div class="feed-profile-picture">
-            <!--<img ng-src="{{UsersCtrl.user.cover_image}}">-->
-             <img ngf-thumbnail="UsersCtrl.user.cover_image"/>
+            <img ng-src="{{UsersCtrl.user.cover_image}}">
+            <!-- <img ngf-thumbnail="UsersCtrl.user.cover_image"/>-->
           </div>
           <div class="feed-profile-username">
            <p class="username" ng-bind="UsersCtrl.user.username"></p>
-           <!--<input class="btn btn-default"
+           <input class="btn btn-default"
                   type="file"
                   id="trigger"
                   onchange="angular.element(this).scope().setFile(this)"
-                  accept="image/*"/>-->
-            <input
+                  accept="image/*"/>
+            <!--<input
               type="file"
               ngf-select
               ng-model="UsersCtrl.user.cover_image"
@@ -24,7 +24,7 @@
               ngf-pattern="'image/*'"
               accept="image/*"
               ngf-max-size="20MB"
-              />
+              />-->
             <!--<input class="btn btn-default" type="file"
 
                    ng-model="UsersCtrl.user.cover_image" />-->
@@ -100,20 +100,6 @@
       </div>
 
       <div class="form-group"
-           ng-class="{ 'has-error': UsersCtrl.hasError('cover_image') }">
-        <input type="text"
-               ng-model="UsersCtrl.user.cover_image"
-               name="txtCover_image"
-               id="txtCover_image"
-               required="required"/>
-        <label class="control-label"
-               ng-class="{ 'has-error': UsersCtrl.hasError('cover_image') }"
-               for="txtCover_image">Imagem
-        </label><i class="bar"></i>
-        <p class="field-err"  ng-if="UsersCtrl.hasError('cover_image')" >{{UsersCtrl.getErrorMessage('cover_image')}}</p>
-      </div>
-
-      <div class="form-group"
            ng-class="{ 'has-error': UsersCtrl.hasError('payment') }">
         <input type="text"
                ng-model="UsersCtrl.user.payment"
@@ -146,7 +132,7 @@
       <div class="button-group">
         <button
           class="btn full btn-info-inverted"
-          ng-click="UsersCtrl.btnUpdate()" >Atualizar</button>
+          ng-click="UsersCtrl.btnUpdate()">Atualizar</button>
       </div>
     </form>
   </div>

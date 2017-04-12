@@ -77,17 +77,18 @@
 
     function _upload(url, file) {
       return new Promise(function(resolve, reject) {
-        let uri = BASEURLS.BASE_API + url;
+        let uri = BASEURLS.BASE_API + '/upload' + url;
 
         Upload.upload({
-          url: 'http://localhost:3000/upload', //webAPI exposed to upload the file
-          data: {
-            file: file
-          } //pass file as data, should be user ng-model
+          url: uri, // 'http://localhost:3000/upload', //webAPI exposed to upload the file
+          data: file, //pass file as data, should be user ng-model
+          headers: getHeader()
         })
           .then(function (data) {
+            resolve(data);
 
           }, function (err) { //catch error
+            reject(err);
             //console.log('Error status: ' + resp.status);
             //$window.alert('Error status: ' + resp.status);
           }, function (evt) {

@@ -87,16 +87,6 @@ function getPageSize() {
 }
 
 /**
- * Path to upload files
- * @return {string}
- */
-function getUploadPath() {
-  let path = require('path');
-  let local = path.dirname(module.parent.filename);
-  return path.resolve(path.join(local, '../../../')) + '/public/uploads';
-}
-
-/**
  * load env vars
  * @return {Promise} Resolve/Reject
  */
@@ -138,6 +128,25 @@ function getRedisPort() {
   return process.env.REDIS_PORT || 6379;
 }
 
+function getPaypalAppId() {
+  return process.env.PAYPAL_APP_ID;
+}
+
+function getPayPalAppSecret() {
+  return process.env.PAYPAL_APP_SECRET;
+}
+
+
+/**
+ * Path to upload files
+ * @return {string}
+ */
+function getUploadPath() {
+  let path = require('path');
+  let local = path.dirname(module.parent.filename);
+  return path.resolve(path.join(local, '../../../../../')) + '/public/uploads';
+}
+
 /**
  * Module Export
  * @type {Object}
@@ -155,5 +164,7 @@ module.exports = {
   getPageSize: getPageSize,
   getRedisHost: getRedisHost,
   getRedisPort: getRedisPort,
+  getPaypalAppId: getPaypalAppId,
+  getPayPalAppSecret: getPayPalAppSecret,
   getUploadPath: getUploadPath
 };

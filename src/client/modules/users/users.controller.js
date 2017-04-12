@@ -3,8 +3,17 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function UsersCtrl($scope, $rootScope, $filter, $location, usersFactory, message, authentication, has_error) {
+  function UsersCtrl($scope,
+                     $rootScope,
+                     $filter,
+                     $location,
+                     Upload,
+                     usersFactory,
+                     message,
+                     authentication,
+                     has_error) {
     var vm = this;
+    let changedImage = false;
 
     vm.year = moment().year();
 
@@ -75,6 +84,7 @@
       average_stars: '0',
       acepted_terms: false,
       cover_image: '',
+      img_data: '',
       payment: ''
     };
 
@@ -88,10 +98,10 @@
 
       reader.onload = function(event) {
         vm.user.cover_image = event.target.result;
+        changedImage = true;
         $scope.$apply();
 
       };
-      // when the file is read it triggers the onload event above.
       reader.readAsDataURL(element.files[0]);
     };
 
@@ -104,35 +114,18 @@
     };
 
     vm.btnUpdate = function () {
+      let usr = {};
 
       has_error.clearError();
       $rootScope.__showLoad = true;
       authentication.credential()
         .then(function (data) {
-          var fd=new FormData();
-          var imgBlob = dataURItoBlob(vm.user.cover_image);
-          let dob = '';
-          if (vm.year) {
-            dob = moment.utc(
-              new Date(vm.year, vm.selectedMonth.id -1, vm.selectedDay.id  )
-            ).format();
-          }
 
           let terms = vm.user.acepted_terms || false;
 
-          fd.append('cover_image', imgBlob);
-          fd.append('_id', data.data.data._id.toString() || '');
-          fd.append('name', vm.user.name || '');
-          fd.append('gender', vm.selectedGender.id.toString() || '0');
-          fd.append('dob', dob);
-          fd.append('average_stars', data.data.data.average_stars.toString() || '');
-          fd.append('acepted_terms', terms ? '1' : '0');
-          //fd.append('cover_image', vm.user.cover_image || '');
-          fd.append('payment', vm.user.payment || '');
+          vm.user.img_data = vm.user.cover_image;
 
-
-
-          /*let usr = {
+          usr = {
             _id: data.data.data._id.toString() || '',
             name: vm.user.name || '',
             gender: vm.selectedGender.id.toString() || '0',
@@ -143,25 +136,55 @@
             payment: vm.user.payment || ''
 
           };
-          console.log('pre usr');
-          console.log(usr);
+
+          if (usr.cover_image) {
+            usr.cover_image = $rootScope.BASEURLS.BASE_API +
+            '/upload/users/' +  data.data.data.username;
+          }
+
           if (vm.year) {
             usr.dob = moment.utc(
               new Date(vm.year, vm.selectedMonth.id -1, vm.selectedDay.id  )
             ).format();
-          }*/
+          }
 
-          return usersFactory.update(fd);
+          return usersFactory.update(usr);
+        })
+        .then(function (data) {
+          console.log('data');
+          console.log(data);
+          return new Promise(function (resolve, reject) {
+            if (changedImage) {
+              console.log('changed image');
+              return usersFactory.updateImg('/users/' + data.data.data.username,
+                {
+                  image: dataURItoBlob(vm.user.img_data)
+                })
+                .then(function () {
+                  resolve(data);
+                })
+                .catch(function (err) {
+                  reject(err);
+                });
+            }
+            else
+              resolve(data);
+          });
+
         })
         .then(function (data) {
           if (!data.status)
             throw data;
-
+          $scope.$apply(function () {
+            $rootScope.$broadcast('evt_navBarUser_event', '');
+          });
           $location.path('/feed');
-          $rootScope.$broadcast('evt_navBarUser_event', '');
+
         })
         .catch(function (data) {
-          if (data.data.data) {
+          console.log('err');
+          console.log(data);
+          if (data.data) {
             let lst = data.data.data.err;
             $scope.$apply(function () {
               if (lst instanceof Array) {
@@ -210,7 +233,7 @@
           vm.selectedGender = vm.cbeGender[data.data.data.gender];
           vm.user.average_stars = data.data.data.average_stars;
           vm.user.acepted_terms = data.data.data.acepted_terms === 1 ? true: false;
-          vm.user.cover_image = data.data.data.cover_image;
+          vm.user.cover_image = data.data.data.cover_image + '?' + new Date().getTime();
           vm.user.payment = data.data.data.payment;
           vm.user.username = '@' + data.data.data.username;
         })
