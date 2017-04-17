@@ -7,6 +7,7 @@
     var vm = this;
     vm.actualPage = 1;
     vm.feedItems = [];
+    let loading = false;
 
     $location.search('next', null);
 
@@ -21,11 +22,10 @@
     }
 
     vm.init = function() {
+      loading = true;
       getData()
         .then(updateList)
         .catch(function (err) {
-          /*console.log('data init err');
-          console.log(err);*/
         });
     };
 
@@ -36,40 +36,25 @@
         .catch(function (err) {
           console.log('data init err');
           console.log(err);
+          loading = false;
         });
     };
 
     function updateList(data) {
       let t = vm.feedItems.length;
-
       if (data.data) {
         for (let i = 0, len = data.data.docs.length; i < len; i++) {
           vm.feedItems.push(data.data.docs[i]);
         }
 
-        if (t === vm.feedItems.length)
+        if (t === vm.feedItems.length && !loading)
           message.notification('information', 'No momento não temos mais posts para apresentar :(');
 
 
-        /*vm.feedItems = data.data.docs;*/
+        loading = false;
       }
 
     }
-/*
-    request._get('/users/req.body36/feed')
-      .then(function (data) {
-        $scope.$apply(function () {
-
-          console.log('data');
-          console.log(data);
-          vm.feedItems = data.data.data.docs;
-          console.log(vm.feedItems);
-        });
-      })
-      .catch(function (err) {
-        console.log(err);
-      });*/
-
   }
 
   FeedCtrl.$inject = [

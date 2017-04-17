@@ -9,14 +9,21 @@
       users: {
         name: 'UsersController',
         nameas: 'UsersCtrl'
+      },
+      writtenBooks: {
+        name: 'WrittenBooksController',
+        nameas: 'WrittenBooksCtrl'
       }
     },
     routes: {
       home: litteraApp.URLS.HOME(),
-      users: litteraApp.URLS.USERS()
+      users: litteraApp.URLS.USERS(),
+      writtenbooks: litteraApp.URLS.WRITTENBOOKS(),
+      writtenbooks_page: litteraApp.URLS.WRITTENBOOKS_PAGE()
     },
     factories: {
-      users: 'usersFactory'
+      users: 'usersFactory',
+      writtenBooks: 'writtenBooksFactory'
     },
     services: {
 
@@ -24,6 +31,9 @@
     templates: {
       users: {
         url: 'views/users-create.view.html'
+      },
+      writtenBooks: {
+        url: 'views/written-books.view.html'
       }
     },
     imports: {
@@ -42,3 +52,5 @@
   ]);
 
 }(angular, litteraApp));
+
+

@@ -151,11 +151,8 @@
           return usersFactory.update(usr);
         })
         .then(function (data) {
-          console.log('data');
-          console.log(data);
           return new Promise(function (resolve, reject) {
             if (changedImage) {
-              console.log('changed image');
               return usersFactory.updateImg('/users/' + data.data.data.username,
                 {
                   image: dataURItoBlob(vm.user.img_data)
@@ -182,8 +179,6 @@
 
         })
         .catch(function (data) {
-          console.log('err');
-          console.log(data);
           if (data.data) {
             let lst = data.data.data.err;
             $scope.$apply(function () {

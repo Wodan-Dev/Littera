@@ -1,0 +1,144 @@
+<div class="feed-notices" ng-init="UsersCtrl.init()">
+  <div class="notice container">
+    <form class="form-container" novalidate>
+      <h1>Criar novo Livro</h1>
+
+      <div class="form-image">
+        <div class="feed-profile">
+          <div class="feed-profile-picture">
+            <img ng-src="{{UsersCtrl.user.cover_image}}">
+            <!-- <img ngf-thumbnail="UsersCtrl.user.cover_image"/>-->
+          </div>
+          <div class="feed-profile-username">
+            <p class="username" ng-bind="UsersCtrl.user.username"></p>
+            <input class="btn btn-default"
+                   type="file"
+                   id="trigger"
+                   onchange="angular.element(this).scope().setFile(this)"
+                   accept="image/*"/>
+            <!--<input
+              type="file"
+              ngf-select
+              ng-model="UsersCtrl.user.cover_image"
+              name="file"
+              ngf-pattern="'image/*'"
+              accept="image/*"
+              ngf-max-size="20MB"
+              />-->
+            <!--<input class="btn btn-default" type="file"
+
+                   ng-model="UsersCtrl.user.cover_image" />-->
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group"
+           ng-class="{ 'has-error': UsersCtrl.hasError('name') }">
+        <input type="text"
+               ng-model="UsersCtrl.user.name"
+               name="txtName"
+               id="txtName"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': UsersCtrl.hasError('name') }"
+               for="txtName">Nome
+        </label><i class="bar"></i>
+        <p class="field-err" ng-if="UsersCtrl.hasError('name')" >{{UsersCtrl.getErrorMessage('name')}}</p>
+      </div>
+
+      <div class="form-group">
+        <select ng-options="o.desc for o in UsersCtrl.cbeGender"
+                ng-model="UsersCtrl.selectedGender"
+                name="cbeGender"
+                id="cbeGender">
+        </select>
+        <label class="control-label"
+               for="cbeGender">Genero</label>
+        <i class="bar"></i>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Data de nascimento</label>
+      </div>
+      <br>
+
+      <div class="form-group">
+        <select ng-options="o.desc for o in UsersCtrl.cbeDays"
+                ng-model="UsersCtrl.selectedDay"
+                name="cbeDays"
+                id="cbeDays">
+        </select>
+        <label class="control-label"
+               for="cbeDays">Dia</label>
+        <i class="bar"></i>
+      </div>
+      <div class="form-group">
+        <select ng-options="o.desc for o in UsersCtrl.cbeMonths"
+                ng-model="UsersCtrl.selectedMonth"
+                name="cbeMonths"
+                id="cbeMonths">
+        </select>
+        <label class="control-label"
+               for="cbeMonths">Mês</label>
+        <i class="bar"></i>
+      </div>
+
+      <div class="form-group"
+           ng-class="{ 'has-error': UsersCtrl.hasError('dob') }">
+        <input type="text"
+               ng-model="UsersCtrl.year"
+               dob="txtYear"
+               id="txtYear"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': UsersCtrl.hasError('dob') }"
+               for="txtYear">Ano
+        </label><i class="bar"></i>
+        <p class="field-err" ng-if="UsersCtrl.hasError('dob')" >{{UsersCtrl.getErrorMessage('dob')}}</p>
+      </div>
+
+      <div class="form-group"
+           ng-class="{ 'has-error': UsersCtrl.hasError('payment') }">
+        <input type="text"
+               ng-model="UsersCtrl.user.payment"
+               name="txtPaymentPayment_id"
+               id="txtPaymentPayment_id"
+               required="required"/>
+        <label class="control-label"
+               ng-class="{ 'has-error': UsersCtrl.hasError('payment') }"
+               for="txtPaymentPayment_id">PayPal Token
+        </label><i class="bar"></i>
+        <p class="field-err"  ng-if="UsersCtrl.hasError('payment')" >{{UsersCtrl.getErrorMessage('payment.payment_id')}}</p>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"
+                 ng-model="UsersCtrl.user.acepted_terms"
+            />
+          <i class="helper"></i>Aceitou os Termos
+        </label>
+      </div>
+
+      <div class="form-group">
+
+        <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+        {{ UsersCtrl.user.average_stars }}
+
+      </div>
+
+      <div class="button-group">
+        <button
+          class="btn full btn-info-inverted"
+          ng-click="UsersCtrl.btnUpdate()">Atualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="trends" data-scroll="dock"
+     ng-include="'views/trends.view.html'">
+
+</div>
+

@@ -81,6 +81,16 @@
         else
           return '/users';
       };
+    },
+    WRITTENBOOKS_PAGE: function() {
+      return function (user) {
+        return '/written/' + user;
+      };
+    },
+    WRITTENBOOKS: function() {
+      return function (user) {
+        return '/users/' + user + '/written/'; // '/written/' + user;
+      };
     }
   };
 }(litteraApp));

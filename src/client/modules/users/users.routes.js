@@ -15,6 +15,14 @@
           access: {
             requiresLogin: false
           }
+        })
+        .when(litteraApp.modules.users.routes.writtenbooks_page(':username'), {
+          controller:  litteraApp.modules.users.controllers.writtenBooks.name,
+          controllerAs:  litteraApp.modules.users.controllers.writtenBooks.nameas,
+          templateUrl: litteraApp.modules.users.templates.writtenBooks.url,
+          access: {
+            requiresLogin: true
+          }
         });
     });
 
