@@ -75,18 +75,15 @@
         <p class="field-err" ng-if="BookCreateCtrl.hasError('esbn')" >{{BookCreateCtrl.getErrorMessage('esbn')}}</p>
       </div>
 
-      <div class="form-group"
-           ng-class="{ 'has-error': BookCreateCtrl.hasError('language') }">
-        <input type="text"
-               ng-model="BookCreateCtrl.book.language"
-               name="txtLanguage"
-               id="txtLanguage"
-               required="required"/>
+      <div class="form-group">
+        <select ng-options="o.desc for o in BookCreateCtrl.cbei18n"
+                ng-model="BookCreateCtrl.selectedI18n"
+                name="cbeLanguage"
+                id="cbeLanguage">
+        </select>
         <label class="control-label"
-               ng-class="{ 'has-error': BookCreateCtrl.hasError('language') }"
-               for="txtLanguage">Idioma
-        </label><i class="bar"></i>
-        <p class="field-err" ng-if="BookCreateCtrl.hasError('language')" >{{BookCreateCtrl.getErrorMessage('language')}}</p>
+               for="cbeLanguage">Idioma</label>
+        <i class="bar"></i>
       </div>
 
       <div class="form-group"
@@ -102,6 +99,10 @@
         </label><i class="bar"></i>
         <p class="field-err" ng-if="BookCreateCtrl.hasError('percentage')" >{{BookCreateCtrl.getErrorMessage('percentage')}}</p>
       </div>
+      <p style="width:300px">
+        <input class="mdl-slider mdl-js-slider" type="range"
+               min="0" max="100" value="25" tabindex="0">
+      </p>
 
       <div class="form-group">
         <select ng-options="o.desc for o in BookCreateCtrl.cbeStatus"
@@ -128,7 +129,7 @@
       <div class="button-group">
         <button
           class="btn full btn-info-inverted"
-          ng-click="BookCreateCtrl.btnCreate()">Salvar</button>
+          ng-click="BookCreateCtrl.btnCreate()">Publicar</button>
       </div>
     </form>
   </div>

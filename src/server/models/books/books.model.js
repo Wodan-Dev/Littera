@@ -94,7 +94,12 @@ function listStore(page) {
   return booksModel.aggregate([
     {
       $match: {
-        'visible': 1
+        'visible': {
+          $in: [
+            1,
+            0
+          ]
+        }
       }
     },
     {
@@ -103,7 +108,7 @@ function listStore(page) {
       }
     },
     {
-      $skip: parseInt((next < 0 ? 1 : next)) || 1
+      $skip: (parseInt((next < 0 ? 1 : next)) || 1) -1
     },
     {
       $limit: pageSize

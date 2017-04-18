@@ -91,7 +91,7 @@ function listByUser(user, page) {
   let pageSize = parseInt(config.getPageSize());
 
   return usersModel.findOne({ username: user })
-    .populate('written_books._id_book', 'cover_image title')
+    .populate('written_books._id_book', 'cover_image title date_published')
     .exec();
 }
 

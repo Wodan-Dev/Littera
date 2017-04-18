@@ -10,7 +10,7 @@
         </div>
       </div>
     </li>
-    <li ng-repeat="r in WrittenBooksCtrl.lstWrittenBooks">
+    <li ng-repeat="r in WrittenBooksCtrl.lstWrittenBooks|orderBy:'-date_published':true">
       <div  class="column column-all">
         <div class="notice-image">
           <img ng-src="{{ r._id_book.cover_image }}" />

@@ -37,6 +37,161 @@
       '/upload/books/' +  this._id + '?' + new Date().getTime()
     };
 
+    vm.cbei18n = [
+      { desc: 'Albanian (Albania)', id: 'sq_AL' },
+      { desc: 'Albanian', id: 'sq' },
+      { desc: 'Arabic (Algeria)', id: 'ar_DZ' },
+      { desc: 'Arabic (Bahrain)', id: 'ar_BH' },
+      { desc: 'Arabic (Egypt)', id: 'ar_EG' },
+      { desc: 'Arabic (Iraq)', id: 'ar_IQ' },
+      { desc: 'Arabic (Jordan)', id: 'ar_JO' },
+      { desc: 'Arabic (Kuwait)', id: 'ar_KW' },
+      { desc: 'Arabic (Lebanon)', id: 'ar_LB' },
+      { desc: 'Arabic (Libya)', id: 'ar_LY' },
+      { desc: 'Arabic (Morocco)', id: 'ar_MA' },
+      { desc: 'Arabic (Oman)', id: 'ar_OM' },
+      { desc: 'Arabic (Qatar)', id: 'ar_QA' },
+      { desc: 'Arabic (Saudi Arabia)', id: 'ar_SA' },
+      { desc: 'Arabic (Sudan)', id: 'ar_SD' },
+      { desc: 'Arabic (Syria)', id: 'ar_SY' },
+      { desc: 'Arabic (Tunisia)', id: 'ar_TN' },
+      { desc: 'Arabic (United Arab Emirates)', id: 'ar_AE' },
+      { desc: 'Arabic (Yemen)', id: 'ar_YE' },
+      { desc: 'Arabic', id: 'ar' },
+      { desc: 'Belarusian (Belarus)', id: 'be_BY' },
+      { desc: 'Belarusian', id: 'be' },
+      { desc: 'Bulgarian (Bulgaria)', id: 'bg_BG' },
+      { desc: 'Bulgarian', id: 'bg' },
+      { desc: 'Catalan (Spain)', id: 'ca_ES' },
+      { desc: 'Catalan', id: 'ca' },
+      { desc: 'Chinese (China)', id: 'zh_CN' },
+      { desc: 'Chinese (Hong Kong)', id: 'zh_HK' },
+      { desc: 'Chinese (Singapore)', id: 'zh_SG' },
+      { desc: 'Chinese (Taiwan)', id: 'zh_TW' },
+      { desc: 'Chinese', id: 'zh' },
+      { desc: 'Croatian (Croatia)', id: 'hr_HR' },
+      { desc: 'Croatian', id: 'hr' },
+      { desc: 'Czech (Czech Republic)', id: 'cs_CZ' },
+      { desc: 'Czech', id: 'cs' },
+      { desc: 'Danish (Denmark)', id: 'da_DK' },
+      { desc: 'Danish', id: 'da' },
+      { desc: 'Dutch (Belgium)', id: 'nl_BE' },
+      { desc: 'Dutch (Netherlands)', id: 'nl_NL' },
+      { desc: 'Dutch', id: 'nl' },
+      { desc: 'English (Australia)', id: 'en_AU' },
+      { desc: 'English (Canada)', id: 'en_CA' },
+      { desc: 'English (India)', id: 'en_IN' },
+      { desc: 'English (Ireland)', id: 'en_IE' },
+      { desc: 'English (Malta)', id: 'en_MT' },
+      { desc: 'English (New Zealand)', id: 'en_NZ' },
+      { desc: 'English (Philippines)', id: 'en_PH' },
+      { desc: 'English (Singapore)', id: 'en_SG' },
+      { desc: 'English (South Africa)', id: 'en_ZA' },
+      { desc: 'English (United Kingdom)', id: 'en_GB' },
+      { desc: 'English (United States)', id: 'en_US' },
+      { desc: 'English', id: 'en' },
+      { desc: 'Estonian (Estonia)', id: 'et_EE' },
+      { desc: 'Estonian', id: 'et' },
+      { desc: 'Finnish (Finland)', id: 'fi_FI' },
+      { desc: 'Finnish', id: 'fi' },
+      { desc: 'French (Belgium)', id: 'fr_BE' },
+      { desc: 'French (Canada)', id: 'fr_CA' },
+      { desc: 'French (France)', id: 'fr_FR' },
+      { desc: 'French (Luxembourg)', id: 'fr_LU' },
+      { desc: 'French (Switzerland)', id: 'fr_CH' },
+      { desc: 'French', id: 'fr' },
+      { desc: 'German (Austria)', id: 'de_AT' },
+      { desc: 'German (Germany)', id: 'de_DE' },
+      { desc: 'German (Luxembourg)', id: 'de_LU' },
+      { desc: 'German (Switzerland)', id: 'de_CH' },
+      { desc: 'German', id: 'de' },
+      { desc: 'Greek (Cyprus)', id: 'el_CY' },
+      { desc: 'Greek (Greece)', id: 'el_GR' },
+      { desc: 'Greek', id: 'el' },
+      { desc: 'Hebrew (Israel)', id: 'iw_IL' },
+      { desc: 'Hebrew', id: 'iw' },
+      { desc: 'Hindi (India)', id: 'hi_IN' },
+      { desc: 'Hungarian (Hungary)', id: 'hu_HU' },
+      { desc: 'Hungarian', id: 'hu' },
+      { desc: 'Icelandic (Iceland)', id: 'is_IS' },
+      { desc: 'Icelandic', id: 'is' },
+      { desc: 'Indonesian (Indonesia)', id: 'in_ID' },
+      { desc: 'Indonesian', id: 'in' },
+      { desc: 'Irish (Ireland)', id: 'ga_IE' },
+      { desc: 'Irish', id: 'ga' },
+      { desc: 'Italian (Italy)', id: 'it_IT' },
+      { desc: 'Italian (Switzerland)', id: 'it_CH' },
+      { desc: 'Italian', id: 'it' },
+      { desc: 'Japanese (Japan)', id: 'ja_JP' },
+      { desc: 'Japanese (Japan JP)', id: 'ja_JP_JP' },
+      { desc: 'Japanese', id: 'ja' },
+      { desc: 'Korean (South Korea)', id: 'ko_KR' },
+      { desc: 'Korean  ', id: 'ko' },
+      { desc: 'Latvian (Latvia)', id: 'lv_LV' },
+      { desc: 'Latvian     ', id: 'lv' },
+      { desc: 'Lithuanian (Lithuania)', id: 'lt_LT' },
+      { desc: 'Lithuanian  ', id: 'lt' },
+      { desc: 'Macedonian (Macedonia)', id: 'mk_MK' },
+      { desc: 'Macedonian', id: 'mk' },
+      { desc: 'Malay (Malaysia)', id: 'ms_MY' },
+      { desc: 'Malay   ', id: 'ms' },
+      { desc: 'Maltese (Malta)', id: 'mt_MT' },
+      { desc: 'Maltese', id: 'mt' },
+      { desc: 'Norwegian (Norway)', id: 'no_NO' },
+      { desc: 'Norwegian (Norway Nynorsk)', id: 'no_NO_NY' },
+      { desc: 'Norwegian', id: 'no' },
+      { desc: 'Polish (Poland)', id: 'pl_PL' },
+      { desc: 'Polish', id: 'pl' },
+      { desc: 'Portuguese (Brazil)', id: 'pt_BR' },
+      { desc: 'Portuguese (Portugal)', id: 'pt_PT' },
+      { desc: 'Portuguese', id: 'pt' },
+      { desc: 'Romanian (Romania)', id: 'ro_RO' },
+      { desc: 'Romanian', id: 'ro' },
+      { desc: 'Russian (Russia)', id: 'ru_RU' },
+      { desc: 'Russian', id: 'ru' },
+      { desc: 'Serbian (Bosnia and Herzegovina)', id: 'sr_BA' },
+      { desc: 'Serbian (Montenegro)', id: 'sr_ME' },
+      { desc: 'Serbian (Serbia and Montenegro)', id: 'sr_CS' },
+      { desc: 'Serbian (Serbia)', id: 'sr_RS' },
+      { desc: 'Serbian', id: 'sr' },
+      { desc: 'Slovak (Slovakia)', id: 'sk_SK' },
+      { desc: 'Slovak', id: 'sk' },
+      { desc: 'Slovenian (Slovenia)', id: 'sl_SI' },
+      { desc: 'Slovenian', id: 'sl' },
+      { desc: 'Spanish (Argentina)', id: 'es_AR' },
+      { desc: 'Spanish (Bolivia)', id: 'es_BO' },
+      { desc: 'Spanish (Chile)', id: 'es_CL' },
+      { desc: 'Spanish (Colombia)', id: 'es_CO' },
+      { desc: 'Spanish (Costa Rica)', id: 'es_CR' },
+      { desc: 'Spanish (Dominican Republic)', id: 'es_DO' },
+      { desc: 'Spanish (Ecuador)', id: 'es_EC' },
+      { desc: 'Spanish (El Salvador)', id: 'es_SV' },
+      { desc: 'Spanish (Guatemala)', id: 'es_GT' },
+      { desc: 'Spanish (Honduras)', id: 'es_HN' },
+      { desc: 'Spanish (Mexico)', id: 'es_MX' },
+      { desc: 'Spanish (Nicaragua)', id: 'es_NI' },
+      { desc: 'Spanish (Panama)', id: 'es_PA' },
+      { desc: 'Spanish (Paraguay)', id: 'es_PY' },
+      { desc: 'Spanish (Peru)', id: 'es_PE' },
+      { desc: 'Spanish (Puerto Rico)', id: 'es_PR' },
+      { desc: 'Spanish (Spain)', id: 'es_ES' },
+      { desc: 'Spanish (United States)', id: 'es_US' },
+      { desc: 'Spanish (Uruguay)', id: 'es_UY' },
+      { desc: 'Spanish (Venezuela)', id: 'es_VE' },
+      { desc: 'Spanish', id: 'es' },
+      { desc: 'Swedish (Sweden)', id: 'sv_SE' },
+      { desc: 'Swedish', id: 'sv' },
+      { desc: 'Thai (Thailand)', id: 'th_TH' },
+      { desc: 'Thai (Thailand TH)', id: 'th_TH_TH' },
+      { desc: 'Thai', id: 'th' },
+      { desc: 'Turkish (Turkey)', id: 'tr_TR' },
+      { desc: 'Turkish', id: 'tr' },
+      { desc: 'Ukrainian (Ukraine)', id: 'uk_UA' },
+      { desc: 'Ukrainian', id: 'uk' },
+      { desc: 'Vietnamese (Vietnam)', id: 'vi_VN' },
+      { desc: 'Vietnamese', id: 'vi' }
+    ];
+
     vm.cbeStatus = [
       { desc:'Completo', id: 0 },
       { desc:'Em Progresso', id: 1 }
@@ -50,6 +205,7 @@
 
     vm.selectedStatus = vm.cbeStatus[0];
     vm.selectedVisible = vm.cbeVisible[0];
+    vm.selectedI18n = vm.cbei18n[104];
 
     vm.init = function () {
 
@@ -88,19 +244,7 @@
         .then(function (data) {
           username = data.data.data.username;
           vm.book.img_data = vm.book.cover_image;
-/*vm.cbeStatus = [
- { desc:'Completo', id: 0 },
- { desc:'Em Progresso', id: 1 }
- ];
 
- vm.cbeVisible = [
- { desc:'Público', id: 0 },
- { desc:'Seguidores', id: 1 },
- { desc:'Oculto', id: 2 }
- ];
-
- vm.selectedStatus = vm.cbeStatus[0];
- vm.selectedVisible = vm.cbeVisible[0];*/
           bookNew = {
             _id_user: data.data.data._id.toString(),
             title: vm.book.title,
@@ -112,7 +256,7 @@
             esbn: vm.book.esbn,
             date_published: vm.book.date_published,
             visible: vm.selectedVisible.id,
-            language: vm.book.language,
+            language: vm.selectedI18n.id,
             average_star: 0,
             prices: [],
             forums: [],
@@ -133,8 +277,6 @@
           return booksFactory.create(bookNew);
         })
         .then(function (data) {
-          console.log('book');
-          console.log(data);
           return new Promise(function (resolve, reject) {
             if (changedImage) {
               return booksFactory.updateImg('/books/' + idImg,
@@ -154,14 +296,11 @@
 
         })
         .then(function (data) {
-          console.log('written');
-          console.log(data);
-
-          $location.path('/written/'+ username);
+          $scope.$apply(function () {
+            $location.path('/written/'+ username);
+          });
         })
         .catch(function (data) {
-          console.log('err');
-          console.log(data);
           if (data.data) {
             let lst = data.data.data.err;
             $scope.$apply(function () {
