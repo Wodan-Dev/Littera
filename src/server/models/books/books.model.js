@@ -123,6 +123,7 @@ function listStore(page) {
       $project: {
         '_id': 1,
         'title': 1,
+        'subtitle': 1,
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
@@ -249,6 +250,7 @@ function findByIdStore(id) {
       $project: {
         '_id': 1,
         'title': 1,
+        'subtitle': 1,
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
@@ -383,6 +385,7 @@ function findPrice(id) {
  */
 function validateCreate(book){
   book.title = checkField.trim(checkField.escape(book.title));
+  book.subtitle = checkField.trim(checkField.escape(book.subtitle));
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
   book.content = checkField.trim(checkField.escape(book.content));
   book.esbn = checkField.trim(checkField.escape(book.esbn));
@@ -399,6 +402,7 @@ function validateCreate(book){
 function validateUpdate(book){
   book._id = checkField.trim(checkField.escape(book._id));
   book.title = checkField.trim(checkField.escape(book.title));
+  book.subtitle = checkField.trim(checkField.escape(book.subtitle));
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
   book.content = checkField.trim(checkField.escape(book.content));
   book.esbn = checkField.trim(checkField.escape(book.esbn));

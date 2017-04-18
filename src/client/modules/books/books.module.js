@@ -9,12 +9,17 @@
       books: {
         name: 'BooksController',
         nameas: 'BooksCtrl'
+      },
+      bookCreate: {
+        name: 'BookCreateController',
+        nameas: 'BookCreateCtrl'
       }
     },
     routes: {
       home: litteraApp.URLS.HOME(),
       books: litteraApp.URLS.BOOKS(),
-      storeDetail: litteraApp.URLS.STOREDETAIL()
+      storeDetail: litteraApp.URLS.STOREDETAIL(),
+      bookCreate: litteraApp.URLS.BOOK_CREATE()
     },
     factories: {
       books: 'booksFactory'
@@ -25,12 +30,17 @@
     templates: {
       books: {
         url: 'views/book-detail.view.html'
+      },
+      bookCreate: {
+        url: 'views/book-create.view.html'
       }
     },
     imports: {
       localSave: litteraApp.core.factories.localSave,
       request: litteraApp.core.services.request,
-      message: litteraApp.core.services.messages
+      message: litteraApp.core.services.messages,
+      authentication: litteraApp.modules.auth.factories.authentication,
+      has_error: litteraApp.core.services.has_error
     }
   };
 

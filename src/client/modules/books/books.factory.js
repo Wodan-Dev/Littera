@@ -4,7 +4,12 @@
 'use strict';
 (function(angular, litteraApp) {
 
-  function booksFactory(BASEURLS, LOCALNAME, localSave, $resource) {
+  function booksFactory(
+    BASEURLS,
+    LOCALNAME,
+    localSave,
+    $resource,
+    request) {
     function getHeader() {
       return {
         'Content-Type': 'application/json',
@@ -34,9 +39,19 @@
       ).get({}).$promise;
     }
 
+    function updateImg(url, file) {
+      return request._upload(url, file);
+    }
+
+    function create(user) {
+      return request._post('/books', user);
+    }
+
     return {
       getBooks: getBooks,
-      getStoreBookById: getStoreBookById
+      getStoreBookById: getStoreBookById,
+      updateImg: updateImg,
+      create: create
     };
   }
 
@@ -44,7 +59,8 @@
     'BASEURLS',
     'LOCALNAME',
     litteraApp.modules.books.imports.localSave,
-    '$resource'
+    '$resource',
+    litteraApp.modules.books.imports.request
   ];
 
   angular.module(litteraApp.modules.books.name)

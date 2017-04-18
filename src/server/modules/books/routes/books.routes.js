@@ -87,6 +87,7 @@ function post(req, res) {
 
   let book = {
     title: req.body.title || '',
+    subtitle: req.body.subtitle || '',
     synopsis: req.body.synopsis || '',
     content: req.body.content || '',
     status: req.body.status || 0,
@@ -137,6 +138,7 @@ function put(req, res) {
   let book = {
     _id: req.body._id || '',
     title: req.body.title || '',
+    subtitle: req.body.subtitle || '',
     synopsis: req.body.synopsis || '',
     content: req.body.content || '',
     status: req.body.status || 0,

@@ -15,6 +15,9 @@
           return '/books';
       };
     },
+    BOOK_CREATE: function() {
+      return '/book/create';
+    },
     STORE: function () {
       return function (page) {
         if (page)

@@ -31,6 +31,11 @@ const booksSchema = new db.mongoose.Schema({
     required: true,
     index: true
   },
+  subtitle: {
+    type: String,
+    required: false,
+    index: true
+  },
   synopsis: {
     type: String,
     required: true
@@ -112,6 +117,7 @@ booksSchema.plugin(db.mongoosePaginate);
  */
 const booksCreateSchema = schema({
   title: models.stringField(true),
+  subtitle: models.stringField(false),
   synopsis: models.stringField(true),
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),
@@ -136,6 +142,7 @@ const booksCreateSchema = schema({
 const booksUpdateSchema = schema({
   _id: models.stringField(true),
   title: models.stringField(true),
+  subtitle: models.stringField(false),
   synopsis: models.stringField(true),
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),

@@ -21,6 +21,14 @@
               return storeFactory.getBooks();
             }
           }*/
+        })
+        .when(litteraApp.modules.books.routes.bookCreate, {
+          controller:  litteraApp.modules.books.controllers.bookCreate.name,
+          controllerAs:  litteraApp.modules.books.controllers.bookCreate.nameas,
+          templateUrl: litteraApp.modules.books.templates.bookCreate.url,
+          access: {
+            requiresLogin: false
+          }
         });
     });
 
