@@ -74,3 +74,4 @@
   angular.module(litteraApp.modules.store.name)
     .controller(litteraApp.modules.store.controllers.store.name, StoreCtrl);
 }(angular, litteraApp));
+

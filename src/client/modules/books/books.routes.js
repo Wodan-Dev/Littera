@@ -12,7 +12,6 @@
           controller:  litteraApp.modules.books.controllers.books.name,
           controllerAs:  litteraApp.modules.books.controllers.books.nameas,
           templateUrl: litteraApp.modules.books.templates.books.url,
-          css: 'static/css/notice.css',
           access: {
             requiresLogin: false
           }/*,

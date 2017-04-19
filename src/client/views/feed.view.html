@@ -1,4 +1,105 @@
-<div class="feed-notices" ng-init="FeedCtrl.init()">
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="FeedCtrl.init()">
+  <div flex="50"
+       layout-margin
+       flex-xs="100"
+       flex-offset-gt-xs="10"
+       class="column-list">
+    <div flex="100"
+         class="column column-all"
+         ng-class="{ 'first-column': $index==0 }"
+         layout-align="center center"
+         ng-repeat="r in FeedCtrl.feedItems">
+      <div class="notice-image">
+        <a ng-href="#/books/{{ r._id_book._id }}">
+          <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
+        </a>
+      </div>
+      <div class="notice-user"
+           layout="row">
+        <div flex="15"
+             flex-xs="20"
+             class="user-picture">
+          <a ng-href="#/user/{{ r._id_user.username }}">
+            <img ng-src="{{ r._id_user.cover_image || './static/images/no-image.png' }}">
+          </a>
+        </div>
+        <div flex="75"
+             flex-xs="70"
+             class="user-name">
+          <a ng-href="#/user/{{ r._id_user.username }}"
+             class="name link-default"
+             ng-bind="r._id_user.name"></a>
+
+          <p class="time"
+             ng-bind="r.create_at"></p>
+        </div>
+        <div flex="10"
+             class="user-options">
+          <a ng-href="#/bookmark">
+            <i class="fa fa-bookmark fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
+          </a>
+        </div>
+
+      </div>
+      <div class="notice-content"
+           layout="column"
+           layout-margin>
+        <div flex="100">
+          <h3 class="title">
+            <a ng-href="#/books/{{ r._id_book._id }}"
+               class="link-title"
+               ng-bind="r._id_book.title"></a>
+          </h3>
+        </div>
+        <div flex="100">
+          <p class="text"
+             ng-bind="r._id_book.synopsis">
+          </p>
+        </div>
+      </div>
+      <div class="notice-options"
+           layout="row">
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id_book._id }}"
+             class="btn-like">
+            <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.average_star }}
+          </a>
+        </div>
+        <div flex="50">
+          <a href="#" class="btn-comment">
+            <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.comments.length }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="column column-all" ng-show="!FeedCtrl.feedItems.length">
+      <div class="notice-content">
+        <h3 class="title">
+          Não temos nada pra exibir aqui ainda :(
+        </h3>
+      </div>
+    </div>
+
+    <div class="column column-all more-data">
+      <a class="btn btn-default full" ng-click="FeedCtrl.btnLoadMore()">Mais</a>
+
+    </div>
+  </div>
+  <div flex="35"
+       flex-xs="100"
+       layout-margin
+       class="trends"
+       data-scroll="dock"
+       ng-include="'views/trends.view.html'">
+  </div>
+</div>
+
+<!--<div class="feed-notices" ng-init="FeedCtrl.init()">
 
   <div class="notice" ng-repeat="r in FeedCtrl.feedItems">
     <div class="notice-image">
@@ -21,7 +122,6 @@
            ng-bind="r.create_at"></p>
       </div>
       <div class="user-options">
-
         <a ng-href="#/bookmark">
           <i class="fa fa-bookmark fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
         </a>
@@ -67,5 +167,5 @@
      ng-include="'views/trends.view.html'">
 
 </div>
-<!--
 
+-->

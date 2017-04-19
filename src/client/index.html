@@ -10,6 +10,8 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="../../bower_modules/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../../bower_modules/angular-material/angular-material.min.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
@@ -18,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="./static/css/animate.css">
   <link rel="stylesheet" type="text/css" href="./static/css/main-style.css">
   <link rel="stylesheet" type="text/css" href="./static/css/navigator.css">
-  <link rel="stylesheet" type="text/css" href="./static/css/feed.css">
+  <!--<link rel="stylesheet" type="text/css" href="./static/css/feed.css">-->
   <link rel="stylesheet" type="text/css" href="./static/css/utils.css">
   <link rel="stylesheet" type="text/css" href="./static/css/trends.css">
   <!--<link rel="stylesheet" type="text/css" href="./static/css/notice.css">-->
@@ -40,14 +42,16 @@
     <div class="cssload-cube cssload-c3"></div>
   </div>
 </div>
-  <liheader></liheader>
-  <linav-Bar-User></linav-Bar-User>
-  <linav-Bar-Notify></linav-Bar-Notify>
-  <linav-Bar-Links></linav-Bar-Links>
+<liheader></liheader>
+<linav-Bar-User></linav-Bar-User>
+<linav-Bar-Notify></linav-Bar-Notify>
+<linav-Bar-Links></linav-Bar-Links>
 
-  <section class="feed" ng-view="ng-view">
+<section class="container-content"
+         layout="column"
+         ng-view="ng-view">
 
-  </section>
+</section>
 
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID
@@ -63,12 +67,18 @@
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
-<script src="./bower_modules/angular/angular.js"></script>
-<script src="./bower_modules/angular-animate/angular-animate.js"></script>
-<script src="./bower_modules/angular-resource/angular-resource.js"></script>
-<script src="./bower_modules/angular-route/angular-route.js"></script>
-<script src="./bower_modules/angular-sanitize/angular-sanitize.js"></script>
-<script src="./bower_modules/angular-css/angular-css.js"></script>
+<script src="../../bower_modules/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_modules/angular/angular.min.js"></script>
+<script src="../../bower_modules/angular-resource/angular-resource.min.js"></script>
+<script src="../../bower_modules/angular-route/angular-route.min.js"></script>
+<script src="../../bower_modules/angular-css/angular-css.min.js"></script>
+<script src="../../bower_modules/angular-aria/angular-aria.min.js"></script>
+<script src="../../bower_modules/angular-messages/angular-messages.min.js"></script>
+<script src="../../bower_modules/angular-animate/angular-animate.min.js"></script>
+<script src="../../bower_modules/ng-file-upload/ng-file-upload.min.js"></script>
+<script src="../../bower_modules/moment/min/moment.min.js"></script>
+<script src="../../bower_modules/noty/js/noty/packaged/jquery.noty.packaged.js"></script>
+<script src="../../bower_modules/angular-material/angular-material.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

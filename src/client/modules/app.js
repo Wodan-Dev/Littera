@@ -86,7 +86,8 @@
     litteraApp.modules.users.name,
     litteraApp.core.name,
     'ngFileUpload',
-    'angularCSS'
+    'angularCSS',
+    'ngMaterial'
   ]).constant('BASEURLS', {
     BASE: 'http://littera.pub',
     BASE_API: 'http://littera.pub/api',

@@ -1,4 +1,104 @@
-<div class="feed-notices" ng-init="StoreCtrl.init()">
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="StoreCtrl.init()">
+  <div flex="50"
+       layout-margin
+       flex-xs="100"
+       flex-offset-gt-xs="10"
+       class="column-list">
+    <div flex="100"
+         id="shop-book-{{ $index }}"
+         class="column column-half"
+         ng-class="{ 'column-half-margin': $index % 2 == 0 }"
+         layout-align="center center"
+         ng-repeat="r in StoreCtrl.books">
+      <div class="notice-image">
+        <div class="shop-image-box">
+          <img class="shop-cover" ng-src="{{ r.cover_image  || './static/images/no-image.png' }}" />
+          <a ng-click="StoreCtrl.btnShowDetail(r._id)" class="shop-more">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="notice-user"
+           layout="row">
+        <div flex="30"
+             flex-xs="20"
+             class="user-picture">
+          <a ng-href="#/user/{{ r.user.username }}">
+            <img ng-src="{{ r.user.cover_image || './static/images/no-image.png' }}">
+          </a>
+        </div>
+        <div flex="70"
+             flex-xs="80"
+             class="user-name">
+          <a ng-href="#/users/{{ r.user._id }}" class="name link-default">{{ r.user.name }}</a>
+          <a ng-href="#/users/{{ r.user._id }}" class="username link-tiny">@{{ r.user.username }}</a>
+        </div>
+
+      </div>
+      <div class="notice-content"
+           layout="column"
+        >
+        <div flex="100"
+             layout-margin>
+          <h3 class="title">
+            <a ng-href="#/books/{{ r._id  }}"
+               class="link-title"
+               ng-bind="r.title"></a>
+          </h3>
+        </div>
+        <div flex="100"
+             layout-margin>
+          <h4 class="title" ng-bind="r.subtitle">
+          </h4>
+        </div>
+        <div flex="100"
+             layout-padding>
+          <a class="btn btn-primary-inverted full" ng-href="#/sales/{{ r.user._id }}">Comprar</a>
+        </div>
+      </div>
+      <div class="notice-options"
+           layout="row">
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id }}"
+             class="btn-like">
+            <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r.average_star }}
+          </a>
+        </div>
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id }}" class="btn-comment">
+            <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r.comments.length }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="column column-all" ng-show="!StoreCtrl.books.length">
+      <div class="notice-content">
+        <h3 class="title">
+          Não temos nada pra exibir aqui ainda :(
+        </h3>
+      </div>
+    </div>
+
+    <div class="column column-all more-data">
+      <a class="btn btn-default full" ng-click="StoreCtrl.btnLoadMore()">Mais</a>
+
+    </div>
+  </div>
+  <div flex="35"
+       flex-xs="100"
+       layout-margin
+       class="trends"
+       data-scroll="dock"
+       ng-include="'views/trends.view.html'">
+  </div>
+</div>
+
+<!--<div class="feed-notices" ng-init="StoreCtrl.init()">
   <ul>
     <li ng-repeat="r in StoreCtrl.books">
       <div  class="column column-half">
@@ -68,3 +168,4 @@
 
 </div>
 
+-->

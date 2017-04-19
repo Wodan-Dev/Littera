@@ -16,12 +16,15 @@
     "angular-resource": "^1.6.1",
     "angular-route": "^1.6.1",
     "angular-css": "^1.0.8",
+    "angular-aria": "^1.6.1",
+    "angular-messages": "^1.6.1",
+    "angular-animate": "^1.6.1",
     "ng-file-upload": "*",
     "moment": "^2.17.1",
     "font-awesome": "^4.7.0",
     "jquery": "^1.7",
     "noty": "*",
-    "material-design-lite": "^1.3.0"
+    "angular-material": "^1.1.2"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
@@ -47,15 +50,30 @@
         "angular-css.min.js"
       ]
     },
+    "angular-aria": {
+      "main": [
+        "angular-aria.min.js"
+      ]
+    },
+    "angular-messages": {
+      "main": [
+        "angular-messages.min.js"
+      ]
+    },
+    "angular-animate": {
+      "main": [
+        "angular-animate.min.js"
+      ]
+    },
     "ng-file-upload": {
       "main": [
         "ng-file-upload.min.js"
       ]
     },
-    "material-design-lite": {
+    "angular-material": {
       "main": [
-        "material.min.js",
-        "material.min.css"
+        "angular-material.min.js",
+        "angular-material.min.css"
       ]
     },
     "moment": {
