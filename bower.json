@@ -24,7 +24,8 @@
     "font-awesome": "^4.7.0",
     "jquery": "^1.7",
     "noty": "*",
-    "angular-material": "^1.1.2"
+    "angular-material": "^1.1.2",
+    "masonry": "^4.1.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
@@ -74,6 +75,11 @@
       "main": [
         "angular-material.min.js",
         "angular-material.min.css"
+      ]
+    },
+    "masonry": {
+      "main": [
+        "dist/masonry.pkgd.min.js"
       ]
     },
     "moment": {

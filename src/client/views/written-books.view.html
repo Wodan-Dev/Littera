@@ -1,36 +1,70 @@
-<div class="feed-notices" ng-init="WrittenBooksCtrl.init()">
-  <ul>
-    <li>
-      <div class="notice-content">
-        <div style="padding: .625rem"
-             class="column column-all">
-          <a class="btn btn-primary full"
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="WrittenBooksCtrl.init()">
+  <div flex="50"
+       layout-margin
+       flex-xs="100"
+       flex-offset-gt-xs="10"
+       class="column-list">
+    <div class="column column-all" ng-show="!WrittenBooksCtrl.feedItems.length"
+         style="padding: .625rem"
+         class="column column-all">
+      <a class="btn btn-primary full"
+         href="#/book/create">Novo Livro</a>
+    </div>
 
-             href="#/book/create">Novo Livro</a>
-        </div>
+
+    <div flex="100"
+         class="column column-all"
+         layout-align="center center"
+         ng-repeat="r in WrittenBooksCtrl.lstWrittenBooks|orderBy:'-date_published':true">
+      <div class="notice-image">
+        <a ng-href="#/books/{{ r._id_book._id }}">
+          <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
+        </a>
       </div>
-    </li>
-    <li ng-repeat="r in WrittenBooksCtrl.lstWrittenBooks|orderBy:'-date_published':true">
-      <div  class="column column-all">
-        <div class="notice-image">
-          <img ng-src="{{ r._id_book.cover_image }}" />
-        </div>
-        <div class="notice-content">
-          <h3 class="title">
-            <a ng-href="#/books/{{ r._id_book._id }}"
-               class="link-title"
-               ng-bind="r._id_book.title"></a>
+      <div class="notice-content"
+           layout="column">
+        <div flex="100"
+             layout-margin>
+          <h3 class="title"
+               ng-bind="r._id_book.title">
           </h3>
         </div>
-        <div class="notice-shop">
-          <a class="btn btn-primary-inverted full" ng-href="#/sales/{{ r._id_book._id }}">Alterar</a>
+        <div flex="100"
+             layout-margin>
+          <h4 class="title" ng-bind="r._id_book.subtitle">
+          </h4>
+        </div>
+        <div flex="100"
+             layout-padding>
+          <a class="btn btn-primary-inverted full" ng-href="#/sales/{{ r.user._id }}">Alterar</a>
         </div>
       </div>
-    </li>
-  </ul>
+      <div class="notice-options"
+           layout="row">
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id_book._id }}"
+             class="btn-like">
+            <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.average_star }}
+          </a>
+        </div>
+        <div flex="50">
+          <a href="#" class="btn-comment">
+            <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.comments.length }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div flex="35"
+       flex-xs="100"
+       layout-margin
+       class="trends"
+       data-scroll="dock"
+       ng-include="'views/trends.view.html'">
+  </div>
 </div>
-<div class="trends" data-scroll="dock"
-     ng-include="'views/trends.view.html'">
-
-</div>
-

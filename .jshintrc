@@ -16,6 +16,7 @@
     "litteraApp": false,
     "$": false,
     "noty": false,
-    "moment": false
+    "moment": false,
+    "Masonry": false
   }
 }

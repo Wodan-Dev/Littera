@@ -1,49 +1,63 @@
-<div class="feed-notices" ng-init="LoginCtrl.init()">
-  <div class="notice container">
-    <form class="form-container" novalidate>
-      <h1>Seja Bem Vindo</h1>
-      <div class="form-group"
-           ng-class="{ 'has-error': LoginCtrl.hasError('username') }">
-        <input type="text"
-               ng-model="LoginCtrl.user.username"
-               name="txtUserName"
-               id="txtUserName"
-               required="required"/>
-        <label class="control-label"
-               ng-class="{ 'has-error': LoginCtrl.hasError('username') }"
-               for="txtUserName">Login
-        </label><i class="bar"></i>
-        <p class="field-err" ng-if="LoginCtrl.hasError('username')" >{{LoginCtrl.getErrorMessage('username')}}</p>
-      </div>
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="LoginCtrl.init()">
+  <div flex="50"
+       layout-margin
+       flex-xs="100"
+       flex-offset-gt-xs="10"
+       class="column-list">
+    <div flex="100"
+         class="column column-all first-column"
+         layout-align="center center">
+      <form class="form-container" novalidate>
+        <h1>Seja Bem Vindo</h1>
+        <div class="form-group"
+             ng-class="{ 'has-error': LoginCtrl.hasError('username') }">
+          <input type="text"
+                 ng-model="LoginCtrl.user.username"
+                 name="txtUserName"
+                 id="txtUserName"
+                 required="required"/>
+          <label class="control-label"
+                 ng-class="{ 'has-error': LoginCtrl.hasError('username') }"
+                 for="txtUserName">Login
+          </label><i class="bar"></i>
+          <p class="field-err" ng-if="LoginCtrl.hasError('username')" >{{LoginCtrl.getErrorMessage('username')}}</p>
+        </div>
 
-      <div class="form-group"
-           ng-class="{ 'has-error': LoginCtrl.hasError('password') }">
-        <input type="password"
-               ng-model="LoginCtrl.user.pass"
-               name="txtPass"
-               id="txtPass"
-               required="required"/>
-        <label class="control-label"
-               ng-class="{ 'has-error': LoginCtrl.hasError('password') }"
-               for="txtPass">Senha
-        </label><i class="bar"></i>
-        <p class="field-err"  ng-if="LoginCtrl.hasError('password')" >{{LoginCtrl.getErrorMessage('password')}}</p>
-      </div>
-      <div class="button-group">
-        <button
-          class="btn full btn-primary-inverted"
-          ng-click="LoginCtrl.btnAuthenticate()" >Login</button>
-      </div>
-      <div class="button-group">
-        <button
-          class="btn full btn-info-inverted"
-          ng-click="LoginCtrl.btnCreate()" >Cadastrar</button>
-      </div>
-    </form>
+        <div class="form-group"
+             ng-class="{ 'has-error': LoginCtrl.hasError('password') }">
+          <input type="password"
+                 ng-model="LoginCtrl.user.pass"
+                 name="txtPass"
+                 id="txtPass"
+                 required="required"/>
+          <label class="control-label"
+                 ng-class="{ 'has-error': LoginCtrl.hasError('password') }"
+                 for="txtPass">Senha
+          </label><i class="bar"></i>
+          <p class="field-err"  ng-if="LoginCtrl.hasError('password')" >{{LoginCtrl.getErrorMessage('password')}}</p>
+        </div>
+        <div class="button-group">
+          <button
+            class="btn full btn-primary-inverted"
+            ng-click="LoginCtrl.btnAuthenticate()" >Login</button>
+        </div>
+        <div class="button-group">
+          <button
+            class="btn full btn-info-inverted"
+            ng-click="LoginCtrl.btnCreate()" >Cadastrar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <div flex="35"
+       flex-xs="100"
+       layout-margin
+       class="trends"
+       data-scroll="dock"
+       ng-include="'views/trends.view.html'">
   </div>
 </div>
-<div class="trends" data-scroll="dock"
-     ng-include="'views/trends.view.html'">
-
-</div>
-

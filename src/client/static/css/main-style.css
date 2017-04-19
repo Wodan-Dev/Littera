@@ -248,8 +248,9 @@ header .nav-user {
   display: block;/*table-cell;*/
   box-sizing: border-box;
   padding-bottom: .625rem; /* 10px */
-  float: left;
-  height: auto;
+  /*float: left;*/
+
+  margin: 1%;
   background: #fafafa;
   border: solid .0625rem /* 1px */ #DADADA;
   border-radius: .1875rem;/* 3px; */
@@ -599,4 +600,15 @@ header .nav-user {
   }
 }
 
-
+/* Use with Masonry*/
+.grid {
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+.grid-item {
+  box-sizing: border-box;
+  display: inline-block;
+  border: solid 1px #dadada;
+}
+/* Use with Masonry*/

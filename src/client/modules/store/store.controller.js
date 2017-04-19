@@ -3,10 +3,16 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function StoreCtrl($rootScope, $window, storeFactory, message) {
+  function StoreCtrl($scope, $rootScope, $window, $mdDialog, storeFactory, message) {
     var vm = this;
     vm.books = [];
     vm.actualPage = 1;
+    var msnry = new Masonry( '.grid', {
+      // options
+      itemSelector: '.grid-item',
+      columnWidth: '.grid-item',
+      stagger: 30
+    });
 
 
 
@@ -23,9 +29,35 @@
       loadData();
     };
 
-    vm.btnShowDetail = function(id) {
-      $rootScope.__showModal = true;
-      document.getElementById('book-'+ id).style.display = 'block';
+    function BookDetailController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+
+    vm.btnShowDetail = function(ev) {
+      $mdDialog.show({
+        controller: BookDetailController,
+        templateUrl: 'views/book-detail.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true // Only for -xs, -sm breakpoints.
+      })
+        .then(function(answer) {
+          $scope.status = 'You said the information was "' + answer + '".';
+        }, function() {
+          $scope.status = 'You cancelled the dialog.';
+        });
+      /*$rootScope.__showModal = true;
+      document.getElementById('book-'+ id).style.display = 'block';*/
     };
 
     vm.showItemDetail = function (id) {
@@ -54,6 +86,11 @@
             vm.books.push(data.data[i]);
           }
 
+
+
+          msnry.layout();
+
+
           if (t === vm.books.length)
             message.notification('information', 'No momento não temos mais livros pra apresentar :(');
         })
@@ -65,8 +102,10 @@
   }
 
   StoreCtrl.$inject = [
+    '$scope',
     '$rootScope',
     '$window',
+    '$mdDialog',
     litteraApp.modules.store.factories.store,
     litteraApp.modules.store.imports.message
   ];

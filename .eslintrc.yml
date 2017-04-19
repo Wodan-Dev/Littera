@@ -26,4 +26,5 @@ globals:
   $: true
   noty: true
   moment: true
+  Masonry: true
 

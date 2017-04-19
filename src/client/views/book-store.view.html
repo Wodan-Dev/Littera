@@ -6,17 +6,17 @@
        layout-margin
        flex-xs="100"
        flex-offset-gt-xs="10"
-       class="column-list">
+       class="column-list grid">
     <div flex="100"
          id="shop-book-{{ $index }}"
-         class="column column-half"
          ng-class="{ 'column-half-margin': $index % 2 == 0 }"
+         class="column column-half grid-item"
          layout-align="center center"
          ng-repeat="r in StoreCtrl.books">
       <div class="notice-image">
         <div class="shop-image-box">
           <img class="shop-cover" ng-src="{{ r.cover_image  || './static/images/no-image.png' }}" />
-          <a ng-click="StoreCtrl.btnShowDetail(r._id)" class="shop-more">
+          <a ng-click="StoreCtrl.btnShowDetail($event)" class="shop-more">
             <i class="fa fa-eye" aria-hidden="true"></i>
           </a>
         </div>
@@ -97,6 +97,7 @@
        ng-include="'views/trends.view.html'">
   </div>
 </div>
+
 
 <!--<div class="feed-notices" ng-init="StoreCtrl.init()">
   <ul>
