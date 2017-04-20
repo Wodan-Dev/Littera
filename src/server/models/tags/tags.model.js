@@ -71,7 +71,10 @@ function remove(id) {
  */
 function list(page) {
   let pageSize = parseInt(config.getPageSize());
-  return tagsModel.paginate(
+  return tagsModel.find({})
+    .sort({ 'created_at': -1})
+    .exec();
+  /*return tagsModel.paginate(
     {
       //  active: true
     },
@@ -81,7 +84,7 @@ function list(page) {
       sort: {
         'created_at': 'descending'
       }
-    });
+    })*/
 }
 
 /**

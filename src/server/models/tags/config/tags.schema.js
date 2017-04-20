@@ -21,7 +21,8 @@ const tagsSchema = new db.mongoose.Schema({
   tag: {
     type: String,
     required: true,
-    index: true
+    index: true,
+    unique: true
   },
   created_at: {
     type: Date,

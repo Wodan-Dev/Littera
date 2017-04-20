@@ -1,7 +1,7 @@
 <div layout="row"
      layout-xs="column"
      flex="100"
-     ng-init="LoginCtrl.init()">
+     ng-init="BookCreateCtrl.init()">
   <div flex="50"
        layout-margin
        flex-xs="100"
@@ -12,6 +12,7 @@
          layout-align="center center">
       <form class="form-container" novalidate>
         <h1>Novo Livro :)</h1>
+        <br>
 
         <div class="form-image">
           <div class="feed-profile">
@@ -29,6 +30,24 @@
             </div>
           </div>
         </div>
+        <md-chips ng-model="BookCreateCtrl.lstKeyWords"
+                  md-autocomplete-snap
+                  md-transform-chip="BookCreateCtrl.transformChip($chip)"
+                  md-require-match flex>
+          <md-autocomplete flex
+                           md-selected-item="student"
+                           md-search-text="searchText"
+                           md-items="item in BookCreateCtrl.querySearch(searchText)"
+                           md-item-text="item"
+                           placeholder="Search for a Student to Exclude">
+            <span md-highlight-text="searchText">{{ item }}</span>
+          </md-autocomplete>
+          <md-chip-template>
+                    <span>
+                        <strong>{{$chip}}</strong><em></em>
+                    </span>
+          </md-chip-template>
+        </md-chips>
 
         <div class="form-group"
              ng-class="{ 'has-error': BookCreateCtrl.hasError('title') }">

@@ -7,6 +7,9 @@
     var vm = this;
     vm.showSynopsis = true;
     vm.showStars = false;
+
+    vm.readonly = false;
+
     vm.book = {
       '_id': '',
       'title': '',

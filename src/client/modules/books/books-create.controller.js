@@ -11,7 +11,8 @@
     booksFactory,
     message,
     authentication,
-    has_error) {
+    has_error,
+    request) {
     var vm = this;
     let changedImage = false;
     vm.book = {
@@ -36,6 +37,10 @@
       cover_image: $rootScope.BASEURLS.BASE_API +
       '/upload/books/' +  this._id + '?' + new Date().getTime()
     };
+
+    vm.allTags = [];
+    vm.lstKeyWords = [];
+    vm.filterSelected = true;
 
     vm.cbei18n = [
       { desc: 'Albanian (Albania)', id: 'sq_AL' },
@@ -207,9 +212,48 @@
     vm.selectedVisible = vm.cbeVisible[0];
     vm.selectedI18n = vm.cbei18n[104];
 
-    vm.init = function () {
+    function loadTags() {
+      request._get('/tags')
+        .then(function (data) {
+          data.data.data.map(function (tag) {
+            vm.allTags.push(tag.tag);
+          });
+        });
+    }
 
+
+    vm.init = function () {
+      loadTags();
     };
+
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+
+      return function filterFn(contact) {
+        return (contact.toLowerCase().indexOf(lowercaseQuery) !== -1);
+      };
+
+    }
+
+    vm.querySearch = function (criteria) {
+      return criteria ? vm.allTags.filter(createFilterFor(criteria)) : [];
+    };
+
+    vm.transformChip = function (chip) {
+      if (!vm.allTags.filter(createFilterFor(chip)).length) {
+        vm.allTags.push(chip);
+        request._post('/tags', { tag: chip})
+          .then(function () {
+
+          })
+          .catch(function () {
+
+          });
+      }
+
+      return chip;
+    };
+
 
 
     $scope.setFile = function(element) {
@@ -265,6 +309,9 @@
             comments: []
 
           };
+          vm.lstKeyWords.map(function (item) {
+            bookNew.keywords.push({ content: item });
+          });
 
           idImg = Math.floor(Math.random(0,1) * 99999999999999999).toString() + new Date().getTime();
 
@@ -321,8 +368,6 @@
         });
     };
 
-
-
     function dataURItoBlob(dataURI) {
       var binary = atob(dataURI.split(',')[1]);
       var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -345,7 +390,8 @@
     litteraApp.modules.books.factories.books,
     litteraApp.modules.books.imports.message,
     litteraApp.modules.books.imports.authentication,
-    litteraApp.modules.books.imports.has_error
+    litteraApp.modules.books.imports.has_error,
+    litteraApp.modules.books.imports.request
   ];
 
   angular.module(litteraApp.modules.books.name)
