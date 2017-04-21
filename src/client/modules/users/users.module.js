@@ -13,13 +13,19 @@
       writtenBooks: {
         name: 'WrittenBooksController',
         nameas: 'WrittenBooksCtrl'
+      },
+      userDetail: {
+        name: 'UserDetailController',
+        nameas: 'UserDetailCtrl'
       }
     },
     routes: {
       home: litteraApp.URLS.HOME(),
       users: litteraApp.URLS.USERS(),
       writtenbooks: litteraApp.URLS.WRITTENBOOKS(),
-      writtenbooks_page: litteraApp.URLS.WRITTENBOOKS_PAGE()
+      writtenbooks_page: litteraApp.URLS.WRITTENBOOKS_PAGE(),
+      userDetail_page: litteraApp.URLS.USER_DETAIL_PAGE(),
+      userDetail: litteraApp.URLS.USER_DETAIL()
     },
     factories: {
       users: 'usersFactory',
@@ -34,6 +40,9 @@
       },
       writtenBooks: {
         url: 'views/written-books.view.html'
+      },
+      userDetail: {
+        url: 'views/user-detail.view.html'
       }
     },
     imports: {

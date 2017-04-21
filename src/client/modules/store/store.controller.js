@@ -3,7 +3,15 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function StoreCtrl($scope, $rootScope, $window, $mdDialog, storeFactory, message) {
+  function StoreCtrl(
+    $scope,
+    $rootScope,
+    $window,
+    $mdDialog,
+    $mdMedia,
+    $location,
+    storeFactory,
+    message) {
     var vm = this;
     vm.books = [];
     vm.actualPage = 1;
@@ -29,35 +37,37 @@
       loadData();
     };
 
-    function BookDetailController($scope, $mdDialog) {
-      $scope.hide = function() {
-        $mdDialog.hide();
-      };
+    function BookDetailController($mdDialog, book) {
+      let vm = this;
 
-      $scope.cancel = function() {
+      vm.book = book;
+
+      vm.cancel = function() {
         $mdDialog.cancel();
       };
 
-      $scope.answer = function(answer) {
-        $mdDialog.hide(answer);
+      vm.buy = function() {
+        $mdDialog.hide('buy');
       };
     }
 
-    vm.btnShowDetail = function(ev) {
+    vm.btnShowDetail = function(ev, cbook) {
       $mdDialog.show({
         controller: BookDetailController,
         templateUrl: 'views/book-detail.tpl.html',
         parent: angular.element(document.body),
         targetEvent: ev,
-        clickOutsideToClose:true // Only for -xs, -sm breakpoints.
+        controllerAs: 'bookDetCtrl',
+        locals: {
+          book: cbook
+        },
+        clickOutsideToClose:true,
+        fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
       })
-        .then(function(answer) {
-          $scope.status = 'You said the information was "' + answer + '".';
+        .then(function() {
+          $location.path('/books/'+cbook._id);
         }, function() {
-          $scope.status = 'You cancelled the dialog.';
         });
-      /*$rootScope.__showModal = true;
-      document.getElementById('book-'+ id).style.display = 'block';*/
     };
 
     vm.showItemDetail = function (id) {
@@ -106,6 +116,8 @@
     '$rootScope',
     '$window',
     '$mdDialog',
+    '$mdMedia',
+    '$location',
     litteraApp.modules.store.factories.store,
     litteraApp.modules.store.imports.message
   ];

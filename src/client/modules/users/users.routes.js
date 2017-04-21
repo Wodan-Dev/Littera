@@ -23,6 +23,14 @@
           access: {
             requiresLogin: true
           }
+        })
+        .when(litteraApp.modules.users.routes.userDetail_page(':username'), {
+          controller:  litteraApp.modules.users.controllers.userDetail.name,
+          controllerAs:  litteraApp.modules.users.controllers.userDetail.nameas,
+          templateUrl: litteraApp.modules.users.templates.userDetail.url,
+          access: {
+            requiresLogin: true
+          }
         });
     });
 

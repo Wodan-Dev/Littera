@@ -35,6 +35,16 @@
     USER: function () {
       return '/users';
     },
+    USER_DETAIL_PAGE: function () {
+      return function (username) {
+        return '/user/'+ username;
+      };
+    },
+    USER_DETAIL: function () {
+      return function (username) {
+        return '/user/'+ username;
+      };
+    },
     LOGIN: function () {
       return '/mordor/login';
     },

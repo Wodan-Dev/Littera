@@ -33,6 +33,45 @@ function get(req, res) {
 }
 
 /**
+ * Method Get in route /:username
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function getByUserName(req, res) {
+  let username = req.params.username || '-';
+  usersModel.findByUserName(username)
+    .then(function (user) {
+      if (user) {
+        http.render(res, {
+          _id: user._id ,
+          name: user.name ,
+          username: user.username ,
+          email: user.email ,
+          written_books: user.written_books ,
+          library: user.library ,
+          wishlist: user.wishlist ,
+          following: user.following ,
+          followers: user.followers ,
+          choices: user.choices ,
+          reviews: user.reviews ,
+          acepted_terms: user.acepted_terms,
+          average_stars: user.average_stars,
+          gender: user.gender ,
+          dob: user.dob ,
+          cover_image: user.cover_image
+        });
+      }
+      else
+        throw 404;
+    })
+    .catch(function (err) {
+      renderError(res, err, err);
+    });
+}
+
+
+
+/**
  * Method Get in route /:id
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
@@ -135,6 +174,7 @@ function router(express, auth) {
   let routes = express.Router();
 
   routes.get('/', auth, get);
+  routes.get('/:username', getByUserName);
   routes.get('/:id', auth, getById);
   routes.post('/', post);
   routes.put('/', auth, put);

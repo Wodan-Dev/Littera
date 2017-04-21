@@ -18,15 +18,28 @@
         <div flex="30"
              flex-xs="20"
              class="user-picture">
-          <a ng-href="#/users/{{ BooksCtrl.book.user.username }}">
+          <a ng-href="#/user/{{ BooksCtrl.book.user.username }}">
             <img ng-src="{{ BooksCtrl.book.user.cover_image || './static/images/no-image.png' }}">
           </a>
         </div>
         <div flex="70"
              flex-xs="80"
              class="user-name">
-          <a ng-href="#/users/{{ BooksCtrl.book.user._id }}" class="name link-default">{{ BooksCtrl.book.user.name }}</a>
-          <a ng-href="#/users/{{ BooksCtrl.book.user._id }}" class="username link-tiny">@{{ BooksCtrl.book.user.username }}</a>
+          <a ng-href="#/user/{{ BooksCtrl.book.user.username }}" class="name link-default">{{ BooksCtrl.book.user.name }}</a>
+          <a ng-href="#/user/{{ BooksCtrl.book.user.username }}" class="username link-tiny">@{{ BooksCtrl.book.user.username }}</a>
+        </div>
+      </div>
+      <div class="notice-content"
+           layout="column">
+        <div flex="100"
+             ng-show="BooksCtrl.book.keywords.length">
+          <div class="tiny-chip">
+            <md-chips ng-model="BooksCtrl.book.keywords" readonly="true" md-removable="false">
+              <md-chip-template style="padding: 0">
+                <span style="font-size: .75rem">{{$chip.content}}</span>
+              </md-chip-template>
+            </md-chips>
+          </div>
         </div>
       </div>
     </div>
@@ -94,8 +107,8 @@
                        class="md-avatar"
                        alt="r.name" />
                   <div class="md-list-item-text" layout="column">
-                    <a ng-href="#/users/{{ r._id_user }}" class="name link-default">{{ r.name }}</a>
-                    <a ng-href="#/users/{{ r._id_user }}" class="username link-tiny">@{{ r.username }}</a>
+                    <a ng-href="#/user/{{ r.username }}" class="name link-default">{{ r.name }}</a>
+                    <a ng-href="#/user/{{ r.username }}" class="username link-tiny">@{{ r.username }}</a>
                     <a class="stars name"
                        ng-click="BooksCtrl.btnShowStars()">
                       <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
@@ -140,7 +153,6 @@
     </div>
   </div>
 </div>
-
 
 <!--<div class="feed-full" ng-init="BooksCtrl.init()">
 

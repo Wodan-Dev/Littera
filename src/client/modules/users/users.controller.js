@@ -255,29 +255,3 @@
     .controller(litteraApp.modules.users.controllers.users.name, UsersCtrl);
 }(angular, litteraApp));
 
-
-/*
-* m.book = {
- _id: '-',
- title: '',
- subtitle: '',
- synopsis: '',
- content: '',
- status: 0,
- percentage: 0,
- esbn: '',
- date_published: moment(),
- visible: 0,
- language: '',
- average_star: 0,
- prices: [],
- forums: [],
- rankings: [],
- keywords: [],
- comments: [],
- cover_image: $rootScope.BASEURLS.BASE_API +
- '/upload/books/' +  this._id + '?' + new Date().getTime()
- };
-* */
-
-

@@ -1,0 +1,52 @@
+<div layout="column"
+     class="user-feed">
+  <div layout="row"
+       layout-sm="column"
+       layout-xs="column"
+       flex="100"
+       class="feed-profile">
+    <div flex="none">
+      <div class="feed-profile-picture"
+           style="margin: auto">
+        <img ng-src="{{ UserDetailCtrl.user.cover_image || './static/images/no-image.png' }}">
+      </div>
+    </div>
+    <div flex="auto"
+         flex-sm="100"
+         flex-xs="100">
+      <div class="feed-profile-username">
+        <p class="name" ng-bind="UserDetailCtrl.user.name"></p>
+        <p class="username" ng-bind="UserDetailCtrl.user.username_link"></p>
+      </div>
+      <div class="feed-profile-options">
+        <a class="btn-following link-tiny" href="#/following">{{ UserDetailCtrl.user.following.length  }} Seguindo</a>
+        <a class="btn-followers link-tiny" href="#/followers">{{ UserDetailCtrl.user.followers.length }} Seguidores</a>
+        <a
+          hide-xs class="btn btn-primary btn-follow" href="#">
+          Seguir
+        </a>
+
+      </div>
+      <div flex="100"
+           hide-gt-xs
+           layout="row">
+        <div flex="33">&nbsp;</div>
+        <div flex="33">
+          <a class="btn btn-primary btn-follow" href="#">
+            Seguir
+          </a>
+        </div>
+        <div flex="33">&nbsp;</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="feed-profile feed-profile-controls">
+    <ul>
+      <li><a class="active" href="#">Publicações</a></li>
+      <li><a href="#">Biblioteca</a></li>
+
+    </ul>
+  </div>
+</div>
+

@@ -525,45 +525,6 @@ header .nav-user {
 }
 
 
-.feed-profile-picture {
-  width: 7.5rem;/* 120px */
-  height: 7.5rem;/* 120px */
-  display: block;
-  float: left;
-  margin: auto;
-  border-radius: .25rem;/* 4px */
-  background: #FFFFFF;
-  border:solid .0625rem/* 1px */#DADADA;
-  box-sizing: border-box;
-}
-.feed-profile .feed-profile-picture img {
-  width: 6.875rem;/* 110px */
-  height: 6.875rem;/* 110px */
-  margin: .25rem;/* 4px */
-  border-radius: .125rem;/* 2px */
-}
-
-.feed-profile .feed-profile-username {
-  float: left;
-  box-sizing: border-box;
-  display: block;
-  margin-left: .625rem;/* 10px */
-}
-
-.feed-profile .feed-profile-username p {
-  color: #555555;
-  margin-top: .625rem;/* 10px */
-}
-
-.feed-profile .feed-profile-username p.name {
-  font-weight: bolder;
-}
-
-.feed-profile .feed-profile-username input {
-  margin-top: 10px;
-}
-
-
 @media only screen and (max-width: 950px) {
   .column-half {
     width: 98%;
@@ -612,3 +573,198 @@ header .nav-user {
   border: solid 1px #dadada;
 }
 /* Use with Masonry*/
+
+
+.tiny-chip .md-chips md-chip {
+  height: 1.25rem;
+  line-height: 0.9375rem;
+  margin: .25rem .25rem 0 0;
+  padding: 0 .625rem;
+}
+
+/*form image*/
+.form-image .feed-profile-picture {
+  width: 7.5rem;/* 120px */
+  height: 7.5rem;/* 120px */
+  display: block;
+  float: left;
+  margin: auto;
+  border-radius: .25rem;/* 4px */
+  background: #FFFFFF;
+  border:solid .0625rem/* 1px */#DADADA;
+  box-sizing: border-box;
+}
+.form-image .feed-profile .feed-profile-picture img {
+  width: 6.875rem;/* 110px */
+  height: 6.875rem;/* 110px */
+  margin: .25rem;/* 4px */
+  border-radius: .125rem;/* 2px */
+}
+
+.form-image .feed-profile .feed-profile-username {
+  float: left;
+  box-sizing: border-box;
+  display: block;
+  margin-left: .625rem;/* 10px */
+}
+
+.form-image .feed-profile .feed-profile-username p {
+  color: #555555;
+  margin-top: .625rem;/* 10px */
+}
+
+.form-image .feed-profile .feed-profile-username p.name {
+  font-weight: bolder;
+}
+
+.form-image .feed-profile .feed-profile-username input {
+  margin-top: 10px;
+}
+/*form image*/
+
+
+/* User info*/
+.user-feed {
+  padding-right: .625rem;/* 10px */
+  padding-left: .625rem;/* 10px */
+  box-sizing: border-box;
+}
+
+.user-feed .feed-profile {
+  box-sizing: border-box;
+  padding: .625rem;/* 10px */
+  margin: auto;
+}
+
+.user-feed .feed-profile .feed-profile-picture {
+  width: 7.5rem;/* 120px */
+  height: 7.5rem;/* 120px */
+  float: left;
+  margin: auto;
+  border-radius: .25rem;/* 4px */
+  background: #FFFFFF;
+  border:solid .0625rem/* 1px */#DADADA;
+  box-sizing: border-box;
+}
+.user-feed .feed-profile .feed-profile-picture img {
+  width: 6.875rem;/* 110px */
+  height: 6.875rem;/* 110px */
+  margin: .25rem;/* 4px */
+  border-radius: .125rem;/* 2px */
+}
+
+.user-feed .feed-profile .feed-profile-username {
+  box-sizing: border-box;
+  display: block;
+  margin: auto;
+  margin-left: .625rem;/* 10px */
+}
+.user-feed .feed-profile .feed-profile-username p {
+  color: #555555;
+  margin-top: .625rem;/* 10px */
+}
+
+.user-feed .feed-profile .feed-profile-username p.name {
+  font-weight: bolder;
+}
+
+.user-feed .feed-profile .feed-profile-options {
+  float: left;
+  box-sizing: border-box;
+  display: block;
+  width: 10rem;/* 160px */
+  padding-top: .625rem;/* 10px */
+  margin-left: .625rem;/* 10px */
+}
+.user-feed .feed-profile .feed-profile-options a.btn-following,
+.user-feed .feed-profile .feed-profile-options a.btn-followers {
+  font-weight: 400;
+  color: #555555;
+  display: block;
+  padding-top: .3125rem;/* 5px */
+  font-size: .7em;
+}
+
+.user-feed .feed-profile .feed-profile-options a.btn-following:hover,
+.user-feed .feed-profile .feed-profile-options a.btn-followers:hover {
+  color: rgb(10,10,10);
+  font-weight: 500;
+}
+
+.user-feed .feed-profile  a.btn-follow {
+  margin-top: .9375rem;/* 15px */
+  width: 4.6875rem;/* 75px */
+}
+
+.user-feed .feed-profile-controls {
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: .625rem;/* 10px */
+}
+
+.user-feed .feed-profile-controls ul li{
+  width: 100%;
+}
+
+.user-feed .feed-profile-controls ul li a {
+  color: rgb(32,32,32);
+  display:block;
+  padding-left: 1.25rem;/* 20px */
+  text-align: left;
+  line-height: 2.1875rem;/* 35px */
+  transition: all 300ms ease;
+}
+
+.user-feed .feed-profile-controls ul li a:hover {
+  color: #1F9963;
+}
+
+.user-feed .feed-profile-controls ul li a.active {
+  color: #1F9963;
+}
+
+
+@media only screen and (max-width: 37.5rem /* 600px */) {
+
+  .user-feed .feed-profile .feed-profile-picture {
+    float: none;
+    margin: auto;
+  }
+
+  .user-feed .feed-profile .feed-profile-username {
+    width: 100%;
+    float: none;
+    margin: auto;
+  }
+
+  .user-feed .feed-profile .feed-profile-options {
+    float: none;
+    margin: auto;
+  }
+
+  .user-feed .feed-profile .feed-profile-username p {
+    color: #555555;
+    margin-top: .625rem;/* 10px */
+    text-align: center;
+  }
+
+  .user-feed .feed-profile .feed-profile-options a.btn-following,
+  .user-feed .feed-profile .feed-profile-options a.btn-followers {
+    margin: auto;
+    text-align: center;
+  }
+
+  .user-feed .feed-profile a.btn-follow {
+    float: none;
+    margin: .625rem auto auto;
+    text-align: center;
+  }
+
+  .user-feed .feed-profile-controls ul li a{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding:0;
+  }
+}
+/* User info*/
