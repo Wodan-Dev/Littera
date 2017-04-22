@@ -24,8 +24,22 @@
         <a class="btn-followers link-tiny"
            ng-click="UserDetailCtrl.changePage(4)">{{ UserDetailCtrl.user.followers.length }} Seguidores</a>
         <a
-          hide-xs class="btn btn-primary btn-follow" href="#">
+          hide-xs
+          class="btn btn-primary btn-follow"
+          ng-if="!UserDetailCtrl.sameUser()"
+          ng-show="!UserDetailCtrl.isFollowing()"
+          ng-click="UserDetailCtrl.btnFollow()"
+          ng-show="UserDetailCtrl.isAuthenticated">
           Seguir
+        </a>
+        <a
+          hide-xs
+          class="btn btn-primary-inverted btn-follow"
+          ng-show="UserDetailCtrl.isFollowing()"
+          ng-click="UserDetailCtrl.btnUnFollow()"
+          ng-if="!UserDetailCtrl.sameUser()"
+          ng-show="UserDetailCtrl.isAuthenticated">
+          Deixar de Seguir
         </a>
 
       </div>
@@ -34,8 +48,23 @@
            layout="row">
         <div flex="33">&nbsp;</div>
         <div flex="33">
-          <a class="btn btn-primary btn-follow" href="#">
+          <a
+            hide-gt-xs
+            class="btn btn-primary btn-follow"
+            ng-show="!UserDetailCtrl.isFollowing()"
+            ng-click="UserDetailCtrl.btnFollow()"
+            ng-if="!UserDetailCtrl.sameUser()"
+            ng-show="UserDetailCtrl.isAuthenticated">
             Seguir
+          </a>
+          <a
+            hide-gt-xs
+            class="btn btn-primary-inverted btn-follow"
+            ng-show="UserDetailCtrl.isFollowing()"
+            ng-click="UserDetailCtrl.btnUnFollow()"
+            ng-if="!UserDetailCtrl.sameUser()"
+            ng-show="UserDetailCtrl.isAuthenticated">
+            Deixar de Seguir
           </a>
         </div>
         <div flex="33">&nbsp;</div>

@@ -15,7 +15,9 @@
                           request,
                           userData) {
     var vm = this;
+    vm.loggedUser = {};
     vm.selectedTab = 0;
+    vm.isAuthenticated = false;
     vm.tabs = [
       {
         id: 0,
@@ -47,7 +49,71 @@
       dob: usr.dob,
       cover_image: usr.cover_image
     };
-    console.log(vm.user);
+
+    vm.init = function () {
+      vm.isAuthenticated = authentication.isAuthenticated();
+      if (vm.isAuthenticated) {
+        authentication.credential()
+          .then(function (data) {
+            $scope.$apply(function () {
+              vm.loggedUser = data.data.data;
+            });
+          })
+          .catch(function (err) {
+
+          });
+      }
+    };
+
+    vm.sameUser = function () {
+      console.log('same');
+      console.log(vm.loggedUser._id);
+      console.log(vm.user._id);
+      return (vm.loggedUser._id === vm.user._id);
+    };
+
+    vm.isFollowing = function () {
+      let tot = $filter('filter')(vm.loggedUser.following, { _id_user_follow: vm.user._id });
+      return (tot || []).length > 0;
+    };
+
+
+
+
+    vm.btnUnFollow = function () {
+
+      request._delete('/users/' + vm.loggedUser.username + '/following/' + vm.user._id, {})
+        .then(function () {
+          return authentication.credential();
+        })
+        .then(function (data) {
+          $scope.$apply(function () {
+            vm.loggedUser = data.data.data;
+          });
+        })
+        .catch(function (err) {
+
+        });
+    };
+
+
+    vm.btnFollow = function () {
+
+      request._post('/users/' + vm.loggedUser.username + '/following/',
+            {_id_user_follow: vm.user._id })
+        .then(function () {
+          return authentication.credential();
+        })
+        .then(function (data) {
+          $scope.$apply(function () {
+            vm.loggedUser = data.data.data;
+          });
+        })
+        .catch(function (err) {
+
+        });
+    };
+
 
     vm.changePage = function (page) {
       vm.selectedTab = page;

@@ -693,7 +693,7 @@ header .nav-user {
 
 .user-feed .feed-profile  a.btn-follow {
   margin-top: .9375rem;/* 15px */
-  width: 4.6875rem;/* 75px */
+  min-width: 4.6875rem;/* 75px */
 }
 
 .user-feed .feed-profile-controls {

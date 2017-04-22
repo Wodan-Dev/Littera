@@ -27,15 +27,18 @@
             <div flex="20"
                  flex-xs="20"
                  class="user-picture">
-              <a ng-href="#/user/{{ bookDetCtrl.book.user.username }}">
+              <a ng-href="#/user/{{ bookDetCtrl.book.user.username }}"
+                 ng-click="bookDetCtrl.cancel()">
                 <img ng-src="{{ bookDetCtrl.book.user.cover_image || './static/images/no-image.png' }}">
               </a>
             </div>
             <div flex="70"
                  flex-xs="80"
                  class="user-name">
-              <a ng-href="#/users/{{ bookDetCtrl.book.user.username }}" class="name link-default">{{ bookDetCtrl.book.user.name }}</a>
-              <a ng-href="#/users/{{ bookDetCtrl.book.user.username }}" class="username link-tiny">@{{ bookDetCtrl.book.user.username }}</a>
+              <p
+                 class="name link-default">{{ bookDetCtrl.book.user.name }}</p>
+              <p
+                 class="username link-tiny">@{{ bookDetCtrl.book.user.username }}</p>
             </div>
           </div>
           <div class="notice-content"
