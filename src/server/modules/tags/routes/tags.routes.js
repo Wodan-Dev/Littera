@@ -56,7 +56,7 @@ function getById(req, res) {
 function post(req, res) {
 
   let tag = {
-    tag: req.body.tag || ''
+    tag: (req.body.tag || '').toLowerCase()
   };
 
   tagsModel.validateCreate(tag)

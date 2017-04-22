@@ -101,8 +101,20 @@ function findById(id) {
  * @param  {ObjectId} username username which has to be loaded
  * @return {Promise}        Resolve/Reject
  */
-function findByUserName(username) {
-  return usersModel.findOne({ username: username }).exec();
+function findByUserName(username, allInfo) {
+  let model = usersModel.findOne({ username: username });
+
+  if (allInfo) {
+    model.populate('written_books._id_book')
+      .populate('library._id_book')
+      .populate('wishlist._id_book')
+      .populate('following._id_user_follow')
+      .populate('followers._id_user_follow')
+      .populate('reviews._id_user');
+  }
+
+
+  return model.exec();
 }
 
 /**

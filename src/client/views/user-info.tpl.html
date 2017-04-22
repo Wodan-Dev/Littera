@@ -19,8 +19,10 @@
         <p class="username" ng-bind="UserDetailCtrl.user.username_link"></p>
       </div>
       <div class="feed-profile-options">
-        <a class="btn-following link-tiny" href="#/following">{{ UserDetailCtrl.user.following.length  }} Seguindo</a>
-        <a class="btn-followers link-tiny" href="#/followers">{{ UserDetailCtrl.user.followers.length }} Seguidores</a>
+        <a class="btn-following link-tiny"
+           ng-click="UserDetailCtrl.changePage(3)">{{ UserDetailCtrl.user.following.length  }} Seguindo</a>
+        <a class="btn-followers link-tiny"
+           ng-click="UserDetailCtrl.changePage(4)">{{ UserDetailCtrl.user.followers.length }} Seguidores</a>
         <a
           hide-xs class="btn btn-primary btn-follow" href="#">
           Seguir
@@ -42,10 +44,17 @@
 
   </div>
   <div class="feed-profile feed-profile-controls">
-    <ul>
+    <ul ng-repeat="item in UserDetailCtrl.tabs">
+      <li >
+        <a style="cursor: pointer"
+           ng-class="{'active': item.id === UserDetailCtrl.selectedTab }"
+           ng-click="UserDetailCtrl.changePage(item.id)"
+           ng-bind="item.desc"></a>
+      </li>
+      <!--
       <li><a class="active" href="#">Publicações</a></li>
       <li><a href="#">Biblioteca</a></li>
-
+-->
     </ul>
   </div>
 </div>

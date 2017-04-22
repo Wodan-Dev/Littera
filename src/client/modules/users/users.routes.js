@@ -29,7 +29,12 @@
           controllerAs:  litteraApp.modules.users.controllers.userDetail.nameas,
           templateUrl: litteraApp.modules.users.templates.userDetail.url,
           access: {
-            requiresLogin: true
+            requiresLogin: false
+          },
+          resolve: {
+            userData: function ($route, usersFactory) {
+              return usersFactory.getUserByUserName($route.current.params.username|| '-');
+            }
           }
         });
     });

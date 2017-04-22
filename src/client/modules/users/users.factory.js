@@ -23,6 +23,17 @@
       ).get({}).$promise;
     }
 
+    function getUserByUserName(username) {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.users.routes.users(username), {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
     function update(data) {
       return request._put(litteraApp.modules.users.routes.users(''), data);
     }
@@ -34,6 +45,7 @@
 
     return {
       getUser: getUser,
+      getUserByUserName: getUserByUserName,
       update: update,
       updateImg: updateImg
     };

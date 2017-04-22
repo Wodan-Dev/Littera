@@ -8,7 +8,6 @@
        hide-gt-xs
        class="trends"
        data-scroll="dock"
-       ng-controller="UserDetailController"
        ng-include="'views/user-info.tpl.html'">
   </div>
   <div flex="50"
@@ -17,15 +16,137 @@
        flex-offset-gt-xs="10"
        class="column-list">
     <div flex="100"
-         class="column column-all first-column"
+         ng-show="UserDetailCtrl.selectedTab === 0"
+         class="column column-all"
+         ng-class="{ 'first-column': $index==0 }"
+         layout-align="center center"
+         ng-repeat="r in UserDetailCtrl.user.written_books|orderBy:'-date_published':true">
+      <div class="notice-image">
+        <a ng-href="#/books/{{ r._id_book._id }}">
+          <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
+        </a>
+      </div>
+      <div class="notice-content"
+           layout="column"
+           layout-margin>
+        <div flex="100">
+          <h3 class="title">
+            <a ng-href="#/books/{{ r._id_book._id }}"
+               class="link-title"
+               ng-bind="r._id_book.title"></a>
+          </h3>
+        </div>
+        <div flex="100">
+          <p class="text"
+             ng-bind="r._id_book.synopsis">
+          </p>
+        </div>
+      </div>
+      <div class="notice-options"
+           layout="row">
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id_book._id }}"
+             class="btn-like">
+            <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.average_star }}
+          </a>
+        </div>
+        <div flex="50">
+          <a href="#" class="btn-comment">
+            <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.comments.length }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div flex="100"
+         ng-show="UserDetailCtrl.selectedTab === 1"
+         class="column column-all"
+         ng-class="{ 'first-column': $index==0 }"
+         layout-align="center center"
+         ng-repeat="r in UserDetailCtrl.user.library|orderBy:'-date_published':true">
+      <div class="notice-image">
+        <a ng-href="#/books/{{ r._id_book._id }}">
+          <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
+        </a>
+      </div>
+      <div class="notice-content"
+           layout="column"
+           layout-margin>
+        <div flex="100">
+          <h3 class="title">
+            <a ng-href="#/books/{{ r._id_book._id }}"
+               class="link-title"
+               ng-bind="r._id_book.title"></a>
+          </h3>
+        </div>
+        <div flex="100">
+          <p class="text"
+             ng-bind="r._id_book.synopsis">
+          </p>
+        </div>
+      </div>
+      <div class="notice-options"
+           layout="row">
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id_book._id }}"
+             class="btn-like">
+            <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.average_star }}
+          </a>
+        </div>
+        <div flex="50">
+          <a href="#" class="btn-comment">
+            <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.comments.length }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div flex="100"
+         class="follow-grid"
+         ng-show="UserDetailCtrl.selectedTab === 3"
          layout-align="center center">
-      <p>page user</p>
+      <ul ng-repeat="r in UserDetailCtrl.user.following">
+        <li>
+          <div class="follow-item">
+            <div class="follow-user">
+              <a ng-href="#/user/{{r._id_user_follow.username}}">
+                <img ng-src="{{ r._id_user_follow.cover_image || './static/images/no-image.png' }}" />
+                <p class="name link-default">{{r._id_user_follow.name}}</p>
+                <p class="username link-tiny">@{{r._id_user_follow.username}}</p>
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div flex="100"
+         class="follow-grid"
+         ng-show="UserDetailCtrl.selectedTab === 4"
+         layout-align="center center">
+      <ul ng-repeat="r in UserDetailCtrl.user.followers">
+        <li>
+          <div class="follow-item">
+            <div class="follow-user">
+              <a ng-href="#/user/{{r._id_user_follow.username}}">
+                <img ng-src="{{ r._id_user_follow.cover_image || './static/images/no-image.png' }}" />
+                <p class="name link-default">{{r._id_user_follow.name}}</p>
+                <p class="username link-tiny">@{{r._id_user_follow.username}}</p>
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
   <div flex="35"
        hide-xs
        class="trends"
-       ng-controller="UserDetailController"
        data-scroll="dock"
        ng-include="'views/user-info.tpl.html'">
   </div>

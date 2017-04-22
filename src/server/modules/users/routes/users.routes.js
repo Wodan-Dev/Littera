@@ -39,7 +39,7 @@ function get(req, res) {
  */
 function getByUserName(req, res) {
   let username = req.params.username || '-';
-  usersModel.findByUserName(username)
+  usersModel.findByUserName(username, true)
     .then(function (user) {
       if (user) {
         http.render(res, {
