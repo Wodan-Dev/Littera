@@ -29,7 +29,9 @@
     imports: {
       localSave: litteraApp.core.factories.localSave,
       request: litteraApp.core.services.request,
-      message: litteraApp.core.services.messages
+      message: litteraApp.core.services.messages,
+      authentication: litteraApp.modules.auth.factories.authentication,
+      salesFactory: litteraApp.modules.sales.factories.sales
     }
   };
 

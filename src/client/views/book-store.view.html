@@ -43,11 +43,11 @@
         <div flex="100"
              ng-show="r.keywords.length">
           <div class="tiny-chip">
-            <md-chips ng-model="r.keywords" readonly="true" md-removable="false">
+            <md-chipStoreCtrls ng-model="r.keywords" readonly="true" md-removable="false">
               <md-chip-template style="padding: 0">
                 <span style="font-size: .75rem">{{$chip.content}}</span>
               </md-chip-template>
-            </md-chips>
+            </md-chipStoreCtrls>
           </div>
         </div>
 
@@ -66,7 +66,8 @@
         </div>
         <div flex="100"
              layout-padding>
-          <a class="btn btn-primary-inverted full" ng-href="#/sales/{{ r.user._id }}">Comprar</a>
+          <a class="btn btn-primary-inverted full"
+             ng-click="StoreCtrl.btnAddBasket(r._id)">Comprar</a>
         </div>
       </div>
       <div class="notice-options"

@@ -197,6 +197,40 @@ function findByUserId(id, page) {
 }
 
 /**
+ * Return sale in status 0
+ * @param  {ObjectId} id Id which has to be listed
+ * @return {Promise} Resolve/Reject
+ */
+function getLastSale(idUser) {
+  return salesModel.find({
+    $and: [
+      { _id_user: idUser },
+      { status: 0 }
+    ]
+  })
+    .populate('items._id_book')
+    .limit(1)
+    .exec();
+}
+
+/**
+ * Check if book already in basket
+ * @param  {ObjectId} idSale sale id
+ * @param  {ObjectId} idBook book id
+ * @return {Promise}        Resolve/Reject
+ */
+function alreadyInBasket(idSale, idBook) {
+  let query = {
+    _id: idSale,
+    'items._id_book': idBook
+  };
+
+  return salesModel
+    .findOne(query)
+    .exec();
+}
+
+/**
  * Validate create
  * @param  {Object} sale Sale object
  * @return {Promise}      Resolve/Reject
@@ -308,5 +342,7 @@ module.exports = {
   list: list,
   findById: findById,
   findByUserId: findByUserId,
-  getSale: getSale
+  getLastSale: getLastSale,
+  getSale: getSale,
+  alreadyInBasket: alreadyInBasket
 };

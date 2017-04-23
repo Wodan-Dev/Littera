@@ -52,6 +52,25 @@ function getByUserId(req, res) {
     });
 }
 
+/**
+ * Method Get in route /user/:id
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function getLastSale(req, res) {
+  let id = req.params.id;
+
+  salesModel.validateId(id)
+    .then(function (rid) {
+      return salesModel.getLastSale(rid);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+    });
+}
 
 
 /**
@@ -74,8 +93,12 @@ function postBook(req, res) {
     })
     .then(function (rIdBook) {
       saleItem._id_book = rIdBook;
+      return salesCtrl.validateBook(_id_sale, saleItem._id_book);
+    })
+    .then(function () {
       return salesModel.validateItemCreate(saleItem);
     })
+
     .then(function (result) {
       return salesModel.insertItem(_id_sale, result.value);
     })
@@ -127,7 +150,7 @@ function post(req, res) {
   let sale = {
     _id_user: req.body._id_user || '',
     transaction_id: '-',
-    status: req.body.status || '0',
+    status: (req.body.status || '0').toString(),
     items: req.body.items || []
   };
 
@@ -273,6 +296,7 @@ function router(express, auth) {
 
   routes.get('/', auth, get);
   routes.get('/:id', auth, getByUserId);
+  routes.get('/user/:id', auth, getLastSale);
   routes.post('/', auth, post);
   routes.post('/pay', pay);
   routes.post('/books', auth, postBook);

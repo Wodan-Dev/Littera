@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="SalesCtrl.init()">
+  <div flex="50"
+       layout-margin
+       flex-xs="100"
+       flex-offset-gt-xs="10"
+       class="column-list">
+    <div flex="100"
+         class="column column-all first-column"
+         layout-align="center center">
+      { sales }
+    </div>
+  </div>
+  <div flex="35"
+       flex-xs="100"
+       layout-margin
+       class="trends"
+       data-scroll="dock"
+       ng-include="'views/trends.view.html'">
+  </div>
+</div>
 
-</body>
-</html>

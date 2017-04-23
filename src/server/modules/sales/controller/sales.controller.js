@@ -9,7 +9,10 @@
 /**
  * Dependencies
  */
+const core = require('../../../modules/core');
 const uid = require('uid-safe').sync;
+const salesModel = require('../../../models/sales/sales.model');
+const validator = core.validator;
 
 /**
  * Genrate unique identifier to sale
@@ -25,6 +28,20 @@ function generateTransactionId(sale) {
   });
 }
 
+function validateBook(idSale, idBook) {
+  return new Promise(function (resolve, reject) {
+    salesModel.alreadyInBasket(idSale, idBook)
+      .then(function (item) {
+        if (item)
+          throw 'Livro já adicionado.';
+
+        resolve(idSale);
+      })
+      .catch(function (err) {
+        reject(validator.invalidResult(idBook, err));
+      });
+  });
+}
 
 
 /**
@@ -32,5 +49,6 @@ function generateTransactionId(sale) {
  * @type {Object}
  */
 module.exports = {
-  generateTransactionId: generateTransactionId
+  generateTransactionId: generateTransactionId,
+  validateBook: validateBook
 };

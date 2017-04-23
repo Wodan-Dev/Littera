@@ -11,7 +11,9 @@
     $mdMedia,
     $location,
     storeFactory,
-    message) {
+    message,
+    salesFactory,
+    authentication) {
     var vm = this;
     vm.books = [];
     vm.actualPage = 1;
@@ -35,6 +37,55 @@
     vm.init = function () {
       vm.books = [];
       loadData();
+    };
+
+    vm.btnAddBasket = function (id) {
+      let idUser = '';
+      authentication.credential()
+        .then(function (data) {
+          idUser = data.data.data._id;
+          return salesFactory.getCurrentSale(idUser);
+        })
+        .then(function (data) {
+          return new Promise(function (resolve, reject) {
+            if (!data.data.length) {
+              let sale = {
+                _id_user: idUser,
+                transaction_id: '-',
+                status: '0',
+                items: []
+              };
+
+              salesFactory.createSale(sale)
+                .then(function (dt) {
+                  resolve(dt.data.data);
+                })
+                .catch(function (err) {
+                  reject(err);
+                });
+            }
+            else
+              resolve(data.data[0]);
+          });
+        })
+        .then(function (data) {
+
+          let saleItem = {
+            _id_sale: data._id,
+            _id_book: id,
+            value: 0
+          };
+
+          return salesFactory.addToBasket(saleItem);
+        })
+        .then(function () {
+          message.notification('information', 'Adicionado ao carrinho com sucesso!!');
+        })
+        .catch(function (err) {
+          if(err.data.data.err)
+            message.notification('information', err.data.data.err);
+        });
+
     };
 
     function BookDetailController($mdDialog, book) {
@@ -119,7 +170,9 @@
     '$mdMedia',
     '$location',
     litteraApp.modules.store.factories.store,
-    litteraApp.modules.store.imports.message
+    litteraApp.modules.store.imports.message,
+    litteraApp.modules.store.imports.salesFactory,
+    litteraApp.modules.store.imports.authentication
   ];
 
   angular.module(litteraApp.modules.store.name)
