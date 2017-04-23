@@ -4,14 +4,8 @@
 'use strict';
 (function (angular, litteraApp) {
   function UserDetailCtrl($scope,
-                          $routeParams,
-                          $rootScope,
                           $filter,
-                          $location,
-                          Upload,
-                          message,
                           authentication,
-                          has_error,
                           request,
                           userData) {
     var vm = this;
@@ -66,9 +60,6 @@
     };
 
     vm.sameUser = function () {
-      console.log('same');
-      console.log(vm.loggedUser._id);
-      console.log(vm.user._id);
       return (vm.loggedUser._id === vm.user._id);
     };
 
@@ -122,14 +113,8 @@
 
   UserDetailCtrl.$inject = [
     '$scope',
-    '$routeParams',
-    '$rootScope',
     '$filter',
-    '$location',
-    'Upload',
-    litteraApp.modules.users.imports.message,
     litteraApp.modules.users.imports.authentication,
-    litteraApp.modules.users.imports.has_error,
     litteraApp.modules.users.imports.request,
     'userData'
   ];

@@ -11,7 +11,7 @@
          class="column column-all"
          ng-class="{ 'first-column': $index==0 }"
          layout-align="center center"
-         ng-repeat="r in FeedCtrl.feedItems">
+         ng-repeat="r in FeedCtrl.feedItems|orderBy:'-create_at':false">
       <div class="notice-image">
         <a ng-href="#/books/{{ r._id_book._id }}">
           <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
@@ -34,7 +34,7 @@
              ng-bind="r._id_user.name"></a>
 
           <p class="time"
-             ng-bind="r.create_at"></p>
+             ng-bind="r.create_at|date:'dd/MM/yyyy HH:mm:ss'"></p>
         </div>
         <div flex="10"
              class="user-options">

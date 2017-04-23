@@ -691,6 +691,13 @@ header .nav-user {
   font-weight: 500;
 }
 
+.user-feed .feed-profile .feed-profile-options a.btn-following.active,
+.user-feed .feed-profile .feed-profile-options a.btn-followers.active {
+  color: rgb(10,10,10);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
 .user-feed .feed-profile  a.btn-follow {
   margin-top: .9375rem;/* 15px */
   min-width: 4.6875rem;/* 75px */

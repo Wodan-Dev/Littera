@@ -20,25 +20,27 @@
       </div>
       <div class="feed-profile-options">
         <a class="btn-following link-tiny"
+           ng-class="{'active': 3 === UserDetailCtrl.selectedTab }"
            ng-click="UserDetailCtrl.changePage(3)">{{ UserDetailCtrl.user.following.length  }} Seguindo</a>
         <a class="btn-followers link-tiny"
+           ng-class="{'active': 4 === UserDetailCtrl.selectedTab }"
            ng-click="UserDetailCtrl.changePage(4)">{{ UserDetailCtrl.user.followers.length }} Seguidores</a>
         <a
           hide-xs
           class="btn btn-primary btn-follow"
-          ng-if="!UserDetailCtrl.sameUser()"
-          ng-show="!UserDetailCtrl.isFollowing()"
           ng-click="UserDetailCtrl.btnFollow()"
-          ng-show="UserDetailCtrl.isAuthenticated">
+          ng-show="UserDetailCtrl.isAuthenticated &&
+          !UserDetailCtrl.isFollowing() &&
+          !UserDetailCtrl.sameUser()">
           Seguir
         </a>
         <a
           hide-xs
           class="btn btn-primary-inverted btn-follow"
-          ng-show="UserDetailCtrl.isFollowing()"
           ng-click="UserDetailCtrl.btnUnFollow()"
-          ng-if="!UserDetailCtrl.sameUser()"
-          ng-show="UserDetailCtrl.isAuthenticated">
+          ng-show="UserDetailCtrl.isAuthenticated &&
+          UserDetailCtrl.isFollowing() &&
+          !UserDetailCtrl.sameUser()">
           Deixar de Seguir
         </a>
 
@@ -51,19 +53,19 @@
           <a
             hide-gt-xs
             class="btn btn-primary btn-follow"
-            ng-show="!UserDetailCtrl.isFollowing()"
             ng-click="UserDetailCtrl.btnFollow()"
-            ng-if="!UserDetailCtrl.sameUser()"
-            ng-show="UserDetailCtrl.isAuthenticated">
+            ng-show="UserDetailCtrl.isAuthenticated &&
+          !UserDetailCtrl.isFollowing() &&
+          !UserDetailCtrl.sameUser()">
             Seguir
           </a>
           <a
             hide-gt-xs
             class="btn btn-primary-inverted btn-follow"
-            ng-show="UserDetailCtrl.isFollowing()"
             ng-click="UserDetailCtrl.btnUnFollow()"
-            ng-if="!UserDetailCtrl.sameUser()"
-            ng-show="UserDetailCtrl.isAuthenticated">
+            ng-show="UserDetailCtrl.isAuthenticated &&
+          UserDetailCtrl.isFollowing() &&
+          !UserDetailCtrl.sameUser()">
             Deixar de Seguir
           </a>
         </div>

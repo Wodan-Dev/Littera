@@ -138,6 +138,7 @@
     litteraApp.modules.store.name,
     litteraApp.modules.books.name,
     litteraApp.modules.users.name,
+    litteraApp.modules.sales.name,
     litteraApp.core.name,
     'ngFileUpload',
     'angularCSS',

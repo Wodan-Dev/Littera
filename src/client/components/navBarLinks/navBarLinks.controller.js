@@ -4,7 +4,7 @@
 'use strict';
 
 (function (angular, litteraApp) {
-  function navBarLinksController($location, $rootScope, authentication) {
+  function navBarLinksController($location, $rootScope, $route, authentication) {
     var vm = this;
 
     vm.User = {
@@ -33,12 +33,14 @@
     vm.btnLogOff = function () {
       authentication.logOut();
       $location.path(litteraApp.components.navBarLinks.routes.home);
+      $route.reload();
     };
   }
 
   navBarLinksController.$inject = [
     '$location',
     '$rootScope',
+    '$route',
     litteraApp.components.navBarLinks.imports.authentication
   ];
   angular.module(litteraApp.components.navBarLinks.name)

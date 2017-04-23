@@ -104,6 +104,12 @@
       return function (user) {
         return '/users/' + user + '/written/'; // '/written/' + user;
       };
+    },
+    SALES_PAGE: function () {
+      return '/sales';
+    },
+    SALES: function () {
+      return '/sales';
     }
   };
 }(litteraApp));
