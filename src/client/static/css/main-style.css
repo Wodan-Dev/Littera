@@ -270,6 +270,11 @@ header .nav-user {
   width: 48%;
 }
 
+.column-little {
+  width: 23%;
+  margin: 1%;
+}
+
 .column-half-margin {
   margin-right: 2%;
 }
@@ -384,6 +389,21 @@ header .nav-user {
   color: #555555;
 }
 
+.notice-content p.price {
+  font-size: 1.1rem;
+  text-align: left;
+  line-height: 1.35rem;
+  color: #555555;
+}
+
+.notice-content p.price-value {
+  font-size: 1.2rem;
+  padding: 0px;
+  text-align: center;
+  line-height: 1.35rem;
+  color: #555555;
+}
+
 .notice-content p.text {
   padding: .9375rem;/* 10px */
   font-size: 1.1rem;
@@ -392,6 +412,8 @@ header .nav-user {
   font-family: 'Tinos', serif;
   color: #555555;
 }
+
+
 
 .notice-options {
   height: 2.5rem;/* 40px */
@@ -443,8 +465,8 @@ header .nav-user {
   position: absolute;
   font-size:2rem;
   color: rgb(55, 55, 55);
-  top: 7.5rem; /*50px*/
-  left: 7.5rem; /* 50px; */
+  top: 6.2rem; /*104px*/
+  left: 6.2rem; /* 104px; */
   width: 2rem;/* 32px */
   height: 2rem;/* 32px */
   display: none;
@@ -535,6 +557,12 @@ header .nav-user {
     margin-top: .625rem; /* 10px */
   }
 
+  .column-little {
+
+    width: 31%;
+    margin: 1%;
+  }
+
 }
 
 
@@ -557,6 +585,18 @@ header .nav-user {
 
   .shop-image-box .shop-more {
     top: 3.75rem; /*50px*/
+  }
+
+  .column-little {
+    width: 48%;
+    margin: 1%;
+  }
+}
+
+@media only screen and (max-width: 26.25rem/* 420px */) {
+  .column-little {
+    width: 94%;
+    margin: 3%;
   }
 }
 
@@ -797,6 +837,7 @@ header .nav-user {
 .follow-grid ul li {
   margin: .125rem;/* 2px */
   display: inline-block;
+  float: left;
 }
 
 .follow-item {

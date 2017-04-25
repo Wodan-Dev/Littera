@@ -15,7 +15,7 @@ const salesModel = require('../../../models/sales/sales.model');
 const validator = core.validator;
 
 /**
- * Genrate unique identifier to sale
+ * Generate unique identifier to sale
  * @param {Object} sale Sale
  * @returns {Promise} Resolve/Reject
  */

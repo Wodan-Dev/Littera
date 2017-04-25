@@ -17,9 +17,9 @@
       };
     }
 
-    function getSale(page) {
+    function getSale(id) {
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.sales.routes.sales, {},
+        litteraApp.modules.sales.routes.sales + '/' + id, {},
         {
           get: {
             headers: getHeader()
@@ -30,7 +30,7 @@
 
     function getCurrentSale(id) {
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.sales.routes.sales + '/user/'+id, {},
+        litteraApp.modules.sales.routes.sales + '/user/' + id, {},
         {
           get: {
             headers: getHeader()

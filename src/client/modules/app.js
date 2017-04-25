@@ -76,7 +76,14 @@
     });
   }
 
-  function runApp($rootScope, authorization, $location, $interval, BASEURLS) {
+  function runApp(
+    $rootScope,
+    authorization,
+    $location,
+    $interval,
+    BASEURLS,
+    $window,
+    $anchorScroll) {
     $rootScope.__showModal = false;
     $rootScope.__showUserMenu = false;
     $rootScope.__showLinks = false;
@@ -85,6 +92,8 @@
     $rootScope.BASEURLS = BASEURLS;
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
+      window.scrollTo(0, 0);
+      $anchorScroll();
       $rootScope.__showModal = false;
       $rootScope.__showLinks = false;
       $rootScope.__showUserMenu = false;
@@ -93,6 +102,8 @@
     });
 
     $rootScope.$on('$routeChangeSuccess', function (event, next) {
+      window.scrollTo(0, 0);
+      $anchorScroll();
       authorization.authorize(next)
        .then(function (url) {
          $rootScope.$broadcast('evt_navBarUser_event', '');
@@ -123,7 +134,9 @@
     litteraApp.modules.auth.factories.authorization,
     '$location',
     '$interval',
-    'BASEURLS'
+    'BASEURLS',
+    '$window',
+    '$anchorScroll'
   ];
 
   angular.module(litteraApp.modules.app.name, [

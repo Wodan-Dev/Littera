@@ -104,8 +104,6 @@ function post(req, res) {
     comments: req.body.comments || [],
     cover_image: req.body.cover_image || ''
   };
-  console.log('book');
-  console.log(book);
 
   booksModel.validateCreate(book)
     .then(function (result) {

@@ -11,91 +11,46 @@
     $mdMedia,
     $location,
     salesFactory,
-    message) {
+    message,
+    authentication) {
     var vm = this;
-    vm.books = [];
-    vm.actualPage = 1;
-
-    vm.book = {
-      _id: '',
-      title: '',
-      username: '',
-      cover_image: '',
-      synopsis: ''
-    };
+    vm.saleItems = [];
 
     vm.init = function () {
-      vm.books = [];
+      vm.saleItems = [];
       loadData();
-    };
-
-    function BookDetailController($mdDialog, book) {
-      let vm = this;
-
-      vm.book = book;
-
-      vm.cancel = function() {
-        $mdDialog.cancel();
-      };
-
-      vm.buy = function() {
-        $mdDialog.hide('buy');
-      };
-    }
-
-    vm.btnShowDetail = function(ev, cbook) {
-      $mdDialog.show({
-        controller: BookDetailController,
-        templateUrl: 'views/book-detail.tpl.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        controllerAs: 'bookDetCtrl',
-        locals: {
-          book: cbook
-        },
-        clickOutsideToClose:true,
-        fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
-      })
-        .then(function() {
-          $location.path('/books/'+cbook._id);
-        }, function() {
-        });
-    };
-
-    vm.showItemDetail = function (id) {
-      return vm.book._id === id;
-    };
-
-    vm.btnCloseDetail = function (id) {
-      document.getElementById('book-'+id).style.display = 'none';
-      vm.book._id = '-';
-      vm.showDetail = false;
-      $rootScope.__showModal = false;
-    };
-
-    vm.btnLoadMore = function () {
-      vm.actualPage++;
-      loadData();
-
     };
 
     function loadData() {
-      salesFactory.getSale(vm.actualPage)
+      let idUser = '';
+      authentication.credential()
         .then(function (data) {
-          let t = vm.books.length;
-
-          for (let i = 0, len = data.data.length; i < len; i++) {
-            vm.books.push(data.data[i]);
-          }
-
-
-
-
-          if (t === vm.books.length)
-            message.notification('information', 'No momento não temos mais livros pra apresentar :(');
+          idUser = data.data.data._id;
+          return salesFactory.getCurrentSale(idUser);
         })
-        .catch(function (er) {
+        .then(function (data) {
+          return new Promise(function (resolve, reject) {
+            if (!data.data.length) {
+              reject({
+                data: {
+                  data: {
+                    err: 'Nenhum produto adicionado no carrinho!'
+                  }
+                }
+              });
+            }
+            else
+              resolve(data.data[0]);
+          });
+        })
+        .then(function (data) {
+          vm.saleItems = data;
 
+        })
+        .catch(function (err) {
+          console.log(err);
+          if(err.data.data.err)
+            message.notification('information', err.data.data.err);
         });
     }
 
@@ -109,7 +64,8 @@
     '$mdMedia',
     '$location',
     litteraApp.modules.sales.factories.sales,
-    litteraApp.modules.sales.imports.message
+    litteraApp.modules.sales.imports.message,
+    litteraApp.modules.sales.imports.authentication
   ];
 
   angular.module(litteraApp.modules.sales.name)

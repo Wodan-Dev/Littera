@@ -9,6 +9,7 @@
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model');
 const pricesModel = require('../../../models/books/prices.model');
+const pricesCtrl = require('../controller/prices.controller');
 const http = core.http;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -72,11 +73,10 @@ function post(req, res) {
   let id_book = req.body._id_book || '';
 
   let price = {
-    price_min: req.body.price_min || 0,
-    price_sug: req.body.price_sug || 0,
-    date_begin: req.body.date_begin || '',
-    date_end: req.body.date_end || '',
-    type: req.body.date_end || 0,
+    price_min: (req.body.price_min || 0).toString(),
+    price_sug: (req.body.price_sug || 0).toString(),
+    active: (req.body.active || 0).toString(),
+    type: (req.body.type || 0).toString()
   };
 
   validator.validateId(id_book)
@@ -85,7 +85,11 @@ function post(req, res) {
       return pricesModel.validateCreate(price);
     })
     .then(function(result) {
-      return pricesModel.insert(id_book, result.value);
+      price = result.value;
+      return pricesCtrl.validatePrice(id_book, price.type);
+    })
+    .then(function() {
+      return pricesModel.insert(id_book, price);
     })
     .then(function (result) {
       http.render(res, result);
@@ -106,11 +110,10 @@ function put(req, res) {
 
   let price = {
     _id: req.body._id || '',
-    price_min: req.body.price_min || 0,
-    price_sug: req.body.price_sug || 0,
-    date_begin: req.body.date_begin || '',
-    date_end: req.body.date_end || '',
-    type: req.body.date_end || 0,
+    price_min: (req.body.price_min || 0).toString(),
+    price_sug: (req.body.price_sug || 0).toString(),
+    active: (req.body.active || 0).toString(),
+    type: (req.body.type || 0).toString()
   };
 
   validator.validateId(id_book)

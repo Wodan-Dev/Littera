@@ -82,9 +82,8 @@ function update(id_book, price) {
     '$set': {
       'prices.$.price_min': price.price_min,
       'prices.$.price_sug': price.price_sug,
-      'prices.$.date_begin': price.date_begin,
-      'prices.$.date_end': price.date_end,
       'prices.$.type': price.type,
+      'prices.$.active': price.active,
       'prices.$.modified_at': date.getDateUTC()
     }
   };
@@ -97,6 +96,25 @@ function update(id_book, price) {
 
   return booksModel
     .findOneAndUpdate(query, data, opt)
+    .exec();
+}
+
+
+/**
+ * Check if type of price already exists
+ * @param  {ObjectId} id_book book id
+ * @param  {Number} type price type
+ * @return {Promise}        Resolve/Reject
+ */
+function alreadyHasPrice(id_book, type) {
+
+  let query = {
+    '_id': id_book,
+    'prices.type': type
+  };
+
+  return booksModel
+    .findOne(query)
     .exec();
 }
 
@@ -137,6 +155,7 @@ function remove(id_book, id) {
 module.exports = {
   validateCreate: validateCreate,
   validateUpdate: validateUpdate,
+  alreadyHasPrice: alreadyHasPrice,
   insert: insert,
   update: update,
   remove: remove

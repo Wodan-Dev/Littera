@@ -28,15 +28,12 @@ const pricesSchema = new db.mongoose.Schema({
     required: true,
     index: true
   },
-  date_begin: {
-    type: Date,
-    required: true
-  },
-  date_end: {
-    type: Date,
-    required: false
-  },
   type: {
+    type: Number,
+    required: true,
+    enum: [0, 1]
+  },
+  active: {
     type: Number,
     required: true,
     enum: [0, 1]
@@ -60,8 +57,7 @@ const pricesSchema = new db.mongoose.Schema({
 const pricesCreateSchema = schema({
   price_min: models.numberField(true),
   price_sug: models.numberField(true),
-  date_begin: models.dateField(true),
-  date_end: models.dateField().allow(''),
+  active: models.numberField(true).min(0).max(1),
   type: models.numberField(true).min(0).max(1)
 });
 
@@ -73,8 +69,7 @@ const pricesUpdateSchema = schema({
   _id: models.stringField(true),
   price_min: models.numberField(true),
   price_sug: models.numberField(true),
-  date_begin: models.dateField(true),
-  date_end: models.dateField().allow(''),
+  active: models.numberField(true).min(0).max(1),
   type: models.numberField(true).min(0).max(1)
 });
 

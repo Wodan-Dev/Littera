@@ -10,6 +10,7 @@
     $mdDialog,
     $mdMedia,
     $location,
+    $filter,
     storeFactory,
     message,
     salesFactory,
@@ -21,6 +22,8 @@
       // options
       itemSelector: '.grid-item',
       columnWidth: '.grid-item',
+      horizontalOrder: true,
+      percentPosition: true,
       stagger: 30
     });
 
@@ -39,7 +42,32 @@
       loadData();
     };
 
-    vm.btnAddBasket = function (id) {
+    function getActualPrice(prices) {
+
+      let off = $filter('filter')(prices, { active:1, type: 1 });
+      if (off.length)
+        return off;
+
+      return $filter('filter')(prices, { type: 0 });
+    }
+
+    vm.getMinPrice = function (prices) {
+
+      if (prices.length) {
+        return getActualPrice(prices)[0].price_min;
+      }
+      return 0;
+    };
+
+    vm.getSugPrice = function (prices) {
+
+      if (prices.length) {
+        return getActualPrice(prices)[0].price_sug;
+      }
+      return 0;
+    };
+
+    vm.btnAddBasket = function (id, sugPrice) {
       let idUser = '';
       authentication.credential()
         .then(function (data) {
@@ -73,7 +101,7 @@
           let saleItem = {
             _id_sale: data._id,
             _id_book: id,
-            value: 0
+            value: sugPrice
           };
 
           return salesFactory.addToBasket(saleItem);
@@ -147,6 +175,8 @@
             vm.books.push(data.data[i]);
           }
 
+          console.log(vm.books);
+
 
 
           msnry.layout();
@@ -169,6 +199,7 @@
     '$mdDialog',
     '$mdMedia',
     '$location',
+    '$filter',
     litteraApp.modules.store.factories.store,
     litteraApp.modules.store.imports.message,
     litteraApp.modules.store.imports.salesFactory,

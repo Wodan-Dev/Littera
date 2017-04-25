@@ -2,15 +2,13 @@
      layout-xs="column"
      flex="100"
      ng-init="StoreCtrl.init()">
-  <div flex="50"
+  <div flex="95"
        layout-margin
-       flex-xs="100"
-       flex-offset-gt-xs="10"
        class="column-list grid">
     <div flex="100"
          id="shop-book-{{ $index }}"
-         ng-class="{ 'column-half-margin': $index % 2 == 0 }"
-         class="column column-half grid-item"
+
+         class="column column-little grid-item"
          layout-align="center center"
          ng-repeat="r in StoreCtrl.books">
       <div class="notice-image">
@@ -24,7 +22,7 @@
       <div class="notice-user"
            layout="row">
         <div flex="30"
-             flex-xs="20"
+             flex-xs="30"
              class="user-picture">
           <a ng-href="#/user/{{ r.user.username }}">
             <img ng-src="{{ r.user.cover_image || './static/images/no-image.png' }}">
@@ -43,17 +41,17 @@
         <div flex="100"
              ng-show="r.keywords.length">
           <div class="tiny-chip">
-            <md-chipStoreCtrls ng-model="r.keywords" readonly="true" md-removable="false">
+            <md-chips ng-model="r.keywords" readonly="true" md-removable="false">
               <md-chip-template style="padding: 0">
                 <span style="font-size: .75rem">{{$chip.content}}</span>
               </md-chip-template>
-            </md-chipStoreCtrls>
+            </md-chips>
           </div>
         </div>
 
-        <div flex="100"
-             layout-margin>
-          <h3 class="title">
+        <div flex="100">
+          <h3 class="title"
+              style="margin-left: .625rem; margin-right: .625rem; text-align:center">
             <a ng-href="#/books/{{ r._id  }}"
                class="link-title"
                ng-bind="r.title"></a>
@@ -61,13 +59,32 @@
         </div>
         <div flex="100"
              layout-margin>
-          <h4 class="title" ng-bind="r.subtitle">
-          </h4>
+          <h4 class="title" ng-bind="r.subtitle"></h4>
+
+        </div>
+        <div flex="100">
+          <div flex="100"
+               ng-show="r.prices.length"
+               style="margin-left: .625rem; margin-right: .625rem "
+               layout="row">
+            <div flex>
+              <p class="price-value">R$ {{StoreCtrl.getMinPrice(r.prices) | number:2}} -
+                {{StoreCtrl.getSugPrice(r.prices) | number:2}}</p>
+            </div>
+          </div>
+          <div flex="100"
+               ng-show="!r.prices.length"
+               style="margin-left: .625rem; margin-right: .625rem"
+               layout="row">
+            <div flex>
+              <p class="price-value">Gratuito</p>
+            </div>
+          </div>
         </div>
         <div flex="100"
              layout-padding>
           <a class="btn btn-primary-inverted full"
-             ng-click="StoreCtrl.btnAddBasket(r._id)">Comprar</a>
+             ng-click="StoreCtrl.btnAddBasket(r._id, StoreCtrl.getSugPrice(r.prices))">Comprar</a>
         </div>
       </div>
       <div class="notice-options"
@@ -100,13 +117,13 @@
 
     </div>
   </div>
-  <div flex="35"
+  <!--<div flex="35"
        flex-xs="100"
        layout-margin
        class="trends"
        data-scroll="dock"
        ng-include="'views/trends.view.html'">
-  </div>
+  </div>-->
 </div>
 
 <style type="text/css">

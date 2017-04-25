@@ -2,23 +2,15 @@
      layout-xs="column"
      flex="100"
      ng-init="SalesCtrl.init()">
-  <div flex="50"
-       layout-margin
-       flex-xs="100"
-       flex-offset-gt-xs="10"
+  <div flex="100"
        class="column-list">
     <div flex="100"
          class="column column-all first-column"
          layout-align="center center">
-      { sales }
+      <ul ng-repeat="r in SalesCtrl.saleItems.items">
+        <li><pre>{{r}}</pre></li>
+      </ul>
     </div>
-  </div>
-  <div flex="35"
-       flex-xs="100"
-       layout-margin
-       class="trends"
-       data-scroll="dock"
-       ng-include="'views/trends.view.html'">
   </div>
 </div>
 
