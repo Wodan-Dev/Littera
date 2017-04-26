@@ -10,6 +10,7 @@
     $mdDialog,
     $mdMedia,
     $location,
+    $filter,
     salesFactory,
     message,
     authentication) {
@@ -19,6 +20,48 @@
     vm.init = function () {
       vm.saleItems = [];
       loadData();
+    };
+
+    vm.percentage = 0;
+
+    function getActualPrice(prices) {
+
+      let off = $filter('filter')(prices, { active:1, type: 1 });
+      if (off.length)
+        return off;
+
+      return $filter('filter')(prices, { type: 0 });
+    }
+
+    vm.getMinPrice = function (prices) {
+
+      if (prices.length) {
+        return getActualPrice(prices)[0].price_min;
+      }
+      return 0;
+    };
+
+    vm.getSugPrice = function (prices) {
+
+      if (prices.length) {
+        return getActualPrice(prices)[0].price_sug;
+      }
+      return 0;
+    };
+
+    vm.btnRemove = function (id) {
+      salesFactory.removeFromBasket(vm.saleItems._id, id)
+        .then(function () {
+          $scope.$apply(function () {
+            let selectedBook = $filter('filter')(vm.saleItems.items, { _id : id})[0];
+            vm.saleItems.items.splice(vm.saleItems.items.indexOf(selectedBook) , 1);
+          });
+
+          message.notification('information', 'Removido com sucesso!');
+        })
+        .catch(function () {
+
+        });
     };
 
     function loadData() {
@@ -44,6 +87,7 @@
           });
         })
         .then(function (data) {
+          console.log(data);
           vm.saleItems = data;
 
         })
@@ -54,6 +98,9 @@
         });
     }
 
+    vm.btnCheckOut = function () {
+
+    };
   }
 
   SalesCtrl.$inject = [
@@ -63,6 +110,7 @@
     '$mdDialog',
     '$mdMedia',
     '$location',
+    '$filter',
     litteraApp.modules.sales.factories.sales,
     litteraApp.modules.sales.imports.message,
     litteraApp.modules.sales.imports.authentication

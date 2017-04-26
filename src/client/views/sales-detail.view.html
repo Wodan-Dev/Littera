@@ -5,11 +5,91 @@
   <div flex="100"
        class="column-list">
     <div flex="100"
-         class="column column-all first-column"
+         style="width: 96%; box-sizing: border-box; margin-right: 2%;margin-left: 2%"
+         class="column column-all first-column basket"
+         layout-align="center center"
+         ng-if="!SalesCtrl.saleItems.items.length">
+      <div class="notice-content">
+        <h3 class="title">
+          Nenhum produto adicionado no carrinho!
+        </h3>
+      </div>
+    </div>
+    <div flex="100"
+         ng-if="SalesCtrl.saleItems.items.length"
+         style="width: 96%; box-sizing: border-box; margin-right: 2%;margin-left: 2%"
+         class="column column-all first-column basket"
          layout-align="center center">
-      <ul ng-repeat="r in SalesCtrl.saleItems.items">
-        <li><pre>{{r}}</pre></li>
-      </ul>
+      <div ng-repeat="r in SalesCtrl.saleItems.items"
+           layout="row"
+           layout-sm="column"
+           layout-xs="column"
+           class="basket-item">
+        <div class="item-image"
+             style="box-sizing: border-box;"
+             flex="none"
+             layout="row"
+             flex-sm="100"
+             flex-xs="100">
+          <div flex="none"
+               layout="column"
+               class="item-controllers">
+            <a ng-click="SalesCtrl.btnRemove(r._id)">
+              <i class="fa fa-times fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            </a>
+          </div>
+          <img layout-align="center center" ng-src="{{ r._id_book.cover_image  || './static/images/no-image.png' }}" />
+
+        </div>
+        <div flex="45"
+             flex-sm="100"
+             flex-xs="100"
+             layout="column"
+             style="box-sizing: border-box;"
+             class="item-content">
+          <div flex="100"
+            >
+            <h3 class="title">
+              <a ng-href="#/books/{{ r._id_book._id  }}"
+                 class="link-title-sale"
+                 ng-bind="r._id_book.title"></a>
+            </h3>
+          </div>
+          <div flex="100"
+               layout-margin>
+            <h4 class="title" ng-bind="r._id_book.subtitle"></h4>
+          </div>
+        </div>
+        <div flex="40"
+             flex-sm="100"
+             flex-xs="100"
+             layout="column"
+             class="item-price"
+             layout-margin
+             style="box-sizing: border-box;">
+          <md-slider-container
+            flex
+            ng-show="r._id_book.prices.length">
+            <span>{{SalesCtrl.getMinPrice(r._id_book.prices) |currency:''}}</span>
+            <md-slider flex
+                       min="{{SalesCtrl.getMinPrice(r._id_book.prices)}}"
+                       max="{{SalesCtrl.getSugPrice(r._id_book.prices)}}"
+                       ng-model="r.value"
+                       md-discrete
+                       aria-label="red"
+                       class="md-primary"
+                       id="red-slider">
+            </md-slider>
+            <span>{{SalesCtrl.getSugPrice(r._id_book.prices) |currency:''}}</span>
+          </md-slider-container>
+          <md-slider-container flex ng-show="!r._id_book.prices.length">
+            <p>Gratuito</p>
+          </md-slider-container>
+        </div>
+      </div>
+      <div class="column column-all more-data">
+        <a class="btn btn-primary full" ng-click="SalesCtrl.btnCheckOut()">Finalizar Compra</a>
+      </div>
     </div>
   </div>
 </div>

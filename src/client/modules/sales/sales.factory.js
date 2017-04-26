@@ -47,11 +47,16 @@
       return request._post(litteraApp.modules.sales.routes.sales, sale);
     }
 
+    function removeFromBasket(idSale, idBook) {
+      return request._delete(litteraApp.modules.sales.routes.sales+'/' + idSale + '/books/'+idBook);
+    }
+
     return {
       getSale: getSale,
       createSale: createSale,
       addToBasket: addToBasket,
-      getCurrentSale: getCurrentSale
+      getCurrentSale: getCurrentSale,
+      removeFromBasket: removeFromBasket
     };
   }
 

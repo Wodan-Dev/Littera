@@ -209,6 +209,26 @@ function removeBook(req, res) {
     });
 }
 
+
+function finalize(req, res) {
+  let sale = {
+    _id: req.params.id || ''
+  };
+/*
+  salesModel.validateId(sale._id)
+    .then(function (rIdSale) {
+
+
+      return salesModel.removeItem(saleItem);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, saleItem, err);
+    });*/
+}
+
 /**
  * Method Pay in route /pay
  * Call Paypal API to post a payment

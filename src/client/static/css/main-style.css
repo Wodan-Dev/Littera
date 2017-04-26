@@ -413,8 +413,6 @@ header .nav-user {
   color: #555555;
 }
 
-
-
 .notice-options {
   height: 2.5rem;/* 40px */
   box-sizing: border-box;
@@ -440,7 +438,6 @@ header .nav-user {
   font-size: .8em;
   color: rgb(120,120,120);
 }
-
 
 .shop-image-box {
   position: relative;
@@ -486,6 +483,7 @@ header .nav-user {
   padding: .625rem;/* 10px */
   box-sizing: border-box;
 }
+
 .stars {
   cursor: pointer;
 }
@@ -545,6 +543,95 @@ header .nav-user {
   box-sizing: border-box;
 }
 
+.basket {
+  /*background: beige;*/
+  padding: 1.25rem;
+  box-sizing: border-box;
+}
+
+.basket .basket-item {
+  /*background: #f1b8e7;*/
+  padding-top: .625rem;
+  padding-bottom: .625rem;
+  border-bottom: solid .0625rem /* 1px */ #DADADA;
+}
+
+.basket .basket-item .item-image {
+  /*background: greenyellow;*/
+
+  /*height: 15rem; *//* 240px; */
+  /*width: 100%;
+  z-index: -1;
+  display: block;
+  transition: all 300ms ease;*/
+}
+
+.basket .basket-item .item-image img {
+  /*height: 15rem;*//* 240px */
+  max-width: 9rem;
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+}
+
+.basket .basket-item .item-content {
+  /*background: olive;*/
+}
+
+
+.basket .basket-item .item-content h3 {
+  padding: .9375rem /*15px*/ .625rem /* 10px */ .9375rem /*15px*/ .625rem; /*15px*/
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+.link-title-sale {
+  color: #555555;
+  font-size: 1.3rem;
+  font-weight: 500;
+  transition: all 300ms ease;
+}
+
+.link-title-sale:hover {
+  color: #009688;/*#1F9963;*/
+}
+
+.basket .basket-item .item-content h3.title {
+  margin-bottom: 1rem;
+  text-align: left;
+  height: auto;
+}
+
+.basket .basket-item .item-content h4.title {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: left;
+  height: auto;
+  color: #555555;
+}
+
+.basket .basket-item .item-content p.price {
+  font-size: 1.1rem;
+  text-align: left;
+  line-height: 1.35rem;
+  color: #555555;
+}
+
+.basket .basket-item .item-price {
+
+}
+
+.basket .basket-item .item-controllers {
+
+}
+
+.basket .basket-item .item-controllers a {
+  line-height: 9.375rem;
+  padding: .625rem;
+}
+
+
 
 @media only screen and (max-width: 950px) {
   .column-half {
@@ -590,6 +677,9 @@ header .nav-user {
   .column-little {
     width: 48%;
     margin: 1%;
+  }
+  .basket {
+    padding: 0;
   }
 }
 
