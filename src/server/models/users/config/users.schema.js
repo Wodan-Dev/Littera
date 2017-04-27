@@ -152,7 +152,8 @@ const usersUpdateSchema = schema({
   dob: models.dateField(false),
   average_stars: models.numberField(true).min(0).max(5),
   acepted_terms: models.numberField(true).min(0).max(1),
-  payment: models.stringField(false)
+  payment: models.stringField(false),
+  choices: models.nestedArray(false, choicesSchema.choicesCreateSchema)
 });
 
 /**

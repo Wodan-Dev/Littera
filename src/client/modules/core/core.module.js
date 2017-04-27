@@ -19,6 +19,9 @@
         name: 'liFileInput'
       }
     },
+    filters: {
+      titleCase: 'titleCase'
+    },
     imports: {
 
     }

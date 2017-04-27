@@ -31,6 +31,25 @@
           </div>
         </div>
 
+        <md-chips ng-model="UsersCtrl.lstKeyWords"
+                  md-autocomplete-snap
+                  md-transform-chip="UsersCtrl.transformChip($chip)"
+                  md-require-match flex>
+          <md-autocomplete flex
+                           md-selected-item="student"
+                           md-search-text="searchText"
+                           md-items="item in UsersCtrl.querySearch(searchText)"
+                           md-item-text="item"
+                           placeholder="Preferências">
+            <span md-highlight-text="searchText">{{ item }}</span>
+          </md-autocomplete>
+          <md-chip-template>
+                    <span>
+                        <strong>{{$chip}}</strong><em></em>
+                    </span>
+          </md-chip-template>
+        </md-chips>
+
 
 
         <div class="form-group"

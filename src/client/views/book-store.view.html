@@ -43,7 +43,7 @@
           <div class="tiny-chip">
             <md-chips ng-model="r.keywords" readonly="true" md-removable="false">
               <md-chip-template style="padding: 0">
-                <span style="font-size: .75rem">{{$chip.content}}</span>
+                <span style="font-size: .75rem">{{$chip.content|titleCase}}</span>
               </md-chip-template>
             </md-chips>
           </div>

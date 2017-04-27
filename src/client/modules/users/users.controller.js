@@ -11,7 +11,8 @@
                      usersFactory,
                      message,
                      authentication,
-                     has_error) {
+                     has_error,
+                     request) {
     var vm = this;
     let changedImage = false;
 
@@ -71,6 +72,10 @@
       { desc:'31', id: 31 }
     ];
 
+    vm.allTags = [];
+    vm.lstKeyWords = [];
+    vm.filterSelected = true;
+
     vm.selectedGender = vm.cbeGender[0];
     vm.selectedDay = vm.cbeDays[0];
     vm.selectedMonth = vm.cbeMonths[0];
@@ -85,11 +90,50 @@
       acepted_terms: false,
       cover_image: '',
       img_data: '',
-      payment: ''
+      payment: '',
+      choices: []
     };
 
+    function loadTags() {
+      request._get('/tags')
+        .then(function (data) {
+          data.data.data.map(function (tag) {
+            vm.allTags.push(tag.tag);
+          });
+        });
+    }
+
     vm.init = function () {
+      loadTags();
       loadData();
+    };
+
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+
+      return function filterFn(contact) {
+        return (contact.toLowerCase().indexOf(lowercaseQuery) !== -1);
+      };
+
+    }
+
+    vm.querySearch = function (criteria) {
+      return criteria ? vm.allTags.filter(createFilterFor(criteria)) : [];
+    };
+
+    vm.transformChip = function (chip) {
+      if (!vm.allTags.filter(createFilterFor(chip)).length) {
+        vm.allTags.push(chip);
+        request._post('/tags', { tag: chip})
+          .then(function () {
+
+          })
+          .catch(function () {
+
+          });
+      }
+
+      return chip;
     };
 
     $scope.setFile = function(element) {
@@ -133,9 +177,13 @@
             average_stars: data.data.data.average_stars.toString() || '',
             acepted_terms: terms ? '1' : '0',
             cover_image: vm.user.cover_image || '',
-            payment: vm.user.payment || ''
-
+            payment: vm.user.payment || '',
+            choices: []
           };
+
+          vm.lstKeyWords.map(function (item) {
+            usr.choices.push({ content: item });
+          });
 
           if (usr.cover_image) {
             usr.cover_image = $rootScope.BASEURLS.BASE_API +
@@ -231,6 +279,12 @@
           vm.user.cover_image = data.data.data.cover_image + '?' + new Date().getTime();
           vm.user.payment = data.data.data.payment;
           vm.user.username = '@' + data.data.data.username;
+          vm.user.choices = [];
+
+          data.data.data.choices.map(function (item) {
+            vm.lstKeyWords.push(item.content);
+          });
+
         })
         .catch(function () {
 
@@ -248,7 +302,8 @@
     litteraApp.modules.users.factories.users,
     litteraApp.modules.users.imports.message,
     litteraApp.modules.users.imports.authentication,
-    litteraApp.modules.users.imports.has_error
+    litteraApp.modules.users.imports.has_error,
+    litteraApp.modules.users.imports.request
   ];
 
   angular.module(litteraApp.modules.users.name)

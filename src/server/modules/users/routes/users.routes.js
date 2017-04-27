@@ -140,7 +140,8 @@ function put(req, res) {
     average_stars: (req.body.average_stars || '0').toString(),
     acepted_terms: (req.body.acepted_terms || '0').toString(),
     cover_image: req.body.cover_image || '',
-    payment: req.body.payment || ''
+    payment: req.body.payment || '',
+    choices: req.body.choices || []
   };
 
   usersModel.validateUpdate(user)
