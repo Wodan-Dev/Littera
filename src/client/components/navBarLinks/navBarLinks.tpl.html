@@ -21,9 +21,9 @@
 
   </div>
   <ul ng-show="$ctrl.User._id!=='-'">
-    <li><a ng-href="#/users/{{ $ctrl.User.username }}">Perfil</a></li>
-    <li><a href="#/following">Seguindo</a></li>
-    <li><a href="#/followers">Seguidores</a></li>
+    <li><a ng-href="#/user/{{ $ctrl.User.username }}">Perfil</a></li>
+    <li><a ng-href="#/user/{{ $ctrl.User.username }}?tab=3">Seguindo</a></li>
+    <li><a ng-href="#/user/{{ $ctrl.User.username }}?tab=4">Seguidores</a></li>
   </ul>
   <div class="divisor"
        ng-show="$ctrl.User._id!=='-'">

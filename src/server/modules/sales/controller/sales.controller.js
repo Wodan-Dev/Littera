@@ -12,6 +12,7 @@
 const core = require('../../../modules/core');
 const uid = require('uid-safe').sync;
 const salesModel = require('../../../models/sales/sales.model');
+const libraryModel = require('../../../models/users/library.model');
 const validator = core.validator;
 
 /**
@@ -28,12 +29,18 @@ function generateTransactionId(sale) {
   });
 }
 
-function validateBook(idSale, idBook) {
+function validateBook(idSale, idBook, idUser) {
   return new Promise(function (resolve, reject) {
     salesModel.alreadyInBasket(idSale, idBook)
       .then(function (item) {
         if (item)
           throw 'Livro já adicionado.';
+        return libraryModel.alreadyInLibrary(idUser, idBook);
+
+      })
+      .then(function (book) {
+        if (book)
+          throw 'Esse livro já está na sua biblioteca :)';
 
         resolve(idSale);
       })

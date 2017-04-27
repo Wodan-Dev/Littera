@@ -16,6 +16,7 @@
     authentication) {
     var vm = this;
     vm.saleItems = [];
+    let loggedUser = {};
 
     vm.init = function () {
       vm.saleItems = [];
@@ -65,11 +66,10 @@
     };
 
     function loadData() {
-      let idUser = '';
       authentication.credential()
         .then(function (data) {
-          idUser = data.data.data._id;
-          return salesFactory.getCurrentSale(idUser);
+          loggedUser = data.data.data;
+          return salesFactory.getCurrentSale(loggedUser._id);
         })
         .then(function (data) {
           return new Promise(function (resolve, reject) {
@@ -87,12 +87,10 @@
           });
         })
         .then(function (data) {
-          console.log(data);
           vm.saleItems = data;
 
         })
         .catch(function (err) {
-          console.log(err);
           if(err.data.data.err)
             message.notification('information', err.data.data.err);
         });
@@ -100,7 +98,19 @@
 
     vm.btnCheckOut = function () {
 
+      $rootScope.__showLoad = true;
+      salesFactory.finalize(vm.saleItems._id)
+        .then(function () {
+          $scope.$apply(function () {
+            message.notification('success', 'Compra concluida com sucesso!');
+            $location.path('/user/'+loggedUser.username);
+          });
+        })
+        .catch(function () {
+
+        });
     };
+
   }
 
   SalesCtrl.$inject = [

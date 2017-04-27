@@ -25,23 +25,34 @@ const checkField = core.validator.validator;
  * @param  {Object} choice choice object
  * @return {Promise}        Resolve/Reject
  */
-function insert(id, book) {
-  console.log(book);
+function insert(id, book, isArray) {
 
   let query = {
     _id: db.getObjectId(id)
   };
 
-  let data = {
-    $push: {
-      library: {
-        _id_book: book._id_book,
-        favorite: book.favorite,
-        date_saved: date.getDateUTC(),
-        visible: book.visible
+  let data = {};
+
+  if (isArray) {
+    data = {
+      $pushAll: {
+        library: book
       }
-    }
-  };
+    };
+  }
+  else {
+    data = {
+      $push: {
+        library: {
+          _id_book: book._id_book,
+          favorite: book.favorite,
+          date_saved: date.getDateUTC(),
+          visible: book.visible
+        }
+      }
+    };
+  }
+
 
   let opt = {
     upsert: false,
@@ -167,6 +178,23 @@ function findById(book) {
 }
 
 /**
+ * Check if book already in library
+ * @param  {ObjectId} idUser user id
+ * @param  {ObjectId} idBook book id
+ * @return {Promise}        Resolve/Reject
+ */
+function alreadyInLibrary(idUser, idBook) {
+  let query = {
+    _id: idUser,
+    'library._id_book': idBook
+  };
+
+  return usersModel
+    .findOne(query)
+    .exec();
+}
+
+/**
  * Validate create
  * @param  {Object} choice choice object
  * @return {Promise}      Resolve/Reject
@@ -209,5 +237,6 @@ module.exports = {
   remove: remove,
   list: list,
   listByUser: listByUser,
-  findById: findById
+  findById: findById,
+  alreadyInLibrary: alreadyInLibrary
 };

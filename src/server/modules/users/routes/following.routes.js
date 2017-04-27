@@ -12,6 +12,7 @@
 
 const core = require('../../core');
 const followingModel = require('../../../models/users/following.model');
+const followersModel = require('../../../models/users/followers.model');
 const usersModel = require('../../../models/users/users.model');
 const followingCtrl = require('../controller/following.controller');
 const http = core.http;
@@ -50,6 +51,9 @@ function post(req, res) {
     _id_user_follow: req.body._id_user_follow || ''
   };
 
+  let retVal = {};
+  let loggedId = '';
+
 
   validator.validateId(userFollow._id_user_follow)
     .then(function (rId) {
@@ -64,10 +68,15 @@ function post(req, res) {
       return followingCtrl.validateFollower(user._id, userFollow._id_user_follow);
     })
     .then(function (id) {
+      loggedId = id;
       return followingModel.insert(id, userFollow);
     })
     .then(function (result) {
-      http.render(res, result);
+      retVal = result;
+      return followersModel.insert(userFollow._id_user_follow, { _id_user_follow: loggedId } );
+    })
+    .then(function () {
+      http.render(res, retVal);
     })
     .catch(function (err) {
       renderError(res, err, err);
@@ -86,6 +95,8 @@ function remove(req, res) {
     _id_follow: req.params.id || ''
   };
 
+  let retVal = {};
+  let loggedId = '';
 
   validator.validateId(userFollow._id_follow)
     .then(function (rId) {
@@ -98,7 +109,14 @@ function remove(req, res) {
       return followingModel.remove(userFollow);
     })
     .then(function (result) {
-      http.render(res, result);
+      retVal = result;
+      return followersModel.remove({
+        _id: userFollow._id_follow,
+        _id_follow: userFollow._id
+      });
+    })
+    .then(function () {
+      http.render(res, retVal);
     })
     .catch(function (err) {
       renderError(res, err, err);

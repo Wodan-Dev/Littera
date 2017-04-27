@@ -51,12 +51,17 @@
       return request._delete(litteraApp.modules.sales.routes.sales+'/' + idSale + '/books/'+idBook);
     }
 
+    function finalize(idSale) {
+      return request._post(litteraApp.modules.sales.routes.sales+'/' + idSale + '/finalize/', {});
+    }
+
     return {
       getSale: getSale,
       createSale: createSale,
       addToBasket: addToBasket,
       getCurrentSale: getCurrentSale,
-      removeFromBasket: removeFromBasket
+      removeFromBasket: removeFromBasket,
+      finalize: finalize
     };
   }
 

@@ -99,6 +99,7 @@
         .then(function (data) {
 
           let saleItem = {
+            _id_user: idUser,
             _id_sale: data._id,
             _id_book: id,
             value: sugPrice
@@ -175,12 +176,7 @@
             vm.books.push(data.data[i]);
           }
 
-          console.log(vm.books);
-
-
-
           msnry.layout();
-
 
           if (t === vm.books.length)
             message.notification('information', 'No momento não temos mais livros pra apresentar :(');

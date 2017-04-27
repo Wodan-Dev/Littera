@@ -5,6 +5,7 @@
 (function (angular, litteraApp) {
   function UserDetailCtrl($scope,
                           $filter,
+                          $routeParams,
                           authentication,
                           request,
                           userData) {
@@ -24,6 +25,7 @@
     ];
 
     let usr = userData.data;
+
     vm.user = {
       _id: usr._id,
       name: usr.name,
@@ -51,6 +53,8 @@
           .then(function (data) {
             $scope.$apply(function () {
               vm.loggedUser = data.data.data;
+              if (($routeParams.tab) && ($routeParams.tab in [0, 1, 2, 3, 4]) )
+                vm.selectedTab = parseInt($routeParams.tab);
             });
           })
           .catch(function (err) {
@@ -80,6 +84,9 @@
         .then(function (data) {
           $scope.$apply(function () {
             vm.loggedUser = data.data.data;
+
+            let selectedUser = $filter('filter')(vm.user.followers, { '_id_user_follow._id' :  vm.loggedUser._id})[0];
+            vm.user.followers.splice(vm.user.followers.indexOf(selectedUser), 1);
           });
         })
         .catch(function (err) {
@@ -98,6 +105,12 @@
         .then(function (data) {
           $scope.$apply(function () {
             vm.loggedUser = data.data.data;
+
+            vm.user.followers.push({
+              _id: Math.floor(Math.random(0,1) * 99999999999999999).toString() + new Date().getTime(),
+              _id_user_follow: vm.loggedUser,
+              date_followed: moment()
+            });
           });
         })
         .catch(function (err) {
@@ -114,6 +127,7 @@
   UserDetailCtrl.$inject = [
     '$scope',
     '$filter',
+    '$routeParams',
     litteraApp.modules.users.imports.authentication,
     litteraApp.modules.users.imports.request,
     'userData'

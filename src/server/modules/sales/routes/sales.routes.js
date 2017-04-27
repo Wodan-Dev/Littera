@@ -9,6 +9,7 @@
 const core = require('../../core');
 const salesModel = require('../../../models/sales/sales.model');
 const salesCtrl = require('../controller/sales.controller');
+const libraryModel = require('../../../models/users/library.model');
 const http = core.http;
 const utils = core.utils;
 const renderError = core.http.renderError;
@@ -83,6 +84,7 @@ function postBook(req, res) {
 
   let saleItem = {
     _id_book: req.body._id_book || '',
+    _id_user: req.body._id_user || '',
     value: (req.body.value || '0').toString()
   };
 
@@ -93,12 +95,11 @@ function postBook(req, res) {
     })
     .then(function (rIdBook) {
       saleItem._id_book = rIdBook;
-      return salesCtrl.validateBook(_id_sale, saleItem._id_book);
+      return salesCtrl.validateBook(_id_sale, saleItem._id_book, saleItem._id_user);
     })
     .then(function () {
       return salesModel.validateItemCreate(saleItem);
     })
-
     .then(function (result) {
       return salesModel.insertItem(_id_sale, result.value);
     })
@@ -214,19 +215,42 @@ function finalize(req, res) {
   let sale = {
     _id: req.params.id || ''
   };
-/*
+
+  let saleItem = {};
+  let books = [];
+
   salesModel.validateId(sale._id)
     .then(function (rIdSale) {
+      sale._id = rIdSale;
+      return salesModel.findById(sale._id);
+    })
+    .then(function (result) {
+      saleItem = result;
 
+      for (var i = 0, len = saleItem.items.length; i < len; i++) {
+        books.push({
+          _id_book: saleItem.items[i]._id_book,
+          favorite: 0,
+          visible: 0
+        });
+      }
 
-      return salesModel.removeItem(saleItem);
+      return libraryModel.insert(saleItem._id_user, books, true);
+    })
+    .then(function () {
+      return salesModel.update(sale._id, {
+        _id_user: saleItem._id_user,
+        transaction_id: saleItem.transaction_id,
+        status: 2,
+        items: saleItem.items
+      });
     })
     .then(function (result) {
       http.render(res, result);
     })
     .catch(function (err) {
       renderError(res, saleItem, err);
-    });*/
+    });
 }
 
 /**
@@ -319,6 +343,7 @@ function router(express, auth) {
   routes.get('/user/:id', auth, getLastSale);
   routes.post('/', auth, post);
   routes.post('/pay', pay);
+  routes.post('/:id/finalize', finalize);
   routes.post('/books', auth, postBook);
   routes.put('/books', auth, putBook);
   routes.delete('/:id', auth, remove);
