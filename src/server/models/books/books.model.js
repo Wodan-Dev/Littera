@@ -187,6 +187,36 @@ function findByIdStore(id) {
       }
     },
     {
+      $project: {
+        '_id': 1,
+        'title': 1,
+        'subtitle': 1,
+        'synopsis': 1,
+        'percentage': 1,
+        'esbn': 1,
+        'date_published': 1,
+        'language': 1,
+        'average_star': 1,
+        'cover_image': 1,
+        'comments': 1,
+        'keywords': 1,
+        'rankings': {
+          _id_user: '$ranking_user._id',
+          username:  '$ranking_user.username',
+          name:  '$ranking_user.name',
+          email:  '$ranking_user.email',
+          followers:  '$ranking_user.followers',
+          following:  '$ranking_user.following',
+          cover_image:  '$ranking_user.cover_image',
+          reviews:  '$ranking_user.reviews',
+          _id:'$rankings._id',
+          comment: '$rankings.comment',
+          stars: '$rankings.stars'
+        },
+        'prices': 1
+      }
+    },
+    {
       $group:{
         _id: '$_id',
         title: {
@@ -223,19 +253,7 @@ function findByIdStore(id) {
           $first: '$prices'
         },
         rankings: {
-          $push: {
-            _id_user: '$ranking_user._id',
-            username:  '$ranking_user.username',
-            name:  '$ranking_user.name',
-            email:  '$ranking_user.email',
-            followers:  '$ranking_user.followers',
-            following:  '$ranking_user.following',
-            cover_image:  '$ranking_user.cover_image',
-            reviews:  '$ranking_user.reviews',
-            _id:'$rankings._id',
-            comment: '$rankings.comment',
-            stars: '$rankings.stars'
-          }
+          $push: '$rankings'
         }
 
       }
@@ -265,7 +283,7 @@ function findByIdStore(id) {
         'cover_image': 1,
         'comments': 1,
         'keywords': 1,
-        'rankings': 1,
+        'rankings':1,
         'prices': 1,
         'user._id': 1,
         'user.username': 1,

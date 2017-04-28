@@ -40,7 +40,8 @@
       request: litteraApp.core.services.request,
       message: litteraApp.core.services.messages,
       authentication: litteraApp.modules.auth.factories.authentication,
-      has_error: litteraApp.core.services.has_error
+      has_error: litteraApp.core.services.has_error,
+      salesFactory: litteraApp.modules.sales.factories.sales
     }
   };
 

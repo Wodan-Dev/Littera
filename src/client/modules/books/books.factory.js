@@ -47,11 +47,16 @@
       return request._post('/books', user);
     }
 
+    function saveRanking(ranking) {
+      return request._post('/books/rankings', ranking);
+    }
+
     return {
       getBooks: getBooks,
       getStoreBookById: getStoreBookById,
       updateImg: updateImg,
-      create: create
+      create: create,
+      saveRanking: saveRanking
     };
   }
 

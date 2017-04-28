@@ -48,10 +48,179 @@
        layout-margin
        flex-xs="100">
     <div flex="100"
+         style="border: none; padding:0"
          class="column column-all first-column"
-         layout-align="center center"
-         style="margin-top: .625rem">
-      <div layout="row"
+         layout-align="center center">
+      <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="Sinopse">
+            <md-content class="md-padding">
+              <div class="content-detail"
+                   ng-show="BooksCtrl.showSynopsis">
+                <h1 ng-bind="BooksCtrl.book.title"></h1>
+                <h3 ng-bind="BooksCtrl.book.subtitle"></h3>
+                <div class="content-divisor"><p>&#8226;&#8226;&#8226;</p></div>
+                <p ng-bind="BooksCtrl.book.synopsis"></p>
+
+              </div>
+            </md-content>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <p>
+                <i class="fa fa-star fa-lg" style="color: #00AB6B;" aria-hidden="true"></i>&nbsp;
+                {{ BooksCtrl.book.average_star }}
+              </p>
+            </md-tab-label>
+            <md-tab-body>
+              <md-content layout="column" class=" column column-all">
+                <md-list class="md-dense" flex
+                         style="border-bottom: solid .0625rem /* 1px */ #DADADA;">
+                  <md-list-item class="md-3-line" ng-repeat="r in [BooksCtrl.loggedUser]">
+                    <div layout="column"
+                         flex="100">
+                      <div flex="100"
+                           layout="row">
+                        <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}"
+                             class="md-avatar"
+                             alt="r.name" />
+                        <div class="md-list-item-text"
+                             layout="column"
+                             flex="100">
+                          <form
+                            class="form-container" novalidate
+                            layout="column"
+                            flex="100">
+                            <md-input-container>
+                              <md-select ng-model="BooksCtrl.ranking.stars" placeholder="Avaliação">
+                                <md-option ng-selected="true" ng-value="1">
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                </md-option>
+                                <md-option ng-value="2">
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                </md-option>
+                                <md-option ng-value="3">
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                </md-option>
+                                <md-option ng-value="4">
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                </md-option>
+                                <md-option ng-value="5">
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                                </md-option>
+                              </md-select>
+                            </md-input-container>
+                            <div class="form-group"  flex="90"
+                                 ng-class="{ 'has-error': BooksCtrl.hasError('comment') }">
+                              <input type="text"
+                                     ng-model="BooksCtrl.ranking.comment"
+                                     name="txtComment"
+                                     id="txtComment"
+                                     required="required"/>
+                              <label class="control-label"
+                                     ng-class="{ 'has-error': BooksCtrl.hasError('comment') }"
+                                     for="txtComment">Avaliar
+                              </label><i class="bar"></i>
+                              <p class="field-err" ng-if="BooksCtrl.hasError('comment')" >{{BooksCtrl.getErrorMessage('comment')}}</p>
+                            </div>
+                            <div style="margin-top: .625rem"
+                                 class="button-group">
+                              <a class="btn btn-primary"
+                                 style="width: 6.25rem"
+                                 ng-click="BooksCtrl.btnPostRanking()">
+                                Publicar
+                              </a>
+                            </div>
+                            <!--<md-input-container
+                              flex="90">
+                              <label>Avaliar</label>
+                              <textarea ng-model="BooksCtrl.ranking.comment"
+                                        rows="2"
+                                        required
+                                        md-select-on-focus></textarea>
+                              <div style="margin-top: .625rem">
+                                <a class="btn btn-primary"
+                                   style="width: 6.25rem"
+                                   ng-click="BooksCtrl.btnPostRanking()">
+                                  Publicar
+                                </a>
+                              </div>
+                            </md-input-container>-->
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                  </md-list-item>
+
+                </md-list>
+                <h5 ng-show="!BooksCtrl.book.rankings.length" class="md-padding md-title" >Ninguém avaliou ainda :/</h5>
+
+
+                <md-list class="md-dense" flex ng-show="BooksCtrl.book.rankings.length">
+                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.rankings"
+                                style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
+                                layout-padding>
+                    <div layout="column"
+                         flex="100">
+                      <div flex="100"
+                           layout="row">
+                        <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}"
+                             class="md-avatar"
+                             alt="r.name" />
+                        <div class="md-list-item-text"
+                             flex="100"
+                             layout="column"
+                             layout-padding>
+                          <a ng-href="#/user/{{ r.username }}" class="name link-default">{{ r.name }}</a>
+                          <a ng-href="#/user/{{ r.username }}" class="username link-tiny">@{{ r.username }}</a>
+                          <a class="stars name"
+                             style="color: #00AB6B; font-size:.8rem"
+                             ng-click="BooksCtrl.btnShowStars()">
+                            <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                            {{ r.stars }}
+                          </a>
+                        </div>
+                      </div>
+                      <div layout-padding  flex="100" class="content">
+                        <p>{{ r.comment }}</p>
+                      </div>
+                    </div>
+
+                  </md-list-item>
+
+                </md-list>
+              </md-content>
+
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <p>
+                <i class="fa fa-comments fa-lg" style="color: #00AB6B;" aria-hidden="true"></i>&nbsp;
+                {{ BooksCtrl.book.comments.length }}
+              </p>
+            </md-tab-label>
+            <md-tab-body>
+              <md-content layout="column" class=" column column-all">
+                <h5 ng-show="!BooksCtrl.book.comments.length" class="md-padding md-title" >Ninguém Comentou ainda :/</h5>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+
+      <!--<div layout="row"
            layout-margin>
         <div flex="33"
              flex-xs="40"
@@ -64,7 +233,7 @@
           </a>
           <a class="btn btn-primary-inverted"
              style="width: 6.25rem"
-             href="#">
+             ng-click="BooksCtrl.btnAddBasket(BooksCtrl.book._id, BooksCtrl.getSugPrice(BooksCtrl.book.prices))">
             Comprar
           </a>
         </div>
@@ -82,9 +251,9 @@
             {{ BooksCtrl.book.comments.length }}
           </a>
         </div>
-      </div>
+      </div>-->
     </div>
-    <div flex="100"
+    <!--<div flex="100"
          style="margin-top: .625rem">
       <div class="content-detail"
            ng-show="BooksCtrl.showSynopsis">
@@ -124,34 +293,34 @@
             </md-list-item>
 
           </md-list>
-        </md-content>
-        <!--<ul >
-          <li ng-repeat="r in BooksCtrl.book.rankings">
-            <div class="column column-all"
-                 style="width: 100%">
-              <div class="notice-user">
-                <div class="user-picture" style="margin-top: .625rem">
-                  <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}">
-                </div>
-                <div class="user-name">
-                  <a ng-href="#/users/{{ r._id_user }}" class="name link-default">{{ r.name }}</a>
-                  <a ng-href="#/users/{{ r._id_user }}" class="username link-tiny">@{{ r.username }}</a>
-                  <a class="stars name"
-                     ng-click="BooksCtrl.btnShowStars()">
-                    <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-                    {{ r.stars }}
-                  </a>
-                </div>
-              </div>
-              <div class="content">
-                <p>{{ r.comment }}</p>
-              </div>
+        </md-content>-->
+    <!--<ul >
+      <li ng-repeat="r in BooksCtrl.book.rankings">
+        <div class="column column-all"
+             style="width: 100%">
+          <div class="notice-user">
+            <div class="user-picture" style="margin-top: .625rem">
+              <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}">
             </div>
-          </li>
-        </ul>-->
-      </div>
-    </div>
+            <div class="user-name">
+              <a ng-href="#/users/{{ r._id_user }}" class="name link-default">{{ r.name }}</a>
+              <a ng-href="#/users/{{ r._id_user }}" class="username link-tiny">@{{ r.username }}</a>
+              <a class="stars name"
+                 ng-click="BooksCtrl.btnShowStars()">
+                <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+                {{ r.stars }}
+              </a>
+            </div>
+          </div>
+          <div class="content">
+            <p>{{ r.comment }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>-->
   </div>
+</div>
+</div>
 </div>
 
 <!--<div class="feed-full" ng-init="BooksCtrl.init()">
