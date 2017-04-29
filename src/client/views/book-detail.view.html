@@ -9,9 +9,7 @@
          class="column column-all"
          layout-align="center center">
       <div class="notice-image">
-        <a ng-href="#/books/{{ r._id_book._id }}">
-          <img ng-src="{{ BooksCtrl.book.cover_image   || './static/images/no-image.png' }}">
-        </a>
+        <img ng-src="{{ BooksCtrl.book.cover_image   || './static/images/no-image.png' }}">
       </div>
       <div class="notice-user"
            layout="row">

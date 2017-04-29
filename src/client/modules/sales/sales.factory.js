@@ -51,8 +51,8 @@
       return request._delete(litteraApp.modules.sales.routes.sales+'/' + idSale + '/books/'+idBook);
     }
 
-    function finalize(idSale) {
-      return request._post(litteraApp.modules.sales.routes.sales+'/' + idSale + '/finalize/', {});
+    function finalize(idSale, items) {
+      return request._post(litteraApp.modules.sales.routes.sales+'/' + idSale + '/finalize/', items);
     }
 
     return {

@@ -216,6 +216,10 @@ function finalize(req, res) {
     _id: req.params.id || ''
   };
 
+  let items = req.body.items || [];
+
+  console.log(items);
+
   let saleItem = {};
   let books = [];
 
@@ -242,7 +246,7 @@ function finalize(req, res) {
         _id_user: saleItem._id_user,
         transaction_id: saleItem.transaction_id,
         status: 2,
-        items: saleItem.items
+        items: items
       });
     })
     .then(function (result) {

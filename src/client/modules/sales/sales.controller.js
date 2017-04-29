@@ -23,8 +23,6 @@
       loadData();
     };
 
-    vm.percentage = 0;
-
     function getActualPrice(prices) {
 
       let off = $filter('filter')(prices, { active:1, type: 1 });
@@ -88,7 +86,6 @@
         })
         .then(function (data) {
           vm.saleItems = data;
-
         })
         .catch(function (err) {
           if(err.data.data.err)
@@ -97,18 +94,31 @@
     }
 
     vm.btnCheckOut = function () {
+      if (vm.saleItems.items.length > 0) {
 
-      $rootScope.__showLoad = true;
-      salesFactory.finalize(vm.saleItems._id)
-        .then(function () {
-          $scope.$apply(function () {
-            message.notification('success', 'Compra concluida com sucesso!');
-            $location.path('/user/'+loggedUser.username);
+        let items = [];
+        vm.saleItems.items.map(function (item) {
+          items.push({
+            _id:item._id,
+            _id_book: item._id_book,
+            value: item.value
           });
-        })
-        .catch(function () {
-
         });
+
+        salesFactory.finalize(vm.saleItems._id, { items: items } )
+          .then(function () {
+            $scope.$apply(function () {
+              message.notification('success', 'Compra concluída com sucesso!');
+              $location.url('/user/'+loggedUser.username + '?tab=1');
+            });
+          })
+          .catch(function () {
+
+          });
+      }
+      else
+        message.notification('warning', 'Nenhum produto adicionado no carrinho!');
+
     };
 
   }

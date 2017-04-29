@@ -80,8 +80,12 @@
 
           });
       }
-      else
+      else {
         loadData();
+        if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
+          vm.selectedTab = parseInt($routeParams.tab);
+      }
+
 
 
     };
