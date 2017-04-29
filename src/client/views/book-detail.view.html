@@ -39,6 +39,11 @@
             </md-chips>
           </div>
         </div>
+        <div flex="100"
+             layout="column">
+          <p style="margin: .625rem 0 .3rem .3rem; font-size: .8rem">Concluído <b>{{ BooksCtrl.book.percentage }}%</b></p>
+          <md-progress-linear md-mode="determinate" value="{{BooksCtrl.book.percentage}}"></md-progress-linear>
+        </div>
       </div>
     </div>
   </div>
@@ -302,176 +307,11 @@
         </md-tabs>
 
       </md-content>
-
-      <!--<div layout="row"
-           layout-margin>
-        <div flex="33"
-             flex-xs="40"
-             layout-margin
-             layout="column">
-          <a class="btn btn-primary"
-             style="width: 6.25rem"
-             href="#/">
-            Loja
-          </a>
-          <a class="btn btn-primary-inverted"
-             style="width: 6.25rem"
-             ng-click="BooksCtrl.btnAddBasket(BooksCtrl.book._id, BooksCtrl.getSugPrice(BooksCtrl.book.prices))">
-            Comprar
-          </a>
-        </div>
-        <div flex="33" >
-          <a class="stars time"
-             ng-click="BooksCtrl.btnShowStars()">
-            <i class="fa fa-star fa-lg" style="color: #00AB6B;" aria-hidden="true"></i>
-            {{ BooksCtrl.book.average_star }}
-          </a>
-        </div>
-        <div flex="33" >
-          <a class="stars time"
-             ng-click="BooksCtrl.btnShowStars()">
-            <i class="fa fa-comments fa-lg" style="color: #00AB6B;" aria-hidden="true"></i>
-            {{ BooksCtrl.book.comments.length }}
-          </a>
-        </div>
-      </div>-->
     </div>
-    <!--<div flex="100"
-         style="margin-top: .625rem">
-      <div class="content-detail"
-           ng-show="BooksCtrl.showSynopsis">
-        <h1 ng-bind="BooksCtrl.book.title"></h1>
-        <h3 ng-bind="BooksCtrl.book.subtitle"></h3>
-        <div class="content-divisor"><p>&#8226;&#8226;&#8226;</p></div>
-        <p ng-bind="BooksCtrl.book.synopsis"></p>
-
-      </div>
-      <div class="content-detail"
-           style="padding: 0; margin: 0"
-           ng-show="BooksCtrl.showStars">
-        <md-content  class="column column-all">
-          <md-list class="md-dense" flex>
-            <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.rankings">
-              <div layout="column">
-                <div flex="100"
-                     layout="row">
-                  <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}"
-                       class="md-avatar"
-                       alt="r.name" />
-                  <div class="md-list-item-text" layout="column">
-                    <a ng-href="#/user/{{ r.username }}" class="name link-default">{{ r.name }}</a>
-                    <a ng-href="#/user/{{ r.username }}" class="username link-tiny">@{{ r.username }}</a>
-                    <a class="stars name"
-                       ng-click="BooksCtrl.btnShowStars()">
-                      <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-                      {{ r.stars }}
-                    </a>
-                  </div>
-                </div>
-                <div  flex="100" class="content">
-                  <p>{{ r.comment }}</p>
-                </div>
-              </div>
-
-            </md-list-item>
-
-          </md-list>
-        </md-content>-->
-    <!--<ul >
-      <li ng-repeat="r in BooksCtrl.book.rankings">
-        <div class="column column-all"
-             style="width: 100%">
-          <div class="notice-user">
-            <div class="user-picture" style="margin-top: .625rem">
-              <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}">
-            </div>
-            <div class="user-name">
-              <a ng-href="#/users/{{ r._id_user }}" class="name link-default">{{ r.name }}</a>
-              <a ng-href="#/users/{{ r._id_user }}" class="username link-tiny">@{{ r.username }}</a>
-              <a class="stars name"
-                 ng-click="BooksCtrl.btnShowStars()">
-                <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-                {{ r.stars }}
-              </a>
-            </div>
-          </div>
-          <div class="content">
-            <p>{{ r.comment }}</p>
-          </div>
-        </div>
-      </li>
-    </ul>-->
   </div>
 </div>
 </div>
 </div>
-
-<!--<div class="feed-full" ng-init="BooksCtrl.init()">
-
-  <div class="full-notice-user">
-    <div class="user-picture">
-      <img ng-src="{{ BooksCtrl.book.user.cover_image  || './static/images/no-image.png' }}">
-    </div>
-    <div class="user-name">
-      <a ng-href="#/users/{{ BooksCtrl.book.user._id }}" class="name link-default">{{ BooksCtrl.book.user.name }}</a>
-      <a ng-href="#/users/{{ BooksCtrl.book.user._id }}" class="username link-tiny">@{{ BooksCtrl.book.user.username }}</a>
-      <a class="stars time"
-        ng-click="BooksCtrl.btnShowStars()">
-        <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-        {{ BooksCtrl.book.average_star }}
-      </a>
-      <a class="btn btn-primary-inverted"
-         style="width: 6.25rem"
-         href="#">
-        Comprar
-      </a>
-    </div>
-    <div class="user-options">
-      <a href="#">
-        <i class="fa fa-bookmark fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
-  <div class="full-notice-image">
-    <img ng-src="{{ BooksCtrl.book.cover_image  || './static/images/no-image.png' }}">
-  </div>
-  <div class="content"
-    ng-show="BooksCtrl.showSynopsis">
-    <h1 ng-bind="BooksCtrl.book.title"></h1>
-    <h3>A historia de um hobbit preguiçoso que queria um segundo café da manhã</h3>
-    <div class="content-divisor"><p>&#8226;&#8226;&#8226;</p></div>
-    <p ng-bind="BooksCtrl.book.synopsis"></p>
-
-  </div>
-  <div class="content"
-       style="padding: 0"
-       ng-show="BooksCtrl.showStars">
-    <ul >
-      <li ng-repeat="r in BooksCtrl.book.rankings">
-        <div class="column column-all"
-             style="width: 100%">
-          <div class="notice-user">
-            <div class="user-picture" style="margin-top: .625rem">
-              <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}">
-            </div>
-            <div class="user-name">
-              <a ng-href="#/users/{{ r._id_user }}" class="name link-default">{{ r.name }}</a>
-              <a ng-href="#/users/{{ r._id_user }}" class="username link-tiny">@{{ r.username }}</a>
-              <a class="stars name"
-                 ng-click="BooksCtrl.btnShowStars()">
-                <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
-                {{ r.stars }}
-              </a>
-            </div>
-          </div>
-          <div class="content">
-            <p>{{ r.comment }}</p>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</div>-->
-
-
-
+<script type="text/javascript">
+  $('textarea').autogrow();
+</script>

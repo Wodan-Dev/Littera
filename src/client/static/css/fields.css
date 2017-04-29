@@ -65,6 +65,8 @@ fieldset {
   height: 1.9rem;
 }
 .form-group textarea {
+  overflow:hidden;
+  height: auto;
   resize: none;
 }
 .form-group select {
@@ -109,6 +111,7 @@ fieldset {
 .form-group input,
 .form-group textarea {
   display: block;
+  height: auto;
   background: none;
   padding: 0.125rem 0.125rem 0.0625rem;
   font-size: 1rem;

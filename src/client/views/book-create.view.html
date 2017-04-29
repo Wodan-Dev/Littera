@@ -58,7 +58,7 @@
                  required="required"/>
           <label class="control-label"
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('title') }"
-                 for="txtTitle">Titulo
+                 for="txtTitle">Título
           </label><i class="bar"></i>
           <p class="field-err" ng-if="BookCreateCtrl.hasError('title')" >{{BookCreateCtrl.getErrorMessage('title')}}</p>
         </div>
@@ -72,18 +72,18 @@
                  required="required"/>
           <label class="control-label"
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('subtitle') }"
-                 for="txtSubTitle">SubTitulo
+                 for="txtSubTitle">Subtítulo
           </label><i class="bar"></i>
           <p class="field-err" ng-if="BookCreateCtrl.hasError('subtitle')" >{{BookCreateCtrl.getErrorMessage('subtitle')}}</p>
         </div>
 
         <div class="form-group"
              ng-class="{ 'has-error': BookCreateCtrl.hasError('synopsis') }">
-          <input type="text"
+          <textarea type="text"
                  ng-model="BookCreateCtrl.book.synopsis"
                  name="txtSynopsis"
                  id="txtSynopsis"
-                 required="required"/>
+                 required="required"></textarea>
           <label class="control-label"
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('synopsis') }"
                  for="txtSynopsis">Sinopse
@@ -128,7 +128,7 @@
 
 
 
-        <div class="form-group">
+        <!--<div class="form-group">
           <select ng-options="o.desc for o in BookCreateCtrl.cbeStatus"
                   ng-model="BookCreateCtrl.selectedStatus"
                   name="cbeStatus"
@@ -137,7 +137,7 @@
           <label class="control-label"
                  for="cbeStatus">Status</label>
           <i class="bar"></i>
-        </div>
+        </div>-->
 
         <div class="form-group">
           <select ng-options="o.desc for o in BookCreateCtrl.cbeVisible"
@@ -167,3 +167,6 @@
        ng-include="'views/trends.view.html'">
   </div>
 </div>
+<script type="text/javascript">
+  $('textarea').autogrow();
+</script>

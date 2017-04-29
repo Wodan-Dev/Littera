@@ -17,6 +17,7 @@
     "$": false,
     "noty": false,
     "moment": false,
-    "Masonry": false
+    "Masonry": false,
+    "jQuery": false
   }
 }

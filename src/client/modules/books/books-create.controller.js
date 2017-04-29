@@ -197,10 +197,10 @@
       { desc: 'Vietnamese', id: 'vi' }
     ];
 
-    vm.cbeStatus = [
+    /*vm.cbeStatus = [
       { desc:'Completo', id: 0 },
       { desc:'Em Progresso', id: 1 }
-    ];
+    ];*/
 
     vm.cbeVisible = [
       { desc:'Público', id: 0 },
@@ -208,7 +208,7 @@
       { desc:'Oculto', id: 2 }
     ];
 
-    vm.selectedStatus = vm.cbeStatus[0];
+    /*vm.selectedStatus = vm.cbeStatus[0];*/
     vm.selectedVisible = vm.cbeVisible[0];
     vm.selectedI18n = vm.cbei18n[104];
 
@@ -295,7 +295,7 @@
             subtitle: vm.book.subtitle,
             synopsis: vm.book.synopsis,
             content: 'vm.book.content',
-            status: vm.selectedStatus.id,
+            status: (vm.book.percentage === 100 ? 0 : 1).toString(),
             percentage: vm.book.percentage,
             esbn: vm.book.esbn,
             date_published: vm.book.date_published,

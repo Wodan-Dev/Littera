@@ -27,4 +27,5 @@ globals:
   noty: true
   moment: true
   Masonry: true
+  jQuery: true
 

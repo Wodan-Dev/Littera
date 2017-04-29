@@ -63,14 +63,15 @@
       <div class="notice-options"
            layout="row">
         <div flex="50">
-          <a ng-href="#/books/{{ r._id_book._id }}"
+          <a ng-href="#/books/{{ r._id_book._id }}?tab=2"
              class="btn-like">
             <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
             {{ r._id_book.average_star }}
           </a>
         </div>
         <div flex="50">
-          <a href="#" class="btn-comment">
+          <a ng-href="#/books/{{ r._id_book._id }}?tab=3"
+             class="btn-comment">
             <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
             {{ r._id_book.comments.length }}
           </a>
