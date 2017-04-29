@@ -53,6 +53,65 @@ function update(id, book) {
     .exec();
 }
 
+
+function updateAverageStars(id) {
+
+  let query = {
+    _id: db.getObjectId(id.toString())
+  };
+
+  let opt = {
+    upsert: false,
+    new: true
+  };
+
+  let averageStars = 0;
+
+  return booksModel.aggregate([
+    {
+      $match:
+      {
+        _id: db.getObjectId(id.toString())
+      }
+    },
+    {
+      $unwind: {
+        path: '$rankings',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $group:
+      {
+        _id: '$_id',
+        total: { $sum: '$rankings.stars' },
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $project: {
+        _id: '$_id',
+        average_stars: {
+          $divide: [ '$total', '$count' ]
+        }
+
+      }
+    }
+  ])
+    .exec()
+    .then(function (avg) {
+      averageStars = avg[0].average_stars;
+      return booksModel.findById(id).exec();
+    })
+    .then(function (book) {
+      book.average_star = parseFloat((averageStars > 5 ? 5 : averageStars).toFixed(1));
+
+      return booksModel
+        .findOneAndUpdate(query, book, opt)
+        .exec();
+    });
+}
+
 /**
  * Delete in DB
  * @param  {ObjectId} id Id which has to be deleted
@@ -211,7 +270,8 @@ function findByIdStore(id) {
           reviews:  '$ranking_user.reviews',
           _id:'$rankings._id',
           comment: '$rankings.comment',
-          stars: '$rankings.stars'
+          stars: '$rankings.stars',
+          created_at: '$rankings.created_at'
         },
         'prices': 1
       }
@@ -254,6 +314,98 @@ function findByIdStore(id) {
         },
         rankings: {
           $push: '$rankings'
+        }
+
+      }
+    },
+    {
+      $unwind: {
+        path: '$comments',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'comments._id_user',
+        foreignField: '_id',
+        as: 'comments_user'
+      }
+    },
+    {
+      $unwind: {
+        path: '$comments_user',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $project: {
+        '_id': 1,
+        'title': 1,
+        'subtitle': 1,
+        'synopsis': 1,
+        'percentage': 1,
+        'esbn': 1,
+        'date_published': 1,
+        'language': 1,
+        'average_star': 1,
+        'cover_image': 1,
+        'comments': {
+          _id_user: '$comments_user._id',
+          username:  '$comments_user.username',
+          name:  '$comments_user.name',
+          email:  '$comments_user.email',
+          followers:  '$comments_user.followers',
+          following:  '$comments_user.following',
+          cover_image:  '$comments_user.cover_image',
+          reviews:  '$comments_user.reviews',
+          _id:'$comments_user._id',
+          content: '$comments.content',
+          created_at: '$comments.created_at'
+        },
+        'keywords': 1,
+        'rankings': 1,
+        'prices': 1
+      }
+    },
+    {
+      $group:{
+        _id: '$_id',
+        title: {
+          $first: '$title'
+        },
+        synopsis: {
+          $first: '$synopsis'
+        },
+        percentage: {
+          $first: '$percentage'
+        },
+        esbn: {
+          $first: '$esbn'
+        },
+        date_published: {
+          $first: '$date_published'
+        },
+        language: {
+          $first: '$language'
+        },
+        average_star: {
+          $first: '$average_star'
+        },
+        cover_image: {
+          $first: '$cover_image'
+        },
+        comments: {
+          $push: '$comments'
+        },
+        keywords: {
+          $first: '$keywords'
+        },
+        prices: {
+          $first: '$prices'
+        },
+        rankings: {
+          $first: '$rankings'
         }
 
       }
@@ -449,5 +601,6 @@ module.exports = {
   findById: findById,
   findByIdStore: findByIdStore,
   findPrice: findPrice,
+  updateAverageStars: updateAverageStars,
   model: booksModel
 };

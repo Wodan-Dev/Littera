@@ -53,7 +53,7 @@
           .then(function (data) {
             $scope.$apply(function () {
               vm.loggedUser = data.data.data;
-              if (($routeParams.tab) && ($routeParams.tab in [0, 1, 2, 3, 4]) )
+              if (($routeParams.tab) && ([0, 1, 2, 3, 4].indexOf(parseInt($routeParams.tab)) > -1))
                 vm.selectedTab = parseInt($routeParams.tab);
             });
           })

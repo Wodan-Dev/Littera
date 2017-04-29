@@ -8,6 +8,7 @@
  */
 const core = require('../../core');
 const rankingsModel = require('../../../models/books/rankings.model');
+const booksModel = require('../../../models/books/books.model');
 const http = core.http;
 const validator = core.validator;
 const renderError = core.http.renderError;
@@ -85,6 +86,9 @@ function post(req, res) {
     })
     .then(function(result) {
       return rankingsModel.insert(id_book, result.value);
+    })
+    .then(function() {
+      return booksModel.updateAverageStars(id_book);
     })
     .then(function (result) {
       http.render(res, result);

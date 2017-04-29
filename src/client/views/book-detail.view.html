@@ -51,8 +51,21 @@
          style="border: none; padding:0"
          class="column column-all first-column"
          layout-align="center center">
+
+
+
       <md-content>
-        <md-tabs md-dynamic-height md-border-bottom>
+        <md-tabs
+          md-selected="BooksCtrl.selectedTab"
+          md-dynamic-height
+          md-border-bottom>
+          <!-- tab:store start-->
+          <md-tab label="Loja"
+            ng-click="BooksCtrl.btnBackToStore()">
+          </md-tab>
+          <!-- tab:store end-->
+
+          <!-- tab:synopsis start-->
           <md-tab label="Sinopse">
             <md-content class="md-padding">
               <div class="content-detail"
@@ -61,10 +74,12 @@
                 <h3 ng-bind="BooksCtrl.book.subtitle"></h3>
                 <div class="content-divisor"><p>&#8226;&#8226;&#8226;</p></div>
                 <p ng-bind="BooksCtrl.book.synopsis"></p>
-
               </div>
             </md-content>
           </md-tab>
+          <!-- tab:synopsis end-->
+
+          <!-- tab:ranking start-->
           <md-tab>
             <md-tab-label>
               <p>
@@ -75,6 +90,7 @@
             <md-tab-body>
               <md-content layout="column" class=" column column-all">
                 <md-list class="md-dense" flex
+                         ng-show="BooksCtrl.isLogged()"
                          style="border-bottom: solid .0625rem /* 1px */ #DADADA;">
                   <md-list-item class="md-3-line" ng-repeat="r in [BooksCtrl.loggedUser]">
                     <div layout="column"
@@ -122,14 +138,13 @@
                             </md-input-container>
                             <div class="form-group"  flex="90"
                                  ng-class="{ 'has-error': BooksCtrl.hasError('comment') }">
-                              <input type="text"
-                                     ng-model="BooksCtrl.ranking.comment"
-                                     name="txtComment"
-                                     id="txtComment"
-                                     required="required"/>
+                              <textarea name="txtRanking"
+                                        id="txtRanking"
+                                        ng-model="BooksCtrl.ranking.comment"
+                                        required="required"></textarea>
                               <label class="control-label"
                                      ng-class="{ 'has-error': BooksCtrl.hasError('comment') }"
-                                     for="txtComment">Avaliar
+                                     for="txtRanking">Escreva sua avaliação
                               </label><i class="bar"></i>
                               <p class="field-err" ng-if="BooksCtrl.hasError('comment')" >{{BooksCtrl.getErrorMessage('comment')}}</p>
                             </div>
@@ -141,21 +156,6 @@
                                 Publicar
                               </a>
                             </div>
-                            <!--<md-input-container
-                              flex="90">
-                              <label>Avaliar</label>
-                              <textarea ng-model="BooksCtrl.ranking.comment"
-                                        rows="2"
-                                        required
-                                        md-select-on-focus></textarea>
-                              <div style="margin-top: .625rem">
-                                <a class="btn btn-primary"
-                                   style="width: 6.25rem"
-                                   ng-click="BooksCtrl.btnPostRanking()">
-                                  Publicar
-                                </a>
-                              </div>
-                            </md-input-container>-->
                           </form>
                         </div>
                       </div>
@@ -168,7 +168,7 @@
 
 
                 <md-list class="md-dense" flex ng-show="BooksCtrl.book.rankings.length">
-                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.rankings"
+                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.rankings|orderBy:'-created_at':false"
                                 style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
                                 layout-padding>
                     <div layout="column"
@@ -185,8 +185,7 @@
                           <a ng-href="#/user/{{ r.username }}" class="name link-default">{{ r.name }}</a>
                           <a ng-href="#/user/{{ r.username }}" class="username link-tiny">@{{ r.username }}</a>
                           <a class="stars name"
-                             style="color: #00AB6B; font-size:.8rem"
-                             ng-click="BooksCtrl.btnShowStars()">
+                             style="color: #00AB6B; font-size:.8rem">
                             <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
                             {{ r.stars }}
                           </a>
@@ -204,6 +203,9 @@
 
             </md-tab-body>
           </md-tab>
+          <!-- tab:ranking end-->
+
+          <!-- tab:comments start-->
           <md-tab>
             <md-tab-label>
               <p>
@@ -213,11 +215,94 @@
             </md-tab-label>
             <md-tab-body>
               <md-content layout="column" class=" column column-all">
+                <md-list class="md-dense" flex
+                         ng-show="BooksCtrl.isLogged()"
+                         style="border-bottom: solid .0625rem /* 1px */ #DADADA;">
+                  <md-list-item class="md-3-line" ng-repeat="r in [BooksCtrl.loggedUser]">
+                    <div layout="column"
+                         flex="100">
+                      <div flex="100"
+                           layout="row">
+                        <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}"
+                             class="md-avatar"
+                             alt="r.name" />
+                        <div class="md-list-item-text"
+                             layout="column"
+                             flex="100">
+                          <form
+                            class="form-container" novalidate
+                            layout="column"
+                            flex="100">
+                            <div class="form-group"  flex="90"
+                                 ng-class="{ 'has-error': BooksCtrl.hasError('content') }">
+                              <textarea name="txtComment"
+                                        id="txtComment"
+                                        ng-model="BooksCtrl.comments.content"
+                                        required="required"></textarea>
+                              <label class="control-label"
+                                     ng-class="{ 'has-error': BooksCtrl.hasError('content') }"
+                                     for="txtComment">Escreva seu comentário
+                              </label><i class="bar"></i>
+                              <p class="field-err" ng-if="BooksCtrl.hasError('content')" >{{BooksCtrl.getErrorMessage('content')}}</p>
+                            </div>
+                            <div style="margin-top: .625rem"
+                                 class="button-group">
+                              <a class="btn btn-primary"
+                                 style="width: 6.25rem"
+                                 ng-click="BooksCtrl.btnPostComment()">
+                                Comentar
+                              </a>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                  </md-list-item>
+
+                </md-list>
+
                 <h5 ng-show="!BooksCtrl.book.comments.length" class="md-padding md-title" >Ninguém Comentou ainda :/</h5>
-              </md-content>
+
+
+                <md-list class="md-dense" flex ng-show="BooksCtrl.book.comments.length">
+                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.comments|orderBy:'-created_at':false"
+                                style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
+                                layout-padding>
+                    <div layout="column"
+                         flex="100">
+                      <div flex="100"
+                           layout="row">
+                        <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}"
+                             class="md-avatar"
+                             alt="r.name" />
+                        <div class="md-list-item-text"
+                             flex="100"
+                             layout="column"
+                             layout-padding>
+                          <a ng-href="#/user/{{ r.username }}" class="name link-default">{{ r.name }}</a>
+                          <a ng-href="#/user/{{ r.username }}" class="username link-tiny">@{{ r.username }}</a>
+                        </div>
+                      </div>
+                      <div layout-padding  flex="100" class="content">
+                        <p>{{ r.content }}</p>
+                      </div>
+                    </div>
+
+                  </md-list-item>
+
+                </md-list>
             </md-tab-body>
           </md-tab>
+          <!-- tab:comments end-->
+
+          <!-- tab:buy start-->
+          <md-tab label="Comprar"
+                  ng-click="BooksCtrl.btnAddBasket(BooksCtrl.book._id, BooksCtrl.getSugPrice(BooksCtrl.book.prices))">
+          </md-tab>
+          <!-- tab:buy end-->
         </md-tabs>
+
       </md-content>
 
       <!--<div layout="row"

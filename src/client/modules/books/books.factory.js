@@ -51,12 +51,17 @@
       return request._post('/books/rankings', ranking);
     }
 
+    function saveComment(comment) {
+      return request._post('/books/comments', comment);
+    }
+
     return {
       getBooks: getBooks,
       getStoreBookById: getStoreBookById,
       updateImg: updateImg,
       create: create,
-      saveRanking: saveRanking
+      saveRanking: saveRanking,
+      saveComment: saveComment
     };
   }
 

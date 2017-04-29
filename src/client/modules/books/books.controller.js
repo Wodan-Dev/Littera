@@ -8,6 +8,7 @@
     $rootScope,
     $routeParams,
     $filter,
+    $location,
     booksFactory,
     message,
     authentication,
@@ -20,6 +21,16 @@
       comment: '',
       stars: 1
     };
+
+    vm.comments = {
+      content: ''
+    };
+
+
+    vm.selectedTab = 1;
+
+
+
     vm.readonly = false;
     vm.err = false;
 
@@ -50,15 +61,28 @@
       }
     };
 
-    vm.init = function () {
-      authentication.credential()
-        .then(function (data) {
-          vm.loggedUser = data.data.data;
-          loadData();
-        })
-        .catch(function () {
+    vm.isLogged = function () {
+      return authentication.isAuthenticated();
+    };
 
-        });
+    vm.init = function () {
+
+
+      if (vm.isLogged()) {
+        authentication.credential()
+          .then(function (data) {
+            vm.loggedUser = data.data.data;
+            loadData();
+            if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
+              vm.selectedTab = parseInt($routeParams.tab);
+          })
+          .catch(function () {
+
+          });
+      }
+      else
+        loadData();
+
 
     };
 
@@ -88,6 +112,7 @@
     };
 
     vm.btnAddBasket = function (id, sugPrice) {
+      vm.selectedTab = 1;
       salesFactory.getCurrentSale(vm.loggedUser._id)
         .then(function (data) {
           return new Promise(function (resolve, reject) {
@@ -132,71 +157,126 @@
 
     };
 
-    vm.btnShowStars = function() {
-      if (vm.book.rankings[0].username) {
-        vm.showSynopsis = !vm.showSynopsis;
-        vm.showStars = !vm.showStars;
-      }
-      else
-        message.notification('information', 'Ninguém fez comentários ainda :/');
-
-
-    };
-
     vm.btnPostRanking = function () {
+      if(vm.isLogged()) {
+        has_error.clearError();
+        $rootScope.__showLoad = true;
+        let ran = {
+          _id_book: vm.book._id,
+          _id_user: vm.loggedUser._id,
+          comment: vm.ranking.comment,
+          stars: vm.ranking.stars
+        };
+        booksFactory.saveRanking(ran)
+          .then(function (data) {
 
-      has_error.clearError();
-      $rootScope.__showLoad = true;
-      let ran = {
-        _id_book: vm.book._id,
-        _id_user: vm.loggedUser._id,
-        comment: vm.ranking.comment,
-        stars: vm.ranking.stars
-      };
-      booksFactory.saveRanking(ran)
-        .then(function () {
-          $scope.$apply(function () {
-            let newRanking = {
-              'stars' : ran.stars,
-              'comment' : ran.comment,
-              '_id_user' : ran._id_user,
-              '_id' : Math.floor(Math.random(0,1) * 99999999999999999).toString() + new Date().getTime(),
-              'username' : vm.loggedUser.username,
-              'name' : vm.loggedUser.name,
-              'email' : vm.loggedUser.email,
-              'followers' : [],
-              'following' : [],
-              'cover_image' : vm.loggedUser.cover_image,
-              'reviews' : []
-            };
-            vm.ranking = {
-              comment: '',
-              stars: 1
-            };
-
-            vm.book.rankings.unshift(newRanking);
-
-            $rootScope.__showLoad = false;
-          });
-        })
-        .catch(function (data) {
-          if (data.data) {
-            let lst = data.data.data.err;
             $scope.$apply(function () {
-              if (lst instanceof Array) {
-                for (var i = 0, len = lst.length; i < len; i++) {
-                  has_error.addError(lst[i].field, lst[i].message);
-                }
-              }
-              else {
-                has_error.addError(data.data.data.value, data.data.data.err);
-              }
+
+              vm.book.average_star = data.data.data.average_star;
+              let newRanking = {
+                'stars': ran.stars,
+                'comment': ran.comment,
+                '_id_user': ran._id_user,
+                '_id': Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime(),
+                'username': vm.loggedUser.username,
+                'name': vm.loggedUser.name,
+                'email': vm.loggedUser.email,
+                'followers': [],
+                'following': [],
+                'cover_image': vm.loggedUser.cover_image,
+                'reviews': [],
+                'created_at': moment()
+              };
+              vm.ranking = {
+                comment: '',
+                stars: 1
+              };
+
+              vm.book.rankings.unshift(newRanking);
 
               $rootScope.__showLoad = false;
-
             });
-          }
-        });
+          })
+          .catch(function (data) {
+            if (data.data) {
+              let lst = data.data.data.err;
+              $scope.$apply(function () {
+                if (lst instanceof Array) {
+                  for (var i = 0, len = lst.length; i < len; i++) {
+                    has_error.addError(lst[i].field, lst[i].message);
+                  }
+                }
+                else {
+                  has_error.addError(data.data.data.value, data.data.data.err);
+                }
+
+                $rootScope.__showLoad = false;
+
+              });
+            }
+          });
+      }
+    };
+
+    vm.btnPostComment = function () {
+      if(vm.isLogged()) {
+        has_error.clearError();
+        $rootScope.__showLoad = true;
+        let com = {
+          _id_book: vm.book._id,
+          _id_user: vm.loggedUser._id,
+          content: vm.comments.content
+        };
+        booksFactory.saveComment(com)
+          .then(function () {
+
+            $scope.$apply(function () {
+
+              let newComment = {
+                'content': com.content,
+                '_id_user': com._id_user,
+                '_id': Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime(),
+                'username': vm.loggedUser.username,
+                'name': vm.loggedUser.name,
+                'email': vm.loggedUser.email,
+                'followers': [],
+                'following': [],
+                'cover_image': vm.loggedUser.cover_image,
+                'reviews': [],
+                'created_at': moment()
+              };
+              vm.comments = {
+                content: ''
+              };
+
+              vm.book.comments.unshift(newComment);
+
+              $rootScope.__showLoad = false;
+            });
+          })
+          .catch(function (data) {
+            if (data.data) {
+              let lst = data.data.data.err;
+              $scope.$apply(function () {
+                if (lst instanceof Array) {
+                  for (var i = 0, len = lst.length; i < len; i++) {
+                    has_error.addError(lst[i].field, lst[i].message);
+                  }
+                }
+                else {
+                  has_error.addError(data.data.data.value, data.data.data.err);
+                }
+
+                $rootScope.__showLoad = false;
+
+              });
+            }
+          });
+      }
+    };
+
+    vm.btnBackToStore = function () {
+      $location.path('/');
     };
 
 
@@ -229,6 +309,7 @@
     '$rootScope',
     '$routeParams',
     '$filter',
+    '$location',
     litteraApp.modules.books.factories.books,
     litteraApp.modules.books.imports.message,
     litteraApp.modules.books.imports.authentication,
