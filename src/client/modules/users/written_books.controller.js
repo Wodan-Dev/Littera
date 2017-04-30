@@ -3,7 +3,14 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function WrittenBooksCtrl($rootScope, $scope, $location, request, authentication, writtenBooksFactory, message) {
+  function WrittenBooksCtrl(
+    $rootScope,
+    $scope,
+    $location,
+    request,
+    authentication,
+    writtenBooksFactory,
+    message) {
     var vm = this;
     vm.actualPage = 1;
     vm.lstWrittenBooks = [];
@@ -40,20 +47,19 @@
 
     function updateList(data) {
       let t = vm.lstWrittenBooks.length;
-      console.log('data');
-      console.log(data);
-      if (data.data) {
-        for (let i = 0, len = data.data.length; i < len; i++) {
-          vm.lstWrittenBooks.push(data.data[i]);
+      $scope.$apply(function () {
+        if (data.data) {
+          for (let i = 0, len = data.data.length; i < len; i++) {
+            vm.lstWrittenBooks.push(data.data[i]);
+          }
+
+          if (t === vm.lstWrittenBooks.length && !loading)
+            message.notification('information', 'No momento não temos mais livros para apresentar :(');
+
+
+          loading = false;
         }
-
-        if (t === vm.lstWrittenBooks.length && !loading)
-          message.notification('information', 'No momento não temos mais livros para apresentar :(');
-
-
-        loading = false;
-      }
-
+      });
     }
   }
 

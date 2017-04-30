@@ -16,7 +16,12 @@
       };
     },
     BOOK_CREATE: function() {
-      return '/book/create';
+      return '/book';
+    },
+    BOOK_UPDATE: function() {
+      return function (id) {
+        return '/book/' + id;
+      };
     },
     STORE: function () {
       return function (page) {

@@ -153,10 +153,10 @@ const booksUpdateSchema = schema({
   language: models.stringField(true),
   cover_image:  models.stringField(false),
   average_star: models.numberField().min(0).max(5),
-  prices: models.nestedArray(false, pricesSchema.pricesUpdateSchema),
+  prices: models.nestedArray(false, pricesSchema.pricesCreateSchema),
   forums: models.nestedArray(false, forumsSchema.forumsUpdateSchema),
   rankings: models.nestedArray(false, rankingsSchema.rankingsUpdateSchema),
-  keywords: models.nestedArray(false, keywordsSchema.keywordsUpdateSchema),
+  keywords: models.nestedArray(false, keywordsSchema.keywordsCreateSchema),
   comments: models.nestedArray(false, commentsSchema.commentsUpdateSchema)
 });
 

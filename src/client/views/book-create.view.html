@@ -150,6 +150,70 @@
           <i class="bar"></i>
         </div>
 
+        <fieldset>
+          <legend>Preço</legend>
+          <br/>
+          <md-checkbox md-no-ink aria-label="Gratuito" ng-model="BookCreateCtrl.noPrice" class="md-primary">
+            Gratuito
+          </md-checkbox>
+
+          <md-input-container
+            ng-show="!BookCreateCtrl.noPrice"
+            flex="100"
+            layout="row">
+            <div flex="100" >
+              <span >Sugerido: {{ BookCreateCtrl.price.suggested|currency:'R$ '}}</span>
+              <md-slider flex class="md-primary"
+                         ng-model="BookCreateCtrl.price.suggested"
+                         step="1" min="0" max="999" aria-label="Sugerido"></md-slider>
+            </div>
+          </md-input-container>
+
+          <md-input-container
+            ng-show="!BookCreateCtrl.noPrice"
+            flex="100"
+            layout="row">
+            <div flex="100" >
+              <span >Mínimo: {{ BookCreateCtrl.price.minimum|currency:'R$ '}}</span>
+              <md-slider flex class="md-primary"
+                         ng-model="BookCreateCtrl.price.minimum"
+                         step="1" min="0" max="{{BookCreateCtrl.price.suggested}}" aria-label="Mínimo"></md-slider>
+            </div>
+          </md-input-container>
+          <br/>
+          <md-checkbox
+            ng-show="!BookCreateCtrl.noPrice"
+            md-no-ink aria-label="Gratuito"
+            ng-model="BookCreateCtrl.noOff"
+            class="md-primary">
+            Promoção
+          </md-checkbox>
+          <md-input-container
+            ng-show="BookCreateCtrl.noOff"
+            flex="100"
+            layout="row">
+            <div flex="100" >
+              <span >Sugerido: {{ BookCreateCtrl.promotion.suggested|currency:'R$ '}}</span>
+              <md-slider flex class="md-primary"
+                         ng-model="BookCreateCtrl.promotion.suggested"
+                         step="1" min="0" aria-label="Sugerido"></md-slider>
+            </div>
+          </md-input-container>
+
+          <md-input-container
+            ng-show="BookCreateCtrl.noOff"
+            flex="100"
+            layout="row">
+            <div flex="100" >
+              <span >Mínimo: {{ BookCreateCtrl.promotion.minimum|currency:'R$ '}}</span>
+              <md-slider flex class="md-primary"
+                         ng-model="BookCreateCtrl.promotion.minimum"
+                         step="1" min="0" max="{{BookCreateCtrl.promotion.suggested}}" aria-label="Mínimo"></md-slider>
+            </div>
+          </md-input-container>
+
+        </fieldset>
+
         <div class="button-group">
           <button
             class="btn full btn-info-inverted"

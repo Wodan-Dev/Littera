@@ -19,7 +19,8 @@
       home: litteraApp.URLS.HOME(),
       books: litteraApp.URLS.BOOKS(),
       storeDetail: litteraApp.URLS.STOREDETAIL(),
-      bookCreate: litteraApp.URLS.BOOK_CREATE()
+      bookCreate: litteraApp.URLS.BOOK_CREATE(),
+      bookUpdate: litteraApp.URLS.BOOK_UPDATE()
     },
     factories: {
       books: 'booksFactory'

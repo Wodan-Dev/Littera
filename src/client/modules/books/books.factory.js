@@ -28,6 +28,17 @@
       ).get({}).$promise;
     }
 
+    function getBookById(id) {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.books.routes.books(id), {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
     function getStoreBookById(id) {
       return $resource(BASEURLS.BASE_API +
         litteraApp.modules.books.routes.storeDetail(id), {},
@@ -41,6 +52,10 @@
 
     function updateImg(url, file) {
       return request._upload(url, file);
+    }
+
+    function update(book) {
+      return request._put('/books', book);
     }
 
     function create(user) {
@@ -57,9 +72,11 @@
 
     return {
       getBooks: getBooks,
+      getBookById: getBookById,
       getStoreBookById: getStoreBookById,
       updateImg: updateImg,
       create: create,
+      update: update,
       saveRanking: saveRanking,
       saveComment: saveComment
     };

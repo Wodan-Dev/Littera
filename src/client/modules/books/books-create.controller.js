@@ -8,13 +8,29 @@
     $rootScope,
     $routeParams,
     $location,
+    $filter,
     booksFactory,
     message,
     authentication,
     has_error,
-    request) {
+    request,
+    bookData) {
     var vm = this;
     let changedImage = false;
+    vm.noPrice = true;
+    vm.noOff = false;
+
+    vm.price = {
+      minimum: 0,
+      suggested: 0
+    };
+
+    vm.promotion = {
+      minimum: 0,
+      suggested: 0
+    };
+
+
     vm.book = {
       _id: '-',
       _id_user: '',
@@ -41,6 +57,7 @@
     vm.allTags = [];
     vm.lstKeyWords = [];
     vm.filterSelected = true;
+    vm.cover_url = '';
 
     vm.cbei18n = [
       { desc: 'Albanian (Albania)', id: 'sq_AL' },
@@ -197,11 +214,6 @@
       { desc: 'Vietnamese', id: 'vi' }
     ];
 
-    /*vm.cbeStatus = [
-      { desc:'Completo', id: 0 },
-      { desc:'Em Progresso', id: 1 }
-    ];*/
-
     vm.cbeVisible = [
       { desc:'Público', id: 0 },
       { desc:'Seguidores', id: 1 },
@@ -224,6 +236,68 @@
 
     vm.init = function () {
       loadTags();
+
+      if ($routeParams.id) {
+        let a = $routeParams.id;
+
+        bookData.data.keywords.map(function (item) {
+          vm.lstKeyWords.push(item.content);
+        });
+
+        vm.selectedVisible = $filter('filter')(vm.cbeVisible, { id: bookData.data.visible })[0];
+        vm.selectedI18n = $filter('filter')(vm.cbei18n, { id: bookData.data.language })[0];
+
+
+
+        vm.cover_url = bookData.data.cover_image;
+        vm.noPrice = bookData.data.prices.length === 0;
+
+        if (bookData.data.prices.length > 0) {
+          let priceDef = $filter('filter')(bookData.data.prices, { type: 0 });
+          if (priceDef.length) {
+            vm.price = {
+              minimum: priceDef[0].price_min,
+              suggested: priceDef[0].price_sug
+            };
+          }
+          priceDef = $filter('filter')(bookData.data.prices, { type: 1 });
+          if (priceDef.length) {
+            vm.noOff = true;
+            vm.promotion = {
+              minimum: priceDef[0].price_min,
+              suggested: priceDef[0].price_sug
+            };
+          }
+
+        }
+
+
+
+
+        vm.book = {
+          _id: bookData.data._id,
+          _id_user: bookData.data._id_user,
+          title: bookData.data.title,
+          subtitle: bookData.data.subtitle,
+          synopsis: bookData.data.synopsis,
+          content: bookData.data.content,
+          status: bookData.data.status,
+          percentage: bookData.data.percentage,
+          esbn: bookData.data.esbn,
+          date_published: bookData.data.date_published,
+          visible: bookData.data.visible,
+          language: bookData.data.language,
+          average_star: bookData.data.average_star,
+          prices: bookData.data.prices,
+          forums: bookData.data.forums,
+          rankings: bookData.data.rankings,
+          keywords: bookData.data.keywords,
+          comments: bookData.data.comments,
+          cover_image: bookData.data.cover_image
+        };
+
+
+      }
     };
 
     function createFilterFor(query) {
@@ -287,6 +361,9 @@
       authentication.credential()
         .then(function (data) {
           username = data.data.data.username;
+
+
+
           vm.book.img_data = vm.book.cover_image;
 
           bookNew = {
@@ -301,25 +378,59 @@
             date_published: vm.book.date_published,
             visible: vm.selectedVisible.id,
             language: vm.selectedI18n.id,
-            average_star: 0,
+            average_star: vm.book.average_star,
             prices: [],
-            forums: [],
-            rankings: [],
+            forums: vm.book.forums,
+            rankings: vm.book.rankings,
             keywords: [],
-            comments: []
-
+            comments: vm.book.comments,
+            cover_image: vm.cover_url
           };
+
+          if (!vm.noPrice) {
+            bookNew.prices.push({
+              price_min: vm.price.minimum,
+              price_sug: vm.price.suggested,
+              active: 1,
+              type: 0
+            });
+
+            if(vm.noOff) {
+              bookNew.prices.push({
+                price_min: vm.promotion.minimum,
+                price_sug: vm.promotion.suggested,
+                active: 1,
+                type: 1
+              });
+            }
+          }
+
+
+
+
+
+
           vm.lstKeyWords.map(function (item) {
             bookNew.keywords.push({ content: item });
           });
 
-          idImg = Math.floor(Math.random(0,1) * 99999999999999999).toString() + new Date().getTime();
+
+          if (!$routeParams.id) {
+            idImg = Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime();
+
+            bookNew.cover_image = $rootScope.BASEURLS.BASE_API +
+            '/upload/books/' + idImg;
+          }
+          else {
+            let place = [Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime()];
+            idImg = (bookNew.cover_image.match(/[\d]+/) || place)[0];
+          }
 
 
-          bookNew.cover_image = $rootScope.BASEURLS.BASE_API +
-          '/upload/books/' + idImg;
-
-
+          if ($routeParams.id) {
+            bookNew._id = $routeParams.id;
+            return booksFactory.update(bookNew);
+          }
 
           return booksFactory.create(bookNew);
         })
@@ -387,11 +498,13 @@
     '$rootScope',
     '$routeParams',
     '$location',
+    '$filter',
     litteraApp.modules.books.factories.books,
     litteraApp.modules.books.imports.message,
     litteraApp.modules.books.imports.authentication,
     litteraApp.modules.books.imports.has_error,
-    litteraApp.modules.books.imports.request
+    litteraApp.modules.books.imports.request,
+    'bookData'
   ];
 
   angular.module(litteraApp.modules.books.name)
