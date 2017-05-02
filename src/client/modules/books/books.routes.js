@@ -42,7 +42,46 @@
             bookData: function ($route, booksFactory) {
               return booksFactory.getBookById($route.current.params.id|| '-');
             }
+          }
+        })
+        .when(litteraApp.modules.books.routes.bookReading(':id'), {
+          controller:  litteraApp.modules.books.controllers.bookReading.name,
+          controllerAs:  litteraApp.modules.books.controllers.bookReading.nameas,
+          templateUrl: litteraApp.modules.books.templates.bookReading.url,
+          access: {
+            requiresLogin: true
           },
+          resolve: {
+            bookData: function ($route, authenticationFactory, booksFactory) {
+              return new Promise(function (resolve, reject) {
+                let userLogged = {};
+                let book = {};
+                authenticationFactory.credential()
+                  .then(function (data) {
+                    userLogged = data.data.data;
+                    return booksFactory.getBookById($route.current.params.id|| '-');
+                  })
+                  .then(function (data) {
+                    console.log('book.content');
+                    console.log(data);
+                    book = data.data;
+                    return resolve({
+                      user: userLogged,
+                      book: book
+                    });
+                  })
+                  .catch(function (err) {
+                    reject(err);
+                  });
+              });
+
+
+
+
+
+
+            }
+          }
         });
     });
 

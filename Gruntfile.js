@@ -94,6 +94,9 @@ module.exports = function(grunt) {
         src: [
           'Gruntfile.js',
           '<%= appcfg.src %>/server/{,*/}{,*/}{,*/}{,*/}*.js',
+          '!<%= appcfg.src %>/client/static/js/epub.min.js',
+          '!<%= appcfg.src %>/client/static/js/zip.min.js',
+          '!<%= appcfg.src %>/client/static/reader/**',
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
         ]
       },
@@ -104,7 +107,10 @@ module.exports = function(grunt) {
       },
       client: {
         src: [
-          '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
+          '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js',
+          '!<%= appcfg.src %>/client/static/js/epub.min.js',
+          '!<%= appcfg.src %>/client/static/js/zip.min.js',
+          '!<%= appcfg.src %>/client/static/reader/**',
         ]
       }
     },
@@ -117,7 +123,10 @@ module.exports = function(grunt) {
         src: [
           'Gruntfile.js',
           '<%= appcfg.src %>/server/{,*/}{,*/}{,*/}{,*/}*.js',
-          '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
+          '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js',
+          '!<%= appcfg.src %>/client/static/js/epub.min.js',
+          '!<%= appcfg.src %>/client/static/js/zip.min.js',
+          '!<%= appcfg.src %>/client/static/reader/**'
         ]
       },
       api: {
@@ -127,7 +136,12 @@ module.exports = function(grunt) {
       },
       client: {
         src: [
-          '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
+          '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js',
+          '!<%= appcfg.src %>/client/static/reader',
+          '!<%= appcfg.src %>/client/static/js/epub.min.js',
+          '!<%= appcfg.src %>/client/static/js/zip.min.js',
+          '!<%= appcfg.src %>/client/static/reader/**.js'
+
         ]
       }
     }

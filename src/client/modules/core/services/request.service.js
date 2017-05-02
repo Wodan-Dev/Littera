@@ -14,12 +14,28 @@
       };
     }
 
+    function getHeaderBinary() {
+      return {
+       // 'Content-Type': 'application/epub+zip',
+        'x-access-token': localsave.getValueLS(LOCALNAME.USER_TOKEN)
+      };
+    }
+
     function request(method, url, data) {
       return $http({
         method: method,
         url: url,
         data: data,
         headers: getHeader()
+      });
+    }
+
+    function requestBinary(method, url, data) {
+      return $http({
+        method: method,
+        url: url,
+        data: data,
+        headers: getHeaderBinary()
       });
     }
 
@@ -34,6 +50,22 @@
             reject(data);
           });
       });
+    }
+
+    function _getBinary(url, data) {
+      return new Promise(function(resolve, reject) {
+        let uri = url;
+        requestBinary('GET', uri, data || {})
+          .then(function (data) {
+            resolve(data);
+          })
+          .catch(function (data) {
+            reject(data);
+          });
+      });
+
+
+
     }
 
     function _post(url, data) {
@@ -115,6 +147,7 @@
 
     return {
       _get: _get,
+      _getBinary: _getBinary,
       _post: _post,
       _put: _put,
       _delete: _delete,

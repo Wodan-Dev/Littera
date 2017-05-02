@@ -54,6 +54,10 @@
       return request._upload(url, file);
     }
 
+    function getBookContent(url) {
+      return request._getBinary(url);
+    }
+
     function update(book) {
       return request._put('/books', book);
     }
@@ -74,6 +78,7 @@
       getBooks: getBooks,
       getBookById: getBookById,
       getStoreBookById: getStoreBookById,
+      getBookContent: getBookContent,
       updateImg: updateImg,
       create: create,
       update: update,

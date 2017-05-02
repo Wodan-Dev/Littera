@@ -14,12 +14,15 @@ const fs = require('fs');
 const multer = require('multer');
 const config = core.config;
 const utils = core.utils;
+const http = core.http;
+const validator = core.validator;
+const renderError = core.http.renderError;
+const HTTP_STATUS = core.http.HTTP_STATUS;
+
 
 const storageUser = multer.diskStorage({
   destination: function (req, file, cb) {
     let basePath = config.getUploadPath() + '/users/' + req.params.username;
-    console.log('basePath');
-    console.log(basePath);
     fs.mkdir(basePath, function(err) {
       console.log('err');
       console.log(err);
@@ -105,6 +108,28 @@ function postBookPic(req, res) {
 
 }
 
+function getBookContent(req, res) {
+  let basePath = config.getUploadPath() + '/books/' + req.params.id;
+
+
+
+  fs.readFile(basePath + '/content.epub', function (err, data) {
+    if (err) {
+      renderError(res, {},
+        validator.invalidResult('content', 'Arquivo não encontrado'),
+        HTTP_STATUS.HTTP_404_NOT_FOUND);
+    }
+    else {
+
+      //res.writeHead(200, { 'Content-Type': 'application/epub+zip' });
+      //res.setHeader('content-type', 'application/epub+zip');
+      res.send(basePath + '/content.epub');
+      //res.end(data);
+    }
+  });
+}
+
+
 /**
  * Create Instance to router object
  * @param  {Object} express Express
@@ -118,11 +143,17 @@ function router(express, auth) {
     multer({ storage: storageUser }).single('image'),
     auth,
     postUserPic);
+
   routes.get('/books/:id', getBookPic);
   routes.post('/books/:id',
     multer({ storage: storageBook }).single('image'),
     auth,
     postBookPic);
+
+
+  routes.get('/books/:id/content', getBookContent);
+
+
 
 
   return routes;

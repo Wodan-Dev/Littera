@@ -13,6 +13,10 @@
       bookCreate: {
         name: 'BookCreateController',
         nameas: 'BookCreateCtrl'
+      },
+      bookReading: {
+        name: 'BookReadingController',
+        nameas: 'BookReadingCtrl'
       }
     },
     routes: {
@@ -20,7 +24,8 @@
       books: litteraApp.URLS.BOOKS(),
       storeDetail: litteraApp.URLS.STOREDETAIL(),
       bookCreate: litteraApp.URLS.BOOK_CREATE(),
-      bookUpdate: litteraApp.URLS.BOOK_UPDATE()
+      bookUpdate: litteraApp.URLS.BOOK_UPDATE(),
+      bookReading: litteraApp.URLS.BOOK_READING()
     },
     factories: {
       books: 'booksFactory'
@@ -34,6 +39,9 @@
       },
       bookCreate: {
         url: 'views/book-create.view.html'
+      },
+      bookReading: {
+        url: 'views/book-reading.view.html'
       }
     },
     imports: {

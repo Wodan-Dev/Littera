@@ -59,7 +59,7 @@
 
       <md-content>
         <md-tabs
-          md-selected="BooksCtrl.selectedTab"
+          md-selected="selectedTab"
           md-dynamic-height
           md-border-bottom>
           <!-- tab:store start-->
@@ -299,18 +299,32 @@
           </md-tab>
           <!-- tab:comments end-->
 
-          <!-- tab:buy start-->
-          <md-tab label="Comprar"
-                  ng-click="BooksCtrl.btnAddBasket(BooksCtrl.book._id, BooksCtrl.getSugPrice(BooksCtrl.book.prices))">
+          <md-tab label="{{ tab.text }}"
+                  md-selected="BooksCtrl.selectedIndex"
+                  ng-repeat="tab in BooksCtrl.tabs"
+                  ng-click="eval(tab.click)">
           </md-tab>
+
+          <!-- tab:reading start-->
+          <!--<md-tab label="Ler"
+                  id="btnReading"
+                  ng-show="BooksCtrl.hasBook('btnReading')"
+                  ng-click="BooksCtrl.btnReading()">
+          </md-tab>-->
+          <!-- tab:reading end-->
+
+          <!-- tab:buy start-->
+          <!--<md-tab ng-show="!BooksCtrl.hasBook('btnBuy')"
+                  id="btnBuy"
+                  label="Comprar"
+                  ng-click="BooksCtrl.btnAddBasket(BooksCtrl.book._id, BooksCtrl.getSugPrice(BooksCtrl.book.prices))">
+          </md-tab>-->
           <!-- tab:buy end-->
         </md-tabs>
 
       </md-content>
     </div>
   </div>
-</div>
-</div>
 </div>
 <script type="text/javascript">
   $('textarea').autogrow();

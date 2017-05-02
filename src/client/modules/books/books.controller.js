@@ -26,8 +26,23 @@
       content: ''
     };
 
+    vm.tabs = [
 
-    vm.selectedTab = 1;
+    ];
+
+
+    $scope.selectedTab = 1;
+
+    $scope.$watch('selectedTab', function(current, old){
+      if (current === 4) {
+        if (vm.hasBook()) {
+          vm.btnReading();
+        }
+        else {
+          vm.btnAddBasket();
+        }
+      }
+    });
 
 
 
@@ -65,6 +80,16 @@
       return authentication.isAuthenticated();
     };
 
+    vm.hasBook = function () {
+
+      if ((vm.isLogged()) &&
+        (vm.loggedUser.library) &&
+        (vm.loggedUser.library.length)) {
+        return $filter('filter')(vm.loggedUser.library, { _id_book: $routeParams.id }).length;
+      }
+      return false;
+    };
+
     vm.init = function () {
 
 
@@ -72,9 +97,25 @@
         authentication.credential()
           .then(function (data) {
             vm.loggedUser = data.data.data;
+            if (vm.hasBook()) {
+              vm.tabs.push(
+                {
+                  id: 0,
+                  text: 'Ler'
+                });
+
+            }
+            else {
+              vm.tabs.push(
+                {
+                  id: 0,
+                  text: 'Comprar'
+                });
+            }
+
             loadData();
             if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
-              vm.selectedTab = parseInt($routeParams.tab);
+              $scope.selectedTab = parseInt($routeParams.tab);
           })
           .catch(function () {
 
@@ -83,7 +124,7 @@
       else {
         loadData();
         if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
-          vm.selectedTab = parseInt($routeParams.tab);
+          $scope.selectedTab = parseInt($routeParams.tab);
       }
 
 
@@ -115,8 +156,8 @@
       return 0;
     };
 
-    vm.btnAddBasket = function (id, sugPrice) {
-      vm.selectedTab = 1;
+    vm.btnAddBasket = function () {
+      $scope.selectedTab = 1;
       salesFactory.getCurrentSale(vm.loggedUser._id)
         .then(function (data) {
           return new Promise(function (resolve, reject) {
@@ -145,8 +186,8 @@
           let saleItem = {
             _id_user: vm.loggedUser._id,
             _id_sale: data._id,
-            _id_book: id,
-            value: sugPrice
+            _id_book: vm.book._id,
+            value: vm.getSugPrice(vm.book.prices)
           };
 
           return salesFactory.addToBasket(saleItem);
@@ -283,17 +324,8 @@
       $location.path('/');
     };
 
-
-    vm.hasError = function (field) {
-      return has_error.hasError(field);
-    };
-
-    vm.getErrorMessage = function (field) {
-      return has_error.getErrorMessage(field);
-    };
-
-    vm.btnLoadMore = function () {
-      loadData();
+    vm.btnReading = function () {
+      $location.path('/book/reading/'+ $routeParams.id);
     };
 
     function loadData() {

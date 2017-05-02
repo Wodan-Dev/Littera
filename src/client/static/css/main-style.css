@@ -245,7 +245,6 @@ header .nav-user {
 
 .column {
   background: #FFFFFF;
-  display: block;/*table-cell;*/
   box-sizing: border-box;
   padding-bottom: .625rem; /* 10px */
   /*float: left;*/

@@ -23,6 +23,11 @@
         return '/book/' + id;
       };
     },
+    BOOK_READING: function() {
+      return function (id) {
+        return '/book/reading/' + id;
+      };
+    },
     STORE: function () {
       return function (page) {
         if (page)
