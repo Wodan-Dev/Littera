@@ -54,6 +54,10 @@
       return request._upload(url, file);
     }
 
+    function updateContent(url, file) {
+      return request._upload(url, file);
+    }
+
     function getBookContent(url) {
       return request._getBinary(url);
     }
@@ -74,6 +78,12 @@
       return request._post('/books/comments', comment);
     }
 
+    function getIdFolder(content) {
+      let place = [Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime()];
+
+      return (content.match(/[\d]+/) || place)[0];
+    }
+
     return {
       getBooks: getBooks,
       getBookById: getBookById,
@@ -83,7 +93,9 @@
       create: create,
       update: update,
       saveRanking: saveRanking,
-      saveComment: saveComment
+      saveComment: saveComment,
+      getIdFolder: getIdFolder,
+      updateContent: updateContent
     };
   }
 

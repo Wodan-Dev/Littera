@@ -17,6 +17,7 @@
     bookData) {
     var vm = this;
     let changedImage = false;
+    let changedContent = false;
     vm.noPrice = true;
     vm.noOff = false;
 
@@ -343,6 +344,18 @@
       reader.readAsDataURL(element.files[0]);
     };
 
+    $scope.setContent = function(element) {
+      $scope.currentContent = element.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        changedContent = true;
+        $scope.$apply();
+
+      };
+      reader.readAsDataURL(element.files[0]);
+    };
+
     vm.hasError = function (field) {
       return has_error.hasError(field);
     };
@@ -351,15 +364,51 @@
       return has_error.getErrorMessage(field);
     };
 
+    /*vm.btnCreate = function () {
+
+      console.log(contentActual);
+      console.log($scope.currentContent);
+      var formData = new FormData();
+      formData.append('content', $scope.currentContent);
+
+
+      request._upload('/books/content/1', {
+        content: $scope.currentContent
+      })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+
+
+
+      console.log($scope.setContent);
+    };*/
+
     vm.btnCreate = function () {
       let bookNew = {};
-      let idImg = '';
+      let idFolder = '';
       let username = '';
 
       has_error.clearError();
       $rootScope.__showLoad = true;
       authentication.credential()
         .then(function (data) {
+          if ((!$routeParams.id) && (!changedContent)) {
+            throw {
+              data: {
+                data: {
+                  value: 'content',
+                  err: 'Informe o conteúdo da sua publicação.'
+                }
+              }
+            };
+          }
+
+
+
           username = data.data.data.username;
 
 
@@ -405,27 +454,20 @@
             }
           }
 
+          idFolder = booksFactory.getIdFolder(
+            (!$routeParams.id) ? '': bookNew.cover_image
+          );
 
+          if (!$routeParams.id) {
+            bookNew.cover_image = $rootScope.BASEURLS.BASE_API +
+            '/upload/books/' + idFolder;
+          }
 
-
-
+          bookNew.content = $rootScope.BASEURLS.BASE_API + '/content/' + idFolder + '/content.epub';
 
           vm.lstKeyWords.map(function (item) {
             bookNew.keywords.push({ content: item });
           });
-
-
-          if (!$routeParams.id) {
-            idImg = Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime();
-
-            bookNew.cover_image = $rootScope.BASEURLS.BASE_API +
-            '/upload/books/' + idImg;
-          }
-          else {
-            let place = [Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime()];
-            idImg = (bookNew.cover_image.match(/[\d]+/) || place)[0];
-          }
-
 
           if ($routeParams.id) {
             bookNew._id = $routeParams.id;
@@ -435,11 +477,33 @@
           return booksFactory.create(bookNew);
         })
         .then(function (data) {
+          /* uploading book cover */
           return new Promise(function (resolve, reject) {
             if (changedImage) {
-              return booksFactory.updateImg('/books/' + idImg,
+              return booksFactory.updateImg('/books/' + idFolder,
                 {
                   image: dataURItoBlob(vm.book.img_data)
+                })
+                .then(function () {
+                  resolve(data);
+                })
+                .catch(function (err) {
+                  reject(err);
+                });
+            }
+            else
+              resolve(data);
+          });
+
+        })
+
+        .then(function (data) {
+          /* uploading book content */
+          return new Promise(function (resolve, reject) {
+            if (changedContent) {
+              return booksFactory.updateContent('/books/content/' + idFolder,
+                {
+                  content: $scope.currentContent
                 })
                 .then(function () {
                   resolve(data);
@@ -459,6 +523,7 @@
           });
         })
         .catch(function (data) {
+
           if (data.data) {
             let lst = data.data.data.err;
             $scope.$apply(function () {

@@ -32,6 +32,13 @@ fieldset {
   margin-bottom: 2.25rem;
 }
 
+.form-group-button {
+  z-index:0;
+  position: relative;
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+}
+
 .form-inline > .form-group,
 .form-inline > .btn {
   display: inline-block;
@@ -91,6 +98,25 @@ fieldset {
   -webkit-transition: all 0.28s ease;
   transition: all 0.28s ease;
 }
+
+.form-group-button .bar {
+  position: relative;
+  border-bottom: 0.0625rem solid #999;
+  display: block;
+}
+.form-group-button .bar::before {
+  content: '';
+  height: 0.125rem;
+  width: 0;
+  left: 50%;
+  bottom: -0.0625rem;
+  position: absolute;
+  background: #009688;/*#337ab7;*/
+  -webkit-transition: left 0.28s ease, width 0.28s ease;
+  transition: left 0.28s ease, width 0.28s ease;
+  z-index: 2;
+}
+
 .form-group .bar {
   position: relative;
   border-bottom: 0.0625rem solid #999;
@@ -124,12 +150,22 @@ fieldset {
   transition: all 0.28s ease;
   box-shadow: none;
 }
+
 .form-group input[type="file"] {
   line-height: 1;
 }
 .form-group input[type="file"] ~ .bar {
   display: none;
 }
+
+.form-group-button input[type="file"] {
+  line-height: 1;
+}
+.form-group-button input[type="file"] ~ .bar {
+  display: none;
+}
+
+.form-group-button input.form-file,
 .form-group select,
 .form-group input:focus,
 .form-group input:valid,
@@ -145,6 +181,7 @@ fieldset {
 .form-group input:focus ~ .control-label,
 .form-group input:valid ~ .control-label,
 .form-group input.form-file ~ .control-label,
+.form-group-button input.form-file ~ .control-label,
 .form-group input.has-value ~ .control-label,
 .form-group textarea:focus ~ .control-label,
 .form-group textarea:valid ~ .control-label,
@@ -155,6 +192,7 @@ fieldset {
   top: -1rem;
   left: 0;
 }
+
 .form-group select:focus,
 .form-group input:focus,
 .form-group textarea:focus {
@@ -173,6 +211,12 @@ fieldset {
 }
 
 .form-group .field-err {
+  color: #d9534f;
+  font-size: .9rem;
+  transition: all 300s ease;
+}
+
+.form-group-button .field-err {
   color: #d9534f;
   font-size: .9rem;
   transition: all 300s ease;

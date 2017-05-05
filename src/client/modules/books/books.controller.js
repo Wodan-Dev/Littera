@@ -26,15 +26,9 @@
       content: ''
     };
 
-    vm.tabs = [
-
-    ];
-
-
-    $scope.selectedTab = 1;
-
-    $scope.$watch('selectedTab', function(current, old){
-      if (current === 4) {
+    vm.tab = {
+      text: '',
+      click: function() {
         if (vm.hasBook()) {
           vm.btnReading();
         }
@@ -42,7 +36,11 @@
           vm.btnAddBasket();
         }
       }
-    });
+    };
+
+
+    vm.selectedTab = 1;
+
 
 
 
@@ -97,25 +95,17 @@
         authentication.credential()
           .then(function (data) {
             vm.loggedUser = data.data.data;
-            if (vm.hasBook()) {
-              vm.tabs.push(
-                {
-                  id: 0,
-                  text: 'Ler'
-                });
 
+            if (vm.hasBook()) {
+              vm.tab.text = 'Ler';
             }
             else {
-              vm.tabs.push(
-                {
-                  id: 0,
-                  text: 'Comprar'
-                });
+              vm.tab.text = 'Comprar';
             }
 
             loadData();
             if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
-              $scope.selectedTab = parseInt($routeParams.tab);
+              vm.selectedTab = parseInt($routeParams.tab);
           })
           .catch(function () {
 
@@ -124,7 +114,7 @@
       else {
         loadData();
         if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
-          $scope.selectedTab = parseInt($routeParams.tab);
+          vm.selectedTab = parseInt($routeParams.tab);
       }
 
 
@@ -157,7 +147,7 @@
     };
 
     vm.btnAddBasket = function () {
-      $scope.selectedTab = 1;
+      vm.selectedTab = 1;
       salesFactory.getCurrentSale(vm.loggedUser._id)
         .then(function (data) {
           return new Promise(function (resolve, reject) {

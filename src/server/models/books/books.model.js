@@ -562,7 +562,7 @@ function validateCreate(book){
   book.title = checkField.trim(checkField.escape(book.title));
   book.subtitle = checkField.trim(checkField.escape(book.subtitle));
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
-  book.content = checkField.trim(checkField.escape(book.content));
+  book.content = checkField.trim(book.content);
   book.esbn = checkField.trim(checkField.escape(book.esbn));
   book.language = checkField.trim(checkField.escape(book.language));
 
@@ -579,7 +579,7 @@ function validateUpdate(book){
   book.title = checkField.trim(checkField.escape(book.title));
   book.subtitle = checkField.trim(checkField.escape(book.subtitle));
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
-  book.content = checkField.trim(checkField.escape(book.content));
+  book.content = checkField.trim(book.content);
   book.esbn = checkField.trim(checkField.escape(book.esbn));
   book.language = checkField.trim(checkField.escape(book.language));
 

@@ -59,7 +59,7 @@
 
       <md-content>
         <md-tabs
-          md-selected="selectedTab"
+          md-selected="BooksCtrl.selectedTab"
           md-dynamic-height
           md-border-bottom>
           <!-- tab:store start-->
@@ -299,10 +299,8 @@
           </md-tab>
           <!-- tab:comments end-->
 
-          <md-tab label="{{ tab.text }}"
-                  md-selected="BooksCtrl.selectedIndex"
-                  ng-repeat="tab in BooksCtrl.tabs"
-                  ng-click="eval(tab.click)">
+          <md-tab label="{{ BooksCtrl.tab.text }}"
+                  ng-click="BooksCtrl.tab.click()">
           </md-tab>
 
           <!-- tab:reading start-->

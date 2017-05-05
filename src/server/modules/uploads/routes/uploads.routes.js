@@ -24,8 +24,6 @@ const storageUser = multer.diskStorage({
   destination: function (req, file, cb) {
     let basePath = config.getUploadPath() + '/users/' + req.params.username;
     fs.mkdir(basePath, function(err) {
-      console.log('err');
-      console.log(err);
 
       cb(null, basePath);
     });
@@ -38,17 +36,26 @@ const storageUser = multer.diskStorage({
 const storageBook = multer.diskStorage({
   destination: function (req, file, cb) {
     let basePath = config.getUploadPath() + '/books/' + req.params.id;
-    console.log('basePath');
-    console.log(basePath);
     fs.mkdir(basePath, function(err) {
-      console.log('err');
-      console.log(err);
 
       cb(null, basePath);
     });
   },
   filename: function (req, file, cb) {
     cb(null, 'cover.png');
+  }
+});
+
+const storageContentBook = multer.diskStorage({
+  destination: function (req, file, cb) {
+    let basePath = config.getUploadPath() + '/books/' + req.params.id;
+    fs.mkdir(basePath, function(err) {
+
+      cb(null, basePath);
+    });
+  },
+  filename: function (req, file, cb) {
+    cb(null, 'content.epub');
   }
 });
 
@@ -78,7 +85,6 @@ function getUserPic(req, res) {
 function postUserPic(req, res) {
 
   res.status(200).end();
-
 }
 
 /**
@@ -108,25 +114,9 @@ function postBookPic(req, res) {
 
 }
 
-function getBookContent(req, res) {
-  let basePath = config.getUploadPath() + '/books/' + req.params.id;
+function postBookContent(req, res) {
 
-
-
-  fs.readFile(basePath + '/content.epub', function (err, data) {
-    if (err) {
-      renderError(res, {},
-        validator.invalidResult('content', 'Arquivo não encontrado'),
-        HTTP_STATUS.HTTP_404_NOT_FOUND);
-    }
-    else {
-
-      //res.writeHead(200, { 'Content-Type': 'application/epub+zip' });
-      //res.setHeader('content-type', 'application/epub+zip');
-      res.send(basePath + '/content.epub');
-      //res.end(data);
-    }
-  });
+  res.status(200).end();
 }
 
 
@@ -150,11 +140,10 @@ function router(express, auth) {
     auth,
     postBookPic);
 
-
-  routes.get('/books/:id/content', getBookContent);
-
-
-
+  routes.post('/books/content/:id',
+    multer({ storage: storageContentBook }).single('content'),
+    auth,
+    postBookContent);
 
   return routes;
 }
