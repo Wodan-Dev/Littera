@@ -120,6 +120,15 @@
     },
     SALES: function () {
       return '/sales';
+    },
+    WISHLIST: function () {
+      return function (username, id) {
+        if (id)
+          return '/users/' + username + '/wish/' + id;
+
+        return '/users/' + username + '/wish';
+
+      };
     }
   };
 }(litteraApp));

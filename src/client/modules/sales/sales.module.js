@@ -13,7 +13,8 @@
     },
     routes: {
       sales_page: litteraApp.URLS.SALES_PAGE(),
-      sales: litteraApp.URLS.SALES()
+      sales: litteraApp.URLS.SALES(),
+      wishList: litteraApp.URLS.WISHLIST()
     },
     factories: {
       sales: 'salesFactory'

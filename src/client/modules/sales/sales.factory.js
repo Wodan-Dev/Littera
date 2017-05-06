@@ -55,13 +55,23 @@
       return request._post(litteraApp.modules.sales.routes.sales+'/' + idSale + '/finalize/', items);
     }
 
+    function addToWishList(username, book) {
+      return request._post(litteraApp.modules.sales.routes.wishList(username), book);
+    }
+
+    function removeFromWishList(username, id) {
+      return request._delete(litteraApp.modules.sales.routes.wishList(username, id));
+    }
+
     return {
       getSale: getSale,
       createSale: createSale,
       addToBasket: addToBasket,
       getCurrentSale: getCurrentSale,
       removeFromBasket: removeFromBasket,
-      finalize: finalize
+      finalize: finalize,
+      addToWishList: addToWishList,
+      removeFromWishList: removeFromWishList
     };
   }
 

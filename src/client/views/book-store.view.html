@@ -89,14 +89,31 @@
       </div>
       <div class="notice-options"
            layout="row">
-        <div flex="50">
+        <div flex="30">
           <a ng-href="#/books/{{ r._id }}?tab=2"
              class="btn-like">
             <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
             {{ r.average_star }}
           </a>
         </div>
-        <div flex="50">
+        <div flex="40">
+          <a ng-click="StoreCtrl.btnAddToWishList(r._id)"
+             ng-show="StoreCtrl.isLogged()"
+             style="text-align: center; cursor: pointer;"
+             class="btn-love">
+            <i class="fa fa-heart-o fa-1x"
+               ng-if="StoreCtrl.isLogged() &&
+                !StoreCtrl.inWishList(r._id)"
+               style="cursor: pointer;color: #00AB6B;"
+               aria-hidden="true"></i>
+            <i class="fa fa-heart fa-1x"
+               ng-if="StoreCtrl.isLogged() &&
+               StoreCtrl.inWishList(r._id)"
+               style="cursor: pointer;color: #00AB6B;"
+               aria-hidden="true"></i>
+          </a>
+        </div>
+        <div flex="30">
           <a ng-href="#/books/{{ r._id }}?tab=3" class="btn-comment">
             <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
             {{ r.comments.length }}

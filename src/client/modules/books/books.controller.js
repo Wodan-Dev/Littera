@@ -78,6 +78,8 @@
       return authentication.isAuthenticated();
     };
 
+
+
     vm.hasBook = function () {
 
       if ((vm.isLogged()) &&

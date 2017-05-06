@@ -438,6 +438,16 @@ header .nav-user {
   color: rgb(120,120,120);
 }
 
+.notice-options a.btn-love {
+  float: none;
+  margin: auto;
+  display: block;
+  text-align: center;
+  line-height: 2.5rem; /* 40px */
+  font-size: .8em;
+  color: rgb(120,120,120);
+}
+
 .shop-image-box {
   position: relative;
   top: 0;
