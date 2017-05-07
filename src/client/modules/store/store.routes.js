@@ -12,6 +12,7 @@
           controller:  litteraApp.modules.store.controllers.store.name,
           controllerAs:  litteraApp.modules.store.controllers.store.nameas,
           templateUrl: litteraApp.modules.store.templates.store.url,
+          title: 'Littera',
           access: {
             requiresLogin: false
           }/*,

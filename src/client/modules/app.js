@@ -84,6 +84,7 @@
     BASEURLS,
     $window,
     $anchorScroll) {
+    $rootScope.__Title = 'Littera';
     $rootScope.__showModal = false;
     $rootScope.__showUserMenu = false;
     $rootScope.__showLinks = false;
@@ -104,6 +105,9 @@
     $rootScope.$on('$routeChangeSuccess', function (event, next) {
       window.scrollTo(0, 0);
       $anchorScroll();
+      $rootScope.__Title = next.title || 'Littera';
+      document.title = $rootScope.__Title;
+
       authorization.authorize(next)
        .then(function (url) {
          $rootScope.$broadcast('evt_navBarUser_event', '');

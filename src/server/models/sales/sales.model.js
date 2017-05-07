@@ -192,7 +192,8 @@ function findByUserId(id, page) {
       limit: pageSize,
       sort: {
         'created_at': 'descending'
-      }
+      },
+      populate: 'items._id_book'
     });
 }
 

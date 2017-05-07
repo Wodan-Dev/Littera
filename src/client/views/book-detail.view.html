@@ -299,9 +299,30 @@
           </md-tab>
           <!-- tab:comments end-->
 
+          <!-- tab:wishlist start-->
+          <md-tab ng-click="BooksCtrl.btnAddToWishList(BooksCtrl.book._id)">
+            <md-tab-label>
+              <p>
+                <i class="fa fa-heart-o fa-1x"
+                   ng-if="BooksCtrl.isLogged() &&
+                         !BooksCtrl.inWishList(BooksCtrl.book._id)"
+                   style="cursor: pointer;color: #00AB6B;"
+                   aria-hidden="true"></i>
+                <i class="fa fa-heart fa-1x"
+                   ng-if="BooksCtrl.isLogged() &&
+                          BooksCtrl.inWishList(BooksCtrl.book._id)"
+                   style="cursor: pointer;color: #00AB6B;"
+                   aria-hidden="true"></i>
+              </p>
+            </md-tab-label>
+          </md-tab>
+          <!-- tab:wishlist end-->
+
+          <!-- tab:buy/read start-->
           <md-tab label="{{ BooksCtrl.tab.text }}"
                   ng-click="BooksCtrl.tab.click()">
           </md-tab>
+          <!-- tab:buy/read end-->
 
           <!-- tab:reading start-->
           <!--<md-tab label="Ler"

@@ -9,12 +9,17 @@
       sales: {
         name: 'SalesController',
         nameas: 'SalesCtrl'
+      },
+      bought: {
+        name: 'BoughtController',
+        nameas: 'BoughtCtrl'
       }
     },
     routes: {
       sales_page: litteraApp.URLS.SALES_PAGE(),
       sales: litteraApp.URLS.SALES(),
-      wishList: litteraApp.URLS.WISHLIST()
+      wishList: litteraApp.URLS.WISHLIST(),
+      bought_page: litteraApp.URLS.BOOKS_BOUGHT_PAGE()
     },
     factories: {
       sales: 'salesFactory'
@@ -25,6 +30,9 @@
     templates: {
       sales: {
         url: 'views/sales-detail.view.html'
+      },
+      bought: {
+        url: 'views/books-bought.view.html'
       }
     },
     imports: {

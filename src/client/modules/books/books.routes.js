@@ -12,6 +12,7 @@
           controller:  litteraApp.modules.books.controllers.books.name,
           controllerAs:  litteraApp.modules.books.controllers.books.nameas,
           templateUrl: litteraApp.modules.books.templates.books.url,
+          title: 'Livro',
           access: {
             requiresLogin: false
           }
@@ -20,6 +21,7 @@
           controller:  litteraApp.modules.books.controllers.bookCreate.name,
           controllerAs:  litteraApp.modules.books.controllers.bookCreate.nameas,
           templateUrl: litteraApp.modules.books.templates.bookCreate.url,
+          title: 'Publicação',
           access: {
             requiresLogin: true
           },
@@ -35,6 +37,7 @@
           controller:  litteraApp.modules.books.controllers.bookCreate.name,
           controllerAs:  litteraApp.modules.books.controllers.bookCreate.nameas,
           templateUrl: litteraApp.modules.books.templates.bookCreate.url,
+          title: 'Publicação',
           access: {
             requiresLogin: true
           },
@@ -48,6 +51,7 @@
           controller:  litteraApp.modules.books.controllers.bookReading.name,
           controllerAs:  litteraApp.modules.books.controllers.bookReading.nameas,
           templateUrl: litteraApp.modules.books.templates.bookReading.url,
+          title: 'Leitura',
           access: {
             requiresLogin: true
           },
@@ -62,8 +66,6 @@
                     return booksFactory.getBookById($route.current.params.id|| '-');
                   })
                   .then(function (data) {
-                    console.log('book.content');
-                    console.log(data);
                     book = data.data;
                     return resolve({
                       user: userLogged,
@@ -74,12 +76,6 @@
                     reject(err);
                   });
               });
-
-
-
-
-
-
             }
           }
         });

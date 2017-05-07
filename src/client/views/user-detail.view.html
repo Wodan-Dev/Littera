@@ -16,6 +16,35 @@
        flex-xs="100"
        flex-offset-gt-xs="10"
        class="column-list">
+
+    <div class="column column-all first-column"
+         ng-show="UserDetailCtrl.selectedTab === 0 &&
+                  !UserDetailCtrl.user.written_books.length">
+      <div class="notice-content">
+        <h3 class="title">
+          Não temos nada pra exibir aqui ainda :(
+        </h3>
+      </div>
+    </div>
+    <div class="column column-all first-column"
+         ng-show="UserDetailCtrl.selectedTab === 1 &&
+                  !UserDetailCtrl.user.library.length">
+      <div class="notice-content">
+        <h3 class="title">
+          Não temos nada pra exibir aqui ainda :(
+        </h3>
+      </div>
+    </div>
+    <div class="column column-all first-column"
+         ng-show="UserDetailCtrl.selectedTab === 5 &&
+                  !UserDetailCtrl.user.wishlist.length">
+      <div class="notice-content">
+        <h3 class="title">
+          Não temos nada pra exibir aqui ainda :(
+        </h3>
+      </div>
+    </div>
+
     <div flex="100"
          ng-show="UserDetailCtrl.selectedTab === 0"
          class="column column-all"
@@ -64,9 +93,55 @@
     <div flex="100"
          ng-show="UserDetailCtrl.selectedTab === 1"
          class="column column-all"
-         ng-class="{ 'first-column': $index==0 }"
+         ng-class="{ 'first-column': $index == 0 }"
          layout-align="center center"
          ng-repeat="r in UserDetailCtrl.user.library|orderBy:'-date_published':true">
+      <div class="notice-image">
+        <a ng-href="#/books/{{ r._id_book._id }}">
+          <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">
+        </a>
+      </div>
+      <div class="notice-content"
+           layout="column"
+           layout-margin>
+        <div flex="100">
+          <h3 class="title">
+            <a ng-href="#/books/{{ r._id_book._id }}"
+               class="link-title"
+               ng-bind="r._id_book.title"></a>
+          </h3>
+        </div>
+        <div flex="100">
+          <p class="text"
+             ng-bind="r._id_book.synopsis">
+          </p>
+        </div>
+      </div>
+      <div class="notice-options"
+           layout="row">
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id_book._id }}?tab=2"
+             class="btn-like">
+            <i class="fa fa-star fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.average_star }}
+          </a>
+        </div>
+        <div flex="50">
+          <a ng-href="#/books/{{ r._id_book._id }}?tab=3"
+             class="btn-comment">
+            <i class="fa fa-comments fa-1x" style="color: #00AB6B;" aria-hidden="true"></i>
+            {{ r._id_book.comments.length }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div flex="100"
+         ng-show="UserDetailCtrl.selectedTab === 5"
+         class="column column-all"
+         ng-class="{ 'first-column': $index == 0 }"
+         layout-align="center center"
+         ng-repeat="r in UserDetailCtrl.user.wishlist|orderBy:'-date_saved'">
       <div class="notice-image">
         <a ng-href="#/books/{{ r._id_book._id }}">
           <img ng-src="{{ r._id_book.cover_image || './static/images/no-image.png' }}">

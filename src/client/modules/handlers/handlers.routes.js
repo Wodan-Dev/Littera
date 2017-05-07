@@ -11,6 +11,7 @@
           controller: litteraApp.modules.handlers.controllers.notAuthorized.name,
           controllerAs: litteraApp.modules.handlers.controllers.notAuthorized.nameas,
           templateUrl: litteraApp.modules.handlers.templates.notAuthorized.url,
+          title: 'Littera',
           access: {
             requiresLogin: false
           }
@@ -19,6 +20,7 @@
           controller: litteraApp.modules.handlers.controllers.notFound.name,
           controllerAs: litteraApp.modules.handlers.controllers.notFound.nameas,
           templateUrl: litteraApp.modules.handlers.templates.notFound.url,
+          title: 'Littera',
           access: {
             requiresLogin: false
           }
@@ -27,6 +29,7 @@
           controller: litteraApp.modules.handlers.controllers.serverError.name,
           controllerAs: litteraApp.modules.handlers.controllers.serverError.nameas,
           templateUrl: litteraApp.modules.handlers.templates.serverError.url,
+          title: 'Littera',
           access: {
             requiresLogin: false
           }

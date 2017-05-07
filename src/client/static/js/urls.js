@@ -129,6 +129,9 @@
         return '/users/' + username + '/wish';
 
       };
+    },
+    BOOKS_BOUGHT_PAGE: function () {
+      return '/sales/bought/';
     }
   };
 }(litteraApp));

@@ -53,7 +53,18 @@
           .then(function (data) {
             $scope.$apply(function () {
               vm.loggedUser = data.data.data;
-              if (($routeParams.tab) && ([0, 1, 2, 3, 4].indexOf(parseInt($routeParams.tab)) > -1))
+
+              if(vm.sameUser()) {
+                vm.tabs.push({
+                  id: 5,
+                  desc: 'Lista de desejos'
+                });
+              }
+
+
+
+
+              if (($routeParams.tab) && ([0, 1, 2, 3, 4, 5].indexOf(parseInt($routeParams.tab)) > -1))
                 vm.selectedTab = parseInt($routeParams.tab);
             });
           })

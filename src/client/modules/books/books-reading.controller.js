@@ -35,7 +35,9 @@
         });
         Book.getMetadata().then(function(meta){
 
-          document.title = meta.bookTitle+' – '+meta.creator;
+
+          $rootScope.__Title = 'Leitura';
+          document.title = 'Littera - ' + meta.bookTitle + ' – ' + meta.creator;
 
         });
 

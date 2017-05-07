@@ -12,6 +12,7 @@
           controller:  litteraApp.modules.users.controllers.users.name,
           controllerAs:  litteraApp.modules.users.controllers.users.nameas,
           templateUrl: litteraApp.modules.users.templates.users.url,
+          title: 'Perfil',
           access: {
             requiresLogin: false
           }
@@ -20,6 +21,7 @@
           controller:  litteraApp.modules.users.controllers.writtenBooks.name,
           controllerAs:  litteraApp.modules.users.controllers.writtenBooks.nameas,
           templateUrl: litteraApp.modules.users.templates.writtenBooks.url,
+          title: 'Meus Livros',
           access: {
             requiresLogin: true
           }
@@ -28,6 +30,7 @@
           controller:  litteraApp.modules.users.controllers.userDetail.name,
           controllerAs:  litteraApp.modules.users.controllers.userDetail.nameas,
           templateUrl: litteraApp.modules.users.templates.userDetail.url,
+          title: 'Perfil',
           access: {
             requiresLogin: false
           },

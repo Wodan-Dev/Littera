@@ -78,6 +78,56 @@
       return authentication.isAuthenticated();
     };
 
+    vm.btnAddToWishList = function (id) {
+      vm.selectedTab = 1;
+      if (vm.isLogged() && !vm.inWishList(id)) {
+        authentication.credential()
+          .then(function (data) {
+            return salesFactory.addToWishList(data.data.data.username, { _id_book: id });
+          })
+          .then(function () {
+            $scope.$apply(function () {
+              vm.loggedUser.wishlist.push({
+                _id: Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime(),
+                _id_book: id,
+                date_saved: moment()
+              });
+            });
+
+            message.notification('information', 'Adicionado a lista de desejos com sucesso!!');
+          })
+          .catch(function (err) {
+            if(err.data.data.err)
+              message.notification('information', err.data.data.err);
+          });
+      }
+      else if (vm.isLogged() && vm.inWishList(id)) {
+        authentication.credential()
+          .then(function (data) {
+            return salesFactory.removeFromWishList(data.data.data.username, id);
+          })
+          .then(function () {
+            $scope.$apply(function () {
+              let selectedBook = $filter('filter')(vm.loggedUser.wishlist, { _id_book : id})[0];
+              vm.loggedUser.wishlist.splice(vm.loggedUser.wishlist.indexOf(selectedBook) , 1);
+            });
+
+            message.notification('alert', 'Removido da lista de desejos com sucesso!!');
+          })
+          .catch(function (err) {
+            if(err.data.data.err)
+              message.notification('information', err.data.data.err);
+          });
+      }
+    };
+
+    vm.inWishList = function (id) {
+      if (vm.isLogged()) {
+        return $filter('filter')(vm.loggedUser.wishlist, { _id_book: id }).length;
+      }
+
+      return false;
+    };
 
 
     vm.hasBook = function () {

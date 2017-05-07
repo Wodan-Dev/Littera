@@ -1,0 +1,91 @@
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="BoughtCtrl.init()">
+  <div flex="100"
+       class="column-list">
+    <div flex="100"
+         style="width: 96%; box-sizing: border-box; margin-right: 2%;margin-left: 2%"
+         class="column column-all first-column basket"
+         ng-if="!BoughtCtrl.saleItems.length"
+         layout-align="center center">
+      <div class="notice-content">
+        <h3 class="title">
+          Nenhuma compra realizada ainda!
+        </h3>
+      </div>
+    </div>
+    <div flex="100"
+         ng-if="BoughtCtrl.saleItems.length"
+         style="width: 96%; box-sizing: border-box; margin-right: 2%;margin-left: 2%"
+         class="column column-all first-column basket"
+         layout-align="center center">
+
+      <div ng-repeat="sale in BoughtCtrl.saleItems|orderBy:'-create_at':false"
+           layout="column"
+           class="basket-item basket-item-body">
+        <div layout="row">
+          <p class="header">{{sale.create_at|date:'dd/MM/yyyy HH:mm:ss'}}
+            <span ng-class="{ 'pending': sale.status == 0,
+                              'waiting': sale.status == 1,
+                              'completed': sale.status == 2,
+                              'canceled': sale.status == 3 }" >{{ sale.status|saleStatus }}</span>
+            <a ng-if="sale.status == 0"
+               href="#/sales">Finalizar</a>
+          </p>
+        </div>
+
+        <div ng-repeat="r in sale.items"
+             layout="row"
+             layout-sm="column"
+             layout-xs="column"
+             class="basket-item">
+          <div class="item-image"
+               style="box-sizing: border-box;"
+               flex="none"
+               layout="row"
+               flex-sm="100"
+               flex-xs="100">
+            <img layout-align="center center" ng-src="{{ r._id_book.cover_image  || './static/images/no-image.png' }}" />
+
+          </div>
+          <div flex="45"
+               flex-sm="100"
+               flex-xs="100"
+               layout="column"
+               style="box-sizing: border-box;"
+               class="item-content">
+            <div flex="100"
+              >
+              <h3 class="title">
+                <a ng-href="#/books/{{ r._id_book._id  }}"
+                   class="link-title-sale"
+                   ng-bind="r._id_book.title"></a>
+              </h3>
+            </div>
+            <div flex="100"
+                 layout-margin>
+              <h4 class="title" ng-bind="r._id_book.subtitle"></h4>
+            </div>
+          </div>
+          <div flex="40"
+               flex-sm="100"
+               flex-xs="100"
+               layout="column"
+               class="item-price"
+               layout-margin
+               style="box-sizing: border-box;">
+            <p ng-if="r.value > 0">{{ r.value |currency:''}}</p>
+            <p ng-if="r.value == 0">Gratuito</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="column column-all more-data">
+        <a class="btn btn-default full" ng-click="BoughtCtrl.btnLoadMore()">Mais</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+

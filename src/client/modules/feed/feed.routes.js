@@ -12,6 +12,7 @@
           controller:  litteraApp.modules.feed.controllers.feed.name,
           controllerAs:  litteraApp.modules.feed.controllers.feed.nameas,
           templateUrl: litteraApp.modules.feed.templates.feed.url,
+          title: 'Feed',
           /*css: 'static/css/trends.css',*/
           access: {
             requiresLogin: true

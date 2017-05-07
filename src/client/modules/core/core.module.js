@@ -20,7 +20,8 @@
       }
     },
     filters: {
-      titleCase: 'titleCase'
+      titleCase: 'titleCase',
+      saleStatus: 'saleStatus'
     },
     imports: {
 
