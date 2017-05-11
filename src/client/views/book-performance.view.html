@@ -1,0 +1,71 @@
+<div layout="row"
+     layout-xs="column"
+     flex="100"
+     ng-init="BookPerformanceCtrl.init()">
+  <div flex="100"
+       class="column-list">
+    <div flex="100"
+         class="column column-all first-column"
+         layout-align="center center"
+         style="box-sizing: border-box;">
+
+      <md-content>
+        <md-tabs md-dynamic-height
+                 md-selected="selectedTab"
+                 md-border-bottom>
+          <md-tab label="Contagem de vendas">
+            <md-content class="md-padding">
+              <canvas
+                id="bar"
+                flex="100"
+                class="chart chart-bar"
+                chart-options="BookPerformanceCtrl.actualGraph.options"
+                chart-data="BookPerformanceCtrl.actualGraph.data"
+                chart-labels="BookPerformanceCtrl.actualGraph.labels"
+                chart-series="BookPerformanceCtrl.actualGraph.series"
+                chart-colours="BookPerformanceCtrl.actualGraph.colours">
+              </canvas>
+            </md-content>
+          </md-tab>
+          <md-tab label="Contagem">
+            <md-content class="md-padding">
+              <canvas
+                id="barb"
+                flex="100"
+                class="chart chart-bar"
+                chart-options="BookPerformanceCtrl.actualGraph.options"
+                chart-data="BookPerformanceCtrl.actualGraph.data"
+                chart-labels="BookPerformanceCtrl.actualGraph.labels"
+                chart-series="BookPerformanceCtrl.actualGraph.series"
+                chart-colours="BookPerformanceCtrl.actualGraph.colours">
+              </canvas>
+          </md-tab>
+          <md-tab label="three">
+            <md-content class="md-padding">
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+
+      <!--
+            <canvas
+              id="bar"
+              class="chart chart-bar"
+              chart-options="BookPerformanceCtrl.chart_options"
+              chart-data="BookPerformanceCtrl.data"
+              chart-labels="BookPerformanceCtrl.labels"
+              chart-series="BookPerformanceCtrl.series"
+              chart-colours="BookPerformanceCtrl.colours">
+            </canvas>
+            -->
+
+
+    </div>
+
+  </div>
+</div>
+<style type="text/css">
+  md-content{
+    background: #ffffff!important;
+  }
+</style>

@@ -132,6 +132,19 @@
     },
     BOOKS_BOUGHT_PAGE: function () {
       return '/sales/bought/';
+    },
+    BUSINESS_BOOKS_PERFORMANCE_PAGE: function () {
+      return '/business/sales/performance/';
+    },
+    BUSINESS_BOOKS_PERFORMANCE: function () {
+      return function (username) {
+        return '/users/'+username + '/sales/performance/';
+      };
+    },
+    BUSINESS_BOOKS_PROFIT: function () {
+      return function (username) {
+        return '/users/'+username + '/sales/profit/';
+      };
     }
   };
 }(litteraApp));

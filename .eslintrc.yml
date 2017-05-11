@@ -29,4 +29,5 @@ globals:
   Masonry: true
   jQuery: true
   ePub: true
+  Chart: true
 

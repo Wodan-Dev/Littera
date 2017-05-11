@@ -345,5 +345,6 @@ module.exports = {
   findByUserId: findByUserId,
   getLastSale: getLastSale,
   getSale: getSale,
-  alreadyInBasket: alreadyInBasket
+  alreadyInBasket: alreadyInBasket,
+  model: salesModel
 };

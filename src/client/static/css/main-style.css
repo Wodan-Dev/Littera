@@ -267,6 +267,10 @@ header .nav-user {
   margin-top: 0;
 }
 
+.column-no-border {
+  border: none;
+}
+
 .column-half {
   width: 48%;
 }

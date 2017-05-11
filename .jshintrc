@@ -19,6 +19,7 @@
     "moment": false,
     "Masonry": false,
     "jQuery": false,
-    "ePub": false
+    "ePub": false,
+    "Chart": false
   }
 }

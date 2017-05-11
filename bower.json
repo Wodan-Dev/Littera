@@ -25,7 +25,9 @@
     "jquery": "^1.7",
     "noty": "*",
     "angular-material": "^1.1.2",
-    "masonry": "^4.1.1"
+    "masonry": "^4.1.1",
+    "chart.js": "^2.5.0",
+    "angular-chart.js": "^1.1.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
@@ -34,6 +36,12 @@
     "angular": {
       "main": [
         "angular.min.js"
+      ]
+    },
+    "chart.js": {
+      "main": [
+        "dist/Chart.min.js",
+        "dist/Chart.bundle.min.js"
       ]
     },
     "angular-resource": {

@@ -9,7 +9,6 @@
 /**
  * Dependencies
  */
-
 const core = require('../../core');
 const choicesModel = require('../../../models/users/choices.model');
 const usersModel = require('../../../models/users/users.model');

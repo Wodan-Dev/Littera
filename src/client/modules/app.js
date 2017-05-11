@@ -3,7 +3,37 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function configApp($mdThemingProvider, $httpProvider, $routeProvider, $locationProvider) {
+  function configApp(
+    $mdThemingProvider,
+    $httpProvider,
+    $routeProvider,
+    $locationProvider) {
+
+    Chart.defaults.global.colours = [
+      '#97BBCD', // blue
+      '#DCDCDC', // light grey
+      '#F7464A', // red
+      '#46BFBD', // green
+      '#FDB45C', // yellow
+      '#949FB1', // grey
+      '#4D5360'  // dark grey
+    ];
+
+
+    /*ChartJsProvider.setOptions({
+      colors : [
+        '#803690',
+        '#009688',
+        '#DCDCDC',
+        '#008b7d',
+        '#FDB45C',
+        '#949FB1',
+        '#4D5360'
+      ]
+    });*/
+
+
+
     $mdThemingProvider.definePalette('amazingPaletteName', {
       /*'50': 'ffebee',
       '100': 'ffcdd2',
@@ -156,10 +186,12 @@
     litteraApp.modules.books.name,
     litteraApp.modules.users.name,
     litteraApp.modules.sales.name,
+    litteraApp.modules.business.name,
     litteraApp.core.name,
     'ngFileUpload',
     'angularCSS',
-    'ngMaterial'
+    'ngMaterial',
+    'chart.js'
   ]).constant('BASEURLS', {
     BASE: 'http://littera.pub',
     BASE_API: 'http://littera.pub/api',
