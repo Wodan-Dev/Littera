@@ -34,9 +34,45 @@
       ).get({}).$promise;
     }
 
+    function getBooksTotalProfit(username) {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.business.routes.booksTotalProfit(username), {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
+    function getBooksWritten(username) {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.business.routes.writtenBooks(username), {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
+    function getBooksCount(username, idBook) {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.business.routes.bookSalesCount(username, idBook), {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
     return {
       getBooksSalesPerformance: getBooksSalesPerformance,
-      getBooksSalesProfit: getBooksSalesProfit
+      getBooksSalesProfit: getBooksSalesProfit,
+      getBooksTotalProfit: getBooksTotalProfit,
+      getBooksWritten: getBooksWritten,
+      getBooksCount: getBooksCount
     };
   }
 

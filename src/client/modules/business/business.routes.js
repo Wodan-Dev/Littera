@@ -21,9 +21,14 @@
               return new Promise(function (resolve, reject) {
                 let userLogged = {};
                 let books = {};
+                let writtenBooks = {};
                 authenticationFactory.credential()
                   .then(function (data) {
                     userLogged = data.data.data;
+                    return businessFactory.getBooksWritten(userLogged.username);
+                  })
+                  .then(function (data) {
+                    writtenBooks = data.data;
                     return businessFactory.getBooksSalesPerformance(userLogged.username);
                   })
                   .then(function (data) {
@@ -31,6 +36,7 @@
                     return resolve({
                       user: userLogged,
                       books: books,
+                      writtenBooks: writtenBooks,
                       businessFactory: businessFactory
                     });
                   })

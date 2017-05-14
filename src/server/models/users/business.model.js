@@ -165,6 +165,150 @@ function getBooksValue(userId) {
     .exec();
 }
 
+function getBooksSalesByMonth(userId, bookId) {
+  console.log(userId);
+  console.log(bookId);
+  return salesModel.aggregate([
+    {
+      $match: {
+        'status': 2
+      }
+    },
+    {
+      $unwind: {
+        path: '$items'
+      }
+    },
+    {
+      $match: {
+        'items._id_book': db.getObjectId(bookId)
+      }
+    },
+    {
+      $project: {
+        '_id': '$items._id_book',
+        'month_year': {
+          '$concat': [
+            { '$substr': [ '$create_at', 5, 2 ] },
+            '/',
+            { '$substr': [ '$create_at', 0, 4 ] },
+
+          ]
+        }
+      }
+    },
+    {
+      $group:
+      {
+        _id: { month_year: '$month_year', '_id_book': '$_id' },
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: '_id._id_book',
+        foreignField: 'written_books._id_book',
+        as: 'user'
+      }
+    },
+    {
+      $unwind: {
+        path: '$user'
+      }
+    },
+    {
+      $match: {
+        'user._id': db.getObjectId(userId)
+      }
+    },
+    {
+      $lookup: {
+        from: 'books',
+        localField: '_id._id_book',
+        foreignField: '_id',
+        as: 'book'
+      }
+    },
+    {
+      $unwind: {
+        path: '$book'
+      }
+    },
+    {
+      $project: {
+        '_id': '$_id.month_year',
+        'count': 1,
+        '_id_book': '$_id._id_book',
+        'title': '$book.title',
+        'subtitle': '$book.subtitle',
+        'average_star': '$book.average_star'
+      }
+    }
+  ])
+    .exec();
+}
+
+
+
+function getBooksTotalByMonth(userId) {
+  return salesModel.aggregate([
+    {
+      $match: {
+        status: 2
+      }
+    },
+    {
+      $unwind: {
+        path: '$items'
+      }
+    },
+    {
+      $project: {
+        '_id': '$items._id_book',
+        'value': '$items.value',
+        'month_year': {
+          '$concat': [
+            { '$substr': [ '$create_at', 5, 2 ] },
+            '/',
+            { '$substr': [ '$create_at', 0, 4 ] }
+          ]
+        }
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: 'written_books._id_book',
+        as: 'user'
+      }
+    },
+    {
+      $unwind: {
+        path: '$user'
+      }
+    },
+    {
+      $match: {
+        'user._id': db.getObjectId(userId)
+      }
+    },
+    {
+      $group:
+      {
+        _id: '$month_year',
+        total: {
+          $sum: '$value'
+        }
+      }
+    }
+  ])
+    .exec();
+}
+
 
 
 /**
@@ -173,5 +317,7 @@ function getBooksValue(userId) {
  */
 module.exports = {
   getSalesPerformance: getSalesPerformance,
-  getBooksValue: getBooksValue
+  getBooksValue: getBooksValue,
+  getBooksSalesByMonth: getBooksSalesByMonth,
+  getBooksTotalByMonth: getBooksTotalByMonth
 };

@@ -11,6 +11,10 @@
     message,
     booksPerformanceData) {
     var vm = this;
+    vm.writtenBooks = [];
+    vm.selectedBook = {};
+    vm.showGraph = false;
+
     vm.books = [];
     let loggedUser = {};
     let businessFactory = {};
@@ -22,6 +26,12 @@
         break;
       case 1:
         valueProfitGraph();
+        break;
+      case 2:
+        valueTotalProfitGraph();
+        break;
+      case 3:
+        booksCountGraph();
         break;
       }
     });
@@ -72,38 +82,119 @@
     }
 
     function valueProfitGraph() {
+      vm.showGraph = false;
+    }
+
+    function valueTotalProfitGraph() {
       $rootScope.__showLoad = true;
-      businessFactory.getBooksSalesProfit(loggedUser.username)
+      businessFactory.getBooksTotalProfit(loggedUser.username)
         .then(function (data) {
-          console.log(data);
+          let labels = [];
+          let legend = [];
+          let serie = [];
+
+          let totalSales = $filter('orderBy')(data.data, '_id');
+
+
+          totalSales.map(function (month, pos) {
+            labels.push(month._id);
+            legend.push(month._id);
+            serie.push(month.total);
+          });
+
+
+
+          vm.actualGraph.series = ['Vendas'];
+          vm.actualGraph.legend = legend;
+          vm.actualGraph.data = [serie];
+          vm.actualGraph.labels = labels;
+
+
+
           $rootScope.__showLoad = false;
         })
         .catch(function (err) {
           $rootScope.__showLoad = false;
         });
-
-
-      vm.actualGraph.series = ['Nice Places'];
-      vm.actualGraph.legend = [
-        'Trenzalore',
-        'Earth',
-        'Caprica',
-        'Sol',
-        'Tau Ceti'];
-      vm.actualGraph.data = [[5, 10, 6, 7, 2]];
-      vm.actualGraph.labels = [
-        'Trenzalore',
-        'Earth',
-        'Caprica',
-        'Sol',
-        'Tau Ceti'];
     }
 
+    function booksCountGraph() {
+      $rootScope.__showLoad = true;
+      businessFactory.getBooksTotalProfit(loggedUser.username)
+        .then(function (data) {
+          let labels = [];
+          let legend = [];
+          let serie = [];
+
+          let totalSales = $filter('orderBy')(data.data, '_id');
+
+
+          totalSales.map(function (month, pos) {
+            labels.push(month._id);
+            legend.push(month._id);
+            serie.push(month.total);
+          });
+
+
+
+          vm.actualGraph.series = ['Vendas'];
+          vm.actualGraph.legend = legend;
+          vm.actualGraph.data = [serie];
+          vm.actualGraph.labels = labels;
+
+
+
+          $rootScope.__showLoad = false;
+        })
+        .catch(function (err) {
+          $rootScope.__showLoad = false;
+        });
+    }
+
+
+    vm.btnLoadBook = function () {
+      console.log(vm.selectedBook);
+
+      if (vm.selectedBook) {
+        businessFactory.getBooksCount(loggedUser.username, vm.selectedBook)
+          .then(function (data) {
+            console.log(data);
+            vm.showGraph = true;
+            let labels = [];
+            let legend = [];
+            let serie = [];
+
+            let totalSales = $filter('orderBy')(data.data, '_id');
+
+
+            totalSales.map(function (month, pos) {
+              labels.push(month._id);
+              legend.push(month._id);
+              serie.push(month.count);
+            });
+
+
+
+            vm.actualGraph.series = ['Vendas'];
+            vm.actualGraph.legend = legend;
+            vm.actualGraph.data = [serie];
+            vm.actualGraph.labels = labels;
+
+
+            $rootScope.__showLoad = false;
+          })
+          .catch(function (err) {
+            $rootScope.__showLoad = false;
+          });
+      }
+
+    };
 
     vm.init = function () {
       console.log(booksPerformanceData);
       businessFactory = booksPerformanceData.businessFactory;
       loggedUser = booksPerformanceData.user;
+      vm.writtenBooks = booksPerformanceData.writtenBooks;
       countTotalSales();
     };
 

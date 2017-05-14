@@ -145,6 +145,16 @@
       return function (username) {
         return '/users/'+username + '/sales/profit/';
       };
+    },
+    BUSINESS_BOOKS_TOTAL_PROFIT: function () {
+      return function (username) {
+        return '/users/'+username + '/sales/total/';
+      };
+    },
+    BUSINESS_BOOKS_BOOK_COUNT: function () {
+      return function (username, idBook) {
+        return '/users/'+username + '/sales/books/' + idBook;
+      };
     }
   };
 }(litteraApp));

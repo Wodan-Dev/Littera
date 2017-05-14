@@ -27,9 +27,28 @@
               </canvas>
             </md-content>
           </md-tab>
-          <md-tab label="Contagem">
+          <md-tab label="Contagem de vendas mensal">
             <md-content class="md-padding">
+              <form>
+                <div layout="row">
+                  <md-input-container>
+                    <label>Livros</label>
+                    <md-select ng-model="BookPerformanceCtrl.selectedBook">
+                      <md-option><em>None</em></md-option>
+                      <md-option ng-repeat="book in BookPerformanceCtrl.writtenBooks|orderBy:'_id_book.title'"
+                                 ng-value="book._id_book._id">
+                        {{book._id_book.title + (book._id_book.subtitle ? ' - ' + book._id_book.subtitle : '')}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                  <md-input-container>
+                    <button class="btn btn-primary-inverted"
+                            ng-click="BookPerformanceCtrl.btnLoadBook()">Carregar</button>
+                  </md-input-container>
+                </div>
+              </form>
               <canvas
+                ng-show="BookPerformanceCtrl.showGraph";
                 id="barb"
                 flex="100"
                 class="chart chart-bar"
@@ -39,9 +58,20 @@
                 chart-series="BookPerformanceCtrl.actualGraph.series"
                 chart-colours="BookPerformanceCtrl.actualGraph.colours">
               </canvas>
+            </md-content>
           </md-tab>
-          <md-tab label="three">
+          <md-tab label="Lucro mensal">
             <md-content class="md-padding">
+              <canvas
+                id="barc"
+                flex="100"
+                class="chart chart-line"
+                chart-options="BookPerformanceCtrl.actualGraph.options"
+                chart-data="BookPerformanceCtrl.actualGraph.data"
+                chart-labels="BookPerformanceCtrl.actualGraph.labels"
+                chart-series="BookPerformanceCtrl.actualGraph.series"
+                chart-colours="BookPerformanceCtrl.actualGraph.colours">
+              </canvas>
             </md-content>
           </md-tab>
         </md-tabs>

@@ -54,6 +54,39 @@ function getSalesProfit(req, res) {
     });
 }
 
+function getTotalProfit(req, res) {
+
+  let username = req.params.username || '-';
+
+  usersModel.findByUserName(username)
+    .then(function (user) {
+      return businessModel.getBooksTotalByMonth(user._id);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+    });
+}
+
+function getTotalBookCount(req, res) {
+
+  let username = req.params.username || '-';
+  let idBook = req.params.idBook || '-';
+
+  usersModel.findByUserName(username)
+    .then(function (user) {
+      return businessModel.getBooksSalesByMonth(user._id, idBook);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+    });
+}
+
 /**
  * Create Instance to router object
  * @param  {Object} express Express
@@ -65,6 +98,9 @@ function router(express, auth) {
 
   routes.get('/:username/sales/performance/', auth, getSalesPerformance);
   routes.get('/:username/sales/profit/', auth, getSalesProfit);
+  routes.get('/:username/sales/total/', auth, getTotalProfit);
+  routes.get('/:username/sales/books/:idBook', auth, getTotalBookCount);
+
 
   return routes;
 }

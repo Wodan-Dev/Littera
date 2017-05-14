@@ -15,7 +15,10 @@
       home: litteraApp.URLS.HOME(),
       booksPerformancePage: litteraApp.URLS.BUSINESS_BOOKS_PERFORMANCE_PAGE(),
       booksPerformance: litteraApp.URLS.BUSINESS_BOOKS_PERFORMANCE(),
-      booksProfit: litteraApp.URLS.BUSINESS_BOOKS_PROFIT()
+      booksProfit: litteraApp.URLS.BUSINESS_BOOKS_PROFIT(),
+      booksTotalProfit: litteraApp.URLS.BUSINESS_BOOKS_TOTAL_PROFIT(),
+      writtenBooks: litteraApp.URLS.WRITTENBOOKS(),
+      bookSalesCount: litteraApp.URLS.BUSINESS_BOOKS_BOOK_COUNT()
     },
     factories: {
       business: 'businessFactory'
