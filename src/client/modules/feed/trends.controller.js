@@ -15,22 +15,13 @@
     vm.init = function() {
       trendsService.getTrends()
         .then(function (trends) {
-          console.log(trends);
           vm.topUsers = trends.data.users;
           vm.topBooks = trends.data.books;
         })
         .catch(function (err) {
-          console.log(err);
         });
 
     };
-
-    vm.goToUser = function (username) {
-
-    };
-
-
-
   }
 
   TrendsCtrl.$inject = [

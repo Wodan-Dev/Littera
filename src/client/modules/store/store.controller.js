@@ -102,7 +102,9 @@
     };
 
     vm.inWishList = function (id) {
-      if (vm.isLogged()) {
+      if (vm.isLogged() &&
+         (vm.loggedUser.wishlist) &&
+         (vm.loggedUser.wishlist.length)) {
         return $filter('filter')(vm.loggedUser.wishlist, { _id_book: id }).length;
       }
 
@@ -173,9 +175,15 @@
           };
 
           return salesFactory.addToBasket(saleItem);
+
         })
         .then(function () {
-          message.notification('information', 'Adicionado ao carrinho com sucesso!!');
+          message.notification('information', 'Adicionado ao carrinho com sucesso!!')
+            .then(function () {
+              $scope.$apply(function () {
+                $location.path('/sales/');
+              });
+            });
         })
         .catch(function (err) {
           if(err.data.data.err)

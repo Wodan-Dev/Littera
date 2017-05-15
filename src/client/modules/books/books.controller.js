@@ -122,7 +122,9 @@
     };
 
     vm.inWishList = function (id) {
-      if (vm.isLogged()) {
+      if (vm.isLogged() &&
+        (vm.loggedUser.wishlist) &&
+        (vm.loggedUser.wishlist.length)) {
         return $filter('filter')(vm.loggedUser.wishlist, { _id_book: id }).length;
       }
 
