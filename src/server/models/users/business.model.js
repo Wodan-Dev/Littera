@@ -166,8 +166,6 @@ function getBooksValue(userId) {
 }
 
 function getBooksSalesByMonth(userId, bookId) {
-  console.log(userId);
-  console.log(bookId);
   return salesModel.aggregate([
     {
       $match: {
@@ -309,6 +307,123 @@ function getBooksTotalByMonth(userId) {
     .exec();
 }
 
+function getTopUserSales() {
+  return salesModel.aggregate([
+    {
+      $match: {
+        status: 2
+      }
+    },
+    {
+      $unwind: {
+        path: '$items'
+      }
+
+    },
+    {
+      $lookup: {
+        from: 'users',
+        foreignField: 'written_books._id_book',
+        localField: 'items._id_book',
+        as: 'user'
+      }
+    },
+    {
+      $unwind: {
+        path: '$user'
+      }
+    },
+    {
+      $group: {
+        _id: {
+          _id: '$user._id',
+          name: '$user.name',
+          username: '$user.username',
+          email: '$user.email',
+          cover_image: '$user.cover_image'
+        },
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    },
+    {
+      $project: {
+        _id: '$_id._id',
+        name: '$_id.name',
+        username: '$_id.username',
+        cover_image: '$_id.cover_image',
+        count: '$count'
+
+      }
+    },
+    {
+      $limit: 4
+    }
+  ])
+    .exec();
+}
+
+
+function getTopBooksSales() {
+  return salesModel.aggregate([
+    {
+      $match: {
+        status: 2
+      }
+    },
+    {
+      $unwind: {
+        path:'$items'
+      }
+
+    },
+    {
+      $group: {
+        _id: '$items._id_book',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    },
+    {
+      $limit: 3
+    },
+    {
+      $lookup: {
+        from: 'books',
+        foreignField: '_id',
+        localField: '_id',
+        as: 'book'
+      }
+    },
+    {
+      $unwind: {
+        path: '$book'
+      }
+    },
+    {
+      $project: {
+        '_id': '$book._id',
+        'title': '$book.title',
+        'subtitle': '$book.subtitle',
+        'cover_image': '$book.cover_image',
+        'count': 1
+      }
+    }
+  ])
+    .exec();
+}
 
 
 /**
@@ -319,5 +434,7 @@ module.exports = {
   getSalesPerformance: getSalesPerformance,
   getBooksValue: getBooksValue,
   getBooksSalesByMonth: getBooksSalesByMonth,
+  getTopUserSales: getTopUserSales,
+  getTopBooksSales: getTopBooksSales,
   getBooksTotalByMonth: getBooksTotalByMonth
 };

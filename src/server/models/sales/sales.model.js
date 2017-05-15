@@ -231,6 +231,7 @@ function alreadyInBasket(idSale, idBook) {
     .exec();
 }
 
+
 /**
  * Validate create
  * @param  {Object} sale Sale object

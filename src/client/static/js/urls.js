@@ -155,6 +155,9 @@
       return function (username, idBook) {
         return '/users/'+username + '/sales/books/' + idBook;
       };
+    },
+    TRENDS: function () {
+      return '/users/top/trends';
     }
   };
 }(litteraApp));

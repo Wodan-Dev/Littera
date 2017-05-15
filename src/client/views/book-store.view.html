@@ -129,8 +129,10 @@
       </div>
     </div>
 
-    <div class="column column-all more-data">
-      <a class="btn btn-default full" ng-click="StoreCtrl.btnLoadMore()">Mais</a>
+    <div class="column column-all more-data"
+         style="background: none">
+      <a class="btn btn-default full"
+         ng-click="StoreCtrl.btnLoadMore()">Mais</a>
 
     </div>
   </div>
@@ -154,76 +156,3 @@
   }
 </style>
 
-
-
-<!--<div class="feed-notices" ng-init="StoreCtrl.init()">
-  <ul>
-    <li ng-repeat="r in StoreCtrl.books">
-      <div  class="column column-half">
-        <div class="notice-image">
-          <div class="shop-image-box">
-            <img class="shop-cover" ng-src="{{ r.cover_image  || './static/images/no-image.png' }}" />
-            <a ng-click="StoreCtrl.btnShowDetail(r._id)" class="shop-more">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </a>
-          </div>
-        </div>
-        <div class="notice-user">
-          <div class="user-picture">
-            <a ng-href="#/users/{{ r.user._id }}">
-              <img ng-src="{{ r.user.cover_image  || './static/images/no-image.png' }}">
-            </a>
-          </div>
-          <div class="user-name">
-            <a ng-href="#/users/{{ r.user._id }}" class="name link-default">{{ r.user.name }}</a>
-            <a ng-href="#/users/{{ r.user._id }}" class="username link-tiny">@{{ r.user.username }}</a>
-          </div>
-        </div>
-        <div class="notice-content">
-          <h3 class="title">
-            <a ng-href="#/books/{{ r._id }}" class="link-title" ng-bind="r.title"></a>
-          </h3>
-        </div>
-        <div class="notice-shop">
-          <a class="btn btn-primary-inverted full" ng-href="#/sales/{{ r.user._id }}">Comprar</a>
-        </div>
-      </div>
-      <div class="shop-book-detail"
-           ng-show="__showModal"
-           id="book-{{r._id}}">
-        <div class="notice-user">
-          <div class="user-picture">
-            <a href="#">
-              <img ng-src="{{ r.user.cover_image  || './static/images/no-image.png' }}">
-            </a>
-          </div>
-          <div class="user-name">
-            <a ng-href="#/users/{{ r.user._id }}" class="name link-default">{{ r.user.name }}</a>
-            <a ng-href="#/users/{{ r.user._id }}" class="username link-tiny">@{{ r.user.username }}</a>
-            <a class="btn btn-primary btn-follow" style="width: 120px" href="#">
-              Comprar
-            </a>
-          </div>
-          <div class="user-options">
-            <a ng-click="StoreCtrl.btnCloseDetail(r._id)">
-              <i class="fa fa-times fa-lg"  style="color: #00AB6B;" aria-hidden="true"></i>
-            </a>
-          </div>
-        </div>
-        <div class="synopsis">
-          <p ng-bind="r.synopsis"></p>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <div class="column column-all more-data">
-    <a class="btn btn-default full" ng-click="StoreCtrl.btnLoadMore()">Mais</a>
-
-  </div>
-</div>
-<div class="trends" data-scroll="dock"
-     ng-include="'views/trends.view.html'">
-
-</div>
-
--->

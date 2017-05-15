@@ -9,16 +9,22 @@
       feed: {
         name: 'FeedController',
         nameas: 'FeedCtrl'
+      },
+      trends: {
+        name: 'TrendsController',
+        nameas: 'TrendsCtrl'
       }
     },
     routes: {
       feed: litteraApp.URLS.FEED(),
+      trends: litteraApp.URLS.TRENDS(),
       feed_page: litteraApp.URLS.FEED_PAGE()
     },
     factories: {
 
     },
     services: {
+      trends: 'trendsService',
       feed: 'feedService'
     },
     templates: {

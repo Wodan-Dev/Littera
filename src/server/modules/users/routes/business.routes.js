@@ -87,6 +87,25 @@ function getTotalBookCount(req, res) {
     });
 }
 
+function getTopSales(req, res) {
+  let userSales = {};
+  businessModel.getTopUserSales()
+    .then(function (user) {
+      userSales = user;
+      return businessModel.getTopBooksSales();
+    })
+    .then(function (bookSales) {
+
+      http.render(res, {
+        users: userSales,
+        books: bookSales
+      });
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+    });
+}
+
 /**
  * Create Instance to router object
  * @param  {Object} express Express
@@ -100,6 +119,7 @@ function router(express, auth) {
   routes.get('/:username/sales/profit/', auth, getSalesProfit);
   routes.get('/:username/sales/total/', auth, getTotalProfit);
   routes.get('/:username/sales/books/:idBook', auth, getTotalBookCount);
+  routes.get('/top/trends/', getTopSales);
 
 
   return routes;
