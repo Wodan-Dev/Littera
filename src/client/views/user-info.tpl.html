@@ -25,6 +25,11 @@
         <a class="btn-followers link-tiny"
            ng-class="{'active': 4 === UserDetailCtrl.selectedTab }"
            ng-click="UserDetailCtrl.changePage(4)">{{ UserDetailCtrl.user.followers.length }} Seguidores</a>
+        <a ng-click="UserDetailCtrl.changePage(6)"
+           class="btn-stars link-tiny"
+           ng-class="{'active': 6 === UserDetailCtrl.selectedTab }">
+          <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i> {{ UserDetailCtrl.user.average_stars }}
+        </a>
         <a
           hide-xs
           class="btn btn-primary btn-follow"

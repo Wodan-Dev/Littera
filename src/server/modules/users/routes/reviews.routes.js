@@ -92,6 +92,9 @@ function post(req, res) {
     .then(function (result) {
       return reviewsModel.insert(_id, result.value);
     })
+    .then(function() {
+      return usersModel.updateAverageStars(_id);
+    })
     .then(function (result) {
       http.render(res, result);
     })

@@ -42,8 +42,6 @@
     vm.selectedTab = 1;
 
 
-
-
     vm.readonly = false;
     vm.err = false;
 
@@ -72,6 +70,14 @@
         'reviews': [],
         'average_stars': 0
       }
+    };
+
+    vm.hasError = function (field) {
+      return has_error.hasError(field);
+    };
+
+    vm.getErrorMessage = function (field) {
+      return has_error.getErrorMessage(field);
     };
 
     vm.isLogged = function () {

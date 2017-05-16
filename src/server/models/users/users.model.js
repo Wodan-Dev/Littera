@@ -126,6 +126,64 @@ function findByUserEmail(email) {
   return usersModel.findOne({ email: email }).exec();
 }
 
+function updateAverageStars(id) {
+
+  let query = {
+    _id: db.getObjectId(id.toString())
+  };
+
+  let opt = {
+    upsert: false,
+    new: true
+  };
+
+  let averageStars = 0;
+
+  return usersModel.aggregate([
+    {
+      $match:
+      {
+        _id: db.getObjectId(id.toString())
+      }
+    },
+    {
+      $unwind: {
+        path: '$reviews',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $group:
+      {
+        _id: '$_id',
+        total: { $sum: '$reviews.stars' },
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $project: {
+        _id: '$_id',
+        average_stars: {
+          $divide: [ '$total', '$count' ]
+        }
+
+      }
+    }
+  ])
+    .exec()
+    .then(function (avg) {
+      averageStars = avg[0].average_stars;
+      return usersModel.findById(id).exec();
+    })
+    .then(function (user) {
+      user.average_stars = parseFloat((averageStars > 5 ? 5 : averageStars).toFixed(1));
+
+      return usersModel
+        .findOneAndUpdate(query, user, opt)
+        .exec();
+    });
+}
+
 /**
  * Validate create
  * @param  {Object} user user object
@@ -186,5 +244,6 @@ module.exports = {
   findById: findById,
   findByUserName: findByUserName,
   findByUserEmail: findByUserEmail,
+  updateAverageStars: updateAverageStars,
   model: usersModel
 };

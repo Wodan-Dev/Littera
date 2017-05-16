@@ -3,16 +3,25 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function UserDetailCtrl($scope,
-                          $filter,
-                          $routeParams,
-                          authentication,
-                          request,
-                          userData) {
+  function UserDetailCtrl(
+    $rootScope,
+    $scope,
+    $filter,
+    $routeParams,
+    authentication,
+    request,
+    userData,
+    has_error,
+    usersFactory) {
     var vm = this;
     vm.loggedUser = {};
     vm.selectedTab = 0;
     vm.isAuthenticated = false;
+    vm.review = {
+      comment: '',
+      stars: 1
+    };
+
     vm.tabs = [
       {
         id: 0,
@@ -61,10 +70,8 @@
                 });
               }
 
-
-
-
-              if (($routeParams.tab) && ([0, 1, 2, 3, 4, 5].indexOf(parseInt($routeParams.tab)) > -1))
+              if (($routeParams.tab) &&
+                 ([0, 1, 2, 3, 4, 5, 6].indexOf(parseInt($routeParams.tab)) > -1))
                 vm.selectedTab = parseInt($routeParams.tab);
             });
           })
@@ -82,9 +89,6 @@
       let tot = $filter('filter')(vm.loggedUser.following, { _id_user_follow: vm.user._id });
       return (tot || []).length > 0;
     };
-
-
-
 
     vm.btnUnFollow = function () {
 
@@ -104,7 +108,6 @@
 
         });
     };
-
 
     vm.btnFollow = function () {
 
@@ -129,19 +132,95 @@
         });
     };
 
-
     vm.changePage = function (page) {
       vm.selectedTab = page;
+    };
+
+    vm.hasError = function (field) {
+      return has_error.hasError(field);
+    };
+
+    vm.getErrorMessage = function (field) {
+      return has_error.getErrorMessage(field);
+    };
+
+    vm.btnPostRanking = function () {
+      if(authentication.isAuthenticated() &&
+        !vm.sameUser()) {
+        has_error.clearError();
+        $rootScope.__showLoad = true;
+        let ran = {
+          _id_user_comment: vm.user._id,
+          _id_user: vm.loggedUser._id,
+          comment: vm.review.comment,
+          stars: vm.review.stars
+        };
+        usersFactory.saveRanking(vm.user.username, ran)
+          .then(function (data) {
+
+            $scope.$apply(function () {
+
+              vm.user.average_stars = data.data.data.average_stars;
+              let newReview = {
+                _id: Math.floor(Math.random(0, 1) * 99999999999999999).toString() + new Date().getTime(),
+                stars: ran.stars,
+                comment: ran.comment,
+                create_at: moment(),
+                modified_at: moment(),
+                _id_user: {
+                  _id: vm.loggedUser._id,
+                  username: vm.loggedUser.username,
+                  name: vm.loggedUser.name,
+                  email: vm.loggedUser.email,
+                  followers: [],
+                  following: [],
+                  cover_image: vm.loggedUser.cover_image
+                }
+
+              };
+
+              vm.review = {
+                comment: '',
+                stars: 1
+              };
+
+              vm.user.reviews.unshift(newReview);
+
+              $rootScope.__showLoad = false;
+            });
+          })
+          .catch(function (data) {
+            if (data.data) {
+              let lst = data.data.data.err;
+              $scope.$apply(function () {
+                if (lst instanceof Array) {
+                  for (var i = 0, len = lst.length; i < len; i++) {
+                    has_error.addError(lst[i].field, lst[i].message);
+                  }
+                }
+                else {
+                  has_error.addError(data.data.data.value, data.data.data.err);
+                }
+
+                $rootScope.__showLoad = false;
+
+              });
+            }
+          });
+      }
     };
   }
 
   UserDetailCtrl.$inject = [
+    '$rootScope',
     '$scope',
     '$filter',
     '$routeParams',
     litteraApp.modules.users.imports.authentication,
     litteraApp.modules.users.imports.request,
-    'userData'
+    'userData',
+    litteraApp.modules.users.imports.has_error,
+    litteraApp.modules.users.factories.users
   ];
 
   angular.module(litteraApp.modules.users.name)

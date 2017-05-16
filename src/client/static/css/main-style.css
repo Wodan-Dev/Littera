@@ -881,6 +881,15 @@ header .nav-user {
   font-size: .7em;
 }
 
+.user-feed .feed-profile .feed-profile-options a.btn-stars {
+  font-weight: 600;
+  color: #555555;
+  cursor: pointer;
+  display: block;
+  padding-top: .625rem;/* 5px */
+  font-size: .8em;
+}
+
 .user-feed .feed-profile .feed-profile-options a.btn-following:hover,
 .user-feed .feed-profile .feed-profile-options a.btn-followers:hover {
   color: rgb(10,10,10);
@@ -888,7 +897,8 @@ header .nav-user {
 }
 
 .user-feed .feed-profile .feed-profile-options a.btn-following.active,
-.user-feed .feed-profile .feed-profile-options a.btn-followers.active {
+.user-feed .feed-profile .feed-profile-options a.btn-followers.active,
+.user-feed .feed-profile .feed-profile-options a.btn-stars.active{
   color: rgb(10,10,10);
   font-weight: 500;
   text-decoration: underline;

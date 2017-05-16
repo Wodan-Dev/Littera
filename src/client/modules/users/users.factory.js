@@ -42,12 +42,17 @@
       return request._upload(url, file);
     }
 
+    function saveRanking(username, ranking) {
+      return request._post('/users/'+ username +'/reviews', ranking);
+    }
+
 
     return {
       getUser: getUser,
       getUserByUserName: getUserByUserName,
       update: update,
-      updateImg: updateImg
+      updateImg: updateImg,
+      saveRanking: saveRanking
     };
   }
 

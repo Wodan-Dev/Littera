@@ -45,6 +45,7 @@
       </div>
     </div>
 
+
     <div flex="100"
          ng-show="UserDetailCtrl.selectedTab === 0"
          class="column column-all"
@@ -220,6 +221,122 @@
         </li>
       </ul>
     </div>
+
+    <md-content layout="column" class=" column column-all first-column"
+                ng-show="UserDetailCtrl.selectedTab === 6">
+      <md-list class="md-dense" flex
+               ng-show="UserDetailCtrl.isAuthenticated &&
+                        !UserDetailCtrl.sameUser()"
+               style="border-bottom: solid .0625rem /* 1px */ #DADADA;">
+        <md-list-item class="md-3-line" ng-repeat="r in [UserDetailCtrl.loggedUser]">
+          <div layout="column"
+               flex="100">
+            <div flex="100"
+                 layout="row">
+              <img ng-src="{{ r.cover_image  || './static/images/no-image.png' }}"
+                   class="md-avatar"
+                   alt="r.name" />
+              <div class="md-list-item-text"
+                   layout="column"
+                   flex="100">
+                <form
+                  class="form-container" novalidate
+                  layout="column"
+                  flex="100">
+                  <md-input-container>
+                    <md-select ng-model="UserDetailCtrl.review.stars" placeholder="Avaliação">
+                      <md-option ng-selected="true" ng-value="1">
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                      </md-option>
+                      <md-option ng-value="2">
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                      </md-option>
+                      <md-option ng-value="3">
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                      </md-option>
+                      <md-option ng-value="4">
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                      </md-option>
+                      <md-option ng-value="5">
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                        <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                  <div class="form-group"  flex="90"
+                       ng-class="{ 'has-error': UserDetailCtrl.hasError('comment') }">
+                            <textarea name="txtRanking"
+                                      id="txtRanking"
+                                      ng-model="UserDetailCtrl.review.comment"
+                                      required="required"></textarea>
+                    <label class="control-label"
+                           ng-class="{ 'has-error': UserDetailCtrl.hasError('comment') }"
+                           for="txtRanking">Escreva sua avaliação
+                    </label><i class="bar"></i>
+                    <p class="field-err" ng-if="UserDetailCtrl.hasError('comment')" >{{UserDetailCtrl.getErrorMessage('comment')}}</p>
+                  </div>
+                  <div style="margin-top: .625rem"
+                       class="button-group">
+                    <a class="btn btn-primary"
+                       style="width: 6.25rem"
+                       ng-click="UserDetailCtrl.btnPostRanking()">
+                      Publicar
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </md-list-item>
+
+      </md-list>
+      <h5 ng-show="!UserDetailCtrl.user.reviews.length" class="md-padding md-title" >Ninguém avaliou ainda :/</h5>
+
+
+      <md-list class="md-dense" flex ng-show="UserDetailCtrl.user.reviews.length">
+        <md-list-item class="md-3-line" ng-repeat="r in UserDetailCtrl.user.reviews|orderBy:'create_at':false"
+                      style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
+                      layout-padding>
+          <div layout="column"
+               flex="100">
+            <div flex="100"
+                 layout="row">
+              <img ng-src="{{ r._id_user.cover_image  || './static/images/no-image.png' }}"
+                   class="md-avatar"
+                   alt="r.name" />
+              <div class="md-list-item-text"
+                   flex="100"
+                   layout="column"
+                   layout-padding>
+                <a ng-href="#/user/{{ r._id_user.username }}" class="name link-default">{{ r._id_user.name }}</a>
+                <a ng-href="#/user/{{ r._id_user.username }}" class="username link-tiny">@{{ r._id_user.username }}</a>
+                <a class="stars name"
+                   style="color: #00AB6B; font-size:.8rem">
+                  <i class="fa fa-star fa-fw" style="color: #00AB6B;" aria-hidden="true"></i>
+                  {{ r.stars }}
+                </a>
+              </div>
+            </div>
+            <div layout-padding  flex="100" class="content">
+              <p>{{ r.comment }}</p>
+            </div>
+          </div>
+
+        </md-list-item>
+
+      </md-list>
+    </md-content>
+
   </div>
   <div flex="35"
        hide-xs
