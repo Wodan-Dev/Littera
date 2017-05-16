@@ -168,8 +168,9 @@
             <div flex="100" >
               <span >Sugerido: {{ BookCreateCtrl.price.suggested|currency:'R$ '}}</span>
               <md-slider flex class="md-primary"
+                         ng-change="BookCreateCtrl.updateMaxValueDef()"
                          ng-model="BookCreateCtrl.price.suggested"
-                         step="1" min="0" max="999" aria-label="Sugerido"></md-slider>
+                         step="1" min="0" max="{{ BookCreateCtrl.maxPriceDef }}" aria-label="Sugerido"></md-slider>
             </div>
           </md-input-container>
 
@@ -199,8 +200,9 @@
             <div flex="100" >
               <span >Sugerido: {{ BookCreateCtrl.promotion.suggested|currency:'R$ '}}</span>
               <md-slider flex class="md-primary"
+                         ng-change="BookCreateCtrl.updateMaxValuePro()"
                          ng-model="BookCreateCtrl.promotion.suggested"
-                         step="1" min="0" aria-label="Sugerido"></md-slider>
+                         step="1" min="0" max="{{BookCreateCtrl.price.suggested}}" aria-label="Sugerido"></md-slider>
             </div>
           </md-input-container>
 

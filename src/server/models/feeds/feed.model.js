@@ -78,7 +78,7 @@ function list(page) {
       page: page,
       limit: pageSize,
       sort: {
-        'created_at': 'descending'
+        'create_at': 'descending'
       },
       populate: '_id_book _id_user'
     });
@@ -104,7 +104,7 @@ function findByUser(follows, page) {
       page: page,
       limit: pageSize,
       sort: {
-        'created_at': 'descending'
+        'create_at': 'descending'
       },
       populate: '_id_book _id_user'
     });

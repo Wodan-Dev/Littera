@@ -23,7 +23,7 @@ const keywordsSchema = new db.mongoose.Schema({
     required: true,
     index: true
   },
-  created_at: {
+  create_at: {
     type: Date,
     required: true,
     default: date.getDateUTC()

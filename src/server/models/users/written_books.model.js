@@ -27,8 +27,6 @@ const checkField = core.validator.validator;
  */
 function insert(id, book) {
 
-  console.log('book');
-  console.log(book);
   let query = {
     _id: db.getObjectId(id)
   };

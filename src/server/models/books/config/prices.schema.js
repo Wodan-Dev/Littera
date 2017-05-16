@@ -38,7 +38,7 @@ const pricesSchema = new db.mongoose.Schema({
     required: true,
     enum: [0, 1]
   },
-  created_at: {
+  create_at: {
     type: Date,
     required: true,
     default: date.getDateUTC()

@@ -29,7 +29,7 @@ const termsSchema = new db.mongoose.Schema({
     default: 1,
     enum: [0, 1]
   },
-  created_at: {
+  create_at: {
     type: Date,
     required: true,
     default: date.getDateUTC()

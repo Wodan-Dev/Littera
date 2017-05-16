@@ -72,7 +72,7 @@ function remove(id) {
 function list(page) {
   let pageSize = parseInt(config.getPageSize());
   return tagsModel.find({})
-    .sort({ 'created_at': -1})
+    .sort({ 'create_at': -1})
     .exec();
   /*return tagsModel.paginate(
     {
@@ -82,7 +82,7 @@ function list(page) {
       page: page,
       limit: pageSize,
       sort: {
-        'created_at': 'descending'
+        'create_at': 'descending'
       }
     })*/
 }

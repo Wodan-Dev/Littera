@@ -160,7 +160,7 @@ function list(page) {
       page: page,
       limit: pageSize,
       sort: {
-        'created_at': 'descending'
+        'create_at': 'descending'
       }
     });
 }
@@ -191,7 +191,7 @@ function findByUserId(id, page) {
       page: page,
       limit: pageSize,
       sort: {
-        'created_at': 'descending'
+        'create_at': 'descending'
       },
       populate: 'items._id_book'
     });

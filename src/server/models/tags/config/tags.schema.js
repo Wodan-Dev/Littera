@@ -24,7 +24,7 @@ const tagsSchema = new db.mongoose.Schema({
     index: true,
     unique: true
   },
-  created_at: {
+  create_at: {
     type: Date,
     required: true,
     default: date.getDateUTC()

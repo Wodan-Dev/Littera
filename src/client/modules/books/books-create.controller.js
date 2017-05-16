@@ -31,7 +31,6 @@
       suggested: 0
     };
 
-
     vm.book = {
       _id: '-',
       _id_user: '',
@@ -59,6 +58,8 @@
     vm.lstKeyWords = [];
     vm.filterSelected = true;
     vm.cover_url = '';
+    vm.maxPriceDef = 100;
+    vm.maxPricePro = 100;
 
     vm.cbei18n = [
       { desc: 'Albanian (Albania)', id: 'sq_AL' },
@@ -221,7 +222,6 @@
       { desc:'Oculto', id: 2 }
     ];
 
-    /*vm.selectedStatus = vm.cbeStatus[0];*/
     vm.selectedVisible = vm.cbeVisible[0];
     vm.selectedI18n = vm.cbei18n[104];
 
@@ -234,12 +234,10 @@
         });
     }
 
-
     vm.init = function () {
       loadTags();
 
       if ($routeParams.id) {
-        let a = $routeParams.id;
 
         bookData.data.keywords.map(function (item) {
           vm.lstKeyWords.push(item.content);
@@ -247,8 +245,6 @@
 
         vm.selectedVisible = $filter('filter')(vm.cbeVisible, { id: bookData.data.visible })[0];
         vm.selectedI18n = $filter('filter')(vm.cbei18n, { id: bookData.data.language })[0];
-
-
 
         vm.cover_url = bookData.data.cover_image;
         vm.noPrice = bookData.data.prices.length === 0;
@@ -260,6 +256,10 @@
               minimum: priceDef[0].price_min,
               suggested: priceDef[0].price_sug
             };
+
+            vm.maxPrice = vm.price.suggested + 15;
+
+
           }
           priceDef = $filter('filter')(bookData.data.prices, { type: 1 });
           if (priceDef.length) {
@@ -271,9 +271,6 @@
           }
 
         }
-
-
-
 
         vm.book = {
           _id: bookData.data._id,
@@ -296,8 +293,6 @@
           comments: bookData.data.comments,
           cover_image: bookData.data.cover_image
         };
-
-
       }
     };
 
@@ -329,7 +324,21 @@
       return chip;
     };
 
+    vm.updateMaxValueDef = function () {
 
+      let perc = vm.maxPriceDef * 0.10;
+      if ((vm.maxPriceDef - vm.price.suggested) < perc)
+        vm.maxPriceDef += 10;
+
+    };
+
+    vm.updateMaxValuePro = function () {
+
+      let perc = vm.maxPricePro * 0.10;
+      if ((vm.maxPricePro - vm.promotion.suggested) < perc)
+        vm.maxPricePro += 10;
+
+    };
 
     $scope.setFile = function(element) {
       $scope.currentFile = element.files[0];
@@ -364,29 +373,6 @@
       return has_error.getErrorMessage(field);
     };
 
-    /*vm.btnCreate = function () {
-
-      console.log(contentActual);
-      console.log($scope.currentContent);
-      var formData = new FormData();
-      formData.append('content', $scope.currentContent);
-
-
-      request._upload('/books/content/1', {
-        content: $scope.currentContent
-      })
-        .then(function (data) {
-          console.log(data);
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-
-
-
-      console.log($scope.setContent);
-    };*/
-
     vm.btnCreate = function () {
       let bookNew = {};
       let idFolder = '';
@@ -407,11 +393,7 @@
             };
           }
 
-
-
           username = data.data.data.username;
-
-
 
           vm.book.img_data = vm.book.cover_image;
 

@@ -79,7 +79,7 @@ function list(page) {
       page: page,
       limit: pageSize,
       sort: {
-        'created_at': 'descending'
+        'create_at': 'descending'
       }
     });
 }

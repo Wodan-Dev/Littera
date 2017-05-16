@@ -34,7 +34,7 @@ const rankingsSchema = new db.mongoose.Schema({
     type: String,
     required: true
   },
-  created_at: {
+  create_at: {
     type: Date,
     required: true,
     default: date.getDateUTC()

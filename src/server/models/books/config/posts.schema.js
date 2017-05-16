@@ -33,7 +33,7 @@ const postsSchema = new db.mongoose.Schema({
     required: true,
     default: 0
   },
-  created_at: {
+  create_at: {
     type: Date,
     required: true,
     default: date.getDateUTC()

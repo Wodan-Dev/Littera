@@ -280,7 +280,7 @@
                 'following': [],
                 'cover_image': vm.loggedUser.cover_image,
                 'reviews': [],
-                'created_at': moment()
+                'create_at': moment()
               };
               vm.ranking = {
                 comment: '',

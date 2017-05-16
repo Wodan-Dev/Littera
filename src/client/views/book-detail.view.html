@@ -171,7 +171,7 @@
 
 
                 <md-list class="md-dense" flex ng-show="BooksCtrl.book.rankings.length">
-                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.rankings|orderBy:'-created_at':false"
+                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.rankings|orderBy:'-create_at':false"
                                 style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
                                 layout-padding>
                     <div layout="column"
@@ -269,7 +269,7 @@
 
 
                 <md-list class="md-dense" flex ng-show="BooksCtrl.book.comments.length">
-                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.comments|orderBy:'-created_at':false"
+                  <md-list-item class="md-3-line" ng-repeat="r in BooksCtrl.book.comments|orderBy:'-create_at':false"
                                 style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
                                 layout-padding>
                     <div layout="column"

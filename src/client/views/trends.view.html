@@ -1,6 +1,7 @@
 <div ng-controller="TrendsController as TrendsCtrl"
      ng-init="TrendsCtrl.init()">
-  <div class="trend-block">
+  <div class="trend-block"
+       ng-show="TrendsCtrl.topUsers.length">
     <h4>Em alta</h4>
   </div>
 
@@ -18,10 +19,12 @@
           <div class="md-list-item-text"
                flex="100"
                layout="column">
-            <a ng-href="#/user/{{ r.username }}"
+            <a style="padding-top: .625rem"
+               ng-href="#/user/{{ r.username }}"
                class="name link-default">{{ r.name }}</a>
             <br />
-            <a ng-href="#/user/{{ r.username }}"
+            <a style="padding-top: .625rem"
+               ng-href="#/user/{{ r.username }}"
                class="username link-tiny">@{{ r.username }}</a>
           </div>
         </div>
@@ -31,7 +34,8 @@
 
   </md-list>
 
-  <div class="trend-block">
+  <div class="trend-block"
+       ng-show="TrendsCtrl.topBooks.length">
     <h4>Leituras</h4>
   </div>
 
@@ -50,11 +54,13 @@
           <div class="md-list-item-text"
                flex="100"
                layout="column">
-            <a ng-href="#/books/{{ r._id  }}"
+            <a style="padding-top: .625rem"
+               ng-href="#/books/{{ r._id  }}"
                class="name link-default"
                ng-bind="r.title"></a>
             <br />
-            <a ng-show="r.subtitle.length"
+            <a style="padding-top: .625rem"
+               ng-show="r.subtitle.length"
                ng-href="#/books/{{ r._id  }}"
                class="username link-tiny"
                ng-bind="r.subtitle"></a>
