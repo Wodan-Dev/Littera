@@ -39,6 +39,9 @@
     };
 
     function updateList(data) {
+
+      console.log('feed data');
+      console.log(data);
       $scope.$apply(function () {
         let t = vm.feedItems.length;
         if (data.data) {

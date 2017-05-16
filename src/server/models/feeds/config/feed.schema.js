@@ -15,8 +15,6 @@ const db = core.connection;
 const models = core.validator.models;
 const schema = core.validator.schema;
 
-
-
 /**
  * Feed Schema Definition
  * @type {Schema}

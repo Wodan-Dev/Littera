@@ -120,7 +120,8 @@ function post(req, res) {
         type_feed: 0
       });
     })
-    .then(function () {
+    .then(function (cc) {
+      console.log(cc);
       http.render(res, book);
     })
     .catch(function (err) {

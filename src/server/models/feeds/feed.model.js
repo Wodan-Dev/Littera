@@ -24,6 +24,7 @@ const feedModel = db.database.model('feeds', feedSchema.feedSchema);
  * @return {Promise}      Resolve/Reject
  */
 function insert(feed) {
+  console.log(feed);
   feed.create_at = date.getDateUTC();
   feed.modified_at = date.getDateUTC();
   return new feedModel(feed).save();
