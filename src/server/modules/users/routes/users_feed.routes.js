@@ -27,17 +27,7 @@ const renderError = core.http.renderError;
 function getByUserName(req, res) {
   let username = req.params.username || '-';
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
-  usersModel.findByUserName(username)
-    .then(function (user) {
-      let follows = [];
-
-      user.following.map(function (item) {
-        follows.push(db.getObjectId(item._id_user_follow.toString()));
-      });
-
-
-      return feedModel.findByUser(follows, pageNum);
-    })
+  feedModel.listFeed(username, pageNum)
     .then(function (result) {
       http.render(res, result);
     })

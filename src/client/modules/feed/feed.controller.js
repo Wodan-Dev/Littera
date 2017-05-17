@@ -3,7 +3,14 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function FeedCtrl($rootScope, $scope, $location, request, authentication, feedService, message) {
+  function FeedCtrl(
+    $rootScope,
+    $scope,
+    $location,
+    request,
+    authentication,
+    feedService,
+    message) {
     var vm = this;
     vm.actualPage = 1;
     vm.feedItems = [];
@@ -39,14 +46,11 @@
     };
 
     function updateList(data) {
-
-      console.log('feed data');
-      console.log(data);
       $scope.$apply(function () {
         let t = vm.feedItems.length;
         if (data.data) {
-          for (let i = 0, len = data.data.docs.length; i < len; i++) {
-            vm.feedItems.push(data.data.docs[i]);
+          for (let i = 0, len = data.data.length; i < len; i++) {
+            vm.feedItems.push(data.data[i]);
           }
 
           if (t === vm.feedItems.length && !loading)

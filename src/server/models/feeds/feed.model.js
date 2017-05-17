@@ -10,128 +10,105 @@
  * Dependencies
  */
 const core = require('../../modules/core');
-const feedSchema = require('./config/feed.schema');
+const usersModel = require('../users/users.model').model;
 const db = core.connection;
 const date = core.date;
 const config = core.config;
 const validator = core.validator;
 const checkField = core.validator.validator;
-const feedModel = db.database.model('feeds', feedSchema.feedSchema);
 
-/**
- * Insert feed
- * @param  {Object} feed Book object
- * @return {Promise}      Resolve/Reject
- */
-function insert(feed) {
-  console.log(feed);
-  feed.create_at = date.getDateUTC();
-  feed.modified_at = date.getDateUTC();
-  return new feedModel(feed).save();
-}
-
-/**
- * Update in DB
- * @param  {ObjectId} id Id which has to be updated
- * @param  {Object} feed Book object
- * @return {Promise}        Resolve/Reject
- */
-function update(id, feed) {
-
-  feed.modified_at = date.getDateUTC();
-
-  let query = {
-    _id: id
-  };
-
-  let opt = {
-    upsert: false,
-    new: true
-  };
-
-  return feedModel
-    .findOneAndUpdate(query, feed, opt)
-    .exec();
-}
-
-/**
- * Delete in DB
- * @param  {ObjectId} id Id which has to be deleted
- * @return {Promise}        Resolve/Reject
- */
-function remove(id) {
-  return feedModel.findByIdAndRemove(id)
-    .exec();
-}
-
-/**
- * List all feeds
- * @param  {Number} page Page number
- * @return {Promise}      Resolve/Reject
- */
-function list(page) {
+function listFeed(username, page) {
   let pageSize = parseInt(config.getPageSize());
-  return feedModel.paginate(
+  let next = (pageSize * (((page <= 1) ? 1 : page) -1));
+  return usersModel.aggregate([
     {
-      //  active: true
-    },
-    {
-      page: page,
-      limit: pageSize,
-      sort: {
-        'create_at': 'descending'
-      },
-      populate: '_id_book _id_user'
-    });
-}
-
-/**
- * List all feeds that user follow
- * @param  {Array}  follows User followed
- * @param  {Number} page Page number
- * @return {Promise}      Resolve/Reject
- */
-function findByUser(follows, page) {
-  let pageSize = parseInt(config.getPageSize());
-
-  return feedModel.paginate(
-    {
-      _id_user: {
-        $in: follows
-
+      $match: {
+        username: username
       }
     },
     {
-      page: page,
-      limit: pageSize,
-      sort: {
-        'create_at': 'descending'
-      },
-      populate: '_id_book _id_user'
-    });
-}
-
-/**
- * List the record in the DB that has the specified ObjectId
- * @param  {ObjectId} id Id which has to be listed
- * @return {Promise} Resolve/Reject
- */
-function findById(id) {
-  return feedModel.findById(id)
-    .exec();
-}
-
-/**
- * Validate create
- * @param  {Object} feed Book object
- * @return {Promise}      Resolve/Reject
- */
-function validateCreate(feed){
-  feed._id_user = checkField.trim(checkField.escape(feed._id_user));
-  feed._id_book = checkField.trim(checkField.escape(feed._id_book));
-  feed.type_feed = checkField.trim(checkField.escape(feed.type_feed));
-
-  return validator.validateSchema(feed, feedSchema.feedCreateSchema);
+      $unwind: {
+        path: '$following'
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'following._id_user_follow',
+        foreignField: '_id',
+        as: 'userFollow'
+      }
+    },
+    {
+      $unwind: {
+        path: '$userFollow'
+      }
+    },
+    {
+      $project: {
+        '_id': 1,
+        'name': 1,
+        'username': 1,
+        'email': 1,
+        'userFollow': {
+          '_id': '$userFollow._id',
+          'cover_image': '$userFollow.cover_image',
+          'name': '$userFollow.name',
+          'username': '$userFollow.username',
+          'email': '$userFollow.email',
+          'written_books': '$userFollow.written_books'
+        }
+      }
+    },
+    {
+      $unwind: {
+        path: '$userFollow.written_books'
+      }
+    },
+    {
+      $lookup: {
+        from: 'books',
+        localField: 'userFollow.written_books._id_book',
+        foreignField: '_id',
+        as: 'book'
+      }
+    },
+    {
+      $unwind: {
+        path: '$book'
+      }
+    },
+    {
+      $match: {
+        'book.visible': {
+          $in: [
+            1,
+            0
+          ]
+        }
+      }
+    },
+    {
+      $sort: {
+        'book.date_published': -1
+      }
+    },
+    {
+      $project: {
+        _id_book: '$book',
+        _id_user: '$userFollow',
+        create_at: '$book.create_at',
+        modified_at: '$book.modified_at'
+      }
+    },
+    {
+      $skip:  (parseInt((next < 0 ? 1 : next)) || 1) -1
+    },
+    {
+      $limit: pageSize
+    }
+  ])
+  .exec();
 }
 
 /**
@@ -139,12 +116,5 @@ function validateCreate(feed){
  * @type {Object}
  */
 module.exports = {
-  validateCreate: validateCreate,
-  insert: insert,
-  update: update,
-  remove: remove,
-  list: list,
-  findById: findById,
-  findByUser: findByUser,
-  model: feedModel
+  listFeed: listFeed
 };
