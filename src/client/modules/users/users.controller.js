@@ -276,7 +276,7 @@
           vm.selectedGender = vm.cbeGender[data.data.data.gender];
           vm.user.average_stars = data.data.data.average_stars;
           vm.user.acepted_terms = data.data.data.acepted_terms === 1 ? true: false;
-          vm.user.cover_image = data.data.data.cover_image + '?' + new Date().getTime();
+          vm.user.cover_image = data.data.data.cover_image ? data.data.data.cover_image + '?' + new Date().getTime() : null;
           vm.user.payment = data.data.data.payment;
           vm.user.username = '@' + data.data.data.username;
           vm.user.choices = [];

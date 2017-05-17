@@ -17,7 +17,7 @@
         <div class="form-image ">
           <div class="feed-profile">
             <div class="feed-profile-picture">
-              <img ng-src="{{UsersCtrl.user.cover_image}}">
+              <img ng-src="{{UsersCtrl.user.cover_image  || './static/images/no-image.png' }}">
             </div>
             <div class="feed-profile-username">
               <p class="username" ng-bind="UsersCtrl.user.username"></p>

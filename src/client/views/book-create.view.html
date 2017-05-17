@@ -100,10 +100,25 @@
                  required="required"/>
           <label class="control-label"
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('esbn') }"
-                 for="txtESBN">ESBN
+                 for="txtESBN">ESBN-10
           </label><i class="bar"></i>
           <p class="field-err" ng-if="BookCreateCtrl.hasError('esbn')" >{{BookCreateCtrl.getErrorMessage('esbn')}}</p>
         </div>
+
+        <div class="form-group"
+             ng-class="{ 'has-error': BookCreateCtrl.hasError('esbn_13') }">
+          <input type="text"
+                 ng-model="BookCreateCtrl.book.esbn_13"
+                 name="txtESBN13"
+                 id="txtESBN13"
+                 required="required"/>
+          <label class="control-label"
+                 ng-class="{ 'has-error': BookCreateCtrl.hasError('esbn_13') }"
+                 for="txtESBN13">ESBN-13
+          </label><i class="bar"></i>
+          <p class="field-err" ng-if="BookCreateCtrl.hasError('esbn_13')" >{{BookCreateCtrl.getErrorMessage('esbn_13')}}</p>
+        </div>
+
 
         <div class="form-group">
           <select ng-options="o.desc for o in BookCreateCtrl.cbei18n"

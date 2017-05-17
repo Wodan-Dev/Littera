@@ -274,7 +274,9 @@
                   </md-input-container>
                   <div class="form-group"  flex="90"
                        ng-class="{ 'has-error': UserDetailCtrl.hasError('comment') }">
-                            <textarea name="txtRanking"
+                    <textarea
+                              type="text"
+                              name="txtRanking"
                                       id="txtRanking"
                                       ng-model="UserDetailCtrl.review.comment"
                                       required="required"></textarea>
@@ -300,11 +302,12 @@
         </md-list-item>
 
       </md-list>
-      <h5 ng-show="!UserDetailCtrl.user.reviews.length" class="md-padding md-title" >Ninguém avaliou ainda :/</h5>
+      <h5 ng-show="!UserDetailCtrl.user.reviews.length"
+          class="md-padding md-title" >Ninguém avaliou ainda :/</h5>
 
 
       <md-list class="md-dense" flex ng-show="UserDetailCtrl.user.reviews.length">
-        <md-list-item class="md-3-line" ng-repeat="r in UserDetailCtrl.user.reviews|orderBy:'create_at':false"
+        <md-list-item class="md-3-line" ng-repeat="r in UserDetailCtrl.user.reviews|orderBy:'-create_at'"
                       style="border-bottom: solid .0625rem /* 1px */ #DADADA;"
                       layout-padding>
           <div layout="column"
@@ -345,3 +348,6 @@
        ng-include="'views/user-info.tpl.html'">
   </div>
 </div>
+<script type="text/javascript">
+  $('textarea').autogrow();
+</script>

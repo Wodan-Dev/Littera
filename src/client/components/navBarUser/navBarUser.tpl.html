@@ -6,7 +6,7 @@
          ng-show="$ctrl.User._id !== '-'">
       <div class="header-user-picture">
         <img
-          ng-src="{{ $ctrl.User.cover_image  }}" />
+          ng-src="{{ $ctrl.User.cover_image || './static/images/no-image.png' }}" />
       </div>
       <div class="header-user-desc">
         <p class="user"

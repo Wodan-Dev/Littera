@@ -29,8 +29,9 @@
         vm.User.name = user.name;
         vm.User.username = user.username;
         vm.User.username_link = user.username_link;
-        vm.User.cover_image = user.cover_image + '?' + new Date().getTime();
-        //user.cover_image || './static/images/no-image.png';
+        vm.User.cover_image = user.cover_image ?
+                                user.cover_image + '?' + new Date().getTime() :
+                                './static/images/no-image.png';
       }
     });
 

@@ -93,6 +93,7 @@ function post(req, res) {
     status: req.body.status || 0,
     percentage: req.body.percentage || 0,
     esbn: req.body.esbn || '',
+    esbn_13: req.body.esbn_13 || '',
     date_published: req.body.date_published || '',
     visible: req.body.visible || 0,
     language: req.body.language || '',
@@ -111,17 +112,11 @@ function post(req, res) {
     })
     .then(function (result) {
       book = result;
-      return writtenBooksModel.insert(user._id_user, { _id_book: book._id });
-    })
-    .then(function () {
-      return feedModel.insert({
-        _id_user: user._id_user,
-        _id_book: book._id,
-        type_feed: 0
+      return writtenBooksModel.insert(user._id_user, {
+        _id_book: book._id
       });
     })
-    .then(function (cc) {
-      console.log(cc);
+    .then(function () {
       http.render(res, book);
     })
     .catch(function (err) {
@@ -145,6 +140,7 @@ function put(req, res) {
     status: req.body.status || 0,
     percentage: req.body.percentage || 0,
     esbn: req.body.esbn || '',
+    esbn_13: req.body.esbn_13 || '',
     date_published: req.body.date_published,
     visible: req.body.visible || 0,
     language: req.body.language || '',

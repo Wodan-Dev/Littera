@@ -47,7 +47,7 @@
          ng-show="$ctrl.User._id !== '-'"
          ng-click="$ctrl.btnUserNotify()">
       <div class="notify">&nbsp;</div>
-      <img ng-src="{{ $ctrl.User.cover_image }}" />
+      <img ng-src="{{ $ctrl.User.cover_image || './static/images/no-image.png' }}" />
     </div>
   </div>
 </header>

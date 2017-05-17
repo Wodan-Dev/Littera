@@ -191,6 +191,7 @@ function listStore(page) {
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
+        'esbn_13': 1,
         'date_published': 1,
         'language': 1,
         'average_star': 1,
@@ -253,6 +254,7 @@ function findByIdStore(id) {
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
+        'esbn_13': 1,
         'date_published': 1,
         'language': 1,
         'average_star': 1,
@@ -290,6 +292,9 @@ function findByIdStore(id) {
         },
         esbn: {
           $first: '$esbn'
+        },
+        esbn_13: {
+          $first: '$esbn_13'
         },
         date_published: {
           $first: '$date_published'
@@ -346,6 +351,7 @@ function findByIdStore(id) {
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
+        'esbn_13': 1,
         'date_published': 1,
         'language': 1,
         'average_star': 1,
@@ -382,6 +388,9 @@ function findByIdStore(id) {
         },
         esbn: {
           $first: '$esbn'
+        },
+        esbn_13: {
+          $first: '$esbn_13'
         },
         date_published: {
           $first: '$date_published'
@@ -429,6 +438,7 @@ function findByIdStore(id) {
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
+        'esbn_13': 1,
         'date_published': 1,
         'language': 1,
         'average_star': 1,
@@ -564,6 +574,7 @@ function validateCreate(book){
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
   book.content = checkField.trim(book.content);
   book.esbn = checkField.trim(checkField.escape(book.esbn));
+  book.esbn_13 = checkField.trim(checkField.escape(book.esbn_13));
   book.language = checkField.trim(checkField.escape(book.language));
 
   return validator.validateSchema(book, booksSchema.booksCreateSchema);
@@ -581,6 +592,7 @@ function validateUpdate(book){
   book.synopsis = checkField.trim(checkField.escape(book.synopsis));
   book.content = checkField.trim(book.content);
   book.esbn = checkField.trim(checkField.escape(book.esbn));
+  book.esbn_13 = checkField.trim(checkField.escape(book.esbn_13));
   book.language = checkField.trim(checkField.escape(book.language));
 
   return validator.validateSchema(book, booksSchema.booksUpdateSchema);

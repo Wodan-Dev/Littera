@@ -53,6 +53,7 @@
       'synopsis': '',
       'percentage': 0,
       'esbn': '',
+      'esbn_13': '',
       'date_published': '',
       'language': '',
       'average_star': 1,
