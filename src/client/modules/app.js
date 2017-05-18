@@ -147,9 +147,26 @@
        });
     });
 
+    $rootScope.$watch('__showLoad', function(oldVal, newVal) {
+      console.log('__showLoad');
+      console.log('oldVal');
+      console.log(oldVal);
+      console.log('newVal');
+      console.log(newVal);
+    });
+
+    $rootScope.$watch('__showModal', function(oldVal, newVal) {
+      console.log('__showModal');
+      console.log('oldVal');
+      console.log(oldVal);
+      console.log('newVal');
+      console.log(newVal);
+    });
+
     $rootScope.$on('$viewContentLoaded', function(){
       var i = $interval(function () {
         $rootScope.__showLoad = false;
+        $rootScope.__showModal = false;
         $interval.cancel(i);
       }, 1300);
 
