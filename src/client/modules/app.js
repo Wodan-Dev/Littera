@@ -153,7 +153,8 @@
       console.log(oldVal);
       console.log('newVal');
       console.log(newVal);
-      $rootScope.$apply();
+      if(!$rootScope.$$phase) 
+        $rootScope.$apply();
     });
 
     $rootScope.$watch('__showModal', function(oldVal, newVal) {
@@ -162,7 +163,8 @@
       console.log(oldVal);
       console.log('newVal');
       console.log(newVal);
-      $rootScope.$apply();
+      if(!$rootScope.$$phase) 
+        $rootScope.$apply();
     });
 
     $rootScope.$on('$viewContentLoaded', function(){
