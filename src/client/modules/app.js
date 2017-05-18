@@ -121,10 +121,14 @@
     $rootScope.__showNotify = false;
     $rootScope.__showLoad = false;
     $rootScope.BASEURLS = BASEURLS;
+    var divModal = document.getElementById('divModal');
+    var divLoad = document.getElementById('divLoad');
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
       window.scrollTo(0, 0);
       $anchorScroll();
+      divModal.style.display = 'none';
+      divLoad.style.display = 'none';
       $rootScope.__showModal = false;
       $rootScope.__showLinks = false;
       $rootScope.__showUserMenu = false;
@@ -147,24 +151,22 @@
        });
     });
 
-    $rootScope.$watch('__showLoad', function(oldVal, newVal) {
+    $rootScope.$watch('__showLoad', function(newVal, oldVal) {
       console.log('__showLoad');
       console.log('oldVal');
       console.log(oldVal);
       console.log('newVal');
       console.log(newVal);
-      if(!$rootScope.$$phase) 
-        $rootScope.$apply();
+      divLoad.style.display = newVal ? 'block' : 'none';
     });
 
-    $rootScope.$watch('__showModal', function(oldVal, newVal) {
+    $rootScope.$watch('__showModal', function(newVal, oldVal) {
       console.log('__showModal');
       console.log('oldVal');
       console.log(oldVal);
       console.log('newVal');
       console.log(newVal);
-      if(!$rootScope.$$phase) 
-        $rootScope.$apply();
+      divModal.style.display = newVal ? 'block' : 'none';
     });
 
     $rootScope.$on('$viewContentLoaded', function(){

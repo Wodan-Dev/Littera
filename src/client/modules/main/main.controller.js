@@ -5,6 +5,7 @@
 (function (angular, litteraApp) {
   function MainCtrl($rootScope, $window) {
     var vm = this;
+
     vm.showModal = $rootScope.__showModal;
     var appWindow = angular.element($window);
 
@@ -17,6 +18,8 @@
     });
 
     vm.btnHideModal = function () {
+
+
       if (!$rootScope.__showLoad) {
         vm.showModal = false;
         $rootScope.__showModal = false;
