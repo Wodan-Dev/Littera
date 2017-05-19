@@ -122,6 +122,29 @@
     $rootScope.__showLoad = false;
     $rootScope.BASEURLS = BASEURLS;
 
+    //$rootScope.$watch('__showLoad', function(newVal, oldVal) {
+    //  console.log('__showLoad');
+    //  console.log('oldVal');
+    //  console.log(oldVal);
+    //  console.log('newVal');
+    //  console.log(newVal);
+    //  /*$rootScope.__showModal = newVal;
+    //  $rootScope.__showLoad = newVal;*/
+    //  $rootScope.$broadcast('evt__showLoad', newVal);
+    //});
+
+    //$rootScope.$watch('__showModal', function(newVal, oldVal) {
+    //  console.log('__showModal');
+    //  console.log('oldVal');
+    //  console.log(oldVal);
+    //  console.log('newVal');
+    //  console.log(newVal);
+    //  /*$rootScope.__showModal = newVal;
+    //  $rootScope.__showLoad = newVal;*/
+    //  $rootScope.$broadcast('evt__showModal', newVal);
+    //});
+
+
     $rootScope.$on('$routeChangeStart', function (event, next) {
       window.scrollTo(0, 0);
       $anchorScroll();
@@ -130,6 +153,8 @@
       $rootScope.__showUserMenu = false;
       $rootScope.__showNotify = false;
       $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showModal', false);
+      $rootScope.$broadcast('evt__showLoad', true);
     });
 
     $rootScope.$on('$routeChangeSuccess', function (event, next) {
@@ -149,10 +174,22 @@
 
     $rootScope.$on('$viewContentLoaded', function(){
       var i = $interval(function () {
-        $rootScope.__showLoad = false;
+
+        /*$rootScope.__showModal = false;
+        $rootScope.__showLoad = false;*/
+        $rootScope.$broadcast('evt__showModal', false);
+        $rootScope.$broadcast('evt__showLoad', false);
         $interval.cancel(i);
       }, 1300);
 
+    });
+
+    $rootScope.$on('evt__showModal', function(ev, value) {
+      $rootScope.__showModal = value;
+    });
+
+    $rootScope.$on('evt__showLoad', function(ev, value) {
+      $rootScope.__showLoad = value;
     });
 
   }

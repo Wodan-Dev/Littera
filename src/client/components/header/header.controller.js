@@ -63,12 +63,14 @@
 
     vm.btnShowUserMenu = function () {
       $rootScope.__showModal = true;
+      $rootScope.$broadcast('evt__showModal', true);
       $rootScope.__showUserMenu = !$rootScope.__showUserMenu;
     };
 
     vm.btnShowLinks = function () {
       if (!vm.showSearch){
         $rootScope.__showModal = true;
+        $rootScope.$broadcast('evt__showModal', true);
         $rootScope.__showLinks = !$rootScope.__showLinks;
       }
 
@@ -76,6 +78,7 @@
 
     vm.btnUserNotify = function () {
       vm.showSearch = false;
+      $rootScope.$broadcast('evt__showModal', true);
       $rootScope.__showModal = true;
       $rootScope.__showLinks = false;
       $rootScope.__showNotify = !$rootScope.__showNotify;

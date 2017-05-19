@@ -5,25 +5,47 @@
 (function (angular, litteraApp) {
   function MainCtrl($rootScope, $window) {
     var vm = this;
-    vm.showModal = $rootScope.__showModal;
+    vm.showModal = false;
+    vm.showLoad = false;
+
     var appWindow = angular.element($window);
 
     appWindow.bind('resize', function () {
       vm.showModal = false;
+      $rootScope.$broadcast('evt__showModal', false);
       $rootScope.__showModal = false;
       $rootScope.__showLinks = false;
       $rootScope.__showUserMenu = false;
       $rootScope.__showNotify = false;
     });
 
+    $rootScope.$on('evt__showModal', function(ev, value) {
+      vm.showModal = value;
+      console.log('evt__showModal');
+      console.log(value);
+    });
+
+    $rootScope.$on('evt__showLoad', function(ev, value) {
+      vm.showLoad = value;
+      console.log('evt__showLoad');
+      console.log(value);
+    });
+
+    vm.init = function () {
+      vm.showModal = false;
+      vm.showLoad = false;
+    };
+
     vm.btnHideModal = function () {
-      if (!$rootScope.__showLoad) {
-        vm.showModal = false;
-        $rootScope.__showModal = false;
-        $rootScope.__showLinks = false;
-        $rootScope.__showUserMenu = false;
-        $rootScope.__showNotify = false;
-      }
+      console.log('btnHideModal');
+      //if (!vm.showLoad) {
+      vm.showModal = false;
+      $rootScope.$broadcast('evt__showModal', false);
+      $rootScope.__showModal = false;
+      $rootScope.__showLinks = false;
+      $rootScope.__showUserMenu = false;
+      $rootScope.__showNotify = false;
+      /*}*/
 
     };
   }

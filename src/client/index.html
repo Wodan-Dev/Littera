@@ -27,15 +27,37 @@
   <link rel="stylesheet" type="text/css" href="./static/css/fields.css">
   <!--<link rel="stylesheet" type="text/css" href="./static/css/mdl-style.css">-->
   <!-- endbuild -->
+  <style type="text/css">
+
+
+    .animate-show-hide.ng-hide {
+      opacity: 0;
+    }
+
+    .animate-show-hide.ng-hide-add,
+    .animate-show-hide.ng-hide-remove {
+      transition: all linear 0.5s;
+    }
+
+    .check-element {
+      border: 1px solid black;
+      opacity: 1;
+      padding: 10px;
+    }
+
+
+  </style>
 </head>
-<body ng-app="litteraApp" ng-controller="MainController as MainCtrl">
+<body ng-app="litteraApp"
+      ng-controller="MainController as MainCtrl"
+      ng-init="MainCtrl.init()">
 <!--[if lte IE 8]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<div id="Modal" class="modal"
-     ng-show="__showLoad||__showModal"
+<div id="Modal" class="modal check-element animate-show-hide"
+     ng-show="MainCtrl.showLoad || MainCtrl.showModal"
      ng-click="MainCtrl.btnHideModal()">
-  <div class="cssload-thecube" ng-show="__showLoad">
+  <div class="cssload-thecube" ng-show="MainCtrl.showLoad">
     <div class="cssload-cube cssload-c1"></div>
     <div class="cssload-cube cssload-c2"></div>
     <div class="cssload-cube cssload-c4"></div>
