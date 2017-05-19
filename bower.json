@@ -29,20 +29,14 @@
     "outlayer": "2.1.0",
     "masonry": "4.2.0",
     "chart.js": "2.5.0"
+    "angular-chart.js": "^1.1.1"
   },
   "devDependencies": {
-    "angular-mocks": "^1.4.0"
   },
   "overrides": {
     "angular": {
       "main": [
         "angular.min.js"
-      ]
-    },
-    "chart.js": {
-      "main": [
-        "dist/Chart.min.js",
-        "dist/Chart.bundle.min.js"
       ]
     },
     "angular-resource": {
@@ -130,3 +124,5 @@
     "bower_modules"
   ]
 }
+
+
