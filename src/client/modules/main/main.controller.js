@@ -21,14 +21,10 @@
 
     $rootScope.$on('evt__showModal', function(ev, value) {
       vm.showModal = value;
-      console.log('evt__showModal');
-      console.log(value);
     });
 
     $rootScope.$on('evt__showLoad', function(ev, value) {
       vm.showLoad = value;
-      console.log('evt__showLoad');
-      console.log(value);
     });
 
     vm.init = function () {
@@ -37,15 +33,14 @@
     };
 
     vm.btnHideModal = function () {
-      console.log('btnHideModal');
-      //if (!vm.showLoad) {
-      vm.showModal = false;
-      $rootScope.$broadcast('evt__showModal', false);
-      $rootScope.__showModal = false;
-      $rootScope.__showLinks = false;
-      $rootScope.__showUserMenu = false;
-      $rootScope.__showNotify = false;
-      /*}*/
+      if (!vm.showLoad) {
+        vm.showModal = false;
+        $rootScope.$broadcast('evt__showModal', false);
+        $rootScope.__showModal = false;
+        $rootScope.__showLinks = false;
+        $rootScope.__showUserMenu = false;
+        $rootScope.__showNotify = false;
+      }
 
     };
   }

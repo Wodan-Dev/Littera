@@ -122,29 +122,6 @@
     $rootScope.__showLoad = false;
     $rootScope.BASEURLS = BASEURLS;
 
-    //$rootScope.$watch('__showLoad', function(newVal, oldVal) {
-    //  console.log('__showLoad');
-    //  console.log('oldVal');
-    //  console.log(oldVal);
-    //  console.log('newVal');
-    //  console.log(newVal);
-    //  /*$rootScope.__showModal = newVal;
-    //  $rootScope.__showLoad = newVal;*/
-    //  $rootScope.$broadcast('evt__showLoad', newVal);
-    //});
-
-    //$rootScope.$watch('__showModal', function(newVal, oldVal) {
-    //  console.log('__showModal');
-    //  console.log('oldVal');
-    //  console.log(oldVal);
-    //  console.log('newVal');
-    //  console.log(newVal);
-    //  /*$rootScope.__showModal = newVal;
-    //  $rootScope.__showLoad = newVal;*/
-    //  $rootScope.$broadcast('evt__showModal', newVal);
-    //});
-
-
     $rootScope.$on('$routeChangeStart', function (event, next) {
       window.scrollTo(0, 0);
       $anchorScroll();
@@ -172,27 +149,8 @@
        });
     });
 
-    $rootScope.$watch('__showLoad', function(newVal, oldVal) {
-      console.log('__showLoad');
-      console.log('oldVal');
-      console.log(oldVal);
-      console.log('newVal');
-      console.log(newVal);
-    });
-
-    $rootScope.$watch('__showModal', function(newVal, oldVal) {
-      console.log('__showModal');
-      console.log('oldVal');
-      console.log(oldVal);
-      console.log('newVal');
-      console.log(newVal);
-    });
-
     $rootScope.$on('$viewContentLoaded', function(){
       var i = $interval(function () {
-
-        /*$rootScope.__showModal = false;
-        $rootScope.__showLoad = false;*/
         $rootScope.$broadcast('evt__showModal', false);
         $rootScope.$broadcast('evt__showLoad', false);
         $interval.cancel(i);
