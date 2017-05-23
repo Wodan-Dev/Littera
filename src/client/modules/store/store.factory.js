@@ -12,9 +12,14 @@
       };
     }
 
-    function getBooks(page) {
+    function getBooks(page, query) {
+      let qry = litteraApp.modules.store.routes.store(page);
+      if (query)
+        qry = litteraApp.modules.store.routes.store_query(page, query);
+
+
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.store.routes.store(page), {},
+        qry, {},
         {
           get: {
             headers: getHeader()

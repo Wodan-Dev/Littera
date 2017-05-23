@@ -381,7 +381,7 @@
       let username = '';
 
       has_error.clearError();
-      $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showLoad', true);
       authentication.credential()
         .then(function (data) {
           if ((!$routeParams.id) && (!changedContent)) {
@@ -523,7 +523,7 @@
 
             });
           }
-          $rootScope.__showLoad = false;
+          $rootScope.$broadcast('evt__showLoad', false);
           $scope.$apply();
 
         });

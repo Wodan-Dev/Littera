@@ -256,7 +256,7 @@
     vm.btnPostRanking = function () {
       if(vm.isLogged()) {
         has_error.clearError();
-        $rootScope.__showLoad = true;
+        $rootScope.$broadcast('evt__showLoad', true);
         let ran = {
           _id_book: vm.book._id,
           _id_user: vm.loggedUser._id,
@@ -290,7 +290,7 @@
 
               vm.book.rankings.unshift(newRanking);
 
-              $rootScope.__showLoad = false;
+              $rootScope.$broadcast('evt__showLoad', false);
             });
           })
           .catch(function (data) {
@@ -306,7 +306,7 @@
                   has_error.addError(data.data.data.value, data.data.data.err);
                 }
 
-                $rootScope.__showLoad = false;
+                $rootScope.$broadcast('evt__showLoad', false);
 
               });
             }
@@ -317,7 +317,7 @@
     vm.btnPostComment = function () {
       if(vm.isLogged()) {
         has_error.clearError();
-        $rootScope.__showLoad = true;
+        $rootScope.$broadcast('evt__showLoad', true);
         let com = {
           _id_book: vm.book._id,
           _id_user: vm.loggedUser._id,
@@ -347,7 +347,7 @@
 
               vm.book.comments.unshift(newComment);
 
-              $rootScope.__showLoad = false;
+              $rootScope.$broadcast('evt__showLoad', false);
             });
           })
           .catch(function (data) {
@@ -363,7 +363,7 @@
                   has_error.addError(data.data.data.value, data.data.data.err);
                 }
 
-                $rootScope.__showLoad = false;
+                $rootScope.$broadcast('evt__showLoad', false);
 
               });
             }

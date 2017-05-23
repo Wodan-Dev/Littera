@@ -8,7 +8,11 @@
     let lstErrors = [];
 
     function clearError() {
-      lstErrors = [];
+      lstErrors.pop();
+    }
+
+    function getAllErrors() {
+      return lstErrors;
     }
 
     function addError(field, message, isInput) {
@@ -24,7 +28,10 @@
     }
 
     function getErrorMessage(field) {
-      return ($filter('filter')(lstErrors, { field : field }))[0].message;
+      let err = ($filter('filter')(lstErrors, { field : field }));
+      if (err.length)
+        return err[0].message;
+      return '';
     }
 
     function noFieldErrors() {
@@ -41,7 +48,8 @@
       hasError: hasError,
       getErrorMessage: getErrorMessage,
       noFieldErrors: noFieldErrors,
-      hasNoFieldErrors: hasNoFieldErrors
+      hasNoFieldErrors: hasNoFieldErrors,
+      getAllErrors: getAllErrors
     };
   }
 

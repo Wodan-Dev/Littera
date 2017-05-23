@@ -24,7 +24,7 @@
     };
 
     vm.init = function () {
-      $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showLoad', true);
       if (vm.isLogged()) {
         console.log(bookData);
         vm.book = bookData.book;
@@ -56,8 +56,8 @@
         Book.setStyle('font-size', '1.2rem');
         Book.setStyle('line-height', '1.8rem');
 
-        Book.ready.all.then(function(){
-          $rootScope.__showLoad = true;
+        Book.ready.all.then(function() {
+          $rootScope.$broadcast('evt__showLoad', true);
         });
 
         Book.renderTo('area');

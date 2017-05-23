@@ -6,6 +6,44 @@
        layout-margin
        class="column-list grid">
     <div flex="100"
+         id="shop-book-search"
+         class="column column-all"
+         layout-align="center center">
+      <form class="form-container"
+            novalidate>
+        <div class="form-group">
+          <input type="text"
+                 ng-model="StoreCtrl.criteria.text"
+                 name="txtSearch"
+                 id="txtSearch"
+                 required="required"/>
+          <label class="control-label"
+                 for="txtSearch">Buscar
+          </label>
+        </div>
+        <div class="button-group"
+             flex="100"
+             layout="row">
+          <div flex="90"
+               flex-sm="70"
+               flex-xs="50"
+               layout="row">
+            <button flex="95"
+                    class="btn btn-info-inverted"
+                    ng-click="StoreCtrl.btnSearch()">Filtrar</button>
+          </div>
+          <div flex="10"
+               flex-sm="30"
+               flex-xs="50"
+               layout="row">
+            <button flex="90"
+                    class="btn btn-default"
+                    ng-click="StoreCtrl.btnClearSearch()">Limpar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div flex="100"
          id="shop-book-{{ $index }}"
 
          class="column column-little grid-item"

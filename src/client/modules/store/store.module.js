@@ -13,7 +13,8 @@
     },
     routes: {
       home: litteraApp.URLS.HOME(),
-      store: litteraApp.URLS.STORE()
+      store: litteraApp.URLS.STORE(),
+      store_query: litteraApp.URLS.STORE_QUERY()
     },
     factories: {
       store: 'storeFactory'

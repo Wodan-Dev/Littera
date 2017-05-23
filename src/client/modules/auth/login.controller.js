@@ -28,8 +28,9 @@
     };
 
     vm.btnAuthenticate = function () {
+
       has_error.clearError();
-      $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showLoad', true);
       let token = '';
 
       authFactory.authenticate(vm.user.username, vm.user.pass)
@@ -50,6 +51,7 @@
           });
         })
         .catch(function (data) {
+
           let lst = data.data.data.err;
           $scope.$apply(function () {
             if (lst instanceof Array) {
@@ -60,9 +62,10 @@
             else {
               has_error.addError(data.data.data.value, data.data.data.err);
             }
-            $rootScope.__showLoad = false;
+            $rootScope.$broadcast('evt__showLoad', false);
 
           });
+
         });
     };
   }

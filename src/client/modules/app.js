@@ -113,7 +113,8 @@
     $interval,
     BASEURLS,
     $window,
-    $anchorScroll) {
+    $anchorScroll,
+    has_error) {
     $rootScope.__Title = 'Littera';
     $rootScope.__showModal = false;
     $rootScope.__showUserMenu = false;
@@ -125,6 +126,7 @@
     $rootScope.$on('$routeChangeStart', function (event, next) {
       window.scrollTo(0, 0);
       $anchorScroll();
+      has_error.clearError();
       $rootScope.__showModal = false;
       $rootScope.__showLinks = false;
       $rootScope.__showUserMenu = false;
@@ -137,6 +139,7 @@
     $rootScope.$on('$routeChangeSuccess', function (event, next) {
       window.scrollTo(0, 0);
       $anchorScroll();
+      has_error.clearError();
       $rootScope.__Title = next.title || 'Littera';
       document.title = $rootScope.__Title;
 
@@ -181,7 +184,8 @@
     '$interval',
     'BASEURLS',
     '$window',
-    '$anchorScroll'
+    '$anchorScroll',
+    litteraApp.core.services.has_error
   ];
 
   angular.module(litteraApp.modules.app.name, [

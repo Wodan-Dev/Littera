@@ -147,10 +147,11 @@ function list(page) {
  * @param  {Number} page Page number
  * @return {Promise}      Resolve/Reject
  */
-function listStore(page) {
+function listStore(page, text) {
   let pageSize = parseInt(config.getPageSize());
   let next = (pageSize * (((page <= 1) ? 1 : page) -1));
-  return booksModel.aggregate([
+
+  let qry = [
     {
       $match: {
         'visible': {
@@ -165,12 +166,6 @@ function listStore(page) {
       $sort: {
         date_published: -1
       }
-    },
-    {
-      $skip: (parseInt((next < 0 ? 1 : next)) || 1) -1
-    },
-    {
-      $limit: pageSize
     },
     {
       $lookup: {
@@ -188,6 +183,12 @@ function listStore(page) {
         '_id': 1,
         'title': 1,
         'subtitle': 1,
+        'search': {
+          '$toLower': {
+            '$concat': [ '$title', ' ', '$subtitle', ' ',
+              { '$concat': [ '@', '$user.username'] }, ' ', '$user.name'  ]
+          }
+        },
         'synopsis': 1,
         'percentage': 1,
         'esbn': 1,
@@ -211,7 +212,26 @@ function listStore(page) {
         'user.cover_image': 1
       }
     }
-  ]).exec();
+  ];
+
+  if (text) {
+    qry.push({
+      $match: {
+        search: {
+          $regex: text
+        }
+      }
+    });
+  }
+
+  qry.push({
+    $skip: (parseInt((next < 0 ? 1 : next)) || 1) -1
+  });
+  qry.push({
+    $limit: pageSize
+  });
+
+  return booksModel.aggregate(qry).exec();
 }
 
 /**

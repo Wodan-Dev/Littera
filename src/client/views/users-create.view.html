@@ -63,7 +63,7 @@
                  ng-class="{ 'has-error': UsersCtrl.hasError('name') }"
                  for="txtName">Nome
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="UsersCtrl.hasError('name')" >{{UsersCtrl.getErrorMessage('name')}}</p>
+          <p class="field-err" ng-show="UsersCtrl.hasError('name')" >{{UsersCtrl.getErrorMessage('name')}}</p>
         </div>
 
         <div class="form-group">
@@ -114,7 +114,7 @@
                  ng-class="{ 'has-error': UsersCtrl.hasError('dob') }"
                  for="txtYear">Ano
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="UsersCtrl.hasError('dob')" >{{UsersCtrl.getErrorMessage('dob')}}</p>
+          <p class="field-err" ng-show="UsersCtrl.hasError('dob')" >{{UsersCtrl.getErrorMessage('dob')}}</p>
         </div>
 
         <div class="form-group"

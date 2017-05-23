@@ -27,7 +27,7 @@
 
     vm.btnCreate = function () {
       has_error.clearError();
-      $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showLoad', true);
       let token = '';
 
       authFactory.register(vm.user)
@@ -62,7 +62,7 @@
             else {
               has_error.addError(data.data.data.value, data.data.data.err);
             }
-            $rootScope.__showLoad = false;
+            $rootScope.$broadcast('evt__showLoad', false);
 
           });
         });

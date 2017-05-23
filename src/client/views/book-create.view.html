@@ -60,7 +60,7 @@
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('title') }"
                  for="txtTitle">Título
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="BookCreateCtrl.hasError('title')" >{{BookCreateCtrl.getErrorMessage('title')}}</p>
+          <p class="field-err" ng-show="BookCreateCtrl.hasError('title')" >{{BookCreateCtrl.getErrorMessage('title')}}</p>
         </div>
 
         <div class="form-group"
@@ -74,7 +74,7 @@
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('subtitle') }"
                  for="txtSubTitle">Subtítulo
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="BookCreateCtrl.hasError('subtitle')" >{{BookCreateCtrl.getErrorMessage('subtitle')}}</p>
+          <p class="field-err" ng-show="BookCreateCtrl.hasError('subtitle')" >{{BookCreateCtrl.getErrorMessage('subtitle')}}</p>
         </div>
 
         <div class="form-group"
@@ -88,7 +88,8 @@
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('synopsis') }"
                  for="txtSynopsis">Sinopse
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="BookCreateCtrl.hasError('synopsis')" >{{BookCreateCtrl.getErrorMessage('synopsis')}}</p>
+          <p class="field-err"
+             ng-show="BookCreateCtrl.hasError('synopsis')" >{{BookCreateCtrl.getErrorMessage('synopsis')}}</p>
         </div>
 
         <div class="form-group"
@@ -102,7 +103,8 @@
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('esbn') }"
                  for="txtESBN">ESBN-10
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="BookCreateCtrl.hasError('esbn')" >{{BookCreateCtrl.getErrorMessage('esbn')}}</p>
+          <p class="field-err"
+             ng-show="BookCreateCtrl.hasError('esbn')" >{{BookCreateCtrl.getErrorMessage('esbn')}}</p>
         </div>
 
         <div class="form-group"
@@ -116,7 +118,7 @@
                  ng-class="{ 'has-error': BookCreateCtrl.hasError('esbn_13') }"
                  for="txtESBN13">ESBN-13
           </label><i class="bar"></i>
-          <p class="field-err" ng-if="BookCreateCtrl.hasError('esbn_13')" >{{BookCreateCtrl.getErrorMessage('esbn_13')}}</p>
+          <p class="field-err" ng-show="BookCreateCtrl.hasError('esbn_13')" >{{BookCreateCtrl.getErrorMessage('esbn_13')}}</p>
         </div>
 
 
@@ -164,7 +166,7 @@
             </label><i class="bar"></i>
             <p class="field-err"
                style="margin-top: .625rem"
-               ng-if="BookCreateCtrl.hasError('content')" >{{BookCreateCtrl.getErrorMessage('content')}}</p>
+               ng-show="BookCreateCtrl.hasError('content')" >{{BookCreateCtrl.getErrorMessage('content')}}</p>
           </div>
         </fieldset>
 

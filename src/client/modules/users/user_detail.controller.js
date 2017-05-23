@@ -148,7 +148,7 @@
       if(authentication.isAuthenticated() &&
         !vm.sameUser()) {
         has_error.clearError();
-        $rootScope.__showLoad = true;
+        $rootScope.$broadcast('evt__showLoad', true);
         let ran = {
           _id_user_comment: vm.user._id,
           _id_user: vm.loggedUser._id,
@@ -186,7 +186,7 @@
 
               vm.user.reviews.unshift(newReview);
 
-              $rootScope.__showLoad = false;
+              $rootScope.$broadcast('evt__showLoad', false);
             });
           })
           .catch(function (data) {
@@ -202,7 +202,7 @@
                   has_error.addError(data.data.data.value, data.data.data.err);
                 }
 
-                $rootScope.__showLoad = false;
+                $rootScope.$broadcast('evt__showLoad', false);
 
               });
             }

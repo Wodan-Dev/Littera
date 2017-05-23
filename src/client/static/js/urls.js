@@ -30,16 +30,27 @@
     },
     STORE: function () {
       return function (page) {
-        if (page)
-          return '/store?page=' + page;
-        else
-          return '/store';
-      };
+        let url = '/store';
 
+        if (page)
+          url += '?page=' + page;
+
+        return url;
+      };
+    },
+    STORE_QUERY: function () {
+      return function (page, query) {
+        let url = '/store/q?' + query;
+
+        if (page)
+          url += '&page=' + page;
+
+        return url;
+      };
     },
     STOREDETAIL: function () {
       return function (id) {
-        return '/store/' + id;
+        return '/store/book/' + id;
       };
     },
     USER: function () {

@@ -86,7 +86,7 @@
     }
 
     function valueTotalProfitGraph() {
-      $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showLoad', true);
       businessFactory.getBooksTotalProfit(loggedUser.username)
         .then(function (data) {
           let labels = [];
@@ -111,15 +111,15 @@
 
 
 
-          $rootScope.__showLoad = false;
+          $rootScope.$broadcast('evt__showLoad', false);
         })
         .catch(function (err) {
-          $rootScope.__showLoad = false;
+          $rootScope.$broadcast('evt__showLoad', false);
         });
     }
 
     function booksCountGraph() {
-      $rootScope.__showLoad = true;
+      $rootScope.$broadcast('evt__showLoad', true);
       businessFactory.getBooksTotalProfit(loggedUser.username)
         .then(function (data) {
           let labels = [];
@@ -144,18 +144,18 @@
 
 
 
-          $rootScope.__showLoad = false;
+          $rootScope.$broadcast('evt__showLoad', false);
         })
         .catch(function (err) {
-          $rootScope.__showLoad = false;
+          $rootScope.$broadcast('evt__showLoad', false);
         });
     }
 
 
     vm.btnLoadBook = function () {
-      console.log(vm.selectedBook);
 
       if (vm.selectedBook) {
+
         businessFactory.getBooksCount(loggedUser.username, vm.selectedBook)
           .then(function (data) {
             console.log(data);
@@ -174,17 +174,16 @@
             });
 
 
-
             vm.actualGraph.series = ['Vendas'];
             vm.actualGraph.legend = legend;
             vm.actualGraph.data = [serie];
             vm.actualGraph.labels = labels;
 
 
-            $rootScope.__showLoad = false;
+            $rootScope.$broadcast('evt__showLoad', false);
           })
           .catch(function (err) {
-            $rootScope.__showLoad = false;
+            $rootScope.$broadcast('evt__showLoad', false);
           });
       }
 

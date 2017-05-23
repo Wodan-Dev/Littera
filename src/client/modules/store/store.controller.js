@@ -17,6 +17,11 @@
     authentication) {
     var vm = this;
     vm.books = [];
+    vm.criteria = {
+      text: '',
+      keywords: ''
+    };
+
     vm.actualPage = 1;
     var msnry = new Masonry( '.grid', {
       // options
@@ -233,7 +238,47 @@
       document.getElementById('book-'+id).style.display = 'none';
       vm.book._id = '-';
       vm.showDetail = false;
-      $rootScope.__showModal = false;
+      $rootScope.$broadcast('evt__showLoad', false);
+    };
+
+    function updateBooksList(data) {
+      let t = vm.books.length;
+
+      for (let i = 0, len = data.data.length; i < len; i++) {
+        vm.books.push(data.data[i]);
+      }
+
+      msnry.layout();
+
+      if (t === vm.books.length)
+        message.notification('information', 'No momento não temos mais livros pra apresentar :(');
+
+      $rootScope.$broadcast('evt__showLoad', false);
+      if (!$scope.$$phase)
+        $scope.$apply();
+    }
+
+    function getSearchCriteria() {
+      let text = null;
+      if (vm.criteria.text)
+        text = 'text=' + vm.criteria.text;
+
+      return text;
+    }
+
+    vm.btnClearSearch = function() {
+      vm.criteria.text = '';
+      vm.actualPage = 1;
+      $rootScope.$broadcast('evt__showLoad', true);
+      vm.books = [];
+      loadData();
+    };
+
+    vm.btnSearch = function () {
+      vm.actualPage = 1;
+      vm.books = [];
+      $rootScope.$broadcast('evt__showLoad', true);
+      loadData();
     };
 
     vm.btnLoadMore = function () {
@@ -243,23 +288,14 @@
     };
 
     function loadData() {
-      storeFactory.getBooks(vm.actualPage)
-        .then(function (data) {
-          let t = vm.books.length;
-
-          for (let i = 0, len = data.data.length; i < len; i++) {
-            vm.books.push(data.data[i]);
-          }
-
-          msnry.layout();
-
-          if (t === vm.books.length)
-            message.notification('information', 'No momento não temos mais livros pra apresentar :(');
-        })
+      storeFactory.getBooks(vm.actualPage, getSearchCriteria())
+        .then(updateBooksList)
         .catch(function (er) {
 
         });
     }
+
+
 
   }
 

@@ -25,7 +25,9 @@ const date = core.date;
  */
 function get(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
-  booksModel.listStore(pageNum)
+  let text = req.query.text;
+
+  booksModel.listStore(pageNum, text)
     .then(function (result) {
       http.render(res, result);
     })
@@ -73,7 +75,8 @@ function router(express, auth) {
   let routes = express.Router();
 
   routes.get('/', get);
-  routes.get('/:id', getById);
+  routes.get('/q', get);
+  routes.get('/book/:id', getById);
   routes.get('/', remove);
 
   return routes;
