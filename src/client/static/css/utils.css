@@ -246,6 +246,39 @@ input[type="submit"].btn.btn-mini {
 }
 
 
+.parental-bag {
+  padding: .625rem;
+  border-radius: 3.125rem;
+  text-align: center;
+  color: white;
+  background: #00AF51;
+  font-weight: bold;
+}
+
+.parental-bag-a {
+  background: #00AF51!important;
+}
+
+.parental-bag-b {
+  background: #00CCFF!important;;
+}
+
+.parental-bag-c {
+  background: #FFCC00!important;;
+}
+
+.parental-bag-d {
+  background: #FF6600!important;;
+}
+
+.parental-bag-e {
+  background: #FE0000!important;;
+}
+
+.parental-bag-f {
+  background: #000000!important;;
+}
+
 .cssload-thecube {
   width: 73px;
   height: 73px;

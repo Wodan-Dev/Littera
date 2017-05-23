@@ -64,6 +64,12 @@ const booksSchema = new db.mongoose.Schema({
     type: String,
     required: false
   },
+  parental_rating: {
+    type: Number,
+    required: true,
+    default: 0,
+    enum: [0, 1, 2, 3, 4, 5]
+  },
   date_published: {
     type: Date,
     required: false,
@@ -125,6 +131,7 @@ const booksCreateSchema = schema({
   synopsis: models.stringField(true),
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),
+  parental_rating: models.numberField(true).integer().min(0).max(5),
   percentage: models.numberField(true).integer().min(0).max(100),
   esbn: models.stringField(false).length(10),
   esbn_13: models.stringField(false).length(13),
@@ -151,6 +158,7 @@ const booksUpdateSchema = schema({
   synopsis: models.stringField(true),
   content: models.stringField(true),
   status: models.numberField(true).integer().min(0).max(1),
+  parental_rating: models.numberField(true).integer().min(0).max(5),
   percentage: models.numberField(true).integer().min(0).max(100),
   esbn: models.stringField(false).length(10),
   esbn_13: models.stringField(false).length(13),

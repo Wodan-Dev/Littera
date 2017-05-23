@@ -38,6 +38,7 @@
       subtitle: '',
       synopsis: '',
       content: '',
+      parental_rating: 0,
       status: 0,
       percentage: 0,
       esbn: '',
@@ -223,6 +224,16 @@
       { desc:'Oculto', id: 2 }
     ];
 
+    vm.cbeParental_rating = [
+      { desc:'Livre', id: 0 },
+      { desc:'10+', id: 1 },
+      { desc:'12+', id: 2 },
+      { desc:'14+', id: 3 },
+      { desc:'16+', id: 4 },
+      { desc:'18+', id: 5 },
+    ];
+
+    vm.selectedParental_rating = vm.cbeParental_rating[0];
     vm.selectedVisible = vm.cbeVisible[0];
     vm.selectedI18n = vm.cbei18n[104];
 
@@ -246,6 +257,7 @@
 
         vm.selectedVisible = $filter('filter')(vm.cbeVisible, { id: bookData.data.visible })[0];
         vm.selectedI18n = $filter('filter')(vm.cbei18n, { id: bookData.data.language })[0];
+        vm.selectedParental_rating = $filter('filter')(vm.cbeParental_rating, { id: bookData.data.parental_rating })[0];
 
         vm.cover_url = bookData.data.cover_image;
         vm.noPrice = bookData.data.prices.length === 0;
@@ -277,6 +289,7 @@
           _id: bookData.data._id,
           _id_user: bookData.data._id_user,
           title: bookData.data.title,
+          parental_rating: bookData.data.parental_rating,
           subtitle: bookData.data.subtitle,
           synopsis: bookData.data.synopsis,
           content: bookData.data.content,
@@ -407,6 +420,7 @@
             content: 'vm.book.content',
             status: (vm.book.percentage === 100 ? 0 : 1).toString(),
             percentage: vm.book.percentage,
+            parental_rating: vm.selectedParental_rating.id,
             esbn: vm.book.esbn,
             esbn_13: vm.book.esbn_13,
             date_published: vm.book.date_published,

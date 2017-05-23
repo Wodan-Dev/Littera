@@ -280,6 +280,7 @@ function findByIdStore(id) {
         'average_star': 1,
         'cover_image': 1,
         'comments': 1,
+        'parental_rating': 1,
         'keywords': 1,
         'rankings': {
           _id_user: '$ranking_user._id',
@@ -315,6 +316,9 @@ function findByIdStore(id) {
         },
         esbn_13: {
           $first: '$esbn_13'
+        },
+        parental_rating: {
+          $first: '$parental_rating'
         },
         date_published: {
           $first: '$date_published'
@@ -372,6 +376,7 @@ function findByIdStore(id) {
         'percentage': 1,
         'esbn': 1,
         'esbn_13': 1,
+        'parental_rating': 1,
         'date_published': 1,
         'language': 1,
         'average_star': 1,
@@ -411,6 +416,9 @@ function findByIdStore(id) {
         },
         esbn_13: {
           $first: '$esbn_13'
+        },
+        parental_rating: {
+          $first: '$parental_rating'
         },
         date_published: {
           $first: '$date_published'
@@ -459,6 +467,7 @@ function findByIdStore(id) {
         'percentage': 1,
         'esbn': 1,
         'esbn_13': 1,
+        'parental_rating': 1,
         'date_published': 1,
         'language': 1,
         'average_star': 1,

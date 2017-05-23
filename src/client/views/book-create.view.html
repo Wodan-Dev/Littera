@@ -123,6 +123,17 @@
 
 
         <div class="form-group">
+          <select ng-options="o.desc for o in BookCreateCtrl.cbeParental_rating"
+                  ng-model="BookCreateCtrl.selectedParental_rating"
+                  name="cbeParental_rating"
+                  id="cbeParental_rating">
+          </select>
+          <label class="control-label"
+                 for="cbeParental_rating">Classificação</label>
+          <i class="bar"></i>
+        </div>
+
+        <div class="form-group">
           <select ng-options="o.desc for o in BookCreateCtrl.cbei18n"
                   ng-model="BookCreateCtrl.selectedI18n"
                   name="cbeLanguage"
@@ -132,6 +143,7 @@
                  for="cbeLanguage">Idioma</label>
           <i class="bar"></i>
         </div>
+
         <md-input-container
           flex="100"
           layout="row">

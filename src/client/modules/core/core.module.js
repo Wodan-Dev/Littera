@@ -21,7 +21,8 @@
     },
     filters: {
       titleCase: 'titleCase',
-      saleStatus: 'saleStatus'
+      saleStatus: 'saleStatus',
+      parentalRating: 'parentalRating'
     },
     imports: {
 

@@ -8,7 +8,6 @@
  */
 const core = require('../../core');
 const booksModel = require('../../../models/books/books.model.js');
-const feedModel = require('../../../models/feeds/feed.model');
 const writtenBooksModel = require('../../../models/users/written_books.model');
 const http = core.http;
 const utils = core.utils;
@@ -90,14 +89,15 @@ function post(req, res) {
     subtitle: req.body.subtitle || '',
     synopsis: req.body.synopsis || '',
     content: req.body.content || '',
-    status: req.body.status || 0,
-    percentage: req.body.percentage || 0,
+    status: (req.body.status || 0).toString(),
+    percentage: (req.body.percentage || 0).toString(),
     esbn: req.body.esbn || '',
     esbn_13: req.body.esbn_13 || '',
+    parental_rating: (req.body.parental_rating || 0).toString(),
     date_published: req.body.date_published || '',
-    visible: req.body.visible || 0,
+    visible: (req.body.visible || 0).toString(),
     language: req.body.language || '',
-    average_star: req.body.average_star || 0,
+    average_star: (req.body.average_star || 0).toString(),
     prices: req.body.prices || [],
     forums: req.body.forums || [],
     rankings: req.body.rankings || [],
@@ -137,14 +137,15 @@ function put(req, res) {
     subtitle: req.body.subtitle || '',
     synopsis: req.body.synopsis || '',
     content: req.body.content || '',
-    status: req.body.status || 0,
-    percentage: req.body.percentage || 0,
+    status: (req.body.status || 0).toString(),
+    percentage: (req.body.percentage || 0).toString(),
     esbn: req.body.esbn || '',
     esbn_13: req.body.esbn_13 || '',
+    parental_rating: (req.body.parental_rating || 0).toString(),
     date_published: req.body.date_published,
-    visible: req.body.visible || 0,
+    visible: (req.body.visible || 0).toString(),
     language: req.body.language || '',
-    average_star: req.body.average_star || 0,
+    average_star: (req.body.average_star || 0).toString(),
     prices: req.body.prices || [],
     forums: req.body.forums || [],
     rankings: req.body.rankings || [],

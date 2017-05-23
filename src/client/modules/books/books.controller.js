@@ -57,6 +57,7 @@
       'date_published': '',
       'language': '',
       'average_star': 1,
+      'parental_rating': 0,
       'cover_image': '',
       'comments': [],
       'keywords': [],

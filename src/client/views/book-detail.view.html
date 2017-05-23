@@ -39,6 +39,18 @@
             </md-chips>
           </div>
         </div>
+        <div flex="10"
+             layout-padding>
+          <p ng-class="{
+             'parental-bag-a': BooksCtrl.book.parental_rating == 0,
+             'parental-bag-b': BooksCtrl.book.parental_rating == 1,
+             'parental-bag-c': BooksCtrl.book.parental_rating == 2,
+             'parental-bag-d': BooksCtrl.book.parental_rating == 3,
+             'parental-bag-e': BooksCtrl.book.parental_rating == 4,
+             'parental-bag-f': BooksCtrl.book.parental_rating == 5
+            }"
+             class="parental-bag">{{BooksCtrl.book.parental_rating|parentalRating}}</p>
+        </div>
         <div flex="100"
              layout="column">
           <p style="margin: .625rem 0 .3rem .3rem; font-size: .8rem">Concluído <b>{{ BooksCtrl.book.percentage }}%</b></p>
@@ -64,7 +76,7 @@
           md-border-bottom>
           <!-- tab:store start-->
           <md-tab label="Loja"
-            ng-click="BooksCtrl.btnBackToStore()">
+                  ng-click="BooksCtrl.btnBackToStore()">
           </md-tab>
           <!-- tab:store end-->
 
