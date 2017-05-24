@@ -17,6 +17,7 @@
     var vm = this;
     vm.showSynopsis = true;
     vm.showStars = false;
+
     vm.ranking = {
       comment: '',
       stars: 1
@@ -178,9 +179,6 @@
         if (($routeParams.tab) && ([1, 2, 3].indexOf(parseInt($routeParams.tab) ) > -1) )
           vm.selectedTab = parseInt($routeParams.tab);
       }
-
-
-
     };
 
     function getActualPrice(prices) {
@@ -373,7 +371,10 @@
     };
 
     vm.btnBackToStore = function () {
-      $location.path('/');
+      if ($routeParams.text)
+        $location.path('/').search({ text:  $routeParams.text});
+      else
+        $location.path('/');
     };
 
     vm.btnReading = function () {

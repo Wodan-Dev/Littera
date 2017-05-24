@@ -131,14 +131,7 @@
           <p class="field-err"  ng-if="UsersCtrl.hasError('payment')" >{{UsersCtrl.getErrorMessage('payment.payment_id')}}</p>
         </div>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"
-                   ng-model="UsersCtrl.user.acepted_terms"
-              />
-            <i class="helper"></i>Aceitou os Termos
-          </label>
-        </div>
+
 
         <div class="form-group">
 
@@ -146,6 +139,8 @@
           {{ UsersCtrl.user.average_stars }}
 
         </div>
+
+
 
         <div class="button-group">
           <button

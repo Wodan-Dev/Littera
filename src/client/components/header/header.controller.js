@@ -5,7 +5,10 @@
 
 (function (angular, litteraApp) {
 
-  function headerController($rootScope, $window) {
+  function headerController(
+    $rootScope,
+    $window,
+    $location) {
     var vm = this;
     vm.showSearch = false;
     vm.actualPage = 'page';
@@ -77,11 +80,13 @@
     };
 
     vm.btnUserNotify = function () {
-      vm.showSearch = false;
+      if (vm.User._id !== '-')
+        $location.path('/user/' + vm.User.username);
+      /*vm.showSearch = false;
       $rootScope.$broadcast('evt__showModal', true);
       $rootScope.__showModal = true;
       $rootScope.__showLinks = false;
-      $rootScope.__showNotify = !$rootScope.__showNotify;
+      $rootScope.__showNotify = !$rootScope.__showNotify;*/
     };
 
 
@@ -90,7 +95,8 @@
 
   headerController.$inject = [
     '$rootScope',
-    '$window'
+    '$window',
+    '$location'
   ];
 
   angular.module(litteraApp.components.header.name)

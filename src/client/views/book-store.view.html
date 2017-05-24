@@ -7,40 +7,96 @@
        class="column-list grid">
     <div flex="100"
          id="shop-book-search"
-         class="column column-all"
+         class="column column-all first-column"
          layout-align="center center">
-      <form class="form-container"
+      <form style="margin: 0 .625rem/* 10px*/ 0 .625rem /* 10px*/"
             novalidate>
-        <div class="form-group">
-          <input type="text"
-                 ng-model="StoreCtrl.criteria.text"
-                 name="txtSearch"
-                 id="txtSearch"
-                 required="required"/>
-          <label class="control-label"
-                 for="txtSearch">Buscar
-          </label>
-        </div>
-        <div class="button-group"
-             flex="100"
-             layout="row">
-          <div flex="90"
-               flex-sm="70"
-               flex-xs="50"
-               layout="row">
+        <div layout="row"
+             layout-xs="column">
+          <md-input-container
+            flex="95"
+            flex-xs="100">
+            <label>Buscar</label>
+            <input ng-model="StoreCtrl.criteria.text">
+          </md-input-container>
+
+          <md-input-container
+            flex="10"
+            flex-xs="100">
             <button flex="95"
                     class="btn btn-info-inverted"
-                    ng-click="StoreCtrl.btnSearch()">Filtrar</button>
-          </div>
-          <div flex="10"
-               flex-sm="30"
-               flex-xs="50"
-               layout="row">
-            <button flex="90"
-                    class="btn btn-default"
-                    ng-click="StoreCtrl.btnClearSearch()">Limpar</button>
-          </div>
+                    ng-click="StoreCtrl.btnSearch()">
+              <i class="fa fa-search"
+                 style="color: white"
+                 id="btnicoSearch" aria-hidden="true"></i>
+            </button>
+          </md-input-container>
         </div>
+        <!--<div flex="100"
+             layout="row">
+          <div flex="80">
+            <div class="form-inline">
+              <div class="form-group">
+                <input type="text"
+                       ng-model="StoreCtrl.criteria.text"
+                       name="txtSearch"
+                       id="txtSearch"
+                       required="required"/>
+                <label class="control-label"
+                       for="txtSearch">Buscar
+                </label><i class="bar"></i>
+              </div>
+              <button flex="95"
+                      class="btn btn-info-inverted"
+                      ng-click="StoreCtrl.btnSearch()">
+                <i class="fa fa-search"
+                   style="color: white"
+                   id="btnicoSearch" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>-->
+        <!--<div flex="20">
+          <button flex="95"
+                  class="btn btn-info-inverted"
+                  ng-click="StoreCtrl.btnSearch()">
+            <i class="fa fa-search"
+               style="color: white"
+               id="icoSearch" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>-->
+        <!--
+
+                <div class="form-group">
+                  <input type="text"
+                         ng-model="StoreCtrl.criteria.text"
+                         name="txtSearch"
+                         id="txtSearch"
+                         required="required"/>
+                  <label class="control-label"
+                         for="txtSearch">Buscar
+                  </label><i class="bar"></i>
+                </div>
+                <div class="button-group"
+                     flex="100"
+                     layout="row">
+                  <div flex="90"
+                       flex-sm="70"
+                       flex-xs="50"
+                       layout="row">
+                    <button flex="95"
+                            class="btn btn-info-inverted"
+                            ng-click="StoreCtrl.btnSearch()">Filtrar</button>
+                  </div>
+                  <div flex="10"
+                       flex-sm="30"
+                       flex-xs="50"
+                       layout="row">
+                    <button flex="90"
+                            class="btn btn-default"
+                            ng-click="StoreCtrl.btnClearSearch()">Limpar</button>
+                  </div>
+                </div>-->
       </form>
     </div>
     <div flex="100"
@@ -90,7 +146,7 @@
         <div flex="100">
           <h3 class="title"
               style="margin-left: .625rem; margin-right: .625rem; text-align:center">
-            <a ng-href="#/books/{{ r._id  }}"
+            <a ng-click="StoreCtrl.goToBook(r._id)"
                class="link-title"
                ng-bind="r.title"></a>
           </h3>
@@ -191,6 +247,10 @@
   md-dialog {
     max-width: 90%;
     max-height: 90%;
+  }
+
+  md-input-container {
+    margin-bottom: 0;
   }
 </style>
 

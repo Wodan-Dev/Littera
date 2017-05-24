@@ -101,7 +101,8 @@ function post(req, res) {
     username: req.body.username || '',
     email: req.body.email || '',
     password: req.body.password || '',
-    passwordbis: req.body.passwordbis || ''
+    passwordbis: req.body.passwordbis || '',
+    acepted_terms: (req.body.acepted_terms || 0).toString()
   };
 
   usersModel.validateCreate(user)

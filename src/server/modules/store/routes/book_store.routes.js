@@ -26,6 +26,8 @@ const date = core.date;
 function get(req, res) {
   let pageNum = utils.normalizeNumber(req.query.page || 1, 1);
   let text = req.query.text;
+  if (text)
+    text = text.toLowerCase();
 
   booksModel.listStore(pageNum, text)
     .then(function (result) {

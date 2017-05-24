@@ -3,14 +3,22 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function RegisterCtrl($rootScope, $scope, $routeParams, $location, authFactory, has_error) {
+  function RegisterCtrl(
+    $rootScope,
+    $scope,
+    $routeParams,
+    $location,
+    authFactory,
+    has_error,
+    message) {
     let vm = this;
     vm.user = {
       name: '',
       username: '',
       email: '',
       password: '',
-      passwordbis: ''
+      passwordbis: '',
+      acepted_terms: false
     };
 
     vm.init = function () {
@@ -26,46 +34,53 @@
     };
 
     vm.btnCreate = function () {
-      has_error.clearError();
-      $rootScope.$broadcast('evt__showLoad', true);
-      let token = '';
+      if (vm.user.acepted_terms) {
+        has_error.clearError();
+        $rootScope.$broadcast('evt__showLoad', true);
+        let token = '';
 
-      authFactory.register(vm.user)
-        .then(function () {
-          return authFactory.authenticate(vm.user.username, vm.user.password);
-        })
-        .then(function (data) {
-          token = data.data.data;
-          return authFactory.setToken(data.data.data.toString());
-        })
-        .then(function () {
-          $scope.$apply(function () {
+        vm.user.acepted_terms = '1';
 
-            let uri = $routeParams.next || '/feed';
+        authFactory.register(vm.user)
+          .then(function () {
+            return authFactory.authenticate(vm.user.username, vm.user.password);
+          })
+          .then(function (data) {
+            token = data.data.data;
+            return authFactory.setToken(data.data.data.toString());
+          })
+          .then(function () {
+            $scope.$apply(function () {
 
-            if (uri[0] !== '/')
-              uri = '/' + $routeParams.next;
+              let uri = $routeParams.next || '/feed';
 
-            $location.path(uri);
-            $rootScope.$broadcast('evt_navBarUser_event', token);
-          });
-        })
-        .catch(function (data) {
+              if (uri[0] !== '/')
+                uri = '/' + $routeParams.next;
 
-          let lst = data.data.data.err;
-          $scope.$apply(function () {
-            if (lst instanceof Array) {
-              for (var i = 0, len = lst.length; i < len; i++) {
-                has_error.addError(lst[i].field, lst[i].message);
+              $location.path(uri);
+              $rootScope.$broadcast('evt_navBarUser_event', token);
+            });
+          })
+          .catch(function (data) {
+
+            let lst = data.data.data.err;
+            $scope.$apply(function () {
+              if (lst instanceof Array) {
+                for (var i = 0, len = lst.length; i < len; i++) {
+                  has_error.addError(lst[i].field, lst[i].message);
+                }
               }
-            }
-            else {
-              has_error.addError(data.data.data.value, data.data.data.err);
-            }
-            $rootScope.$broadcast('evt__showLoad', false);
+              else {
+                has_error.addError(data.data.data.value, data.data.data.err);
+              }
+              $rootScope.$broadcast('evt__showLoad', false);
 
+            });
           });
-        });
+      }
+      else
+        message.notification('warning', 'Você deve aceitar os termos.');
+
     };
   }
 
@@ -75,7 +90,8 @@
     '$routeParams',
     '$location',
     litteraApp.modules.auth.factories.authentication,
-    litteraApp.modules.auth.imports.has_error
+    litteraApp.modules.auth.imports.has_error,
+    litteraApp.modules.auth.imports.message
   ];
 
   angular.module(litteraApp.modules.auth.name)

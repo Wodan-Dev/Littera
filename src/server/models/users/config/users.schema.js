@@ -165,7 +165,8 @@ const newUsersCreateSchema = schema({
   username: models.stringField(true).min(5).max(30),
   email: models.stringField(true).email(),
   password: models.stringField(true).min(8),
-  passwordbis: models.stringField(true).min(8)
+  passwordbis: models.stringField(true).min(8),
+  acepted_terms:models.numberField(true).integer().min(0).max(1)
 });
 
 /**

@@ -80,6 +80,14 @@
           </label><i class="bar"></i>
           <p class="field-err"  ng-show="RegisterCtrl.hasError('passwordbis')" >{{RegisterCtrl.getErrorMessage('passwordbis')}}</p>
         </div>
+        <div class="checkbox form-group">
+          <label>
+            <input type="checkbox"
+                   ng-model="RegisterCtrl.user.acepted_terms"  />
+            <i class="helper"></i>Aceitou os Termos
+          </label>
+        </div>
+
         <div class="button-group">
           <button
             class="btn full btn-info-inverted"

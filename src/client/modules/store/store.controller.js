@@ -11,6 +11,7 @@
     $mdMedia,
     $location,
     $filter,
+    $routeParams,
     storeFactory,
     message,
     salesFactory,
@@ -23,7 +24,7 @@
     };
 
     vm.actualPage = 1;
-    var msnry = new Masonry( '.grid', {
+    var msnry = new Masonry('.grid', {
       // options
       itemSelector: '.grid-item',
       columnWidth: '.grid-item',
@@ -43,6 +44,9 @@
     };
 
     vm.init = function () {
+      if ($routeParams.text)
+        vm.criteria.text = $routeParams.text;
+
       vm.books = [];
       if (vm.isLogged()) {
         authentication.credential()
@@ -258,6 +262,11 @@
         $scope.$apply();
     }
 
+    vm.goToBook = function (id) {
+      $location.path('/books/' + id)
+               .search({ text: vm.criteria.text });
+    };
+
     function getSearchCriteria() {
       let text = null;
       if (vm.criteria.text)
@@ -278,7 +287,8 @@
       vm.actualPage = 1;
       vm.books = [];
       $rootScope.$broadcast('evt__showLoad', true);
-      loadData();
+      $location.path('/').search({ text: vm.criteria.text });
+      //loadData();
     };
 
     vm.btnLoadMore = function () {
@@ -288,6 +298,10 @@
     };
 
     function loadData() {
+
+
+
+
       storeFactory.getBooks(vm.actualPage, getSearchCriteria())
         .then(updateBooksList)
         .catch(function (er) {
@@ -307,6 +321,7 @@
     '$mdMedia',
     '$location',
     '$filter',
+    '$routeParams',
     litteraApp.modules.store.factories.store,
     litteraApp.modules.store.imports.message,
     litteraApp.modules.store.imports.salesFactory,
