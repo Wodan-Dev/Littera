@@ -168,6 +168,25 @@ function remove(req, res) {
 }
 
 /**
+ * Method Get in route /:id
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function getLibraryInfo(req, res) {
+
+  let username = req.params.username || '';
+
+  libraryModel.listLibraryInfo(username)
+    .then(function (result) {
+      http.render(res, result.library);
+    })
+    .catch(function (err) {
+      renderError(res, username, err);
+    });
+  
+}
+
+/**
  * Create Instance to router object
  * @param  {Object} express Express
  * @param  {Function} auth authentication
@@ -178,6 +197,7 @@ function router(express, auth) {
 
   routes.get('/:username/library/', auth, get);
   routes.get('/:username/library/:id', auth, getById);
+  routes.get('/:username/libraryinfo/', auth, getLibraryInfo);
   routes.post('/:username/library/', auth, post);
   routes.put('/:username/library/', auth, put);
   routes.delete('/:username/library/:id', auth, remove);
