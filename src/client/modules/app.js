@@ -122,8 +122,11 @@
     $rootScope.__showNotify = false;
     $rootScope.__showLoad = false;
     $rootScope.BASEURLS = BASEURLS;
+    if(!$rootScope.__pathHistory)
+      $rootScope.__pathHistory = [];
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
+
       window.scrollTo(0, 0);
       $anchorScroll();
       has_error.clearError();
@@ -145,6 +148,7 @@
 
       authorization.authorize(next)
        .then(function (url) {
+         $rootScope.__pathHistory.push($location.$$path);
          $rootScope.$broadcast('evt_navBarUser_event', '');
        })
        .catch(function (url) {

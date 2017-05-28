@@ -17,18 +17,44 @@
 
     function getTrends() {
       return $resource(BASEURLS.BASE_API +
-        litteraApp.modules.feed.routes.trends, {},
+        litteraApp.modules.feed.routes.trends +
+        '?topuser=4&topsale=3', {},
         {
           get: {
             headers: getHeader()
           }
         }
       ).get({}).$promise;
+    }
 
+    function getReadings() {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.feed.routes.trends +
+        '?topuser=1&topsale=20', {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
+    function getTrendings() {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.feed.routes.trends +
+        '?topuser=20&topsale=1', {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
     }
 
     return {
-      getTrends: getTrends
+      getTrends: getTrends,
+      getReadings: getReadings,
+      getTrendings: getTrendings
     };
   }
 

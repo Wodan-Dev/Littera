@@ -2,7 +2,7 @@
          id="NavRight"
          ng-style="$root.__showLinks ? { 'right': 0 } : { 'right': '-15.625rem'}">
   <h4>
-    <a ng-href="#/users/{{ $ctrl.User.username }}"
+    <a ng-href="#/user/{{ $ctrl.User.username }}"
        class="link-default"
        ng-show="$ctrl.User._id!=='-'">{{ $ctrl.User.name ||$ctrl.User.username }}</a>
     <p class="link-default"
@@ -21,7 +21,7 @@
 
   </div>
   <ul ng-show="$ctrl.User._id!=='-'">
-    <li><a ng-href="#/user/{{ $ctrl.User.username }}">Perfil</a></li>
+    <li><a ng-href="#/users/{{ $ctrl.User.username }}">Perfil</a></li>
     <li><a ng-href="#/user/{{ $ctrl.User.username }}?tab=3">Seguindo</a></li>
     <li><a ng-href="#/user/{{ $ctrl.User.username }}?tab=4">Seguidores</a></li>
   </ul>
@@ -37,25 +37,25 @@
        ng-show="$ctrl.User._id!=='-'">
 
   </div>
-  <ul ng-show="$ctrl.User._id!=='-'">
+  <!--<ul ng-show="$ctrl.User._id!=='-'">
     <li><a href="#">Criar Grupo</a></li>
     <li><a href="#">Meus Grupos</a></li>
   </ul>
   <div class="divisor"
        ng-show="$ctrl.User._id!=='-'">
 
-  </div>
+  </div>-->
+  <ul>
+    <li><a href="#/terms">Termos</a></li>
+    <!--<li><a href="#">Ajuda</a></li>-->
+  </ul>
   <ul ng-show="$ctrl.User._id!=='-'">
-    <li><a href="#">Preferências</a></li>
-    <li><a href="#">Configurações</a></li>
+    <!--<li><a href="#">Preferências</a></li>
+    <li><a href="#">Configurações</a></li>-->
     <li><a ng-click="$ctrl.btnLogOff()">Sair</a></li>
   </ul>
   <div class="divisor">
 
   </div>
-  <ul>
-    <li><a href="#">Termos</a></li>
-    <li><a href="#">Ajuda</a></li>
-  </ul>
 
 </section>

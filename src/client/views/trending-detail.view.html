@@ -1,0 +1,19 @@
+<div ng-init="TrendingCtrl.init()">
+  <div flex="100"
+       class="follow-grid"
+       layout-align="center center">
+    <ul ng-repeat="r in TrendingCtrl.topUsers">
+      <li>
+        <div class="follow-item">
+          <div class="follow-user">
+            <a ng-href="#/user/{{ r.username}}">
+              <img ng-src="{{ r.cover_image || './static/images/no-image.png' }}" />
+              <p class="name link-default">{{r.name }}</p>
+              <p class="username link-tiny">@{{r.username}}</p>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

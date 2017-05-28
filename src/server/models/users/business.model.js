@@ -249,8 +249,6 @@ function getBooksSalesByMonth(userId, bookId) {
     .exec();
 }
 
-
-
 function getBooksTotalByMonth(userId) {
   return salesModel.aggregate([
     {
@@ -307,7 +305,7 @@ function getBooksTotalByMonth(userId) {
     .exec();
 }
 
-function getTopUserSales() {
+function getTopUserSales(count) {
   return salesModel.aggregate([
     {
       $match: {
@@ -363,14 +361,13 @@ function getTopUserSales() {
       }
     },
     {
-      $limit: 4
+      $limit: count
     }
   ])
     .exec();
 }
 
-
-function getTopBooksSales() {
+function getTopBooksSales(count) {
   return salesModel.aggregate([
     {
       $match: {
@@ -397,7 +394,7 @@ function getTopBooksSales() {
       }
     },
     {
-      $limit: 3
+      $limit: count
     },
     {
       $lookup: {
@@ -418,7 +415,18 @@ function getTopBooksSales() {
         'title': '$book.title',
         'subtitle': '$book.subtitle',
         'cover_image': '$book.cover_image',
-        'count': 1
+        'count': '$book.count',
+        'synopsis': '$book.synopsis',
+        'percentage': '$book.percentage',
+        'esbn': '$book.esbn',
+        'esbn_13': '$book.esbn_13',
+        'date_published': '$book.date_published',
+        'language': '$book.language',
+        'average_star': '$book.average_star',
+        'comments': '$book.comments',
+        'keywords': '$book.keywords',
+        'rankings': '$book.rankings',
+        'prices': '$book.prices'
       }
     }
   ])

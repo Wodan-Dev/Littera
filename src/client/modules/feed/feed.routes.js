@@ -17,6 +17,24 @@
           access: {
             requiresLogin: true
           }
+        })
+        .when(litteraApp.modules.feed.routes.trending, {
+          controller:  litteraApp.modules.feed.controllers.trending.name,
+          controllerAs:  litteraApp.modules.feed.controllers.trending.nameas,
+          templateUrl: litteraApp.modules.feed.templates.trending.url,
+          title: 'Em Alta',
+          access: {
+            requiresLogin: false
+          }
+        })
+        .when(litteraApp.modules.feed.routes.readings, {
+          controller:  litteraApp.modules.feed.controllers.readings.name,
+          controllerAs:  litteraApp.modules.feed.controllers.readings.nameas,
+          templateUrl: litteraApp.modules.feed.templates.readings.url,
+          title: 'Leituras',
+          access: {
+            requiresLogin: false
+          }
         });
     });
 

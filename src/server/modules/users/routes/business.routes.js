@@ -88,11 +88,15 @@ function getTotalBookCount(req, res) {
 }
 
 function getTopSales(req, res) {
+  let limitTopUser = utils.normalizeNumber(req.query.topuser || 4, 4);
+  let limitTopSale = utils.normalizeNumber(req.query.topsale || 3, 3);
+
+
   let userSales = {};
-  businessModel.getTopUserSales()
+  businessModel.getTopUserSales(limitTopUser)
     .then(function (user) {
       userSales = user;
-      return businessModel.getTopBooksSales();
+      return businessModel.getTopBooksSales(limitTopSale);
     })
     .then(function (bookSales) {
 

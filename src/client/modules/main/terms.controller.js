@@ -4,11 +4,21 @@
 'use strict';
 
 (function (angular, litteraApp) {
-  function TermsCtrl() {
+  function TermsCtrl($mdDialog) {
     var vm = this;
+
+    vm.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    vm.accept = function() {
+      $mdDialog.hide('accept');
+    };
   }
 
-  TermsCtrl.$inject = [];
+  TermsCtrl.$inject = [
+    '$mdDialog'
+  ];
 
 
   angular.module(litteraApp.modules.main.name)

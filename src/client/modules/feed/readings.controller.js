@@ -1,60 +1,33 @@
 /**
- * Created by jonathan on 28/03/17.
+ * Created by jonathan on 14/05/17.
  */
 'use strict';
 (function (angular, litteraApp) {
-  function StoreCtrl(
-    $scope,
+  function ReadingsCtrl(
     $rootScope,
-    $window,
+    $scope,
+    $location,
     $mdDialog,
     $mdMedia,
-    $location,
     $filter,
-    $routeParams,
-    storeFactory,
+    trendsService,
+    authentication,
     message,
-    salesFactory,
-    authentication) {
+    salesFactory) {
     var vm = this;
-    vm.books = [];
-    vm.criteria = {
-      text: '',
-      keywords: ''
-    };
-
-    vm.actualPage = 1;
-    var msnry = new Masonry('.grid', {
-      // options
-      itemSelector: '.grid-item',
-      columnWidth: '.grid-item',
-      horizontalOrder: true,
-      percentPosition: true,
-      stagger: 30
-    });
-
+    vm.topBooks = [];
     vm.loggedUser = {};
 
-    vm.book = {
-      _id: '',
-      title: '',
-      username: '',
-      cover_image: '',
-      synopsis: ''
-    };
-
     function loadData() {
-      storeFactory.getBooks(vm.actualPage, getSearchCriteria())
-        .then(updateBooksList)
-        .catch(function (er) {
+      trendsService.getReadings()
+        .then(function (trends) {
+          vm.topBooks = trends.data.books;
+        })
+        .catch(function (err) {
         });
     }
 
-    vm.init = function () {
-      if ($routeParams.text)
-        vm.criteria.text = $routeParams.text;
-
-      vm.books = [];
+    vm.init = function() {
       if (vm.isLogged()) {
         authentication.credential()
           .then(function (data) {
@@ -71,8 +44,70 @@
       }
     };
 
+
     vm.isLogged = function () {
       return authentication.isAuthenticated();
+    };
+
+    function BookDetailController($mdDialog, book) {
+      let vm = this;
+
+      vm.book = book;
+
+      vm.cancel = function() {
+        $mdDialog.cancel();
+      };
+
+      vm.buy = function() {
+        $mdDialog.hide('buy');
+      };
+    }
+
+    vm.btnShowDetail = function(ev, cbook) {
+      $mdDialog.show({
+        controller: BookDetailController,
+        templateUrl: 'views/book-detail.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        controllerAs: 'bookDetCtrl',
+        locals: {
+          book: cbook
+        },
+        clickOutsideToClose:true,
+        fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
+      })
+        .then(function() {
+          $location.path('/books/'+ cbook._id);
+        }, function() {
+        });
+    };
+
+    vm.goToBook = function (id) {
+      $location.path('/books/' + id);
+    };
+
+    function getActualPrice(prices) {
+      let off = $filter('filter')(prices, { active:1, type: 1 });
+      if (off.length)
+        return off;
+
+      return $filter('filter')(prices, { type: 0 });
+    }
+
+    vm.getMinPrice = function (prices) {
+
+      if (prices.length) {
+        return getActualPrice(prices)[0].price_min;
+      }
+      return 0;
+    };
+
+    vm.getSugPrice = function (prices) {
+
+      if (prices.length) {
+        return getActualPrice(prices)[0].price_sug;
+      }
+      return 0;
     };
 
     vm.btnAddToWishList = function (id) {
@@ -124,30 +159,6 @@
         return $filter('filter')(vm.loggedUser.wishlist, { _id_book: id }).length;
       }
       return false;
-    };
-
-    function getActualPrice(prices) {
-      let off = $filter('filter')(prices, { active:1, type: 1 });
-      if (off.length)
-        return off;
-
-      return $filter('filter')(prices, { type: 0 });
-    }
-
-    vm.getMinPrice = function (prices) {
-
-      if (prices.length) {
-        return getActualPrice(prices)[0].price_min;
-      }
-      return 0;
-    };
-
-    vm.getSugPrice = function (prices) {
-
-      if (prices.length) {
-        return getActualPrice(prices)[0].price_sug;
-      }
-      return 0;
     };
 
     vm.btnAddBasket = function (id, sugPrice) {
@@ -208,116 +219,21 @@
 
     };
 
-    function BookDetailController($mdDialog, book) {
-      let vm = this;
-
-      vm.book = book;
-
-      vm.cancel = function() {
-        $mdDialog.cancel();
-      };
-
-      vm.buy = function() {
-        $mdDialog.hide('buy');
-      };
-    }
-
-    vm.btnShowDetail = function(ev, cbook) {
-      $mdDialog.show({
-        controller: BookDetailController,
-        templateUrl: 'views/book-detail.tpl.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        controllerAs: 'bookDetCtrl',
-        locals: {
-          book: cbook
-        },
-        clickOutsideToClose:true,
-        fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
-      })
-        .then(function() {
-          $location.path('/books/'+cbook._id);
-        }, function() {
-        });
-    };
-
-    vm.showItemDetail = function (id) {
-      return vm.book._id === id;
-    };
-
-    vm.btnCloseDetail = function (id) {
-      document.getElementById('book-'+id).style.display = 'none';
-      vm.book._id = '-';
-      vm.showDetail = false;
-      $rootScope.$broadcast('evt__showLoad', false);
-    };
-
-    function updateBooksList(data) {
-      let t = vm.books.length;
-
-      for (let i = 0, len = data.data.length; i < len; i++) {
-        vm.books.push(data.data[i]);
-      }
-
-      msnry.layout();
-
-      if (t === vm.books.length)
-        message.notification('information', 'No momento não temos mais livros pra apresentar :(');
-
-      $rootScope.$broadcast('evt__showLoad', false);
-      if (!$scope.$$phase)
-        $scope.$apply();
-    }
-
-    vm.goToBook = function (id) {
-      $location.path('/books/' + id)
-               .search({ text: vm.criteria.text });
-    };
-
-    function getSearchCriteria() {
-      let text = null;
-      if (vm.criteria.text)
-        text = 'text=' + vm.criteria.text;
-
-      return text;
-    }
-
-    vm.btnSearch = function () {
-      vm.actualPage = 1;
-      vm.books = [];
-      $rootScope.$broadcast('evt__showLoad', true);
-      $location.path('/').search({ text: vm.criteria.text });
-    };
-
-    vm.btnClearSearch = function() {
-      vm.criteria.text = '';
-      vm.actualPage = 1;
-      $rootScope.$broadcast('evt__showLoad', true);
-      vm.books = [];
-      loadData();
-    };
-
-    vm.btnLoadMore = function () {
-      vm.actualPage++;
-      loadData();
-    };
   }
 
-  StoreCtrl.$inject = [
-    '$scope',
+  ReadingsCtrl.$inject = [
     '$rootScope',
-    '$window',
+    '$scope',
+    '$location',
     '$mdDialog',
     '$mdMedia',
-    '$location',
     '$filter',
-    '$routeParams',
-    litteraApp.modules.store.factories.store,
-    litteraApp.modules.store.imports.message,
-    litteraApp.modules.store.imports.salesFactory,
-    litteraApp.modules.store.imports.authentication
+    litteraApp.modules.feed.services.trends,
+    litteraApp.modules.feed.imports.authentication,
+    litteraApp.modules.feed.imports.message,
+    litteraApp.modules.feed.imports.salesFactory
   ];
 
-  angular.module(litteraApp.modules.store.name)
-    .controller(litteraApp.modules.store.controllers.store.name, StoreCtrl);
+  angular.module(litteraApp.modules.feed.name)
+    .controller(litteraApp.modules.feed.controllers.readings.name, ReadingsCtrl);
 }(angular, litteraApp));

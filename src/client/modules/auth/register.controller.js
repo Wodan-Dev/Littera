@@ -8,6 +8,8 @@
     $scope,
     $routeParams,
     $location,
+    $mdDialog,
+    $mdMedia,
     authFactory,
     has_error,
     message) {
@@ -31,6 +33,23 @@
 
     vm.getErrorMessage = function (field) {
       return has_error.getErrorMessage(field);
+    };
+
+    vm.btnTerms = function(ev) {
+      console.log('click');
+      $mdDialog.show({
+        controller: 'TermsController',
+        controllerAs: 'TermsCtrl',
+        templateUrl: 'views/terms-detail.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: ($mdMedia('sm') || $mdMedia('xs'))
+      })
+        .then(function() {
+          vm.user.acepted_terms = true;
+        }, function() {
+        });
     };
 
     vm.btnCreate = function () {
@@ -89,6 +108,8 @@
     '$scope',
     '$routeParams',
     '$location',
+    '$mdDialog',
+    '$mdMedia',
     litteraApp.modules.auth.factories.authentication,
     litteraApp.modules.auth.imports.has_error,
     litteraApp.modules.auth.imports.message

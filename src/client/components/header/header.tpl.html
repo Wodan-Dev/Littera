@@ -1,6 +1,8 @@
 <header>
-  <div class="nav-button" id="btnMenu">
-    <a class="menu-button" ng-click="$ctrl.btnShowUserMenu()">
+  <div class="nav-button"
+       id="btnMenu"
+       ng-click="$ctrl.btnShowUserMenu()">
+    <a class="menu-button" >
       <i class="fa fa-bars fa-lg" aria-hidden="true" style="color: rgb(32,32,32)"></i>
     </a>
   </div>
@@ -11,10 +13,11 @@
        id="navDescUser"
        ng-style="$ctrl.showSearch ? { 'width': $ctrl.navSize() } : { 'width': '15.625rem'}"
     >
-    <div class="nav-user-config" id="nav-user-config">
+    <div class="nav-user-config"
+         id="nav-user-config"
+         ng-click="$ctrl.btnSearch()">
       <a class="btn-search"
-         id="btnSearch"
-         ng-click="$ctrl.btnSearch()" >
+         id="btnSearch">
         <i class="fa fa-search"
            ng-class="{ 'fa fa-times' : $ctrl.showSearch,
                        'fa fa-search': !$ctrl.showSearch}"
@@ -22,7 +25,6 @@
       </a>
     </div>
 
-    <!--ng-style="myObject.value === 'ok' ? { 'width':'100%', color:'green' } : { 'width': '0%' }"-->
     <div class="nav-user-desc"
          id="btnUser"
          ng-click="$ctrl.btnShowLinks()"
@@ -30,7 +32,8 @@
             $ctrl.User._id == '-' ? '13.6rem' : '9.375rem'
           }"
       >
-      <input ng-show="$ctrl.showSearch"
+      <input class="animate-show-hide"
+             ng-if="$ctrl.showSearch"
              ng-style="$ctrl.showSearch ? { 'width': $ctrl.txtSearchSize } : { 'width':
             $ctrl.User._id == '-' ? '13.6rem' : '9.375rem'
           }"
@@ -38,13 +41,14 @@
              name="txtSearch"
              type="text"
              placeholder="Pesquisar" />
-      <p ng-show="!$ctrl.showSearch"
+      <p class="animate-show-hide"
+         ng-show="!$ctrl.showSearch"
          id="txtUsername"
          ng-bind="$ctrl.User.name"></p>
     </div>
     <div class="nav-user-picture"
          id="btnUserPic"
-         ng-show="$ctrl.User._id !== '-'"
+         ng-if="$ctrl.User._id !== '-'"
          ng-click="$ctrl.btnUserNotify()">
       <!--<div class="notify">&nbsp;</div>-->
       <img ng-src="{{ $ctrl.User.cover_image || './static/images/no-image.png' }}" />

@@ -84,7 +84,8 @@
           <label>
             <input type="checkbox"
                    ng-model="RegisterCtrl.user.acepted_terms"  />
-            <i class="helper"></i>Aceitou os Termos
+            <i class="helper"></i>Aceitou os <a class="link-default"
+                ng-click="RegisterCtrl.btnTerms($event)">Termos</a>
           </label>
         </div>
 
@@ -105,5 +106,3 @@
        ng-include="'views/trends.view.html'">
   </div>
 </div>
-
-

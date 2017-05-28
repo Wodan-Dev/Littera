@@ -8,6 +8,8 @@
     function authorize(next) {
       return new Promise(function (resolve, reject) {
         let requiresLogin = false;
+        console.log('authorize');
+        console.log(next);
 
         if (next.access !== undefined &&
           next.access.hasOwnProperty('requiresLogin')) {
@@ -17,6 +19,8 @@
         if (requiresLogin) {
           if (!authentication.isAuthenticated()) {
             authentication.logOut();
+            console.log('next');
+            console.log(next);
             reject(litteraApp.modules.auth.routes.login);
           }
           else {
@@ -26,6 +30,8 @@
               }
               else if (status === 401) {
                 authentication.logOut();
+                console.log('next');
+                console.log(next);
                 reject(litteraApp.modules.auth.routes.login);
               }
               else {
@@ -35,8 +41,10 @@
             });
           }
         }
-        else
+        else{
+          console.log('resolve(');
           resolve('');
+        }
 
       });
 

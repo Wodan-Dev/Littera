@@ -149,6 +149,7 @@ header .nav-user {
   min-width: 9.375rem; /* 150px; */
   width: 100%;
   transition: all 300ms ease;
+  overflow: hidden;
 }
 .nav-user-desc:hover{
   background: rgb(245,245,245);
@@ -178,10 +179,10 @@ header .nav-user {
   margin-bottom: 0;
   height: 2.625rem; /* 42px; */
   display: block;
-  transition: all 300ms ease;
   border:none;
   border-bottom: solid .125rem /* 2px */ #DADADA;
-  outline: none
+  outline: none;
+  transition: all 100ms linear;
 }
 
 .nav-user .nav-user-picture {
@@ -1110,4 +1111,3 @@ md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
 
 
 /* terms */
-

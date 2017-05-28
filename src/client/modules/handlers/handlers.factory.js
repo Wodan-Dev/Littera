@@ -19,13 +19,19 @@
     };
   }
 
-  function notAuthorizedFactory($location) {
+  function notAuthorizedFactory($location, $window) {
     return {
       responseError: function(rejection) {
+
+
+
+        console.log('rejection');
+        console.log(rejection);
+        console.log($window.history);
         return new Promise(function (resolve, reject) {
           if($location.url() !== litteraApp.modules.handlers.routes.login &&
-            rejection.status === 401){
-            $location.path(litteraApp.modules.handlers.routes.login);
+            rejection.status === 401) {
+            $location.path(litteraApp.modules.handlers.routes.login).search({history: 'true'});
           }
 
           return reject(rejection);
@@ -48,7 +54,7 @@
   }
 
   notFoundFactory.$inject = ['$location'];
-  notAuthorizedFactory.$inject = ['$location'];
+  notAuthorizedFactory.$inject = ['$location', '$window'];
   serverErrorFactory.$inject = ['$location'];
 
   angular.module(litteraApp.modules.handlers.name)

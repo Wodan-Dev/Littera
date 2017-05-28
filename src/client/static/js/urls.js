@@ -170,6 +170,12 @@
     TRENDS: function () {
       return '/users/top/trends';
     },
+    TRENDING: function () {
+      return '/trending';
+    },
+    READINGS: function () {
+      return '/readings';
+    },
     TERMS: function () {
       return '/terms';
     }

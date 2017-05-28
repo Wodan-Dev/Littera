@@ -58,6 +58,7 @@ module.exports = function(grunt) {
           src: [
             'client/*.html',
             'client/components/**',
+            'client/favicon/**',
             'client/modules/**',
             'client/static/**',
             'client/{,*/}*.html'

@@ -3,7 +3,13 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function LoginCtrl($rootScope, $scope, $routeParams, $location, authFactory, has_error) {
+  function LoginCtrl(
+    $rootScope,
+    $scope,
+    $routeParams,
+    $location,
+    authFactory,
+    has_error) {
     let vm = this;
     vm.user = {
       username: '',
@@ -43,10 +49,17 @@
           $scope.$apply(function () {
             let uri = $routeParams.next || '/feed';
 
-            if (uri[0] !== '/')
-              uri = '/' + $routeParams.next;
+            if (!$routeParams.history) {
+              if (uri[0] !== '/')
+                uri = '/' + $routeParams.next;
 
-            $location.path(uri);
+
+
+              $location.path(uri);
+            }
+            else
+              window.history.back();
+
             $rootScope.$broadcast('evt_navBarUser_event', token);
           });
         })
