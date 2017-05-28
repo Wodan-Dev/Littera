@@ -9,13 +9,21 @@
       main: {
         name: 'MainController',
         nameas: 'MainCtrl'
-      }
+      },
+      terms: {
+        name: 'TermsController',
+        nameas: 'TermsCtrl'
+      },
     },
     routes: {
+      terms: litteraApp.URLS.TERMS()
     },
     factories: {
     },
     templates: {
+      terms:{
+        url: 'views/terms.view.html'
+      }
     },
     imports: {
     }

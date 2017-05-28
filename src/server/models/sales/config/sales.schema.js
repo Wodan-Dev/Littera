@@ -41,6 +41,10 @@ const salesSchema = new db.mongoose.Schema({
     type: String,
     required: true
   },
+  payment_url: {
+    type: String,
+    required: false
+  },
   status: {
     type: Number,
     required: true,

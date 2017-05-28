@@ -169,6 +169,9 @@
     },
     TRENDS: function () {
       return '/users/top/trends';
+    },
+    TERMS: function () {
+      return '/terms';
     }
   };
 }(litteraApp));

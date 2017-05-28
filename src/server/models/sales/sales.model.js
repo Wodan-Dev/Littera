@@ -231,6 +231,54 @@ function alreadyInBasket(idSale, idBook) {
     .exec();
 }
 
+function createPayPalSale(idSale, totalSale, itemsSale) {
+  let paypal_sale = {
+    intent: 'sale',
+    payer: {
+      payment_method: 'paypal'
+    },
+    transactions: [],
+    note_to_payer: 'Em caso de dúvidas, contate o suporte do Littera.',
+    redirect_urls: {
+      return_url: config.getDomain() + '/purchases',
+      cancel_url: config.getDomain() + '/cart'
+    }
+  };
+
+  let obj = {
+    amount: {
+      total: totalSale,
+      currency: 'BRL'
+    },
+    description: 'Compra de E-books no site Littera.',
+    custom: 'Cod. Venda: ' + idSale,
+    payment_options: {
+      allowed_payment_method: 'INSTANT_FUNDING_SOURCE'
+    },
+    soft_descriptor: 'Littera Ebooks',
+    item_list: {
+      items: []
+    }
+  };
+
+
+  itemsSale.map(function (item) {
+    obj.item_list.items.push({
+      name: item.title,
+      description: item.synopsis,
+      quantity: '1',
+      price: item.value,
+      tax: 0,
+      currency: 'BRL'
+    });
+  });
+
+
+  paypal_sale.transactions.push(obj);
+
+  return paypal_sale;
+}
+
 
 /**
  * Validate create
@@ -347,5 +395,6 @@ module.exports = {
   getLastSale: getLastSale,
   getSale: getSale,
   alreadyInBasket: alreadyInBasket,
+  createPayPalSale: createPayPalSale,
   model: salesModel
 };

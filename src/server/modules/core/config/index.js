@@ -87,6 +87,14 @@ function getPageSize() {
 }
 
 /**
+ * default domain of application
+ * @return {String} default domain
+ */
+function getDomain() {
+  return process.env.DOMAIN || 'littera.pub';
+}
+
+/**
  * load env vars
  * @return {Promise} Resolve/Reject
  */
@@ -129,11 +137,15 @@ function getRedisPort() {
 }
 
 function getPaypalAppId() {
-  return process.env.PAYPAL_APP_ID;
+  return process.env.PAYPAL_APP_ID || 'a';
 }
 
 function getPayPalAppSecret() {
-  return process.env.PAYPAL_APP_SECRET;
+  return process.env.PAYPAL_APP_SECRET || 'a';
+}
+
+function getPayPalMode() {
+  return process.env.PAYPAL_MODE || 'sandbox';
 }
 
 
@@ -166,5 +178,7 @@ module.exports = {
   getRedisPort: getRedisPort,
   getPaypalAppId: getPaypalAppId,
   getPayPalAppSecret: getPayPalAppSecret,
-  getUploadPath: getUploadPath
+  getPayPalMode: getPayPalMode,
+  getUploadPath: getUploadPath,
+  getDomain: getDomain
 };

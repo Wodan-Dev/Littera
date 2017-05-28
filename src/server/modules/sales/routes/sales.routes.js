@@ -9,12 +9,12 @@
 const core = require('../../core');
 const salesModel = require('../../../models/sales/sales.model');
 const salesCtrl = require('../controller/sales.controller');
-const libraryModel = require('../../../models/users/library.model');
 const http = core.http;
 const utils = core.utils;
 const renderError = core.http.renderError;
 const validator = core.validator;
 const paypal = core.paypal;
+const config = core.config;
 
 /**
  * Method Get in route /
@@ -151,6 +151,7 @@ function post(req, res) {
   let sale = {
     _id_user: req.body._id_user || '',
     transaction_id: '-',
+    payment_url: req.body.payment_url || '',
     status: (req.body.status || '0').toString(),
     items: req.body.items || []
   };
@@ -212,13 +213,11 @@ function removeBook(req, res) {
 
 
 function finalize(req, res) {
-  let sale = {
+  /*let sale = {
     _id: req.params.id || ''
   };
 
   let items = req.body.items || [];
-
-  console.log(items);
 
   let saleItem = {};
   let books = [];
@@ -254,7 +253,7 @@ function finalize(req, res) {
     })
     .catch(function (err) {
       renderError(res, saleItem, err);
-    });
+    });*/
 }
 
 /**
@@ -333,6 +332,125 @@ function pay(req, res) {
 
 }
 
+
+function updatePrices(req, res) {
+  console.log('req.body');
+  console.log(req.body);
+
+  let sale = {
+    _id: req.params.id || '',
+    items: req.body.sale.items || [],
+    status: (req.body.sale.status || 0).toString()
+  };
+
+  //let items = req.body.items || [];
+  //let saleItem = {};
+  //let books = [];
+
+  salesModel.validateId(sale._id)
+    .then(function (rIdSale) {
+      sale._id = rIdSale;
+      return salesModel.findById(sale._id);
+    })
+    .then(function (result) {
+      //saleItem = result;
+
+      return salesModel.update(sale._id, {
+        _id_user: result._id_user,
+        transaction_id: result.transaction_id,
+        status: sale.status,
+        items: sale.items
+      });
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, sale, err);
+    });
+}
+
+
+function checkoutSale(req, res) {
+  console.log('req.body');
+  console.log(req.body);
+
+  let sale = {
+    _id: req.params.id || '',
+    items: req.body.sale.items || [],
+    status: (req.body.sale.status || 0).toString()
+  };
+
+  let retSale = {};
+  let payPalSale = {};
+
+  salesModel.validateId(sale._id)
+    .then(function (rIdSale) {
+      sale._id = rIdSale;
+      return salesModel.findById(sale._id);
+    })
+    .then(function (result) {
+
+      console.log('1');
+      //saleItem = result;
+
+      return salesModel.update(sale._id, {
+        _id_user: result._id_user,
+        transaction_id: result.transaction_id,
+        status: 0, //----- mudar mudar mudar 1
+        payment_url: result.payment_url,
+        items: sale.items
+      });
+    })
+    .then(function (result) {
+      console.log('2');
+      retSale = result;
+
+      return salesModel.getSale(sale._id);
+    })
+    .then(function (result) {
+      return new Promise(function (resolve, reject) {
+        console.log('3');
+        let rPayPal = result[0];
+        payPalSale = salesModel.createPayPalSale(
+          sale._id, rPayPal.totalsale, rPayPal.items);
+
+        paypal.payment.create(payPalSale, function (error, payment) {
+          if (error) {
+            console.log('4');
+            reject(validator.createErrItem('paypal', error));
+          }
+          else {
+            console.log('5');
+            resolve(payment);
+          }
+        });
+
+      });
+    })
+    .then(function (payment_url) {
+      console.log('6');
+
+      console.log(payment_url);
+
+      return salesModel.update(sale._id, {
+        _id_user: retSale._id_user,
+        transaction_id: retSale.transaction_id,
+        status: 1,
+        payment_url: payment_url,
+        items: sale.items
+      });
+    })
+    .then(function (result) {
+      console.log('7');
+      retSale = result;
+      http.render(res, retSale);
+    })
+    .catch(function (err) {
+      renderError(res, retSale, err);
+    });
+}
+
 /**
  * Create Instance to router object
  * @param  {Object} express Express
@@ -348,6 +466,8 @@ function router(express, auth) {
   routes.post('/', auth, post);
   routes.post('/pay', pay);
   routes.post('/:id/finalize', finalize);
+  routes.post('/:id/prices', updatePrices);
+  routes.post('/:id/checkout', checkoutSale);
   routes.post('/books', auth, postBook);
   routes.put('/books', auth, putBook);
   routes.delete('/:id', auth, remove);

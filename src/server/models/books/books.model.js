@@ -218,7 +218,8 @@ function listStore(page, text) {
     qry.push({
       $match: {
         search: {
-          $regex: text
+          $regex: text,
+          $options: 'i'
         }
       }
     });

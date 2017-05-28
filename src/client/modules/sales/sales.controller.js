@@ -18,6 +18,34 @@
     vm.saleItems = [];
     let loggedUser = {};
 
+/*
+    vm.opts = {
+      env: 'sandbox',
+      client: {
+        sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+        production: '--'
+      },
+      payment: function() {
+        var env    = this.props.env;
+        var client = this.props.client;
+        return paypal.rest.payment.create(env, client, {
+          transactions: [
+            {
+              amount: { total: '1.00', currency: 'USD' }
+            }
+          ]
+        });
+      },
+      commit: true, // Optional: show a 'Pay Now' button in the checkout flow
+      onAuthorize: function(data, actions) {
+        // Optional: display a confirmation page here
+        return actions.payment.execute().then(function() {
+          // Show a success page to the buyer
+          message.notification('information', 'comprado com sucesso!');
+        });
+      }
+    };*/
+
     vm.init = function () {
       vm.saleItems = [];
       loadData();
@@ -88,6 +116,7 @@
           vm.saleItems = data;
         })
         .catch(function (err) {
+
           if(err.data.data.err)
             message.notification('information', err.data.data.err);
         });
@@ -104,6 +133,20 @@
             value: item.value
           });
         });
+
+        let sale = {
+          status: 0,
+          items: items
+        };
+/*
+        salesFactory.updateSale(vm.saleItems._id, { sale: sale })
+          .then(function (data) {
+            console.log(data);
+          })
+          .catch(function (er) {
+            console.log(er);
+          });*/
+
 
         salesFactory.finalize(vm.saleItems._id, { items: items } )
           .then(function () {

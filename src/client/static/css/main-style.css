@@ -1,6 +1,6 @@
 @import url("reset.css");
-/*@import url(http://fonts.googleapis.com/css?family=Arimo);
-@import url(http://fonts.googleapis.com/css?family=Tinos)*/
+@import url(http://fonts.googleapis.com/css?family=Arimo);
+@import url(http://fonts.googleapis.com/css?family=Tinos);
 
 html, body {
   height:100%;
@@ -403,7 +403,7 @@ header .nav-user {
 
 .notice-content p.price-value {
   font-size: 1.2rem;
-  padding: 0px;
+  padding: 0;
   text-align: center;
   line-height: 1.35rem;
   color: #555555;
@@ -533,21 +533,25 @@ header .nav-user {
   font-weight: 400;
 }
 
-.content-detail .content-divisor {
+.content-detail .content-divisor,
+.platform-terms .content-divisor{
   height: 1.875rem; /* 30px */
   width: 100%;
   display: block;
   /*background: green;*/
 }
 
-.content-detail .content-divisor p {
+
+.content-detail .content-divisor p,
+.platform-terms .content-divisor p{
   text-align: center;
   line-height: 1.875rem; /* 30px */
   letter-spacing: .625rem; /* 1px */
   color: #cccccc;
 }
 
-.content-detail p {
+.content-detail p,
+.platform-terms p {
   font-family: 'Tinos', serif;
   max-width: 46.875rem;/* 750px; */
   margin: 0 auto;
@@ -1040,3 +1044,70 @@ md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
   background-color: rgb(0, 150, 136) !important;
 }
 /* md-tabs color*/
+
+
+/* terms */
+.platform-terms {
+  /*background: green;*/
+  padding: .625rem 1.25rem .625rem 1.25rem;
+}
+
+.platform-terms h1 {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding-top: .625rem;
+}
+.platform-terms .content-terms {
+  margin-top: .625rem;
+}
+
+.platform-terms h1 {
+  color: #393939;
+}
+
+.platform-terms ul.main li {
+}
+
+.platform-terms ul.main li h3 {
+  padding-top: 1.25rem; /* 20px */
+  color: #393939;
+}
+
+.platform-terms ul.subitem {
+  margin-top: .625rem; /* 10px */
+  padding-left: 1.875rem; /* 20px */
+}
+
+.platform-terms ul.subitem li {
+  color: #464646;
+  list-style: upper-roman!important;
+}
+
+.platform-terms ul.subitem li p {
+  padding-top: .3125rem; /* 5px */
+}
+
+.platform-terms b {
+  font-size: .9rem!important;
+  line-height: .9rem;
+}
+
+.platform-terms p {
+  font-size: 1rem!important; /* 16px */
+  line-height: 1.5rem; /* 24px */
+}
+
+.platform-terms .content-terms p.footer {
+  text-align: center;
+}
+
+.platform-terms .content-terms p.footer span.tiny {
+  color: rgb(120,120,120);
+  font-size: .75rem;
+}
+
+
+
+/* terms */
+

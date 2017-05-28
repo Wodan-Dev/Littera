@@ -96,6 +96,7 @@ module.exports = function(grunt) {
           '<%= appcfg.src %>/server/{,*/}{,*/}{,*/}{,*/}*.js',
           '!<%= appcfg.src %>/client/static/js/epub.min.js',
           '!<%= appcfg.src %>/client/static/js/zip.min.js',
+          '!<%= appcfg.src %>/client/static/js/checkout.js',
           '!<%= appcfg.src %>/client/static/reader/**',
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js'
         ]
@@ -110,6 +111,7 @@ module.exports = function(grunt) {
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js',
           '!<%= appcfg.src %>/client/static/js/epub.min.js',
           '!<%= appcfg.src %>/client/static/js/zip.min.js',
+          '!<%= appcfg.src %>/client/static/js/checkout.js',
           '!<%= appcfg.src %>/client/static/reader/**',
         ]
       }
@@ -125,6 +127,7 @@ module.exports = function(grunt) {
           '<%= appcfg.src %>/server/{,*/}{,*/}{,*/}{,*/}*.js',
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js',
           '!<%= appcfg.src %>/client/static/js/epub.min.js',
+          '!<%= appcfg.src %>/client/static/js/checkout.js',
           '!<%= appcfg.src %>/client/static/js/zip.min.js',
           '!<%= appcfg.src %>/client/static/reader/**'
         ]
@@ -139,6 +142,7 @@ module.exports = function(grunt) {
           '<%= appcfg.src %>/client/{,*/}{,*/}{,*/}{,*/}*.js',
           '!<%= appcfg.src %>/client/static/reader',
           '!<%= appcfg.src %>/client/static/js/epub.min.js',
+          '!<%= appcfg.src %>/client/static/js/checkout.js',
           '!<%= appcfg.src %>/client/static/js/zip.min.js',
           '!<%= appcfg.src %>/client/static/reader/**.js'
 
