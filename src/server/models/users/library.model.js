@@ -195,6 +195,18 @@ function alreadyInLibrary(idUser, idBook) {
 }
 
 /**
+ * List all books from user's library with some info
+ * @param  {String} user username
+ * @return {Promise} Resolve/Reject
+ */
+function listLibraryInfo(username) {
+
+  return usersModel.findOne({ username: username })
+    .populate('library._id_book', 'title subtitle synopsis content cover_image')
+    .exec();
+}
+
+/**
  * Validate create
  * @param  {Object} choice choice object
  * @return {Promise}      Resolve/Reject
@@ -238,5 +250,6 @@ module.exports = {
   list: list,
   listByUser: listByUser,
   findById: findById,
-  alreadyInLibrary: alreadyInLibrary
+  alreadyInLibrary: alreadyInLibrary,
+  listLibraryInfo: listLibraryInfo
 };
