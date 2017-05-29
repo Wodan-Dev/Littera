@@ -12,6 +12,7 @@ const userModel = require('../../../models/users/users.model');
 const http = core.http;
 const auth = core.authentication;
 const renderError = core.http.renderError;
+const crypto = core.crypto;
 
 /**
  * Method Get in route /
@@ -108,16 +109,57 @@ function postAuth(req, res) {
     });
 }
 
+function changePass(req, res) {
+  let user = {
+    email: req.body.email || '',
+    username: req.body.username || '',
+    password: req.body.password || '',
+    newPass: req.body.newPass || '',
+    newPassBis: req.body.newPassBis || ''
+  };
+
+  let userLoad = {};
+
+  userModel.findByUserName(user.username)
+    .then(function (result) {
+      userLoad = result;
+      return userModel.findByUserEmail(user.email);
+    })
+    .then(function (result) {
+      return authCtrl.validateUser(user);
+    })
+    .then(function (ruser) {
+      return authCtrl.validatePassword(userLoad, ruser.value.password);
+    })
+    .then(function (rvalid) {
+      return authCtrl.validatePassBis(user);
+    })
+    .then(function (rvalid) {
+      return crypto.encrypt(user.newPass);
+    })
+    .then(function (pass) {
+      userLoad.password = pass;
+      return userModel.update(userLoad._id, userLoad);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, user, err);
+    });
+}
+
 /**
 * Create Instance to router object
 * @param  {Object} express Express
 * @return {Router}         router object with the routes
 */
-function router(express) {
+function router(express, ath) {
   let routes = express.Router();
 
   routes.post('/authenticate', postAuth);
   routes.get('/me', get);
+  routes.post('/change', ath, changePass);
 
   return routes;
 }

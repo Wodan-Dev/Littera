@@ -20,8 +20,10 @@
           resolve();
         }, 2000);
       });
+    }
 
-
+    function changePass(user) {
+      return request._post(litteraApp.modules.auth.routes.change, user);
     }
 
     function register(user) {
@@ -47,7 +49,8 @@
       credential: credential,
       logOut: logOut,
       isAuthenticated: isAuthenticated,
-      register: register
+      register: register,
+      changePass: changePass
     };
   }
 

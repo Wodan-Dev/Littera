@@ -69,6 +69,9 @@
     LOGIN: function () {
       return '/mordor/login';
     },
+    CHANGE_PASS: function () {
+      return '/mordor/change';
+    },
     REGISTER: function () {
       return '/mordor/register';
     },
@@ -84,6 +87,9 @@
       },
       ME: function () {
         return '/mordor/me';
+      },
+      CHANGE: function () {
+        return '/mordor/change';
       }
     },
     NOTAUTHORIZED: function() {

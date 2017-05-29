@@ -13,6 +13,10 @@
       register: {
         name: 'RegisterController',
         nameas: 'RegisterCtrl'
+      },
+      password: {
+        name: 'PasswordController',
+        nameas: 'PasswordCtrl'
       }
     },
     routes: {
@@ -21,6 +25,8 @@
       loginNext: litteraApp.URLS.LOGINNEXT(),
       authenticate: litteraApp.URLS.MORDOR.AUTHENTICATION(),
       me: litteraApp.URLS.MORDOR.ME(),
+      change_pass: litteraApp.URLS.CHANGE_PASS(),
+      change: litteraApp.URLS.MORDOR.CHANGE(),
       notAuthorized: litteraApp.URLS.NOTAUTHORIZED(),
       serverError: litteraApp.URLS.SERVERERROR(),
       user: litteraApp.URLS.USER()
@@ -37,6 +43,9 @@
       },
       register: {
         url: 'views/register.view.html'
+      },
+      password: {
+        url: 'views/users-password.view.html'
       }
     },
     imports: {
@@ -54,4 +63,3 @@
   ]);
 
 }(angular, litteraApp));
-

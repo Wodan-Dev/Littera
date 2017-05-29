@@ -94,6 +94,31 @@ function validateUser(user) {
   });
 }
 
+
+function validatePassBis(user) {
+  return new Promise(function (resolve, reject) {
+    user.newPass = checkField.trim(checkField.escape(user.newPass));
+    user.newPassBis = checkField.trim(checkField.escape(user.newPassBis));
+    let lstErrors = [];
+    console.log('user');
+    console.log(user);
+
+    if (user.newPass !== user.newPassBis) {
+      lstErrors.push(validator.createErrItem('newPassBis', 'Senhas não são iguais.'));
+    }
+
+    if (user.newPass === user.newPassBis &&
+        user.newPass === user.password) {
+      lstErrors.push(validator.createErrItem('password', 'A nova senha deve ser diferente da atual.'));
+    }
+
+    if (lstErrors.length)
+      reject(validator.invalidResult('login', lstErrors));
+    else
+      resolve(validator.validResult(user));
+  });
+}
+
 /**
  * Module Export
  * @type {Object}
@@ -101,5 +126,6 @@ function validateUser(user) {
 module.exports = {
   loadUser: loadUser,
   validatePassword: validatePassword,
-  validateUser: validateUser
+  validateUser: validateUser,
+  validatePassBis: validatePassBis
 };

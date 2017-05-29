@@ -12,9 +12,6 @@
           controller:  litteraApp.modules.auth.controllers.login.name,
           controllerAs:  litteraApp.modules.auth.controllers.login.nameas,
           templateUrl: litteraApp.modules.auth.templates.login.url,
-          //css: 'static/css/trends.css',
-          //css: [ //'static/css/trends.css',
-          //  /*'static/css/notice.css'*/],
           access: {
             requiresLogin: false
           }
@@ -23,11 +20,16 @@
           controller:  litteraApp.modules.auth.controllers.register.name,
           controllerAs:  litteraApp.modules.auth.controllers.register.nameas,
           templateUrl: litteraApp.modules.auth.templates.register.url,
-          //css: 'static/css/trends.css',
-          //css: [ //'static/css/trends.css',
-          //  /*'static/css/notice.css'*/],
           access: {
             requiresLogin: false
+          }
+        })
+        .when(litteraApp.modules.auth.routes.change_pass, {
+          controller: litteraApp.modules.auth.controllers.password.name,
+          controllerAs: litteraApp.modules.auth.controllers.password.nameas,
+          templateUrl: litteraApp.modules.auth.templates.password.url,
+          access: {
+            requiresLogin: true
           }
         });
     });
