@@ -161,6 +161,12 @@
 
             if (vm.hasBook()) {
               vm.tab.text = 'Ler';
+              /*vm.options = [{
+                label: 'Baixar',
+                click: function () {
+
+                }
+              }];*/
             }
             else {
               vm.tab.text = 'Comprar';
@@ -385,6 +391,7 @@
       booksFactory.getStoreBookById($routeParams.id)
         .then(function (data) {
           vm.book = data.data[0];
+          console.log(vm.book);
         })
         .catch(function () {
 

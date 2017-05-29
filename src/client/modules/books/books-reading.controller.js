@@ -26,7 +26,6 @@
     vm.init = function () {
       $rootScope.$broadcast('evt__showLoad', true);
       if (vm.isLogged()) {
-        console.log(bookData);
         vm.book = bookData.book;
         Book = ePub(bookData.book.content, {
           width: 400,

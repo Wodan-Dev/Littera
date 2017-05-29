@@ -9,6 +9,7 @@
 const core = require('../../core');
 const salesModel = require('../../../models/sales/sales.model');
 const salesCtrl = require('../controller/sales.controller');
+const libraryModel = require('../../../models/users/library.model');
 const http = core.http;
 const utils = core.utils;
 const renderError = core.http.renderError;
@@ -213,7 +214,7 @@ function removeBook(req, res) {
 
 
 function finalize(req, res) {
-  /*let sale = {
+  let sale = {
     _id: req.params.id || ''
   };
 
@@ -253,7 +254,7 @@ function finalize(req, res) {
     })
     .catch(function (err) {
       renderError(res, saleItem, err);
-    });*/
+    });
 }
 
 /**

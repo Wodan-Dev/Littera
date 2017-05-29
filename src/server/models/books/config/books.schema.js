@@ -44,6 +44,10 @@ const booksSchema = new db.mongoose.Schema({
     type: String,
     required: true
   },
+  download: {
+    type: String,
+    required: false
+  },
   status: {
     type: Number,
     required: true,
@@ -138,6 +142,7 @@ const booksCreateSchema = schema({
   date_published: models.dateField(false).allow(''),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
+  download: models.stringField(false),
   cover_image:  models.stringField(false),
   average_star: models.numberField().min(0).max(5),
   prices: models.nestedArray(false, pricesSchema.pricesCreateSchema),
@@ -165,6 +170,7 @@ const booksUpdateSchema = schema({
   date_published: models.dateField(false).allow(''),
   visible: models.numberField().integer().min(0).max(2),
   language: models.stringField(true),
+  download: models.stringField(false),
   cover_image:  models.stringField(false),
   average_star: models.numberField().min(0).max(5),
   prices: models.nestedArray(false, pricesSchema.pricesCreateSchema),

@@ -52,6 +52,13 @@
              class="parental-bag">{{BooksCtrl.book.parental_rating|parentalRating}}</p>
         </div>
         <div flex="100"
+             ng-if="BooksCtrl.hasBook() && BooksCtrl.book.download"
+             layout-padding>
+          <a class="btn btn-info-inverted full"
+             target="_blank"
+             ng-href="{{ BooksCtrl.book.download }}">Baixar</a>
+        </div>
+        <div flex="100"
              layout="column">
           <p style="margin: .625rem 0 .3rem .3rem; font-size: .8rem">Concluído <b>{{ BooksCtrl.book.percentage }}%</b></p>
           <md-progress-linear md-mode="determinate" value="{{BooksCtrl.book.percentage}}"></md-progress-linear>

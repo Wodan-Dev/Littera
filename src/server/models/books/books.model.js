@@ -283,6 +283,8 @@ function findByIdStore(id) {
         'comments': 1,
         'parental_rating': 1,
         'keywords': 1,
+        'content': 1,
+        'download': 1,
         'rankings': {
           _id_user: '$ranking_user._id',
           username:  '$ranking_user.username',
@@ -338,6 +340,12 @@ function findByIdStore(id) {
         },
         keywords: {
           $first: '$keywords'
+        },
+        content: {
+          $first: '$content'
+        },
+        download: {
+          $first: '$download'
         },
         prices: {
           $first: '$prices'
@@ -396,6 +404,8 @@ function findByIdStore(id) {
           create_at: '$comments.create_at'
         },
         'keywords': 1,
+        'content': 1,
+        'download': 1,
         'rankings': 1,
         'prices': 1
       }
@@ -439,6 +449,12 @@ function findByIdStore(id) {
         keywords: {
           $first: '$keywords'
         },
+        content: {
+          $first: '$content'
+        },
+        download: {
+          $first: '$download'
+        },
         prices: {
           $first: '$prices'
         },
@@ -475,6 +491,8 @@ function findByIdStore(id) {
         'cover_image': 1,
         'comments': 1,
         'keywords': 1,
+        'content': 1,
+        'download': 1,
         'rankings':1,
         'prices': 1,
         'user._id': 1,

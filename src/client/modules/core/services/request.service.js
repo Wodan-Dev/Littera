@@ -5,7 +5,12 @@
 
 (function(angular, litteraApp) {
 
-  function requestFactory(BASEURLS, LOCALNAME, localsave, $http, Upload) {
+  function requestFactory(
+    BASEURLS,
+    LOCALNAME,
+    localsave,
+    $http, 
+    Upload) {
 
     function getHeader() {
       return {
@@ -63,9 +68,6 @@
             reject(data);
           });
       });
-
-
-
     }
 
     function _post(url, data) {
@@ -119,29 +121,10 @@
           .then(function (data) {
             resolve(data);
 
-          }, function (err) { //catch error
+          }, function (err) {
             reject(err);
-            //console.log('Error status: ' + resp.status);
-            //$window.alert('Error status: ' + resp.status);
           }, function (evt) {
-            //console.log(evt);
-            //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-            //vm.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
           });
-
-
-
-
-
-        /*let uri = BASEURLS.BASE_API + url;
-        request('DELETE', uri, data || {})
-          .then(function (data) {
-            resolve(data);
-          })
-          .catch(function (data) {
-            reject(data);
-          });*/
       });
     }
 

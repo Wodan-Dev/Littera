@@ -9,6 +9,8 @@
     $routeParams,
     $location,
     $filter,
+    $timeout,
+    Upload,
     booksFactory,
     message,
     authentication,
@@ -18,8 +20,13 @@
     var vm = this;
     let changedImage = false;
     let changedContent = false;
+    let changedDownload = false;
     vm.noPrice = true;
     vm.noOff = false;
+    vm.downloadFile = {};
+    vm.downloadError = null;
+    vm.contentFile = {};
+    vm.contentError = null;
 
     vm.price = {
       minimum: 0,
@@ -369,11 +376,21 @@
     };
 
     $scope.setContent = function(element) {
-      $scope.currentContent = element.files[0];
       var reader = new FileReader();
 
       reader.onload = function(event) {
         changedContent = true;
+        $scope.$apply();
+
+      };
+      reader.readAsDataURL(element.files[0]);
+    };
+
+    $scope.setDownload = function(element) {
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+        changedDownload = true;
         $scope.$apply();
 
       };
@@ -403,6 +420,28 @@
                 data: {
                   value: 'content',
                   err: 'Informe o conteúdo da sua publicação.'
+                }
+              }
+            };
+          }
+
+          if (vm.downloadError) {
+            throw {
+              data: {
+                data: {
+                  value: 'download',
+                  err: 'O conteúdo informado é muito grande.'
+                }
+              }
+            };
+          }
+
+          if (vm.contentError) {
+            throw {
+              data: {
+                data: {
+                  value: 'content',
+                  err: 'O conteúdo informado é muito grande.'
                 }
               }
             };
@@ -464,6 +503,11 @@
 
           bookNew.content = $rootScope.BASEURLS.BASE_API + '/content/' + idFolder + '/content.epub';
 
+          if (changedDownload && vm.downloadFile) {
+            let name = vm.downloadFile.name.split('.');
+            bookNew.download = $rootScope.BASEURLS.BASE_API + '/content/' + idFolder + '/download.'+ name[name.length-1];
+          }
+
           vm.lstKeyWords.map(function (item) {
             bookNew.keywords.push({ content: item });
           });
@@ -495,14 +539,13 @@
           });
 
         })
-
         .then(function (data) {
           /* uploading book content */
           return new Promise(function (resolve, reject) {
             if (changedContent) {
               return booksFactory.updateContent('/books/content/' + idFolder,
                 {
-                  content: $scope.currentContent
+                  content: vm.contentFile
                 })
                 .then(function () {
                   resolve(data);
@@ -517,11 +560,41 @@
 
         })
         .then(function (data) {
+          /* uploading book download */
+          return new Promise(function (resolve, reject) {
+            if (changedDownload) {
+
+              console.log('changedDownload');
+              console.log(vm.downloadFile);
+              return booksFactory.updateContent('/books/download/' + idFolder,
+                {
+                  download: vm.downloadFile
+                })
+                .then(function () {
+                  console.log('changedDownload');
+                  console.log('ok download');
+                  console.log(data);
+                  resolve(data);
+                })
+                .catch(function (err) {
+                  console.log('err download');
+                  console.log(err);
+                  reject(err);
+                });
+            }
+            else
+              resolve(data);
+          });
+
+        })
+        .then(function (data) {
           $scope.$apply(function () {
             $location.path('/written/'+ username);
           });
         })
         .catch(function (data) {
+          console.log('err');
+          console.log(data);
 
           if (data.data) {
             let lst = data.data.data.err;
@@ -541,6 +614,7 @@
           $scope.$apply();
 
         });
+
     };
 
     function dataURItoBlob(dataURI) {
@@ -554,6 +628,7 @@
         type: mimeString
       });
     }
+    vm.errorMsg = '';
 
   }
 
@@ -563,6 +638,8 @@
     '$routeParams',
     '$location',
     '$filter',
+    '$timeout',
+    'Upload',
     litteraApp.modules.books.factories.books,
     litteraApp.modules.books.imports.message,
     litteraApp.modules.books.imports.authentication,

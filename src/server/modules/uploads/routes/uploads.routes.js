@@ -59,6 +59,21 @@ const storageContentBook = multer.diskStorage({
   }
 });
 
+const storageDownloadBook = multer.diskStorage({
+  destination: function (req, file, cb) {
+    let basePath = config.getUploadPath() + '/books/' + req.params.id;
+    fs.mkdir(basePath, function(err) {
+
+      cb(null, basePath);
+    });
+  },
+  filename: function (req, file, cb) {
+    let name = file.originalname.split('.');
+    let ext = name[name.length -1];
+    cb(null, 'download.'+ext);
+  }
+});
+
 //const upload = multer({ storage: storage }).single('image');
 
 /**
@@ -115,9 +130,13 @@ function postBookPic(req, res) {
 }
 
 function postBookContent(req, res) {
-
   res.status(200).end();
 }
+
+function postBookDownload(req, res) {
+  res.status(200).end();
+}
+
 
 
 /**
@@ -145,6 +164,11 @@ function router(express, auth) {
     auth,
     postBookContent);
 
+  routes.post('/books/download/:id',
+    multer({ storage: storageDownloadBook }).single('download'),
+    auth,
+    postBookDownload);
+
   return routes;
 }
 
@@ -153,4 +177,3 @@ function router(express, auth) {
  * @type {Object}
  */
 module.exports = router;
-

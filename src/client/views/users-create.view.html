@@ -17,11 +17,15 @@
         <div class="form-image ">
           <div class="feed-profile">
             <div class="feed-profile-picture">
-              <img ng-src="{{UsersCtrl.user.cover_image  || './static/images/no-image.png' }}">
+              <label for="trigger"
+                style="cursor:pointer">
+                <img ng-src="{{UsersCtrl.user.cover_image  || './static/images/no-image.png' }}">
+              </label>
             </div>
             <div class="feed-profile-username">
               <p class="username" ng-bind="UsersCtrl.user.username"></p>
               <input class="btn btn-default"
+                     style="display:none"
                      style="max-width: 120px"
                      type="file"
                      id="trigger"
