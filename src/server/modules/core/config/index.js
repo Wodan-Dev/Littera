@@ -113,7 +113,6 @@ function loadEnv() {
           let keyValue = rows[i].split('=');
           process.env[keyValue[0]] = keyValue[1];
         }
-
         resolve('Variáveis de ambiente carregadas.');
       }
     });
@@ -148,6 +147,37 @@ function getPayPalMode() {
   return process.env.PAYPAL_MODE || 'sandbox';
 }
 
+/**
+ * return e-mail service
+ * @return {String} service name
+ */
+function getEmailService() {
+  return process.env.EMAIL_SERVICE || 'gmail';
+}
+
+/**
+ * return e-mail auth user
+ * @return {String} auth user
+ */
+function getEmailAuthUser() {
+  return process.env.EMAIL_USER || '-';
+}
+
+/**
+ * return e-mail auth clientId
+ * @return {String} auth clientId
+ */
+function getEmailAuthPass() {
+  return process.env.EMAIL_PASS || '-';
+}
+
+/**
+ * return e-mail port
+ * @return {String} e-mail port
+ */
+function getEmailPort() {
+  return process.env.EMAIL_PORT || 587;
+}
 
 /**
  * Path to upload files
@@ -180,5 +210,9 @@ module.exports = {
   getPayPalAppSecret: getPayPalAppSecret,
   getPayPalMode: getPayPalMode,
   getUploadPath: getUploadPath,
-  getDomain: getDomain
+  getDomain: getDomain,
+  getEmailService: getEmailService,
+  getEmailPort: getEmailPort,
+  getEmailAuthUser: getEmailAuthUser,
+  getEmailAuthPass: getEmailAuthPass
 };

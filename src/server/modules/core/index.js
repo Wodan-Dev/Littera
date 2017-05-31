@@ -14,5 +14,6 @@ module.exports = {
   http: require('./http'),
   authentication: require('./authentication'),
   utils: require('./utils'),
-  paypal: require('./paypal')
+  paypal: require('./paypal'),
+  email: require('./email')
 };

@@ -10,6 +10,7 @@ const core = require('../../core');
 const authCtrl = require('../controller/authentication.controller');
 const userModel = require('../../../models/users/users.model');
 const http = core.http;
+const email = core.email;
 const auth = core.authentication;
 const renderError = core.http.renderError;
 const crypto = core.crypto;
@@ -149,6 +150,18 @@ function changePass(req, res) {
     });
 }
 
+function sendMail(req, res) {
+  email.sendPlainEmail('jonathan_vale@outlook.com', 'creativeweb.de@gmail.com', 'teste', 'so um teste')
+    .then(function (data) {
+      http.render(res, data);
+
+    })
+    .catch(function (err) {
+      renderError(res, {}, err);
+
+    });
+}
+
 /**
 * Create Instance to router object
 * @param  {Object} express Express
@@ -160,6 +173,7 @@ function router(express, ath) {
   routes.post('/authenticate', postAuth);
   routes.get('/me', get);
   routes.post('/change', ath, changePass);
+  routes.post('/mail', sendMail);
 
   return routes;
 }
