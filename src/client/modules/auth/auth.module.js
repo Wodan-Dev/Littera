@@ -27,9 +27,13 @@
       me: litteraApp.URLS.MORDOR.ME(),
       change_pass: litteraApp.URLS.CHANGE_PASS(),
       change: litteraApp.URLS.MORDOR.CHANGE(),
+      forgot: litteraApp.URLS.MORDOR.FORGOT(),
       notAuthorized: litteraApp.URLS.NOTAUTHORIZED(),
       serverError: litteraApp.URLS.SERVERERROR(),
-      user: litteraApp.URLS.USER()
+      user: litteraApp.URLS.USER(),
+      forgot_pass: litteraApp.URLS.FORGOT_PASS(),
+      recover: litteraApp.URLS.MORDOR.RECOVER(),
+      recover_pass: litteraApp.URLS.RECOVER_PASS(),
     },
     factories: {
       authentication: 'authenticationFactory',
@@ -46,6 +50,12 @@
       },
       password: {
         url: 'views/users-password.view.html'
+      },
+      forgot: {
+        url: 'views/forgot-password.view.html'
+      },
+      recover: {
+        url: 'views/user-recover.view.html'
       }
     },
     imports: {

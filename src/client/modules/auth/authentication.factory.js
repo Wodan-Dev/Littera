@@ -26,6 +26,14 @@
       return request._post(litteraApp.modules.auth.routes.change, user);
     }
 
+    function forgotPass(user) {
+      return request._post(litteraApp.modules.auth.routes.forgot, user);
+    }
+
+    function recoverPass(user) {
+      return request._post(litteraApp.modules.auth.routes.recover, user);
+    }
+
     function register(user) {
       return request._post(litteraApp.modules.auth.routes.user, user);
     }
@@ -50,7 +58,9 @@
       logOut: logOut,
       isAuthenticated: isAuthenticated,
       register: register,
-      changePass: changePass
+      changePass: changePass,
+      forgotPass: forgotPass,
+      recoverPass: recoverPass
     };
   }
 

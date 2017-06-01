@@ -22,12 +22,6 @@
   function notAuthorizedFactory($location, $window) {
     return {
       responseError: function(rejection) {
-
-
-
-        console.log('rejection');
-        console.log(rejection);
-        console.log($window.history);
         return new Promise(function (resolve, reject) {
           if($location.url() !== litteraApp.modules.handlers.routes.login &&
             rejection.status === 401) {

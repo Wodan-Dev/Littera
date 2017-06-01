@@ -72,6 +72,14 @@
     CHANGE_PASS: function () {
       return '/mordor/change';
     },
+    FORGOT_PASS: function () {
+      return '/mordor/forgot';
+    },
+    RECOVER_PASS: function () {
+      return function (param) {
+        return '/mordor/recover/' + param;
+      };
+    },
     REGISTER: function () {
       return '/mordor/register';
     },
@@ -90,6 +98,12 @@
       },
       CHANGE: function () {
         return '/mordor/change';
+      },
+      FORGOT: function () {
+        return '/mordor/forgot';
+      },
+      RECOVER: function () {
+        return '/mordor/recover/';
       }
     },
     NOTAUTHORIZED: function() {

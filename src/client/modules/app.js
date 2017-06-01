@@ -192,6 +192,27 @@
     litteraApp.core.services.has_error
   ];
 
+  angular.module(litteraApp.modules.admin.name, [
+    litteraApp.modules.handlers.name,
+    litteraApp.modules.main.name,
+    litteraApp.modules.auth.name,
+    litteraApp.modules.books.name,
+    litteraApp.modules.users.name,
+    litteraApp.modules.sales.name,
+    litteraApp.modules.business.name,
+    litteraApp.core.name,
+    'ngMaterial',
+    'chart.js'
+  ]).constant('BASEURLS', {
+    BASE: 'http://littera.pub',
+    BASE_API: 'http://littera.pub/api',
+    URLS: litteraApp.URLS
+  }).constant('LOCALNAME', {
+    USER_TOKEN: 'User-Token'
+  })
+    .config(configApp)
+    .run(runApp);
+
   angular.module(litteraApp.modules.app.name, [
     litteraApp.components.header.name,
     litteraApp.components.navBarLinks.name,

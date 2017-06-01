@@ -9,6 +9,9 @@
   litteraApp.modules = {
     app: {
       name: 'litteraApp'
+    },
+    admin: {
+      name: 'litteraAdmin'
     }
   };
 

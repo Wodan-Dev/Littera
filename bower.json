@@ -29,10 +29,9 @@
     "outlayer": "2.1.0",
     "masonry": "4.2.0",
     "chart.js": "2.5.0",
-    "angular-chart.js": "^1.1.1"
+    "bootstrap": "^3.3.7"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "overrides": {
     "angular": {
       "main": [
@@ -124,5 +123,3 @@
     "bower_modules"
   ]
 }
-
-

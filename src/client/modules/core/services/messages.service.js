@@ -63,12 +63,12 @@
             speed : 500
           },
           buttons     : [
-            {addClass: 'btn btn-info', text: 'Ok', onClick: function ($noty) {
+            {addClass: 'btn btn-info-inverted', text: 'Ok', onClick: function ($noty) {
               $noty.close();
               resolve();
             }
             },
-            {addClass: 'btn btn-danger', text: 'Cancelar', onClick: function ($noty) {
+            {addClass: 'btn btn-danger-inverted', text: 'Cancelar', onClick: function ($noty) {
               $noty.close();
               reject();
             }

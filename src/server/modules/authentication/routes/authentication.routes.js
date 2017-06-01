@@ -10,10 +10,12 @@ const core = require('../../core');
 const authCtrl = require('../controller/authentication.controller');
 const userModel = require('../../../models/users/users.model');
 const http = core.http;
+const config = core.config;
 const email = core.email;
 const auth = core.authentication;
 const renderError = core.http.renderError;
 const crypto = core.crypto;
+const uid = require('uid-safe').sync;
 
 /**
  * Method Get in route /
@@ -121,12 +123,9 @@ function changePass(req, res) {
 
   let userLoad = {};
 
-  userModel.findByUserName(user.username)
+  userModel.findByEmailAndUsername(user.username, user.email)
     .then(function (result) {
       userLoad = result;
-      return userModel.findByUserEmail(user.email);
-    })
-    .then(function (result) {
       return authCtrl.validateUser(user);
     })
     .then(function (ruser) {
@@ -151,14 +150,72 @@ function changePass(req, res) {
 }
 
 function sendMail(req, res) {
-  email.sendPlainEmail('jonathan_vale@outlook.com', 'creativeweb.de@gmail.com', 'teste', 'so um teste')
-    .then(function (data) {
-      http.render(res, data);
+  let user = {
+    email: req.body.email || '',
+    username: req.body.username || ''
+  };
 
+  let userLoad = {};
+
+  userModel.validateForgot(user)
+    .then(function (usr) {
+      user = usr.value;
+      return userModel.findByEmailAndUsername(user.username, user.email);
+    })
+    .then(function (ruser) {
+      ruser.checksum = ruser.username + uid(24);
+      userLoad = ruser;
+      return userModel.update(userLoad._id, userLoad);
+    })
+    .then(function (result) {
+      return email.sendPlainEmail(
+        config.getEmailAuthUser(),
+        userLoad.email,
+        'Recuperação de senha',
+        'recupere sua seha através do link: http://'+
+        config.getDomain() + '/#/mordor/recover/'+ userLoad.checksum);
+    })
+    .then(function (result) {
+      http.render(res, result);
     })
     .catch(function (err) {
-      renderError(res, {}, err);
+      renderError(res, user, err);
+    });
+}
 
+function postRecover(req, res) {
+  let user = {
+    email: req.body.email || '',
+    username: req.body.username || '',
+    checksum: req.body.checksum || '',
+    password: req.body.password || '',
+    passwordbis: req.body.passwordbis || ''
+  };
+
+  let userLoad = {};
+
+  userModel.validateRecover(user)
+    .then(function (usr) {
+      user = usr.value;
+      return userModel.findRecover(user);
+    })
+    .then(function (ruser) {
+      userLoad = ruser;
+      return authCtrl.validatePassRecover(user);
+    })
+    .then(function (ruser) {
+      return crypto.encrypt(user.password);
+    })
+    .then(function (pass) {
+      userLoad.password = pass;
+      userLoad.checksum = '-';
+      return userModel.update(userLoad._id, userLoad);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, user, err);
     });
 }
 
@@ -173,7 +230,9 @@ function router(express, ath) {
   routes.post('/authenticate', postAuth);
   routes.get('/me', get);
   routes.post('/change', ath, changePass);
-  routes.post('/mail', sendMail);
+  routes.post('/forgot', sendMail);
+  routes.post('/recover', postRecover);
+
 
   return routes;
 }

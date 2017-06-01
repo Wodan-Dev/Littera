@@ -21,6 +21,7 @@
     };
 
     vm.init = function () {
+      console.log('a');
       has_error.clearError();
       authFactory.credential()
         .then(function (data) {
@@ -40,9 +41,7 @@
     };
 
     vm.btnChangePass = function () {
-
       has_error.clearError();
-      let token = '';
       let msg = 'Você será desconectado e terá que entrar novamente, deseja continuar?';
 
       message.confirm(msg)
@@ -71,52 +70,108 @@
 
           });
         });
-
-
-
-/*
-      authFactory.authenticate(vm.user.username, vm.user.pass)
-        .then(function (data) {
-          token = data.data.data.toString();
-          return authFactory.setToken(data.data.data.toString());
-        })
-        .then(function () {
-
-          $scope.$apply(function () {
-            let uri = $routeParams.next || '/feed';
-
-            if (!$routeParams.history) {
-              if (uri[0] !== '/')
-                uri = '/' + $routeParams.next;
-
-
-
-              $location.path(uri);
-            }
-            else
-              window.history.back();
-
-            $rootScope.$broadcast('evt_navBarUser_event', token);
-          });
-        })
-        .catch(function (data) {
-
-          let lst = data.data.data.err;
-          $scope.$apply(function () {
-            if (lst instanceof Array) {
-              for (var i = 0, len = lst.length; i < len; i++) {
-                has_error.addError(lst[i].field, lst[i].message);
-              }
-            }
-            else {
-              has_error.addError(data.data.data.value, data.data.data.err);
-            }
-            $rootScope.$broadcast('evt__showLoad', false);
-
-          });
-
-        });*/
     };
+
+    vm.btnForgotPass = function () {
+      authFactory.logOut();
+      has_error.clearError();
+      $rootScope.$broadcast('evt__showLoad', true);
+
+      if (!vm.user.email)
+        has_error.addError('email', 'Informe seu e-mail');
+
+      if (!vm.user.username)
+        has_error.addError('username', 'Informe seu usuário');
+
+      if (!has_error.getAllErrors().length) {
+        authFactory.forgotPass(vm.user)
+          .then(function () {
+            $scope.$apply(function () {
+              message.notification('information', 'Se tudo estiver correto você receberá um e-mail, verifique seu spam :)');
+
+              $rootScope.$broadcast('evt__showLoad', false);
+              $location.path(litteraApp.modules.auth.routes.login);
+            });
+          })
+          .catch(function () {
+            $scope.$apply(function () {
+              message.notification('information', 'Se tudo estiver correto você receberá um e-mail, verifique seu spam :)');
+
+              $rootScope.$broadcast('evt__showLoad', false);
+              $location.path(litteraApp.modules.auth.routes.login);
+            });
+          });
+      }
+      else
+        $rootScope.$broadcast('evt__showLoad', false);
+    };
+
+    function convertField(field) {
+      switch (field) {
+      case 'password':
+        return 'newPass';
+      case 'passwordbis':
+        return 'newPassBis';
+      default:
+        return field;
+      }
+    }
+
+    vm.btnRecoverPass = function () {
+      authFactory.logOut();
+      has_error.clearError();
+      $rootScope.$broadcast('evt__showLoad', true);
+
+      if (!vm.user.email)
+        has_error.addError('email', 'Informe seu e-mail');
+
+      if (!vm.user.username)
+        has_error.addError('username', 'Informe seu usuário');
+
+      if (!vm.user.newPass)
+        has_error.addError('newPass', 'Informe a senha');
+
+      if (!vm.user.newPassBis)
+        has_error.addError('newPassBis', 'Confirme a senha');
+
+      if (!has_error.getAllErrors().length) {
+        authFactory.recoverPass({
+          email: vm.user.email || '',
+          username: vm.user.username || '',
+          checksum: $routeParams.checksum || '',
+          password: vm.user.newPass || '',
+          passwordbis: vm.user.newPassBis || ''
+        })
+          .then(function () {
+            $scope.$apply(function () {
+              message.notification('information', 'Se tudo estiver correto você receberá um e-mail, verifique seu spam :)');
+
+              $rootScope.$broadcast('evt__showLoad', false);
+              $location.path(litteraApp.modules.auth.routes.login);
+            });
+          })
+          .catch(function (data) {
+            let lst = data.data.data.err;
+            $scope.$apply(function () {
+              if (lst instanceof Array) {
+                for (var i = 0, len = lst.length; i < len; i++) {
+                  has_error.addError(convertField(lst[i].field), lst[i].message);
+                }
+              }
+              else {
+                has_error.addError(convertField(data.data.data.value),
+                 data.data.data.err);
+              }
+              $rootScope.$broadcast('evt__showLoad', false);
+
+            });
+          });
+      }
+      else
+        $rootScope.$broadcast('evt__showLoad', false);
+    };
+
+
   }
 
   PasswordCtrl.$inject = [

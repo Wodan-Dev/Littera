@@ -72,28 +72,7 @@
 <!--[if lte IE 8]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<div id="Modal" class="modal check-element animate-show-hide"
-     ng-show="MainCtrl.showLoad || MainCtrl.showModal"
-     ng-click="MainCtrl.btnHideModal()">
-  <div class="cssload-thecube" ng-show="MainCtrl.showLoad">
-    <div class="cssload-cube cssload-c1"></div>
-    <div class="cssload-cube cssload-c2"></div>
-    <div class="cssload-cube cssload-c4"></div>
-    <div class="cssload-cube cssload-c3"></div>
-  </div>
-</div>
-<liheader></liheader>
-<linav-Bar-User></linav-Bar-User>
-<linav-Bar-Notify></linav-Bar-Notify>
-<linav-Bar-Links></linav-Bar-Links>
 
-<section class="container-content"
-         layout="column"
-         ng-cloak
-         autoscroll="true"
-         ng-view="ng-view">
-
-</section>
 
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID
@@ -126,7 +105,6 @@
 <script src="../../bower_modules/get-size/get-size.js"></script>
 <script src="../../bower_modules/desandro-matches-selector/matches-selector.js"></script>
 <script src="../../bower_modules/fizzy-ui-utils/utils.js"></script>
-<script src="../../bower_modules/outlayer/item.js"></script>
 <script src="../../bower_modules/outlayer/outlayer.js"></script>
 <script src="../../bower_modules/masonry/dist/masonry.pkgd.min.js"></script>
 <!-- endbower -->
@@ -208,17 +186,6 @@
 <script src="./modules/users/written_books.controller.js"></script>
 <script src="./modules/users/users.controller.js"></script>
 <script src="./modules/users/user_detail.controller.js"></script>
-
-
-<script src="./components/header/header.module.js"></script>
-<script src="./components/header/header.controller.js"></script>
-<script src="./components/navBarLinks/navBarLinks.module.js"></script>
-<script src="./components/navBarLinks/navBarLinks.controller.js"></script>
-<script src="./components/navBarNotify/navBarNotify.module.js"></script>
-<script src="./components/navBarNotify/navBarNotify.controller.js"></script>
-<script src="./components/navBarUser/navBarUser.module.js"></script>
-<script src="./components/navBarUser/navBarUser.controller.js"></script>
-<script src="./components/navBarUser/navBarUser.factory.js"></script>
 
 <script src="./modules/app.js"></script>
 

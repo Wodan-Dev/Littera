@@ -118,6 +118,50 @@ function findByUserName(username, allInfo) {
 }
 
 /**
+ * returns user by username and email
+ * @param  {String} username username
+ * @param  {String} email    E-mail
+ * @return {Promise}          Resolve/Reject
+ */
+function findByEmailAndUsername(username, email) {
+  return new Promise(function (resolve, reject) {
+    usersModel.findOne({
+      username: username,
+      email: email
+    }, function (err, user) {
+      if (user)
+        resolve(user);
+      else
+        reject(validator.invalidResult('email', 'E-mail inválido.'));
+
+
+    });
+  });
+}
+
+/**
+ * find used to validate token and username
+ * @param  {Object} user user definition
+ * @return {Promise}      Resolve/Reject
+ */
+function findRecover(user) {
+  return new Promise(function (resolve, reject) {
+    usersModel.findOne({
+      username: user.username,
+      email: user.email,
+      checksum: user.checksum
+    }, function (err, user) {
+      if (user)
+        resolve(user);
+      else
+        reject(validator.invalidResult('email', 'Token inválido, tente novamente.'));
+
+
+    });
+  });
+}
+
+/**
  * get user by email
  * @param  {ObjectId} email email which has to be loaded
  * @return {Promise}        Resolve/Reject
@@ -218,6 +262,35 @@ function validateUpdate(user) {
   return validator.validateSchema(user, usersSchema.usersUpdateSchema);
 }
 
+/**
+ * Validate forgot
+ * @param  {Object} user user object
+ * @return {Promise}      Resolve/Reject
+ */
+function validateForgot(user) {
+
+  user.email = checkField.trim(checkField.escape(user.email));
+  user.username = checkField.trim(checkField.escape(user.username));
+
+  return validator.validateSchema(user, usersSchema.userForgotSchema);
+}
+
+/**
+ * Validate recover
+ * @param  {Object} user user object
+ * @return {Promise}      Resolve/Reject
+ */
+function validateRecover(user) {
+
+  user.email = checkField.trim(checkField.escape(user.email));
+  user.username = checkField.trim(checkField.escape(user.username));
+  user.password = checkField.trim(checkField.escape(user.password));
+  user.passwordbis = checkField.trim(checkField.escape(user.passwordbis));
+  user.checksum = checkField.trim(checkField.escape(user.checksum));
+
+  return validator.validateSchema(user, usersSchema.userRecoverSchema);
+}
+
 function validateId(id) {
   return new Promise(function (resolve, reject) {
     if (checkField.isMongoId(id)) {
@@ -234,16 +307,20 @@ function validateId(id) {
  * @type {Object}
  */
 module.exports = {
+  validateForgot: validateForgot,
   validateCreate: validateCreate,
   validateUpdate: validateUpdate,
+  validateRecover: validateRecover,
   validateId: validateId,
   insert: insert,
   update: update,
   remove: remove,
   list: list,
   findById: findById,
+  findByEmailAndUsername: findByEmailAndUsername,
   findByUserName: findByUserName,
   findByUserEmail: findByUserEmail,
+  findRecover: findRecover,
   updateAverageStars: updateAverageStars,
   model: usersModel
 };

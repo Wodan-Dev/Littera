@@ -100,8 +100,6 @@ function validatePassBis(user) {
     user.newPass = checkField.trim(checkField.escape(user.newPass));
     user.newPassBis = checkField.trim(checkField.escape(user.newPassBis));
     let lstErrors = [];
-    console.log('user');
-    console.log(user);
 
     if (user.newPass !== user.newPassBis) {
       lstErrors.push(validator.createErrItem('newPassBis', 'Senhas não são iguais.'));
@@ -119,6 +117,23 @@ function validatePassBis(user) {
   });
 }
 
+function validatePassRecover(user) {
+  return new Promise(function (resolve, reject) {
+    user.password = checkField.trim(checkField.escape(user.password));
+    user.passwordbis = checkField.trim(checkField.escape(user.passwordbis));
+    let lstErrors = [];
+
+    if (user.password !== user.passwordbis) {
+      lstErrors.push(validator.createErrItem('passwordbis', 'Senhas não são iguais.'));
+    }
+
+    if (lstErrors.length)
+      reject(validator.invalidResult('login', lstErrors));
+    else
+      resolve(validator.validResult(user));
+  });
+}
+
 /**
  * Module Export
  * @type {Object}
@@ -127,5 +142,6 @@ module.exports = {
   loadUser: loadUser,
   validatePassword: validatePassword,
   validateUser: validateUser,
-  validatePassBis: validatePassBis
+  validatePassBis: validatePassBis,
+  validatePassRecover: validatePassRecover
 };

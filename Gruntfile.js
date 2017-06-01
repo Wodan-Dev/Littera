@@ -81,7 +81,8 @@ module.exports = function(grunt) {
     wiredep: {
       target: {
         src: [
-          '<%= appcfg.build %>/client/index.html'
+          '<%= appcfg.build %>/client/index.html',
+          '<%= appcfg.build %>/client/admin.html'
         ]
       }
     },

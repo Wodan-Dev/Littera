@@ -170,12 +170,35 @@ const newUsersCreateSchema = schema({
 });
 
 /**
+ * User forgot Schema
+ * @type {Object}
+ */
+const userForgotSchema = schema({
+  username: models.stringField(true).min(5).max(30),
+  email: models.stringField(true).email(),
+});
+
+/**
+ * User recover Schema
+ * @type {Object}
+ */
+const userRecoverSchema = schema({
+  username: models.stringField(true).min(5).max(30),
+  email: models.stringField(true).email(),
+  password: models.stringField(true).min(8),
+  passwordbis: models.stringField(true).min(8),
+  checksum: models.stringField(true).min(24)
+});
+
+/**
  * Module Export
  * @type {Object}
  */
 module.exports = {
   usersSchema: usersSchema,
+  userForgotSchema: userForgotSchema,
   usersCreateSchema: usersCreateSchema,
   usersUpdateSchema: usersUpdateSchema,
-  newUsersCreateSchema: newUsersCreateSchema
+  newUsersCreateSchema: newUsersCreateSchema,
+  userRecoverSchema: userRecoverSchema
 };
