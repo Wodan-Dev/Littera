@@ -29,6 +29,15 @@ module.exports = function(grunt) {
             '!<%= appcfg.build %>/.git{,*/}*'
           ]
         }]
+      },
+      admin: {
+        files: [{
+          dot: true,
+          src: [
+            '<%= appcfg.build %>/admin/{,*/}*',
+            '!<%= appcfg.build %>/.git{,*/}*'
+          ]
+        }]
       }
     },
     // Copy Files to build
@@ -65,12 +74,37 @@ module.exports = function(grunt) {
           ]
         }]
       },
+      admin: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= appcfg.src %>',
+          dest: '<%= appcfg.build %>',
+          src: [
+            'admin/*.html',
+            'admin/components/**',
+            'admin/favicon/**',
+            'admin/modules/**',
+            'admin/static/**',
+            'admin/{,*/}*.html'
+          ]
+        }]
+      },
       dependence: {
         files: [{
           expand: true,
           dot: true,
           cwd: './bower_modules',
           dest: '<%= appcfg.build %>/client/bower_modules',
+          src: [
+            '**',
+          ]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: './bower_modules',
+          dest: '<%= appcfg.build %>/admin/bower_modules',
           src: [
             '**',
           ]
@@ -81,8 +115,7 @@ module.exports = function(grunt) {
     wiredep: {
       target: {
         src: [
-          '<%= appcfg.build %>/client/index.html',
-          '<%= appcfg.build %>/client/admin.html'
+          '<%= appcfg.build %>/client/index.html'
         ]
       }
     },
@@ -115,6 +148,11 @@ module.exports = function(grunt) {
           '!<%= appcfg.src %>/client/static/js/zip.min.js',
           '!<%= appcfg.src %>/client/static/js/checkout.js',
           '!<%= appcfg.src %>/client/static/reader/**',
+        ]
+      },
+      admin: {
+        src: [
+          '<%= appcfg.src %>/admin/{,*/}{,*/}{,*/}{,*/}*.js'
         ]
       }
     },
@@ -149,6 +187,11 @@ module.exports = function(grunt) {
           '!<%= appcfg.src %>/client/static/reader/**.js'
 
         ]
+      },
+      admin: {
+        src: [
+          '<%= appcfg.src %>/admin/{,*/}{,*/}{,*/}{,*/}*.js'
+        ]
       }
     }
 
@@ -174,6 +217,15 @@ module.exports = function(grunt) {
     'eslint:client',
     'clean:client',
     'copy:client',
+    'copy:dependence',
+    'wiredep'
+  ]);
+
+  grunt.registerTask('admin', [
+    'jshint:admin',
+    'eslint:admin',
+    'clean:admin',
+    'copy:admin',
     'copy:dependence',
     'wiredep'
   ]);

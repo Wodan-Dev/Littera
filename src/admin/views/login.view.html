@@ -1,0 +1,26 @@
+<div class="col-md-4 col-md-offset-4 main"
+     ng-init="LoginCtrl.init()">
+  <form class="form-signin"
+        style="margin:0 auto">
+    <h2 class="form-signin-heading">Login</h2>
+    <label for="txtUserName"
+           class="sr-only">Email/Usename</label>
+    <input type="text"
+           id="txtUserName"
+           ng-model="LoginCtrl.user.username"
+           class="form-control"
+           placeholder="Email/Username"
+           required
+           autofocus>
+    <label for="txtPass"
+           class="sr-only">Senha</label>
+    <input type="password"
+           ng-model="LoginCtrl.user.pass"
+           id="txtPass"
+           class="form-control"
+           placeholder="Senha"
+           required>
+    <button class="btn btn-lg btn-primary btn-block"
+            ng-click="LoginCtrl.btnAuthenticate()">Logar</button>
+  </form>
+</div>

@@ -3,19 +3,18 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  angular.module(litteraApp.modules.main.name)
+  angular.module(litteraApp.modules.admin.name)
     .config(
     function ($routeProvider) {
       $routeProvider
-        .when(litteraApp.modules.main.routes.terms, {
-          controller: litteraApp.modules.main.controllers.terms.name,
-          controllerAs: litteraApp.modules.main.controllers.terms.nameas,
-          templateUrl: litteraApp.modules.main.templates.terms.url,
-          title: 'Termos',
+        .when(litteraApp.modules.admin.routes.admin, {
+          controller: litteraApp.modules.admin.controllers.admin.name,
+          controllerAs: litteraApp.modules.admin.controllers.admin.nameas,
+          templateUrl: litteraApp.modules.admin.templates.admin.url,
+          title: 'Administração',
           access: {
             requiresLogin: false
           }
         });
     });
 }(angular, litteraApp));
-

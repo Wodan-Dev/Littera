@@ -6,19 +6,19 @@
   litteraApp.modules.admin = {
     name: 'litteraApp.admin',
     controllers: {
-      admin: {
-        name: 'AdminController',
-        nameas: 'AdminCtrl'
+      dashboard: {
+        name: 'DashboardController',
+        nameas: 'DashboardCtrl'
       }
     },
     routes: {
-      admin: litteraApp.URLS.ADMIN()
+      dashboard: litteraApp.URLS.HOME()
     },
     factories: {
     },
     templates: {
-      admin:{
-        url: 'admin.html'
+      dashboard:{
+        url: 'views/dashboard-view.html'
       }
     },
     imports: {

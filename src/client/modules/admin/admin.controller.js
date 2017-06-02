@@ -3,7 +3,7 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function MainCtrl($rootScope, $window) {
+  function AdminCtrl($rootScope, $window) {
     var vm = this;
     vm.showModal = false;
     vm.showLoad = false;
@@ -45,8 +45,8 @@
     };
   }
 
-  MainCtrl.$inject = ['$rootScope', '$window'];
+  AdminCtrl.$inject = ['$rootScope', '$window'];
 
-  angular.module(litteraApp.modules.main.name)
-    .controller(litteraApp.modules.main.controllers.main.name, MainCtrl);
+  angular.module(litteraApp.modules.admin.name)
+    .controller(litteraApp.modules.admin.controllers.admin.name, AdminCtrl);
 }(angular, litteraApp));

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="pt-br">
+  <meta charset="utf-8">
+  <title>Administração</title>
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1"> <!-- media="(device-height: 568px)">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link href="./bower_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./static/css/main-style.css">
+  <style type="text/css">
+
+
+    .animate-show-hide.ng-hide {
+      opacity: 0;
+    }
+
+    .animate-show-hide.ng-hide-add,
+    .animate-show-hide.ng-hide-remove {
+      transition: all linear 0.3s;
+    }
+
+    .check-element {
+      opacity: 1;
+      padding: 10px;
+    }
+
+
+  </style>
+</head>
+<body ng-app="litteraApp"
+      ng-controller="MainController as MainCtrl"
+      ng-init="MainCtrl.init()">
+  <div id="Modal" class="modal check-element animate-show-hide"
+       ng-show="MainCtrl.showLoad || MainCtrl.showModal"
+       ng-click="MainCtrl.btnHideModal()">
+    <div class="cssload-thecube" ng-show="MainCtrl.showLoad">
+      <div class="cssload-cube cssload-c1"></div>
+      <div class="cssload-cube cssload-c2"></div>
+      <div class="cssload-cube cssload-c4"></div>
+      <div class="cssload-cube cssload-c3"></div>
+    </div>
+  </div>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Littera</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a ng-show="MainCtrl.isAuth" href="#">Usuários</a></li>
+          <li><a ng-show="MainCtrl.isAuth" href="#">Livros</a></li>
+          <li><a ng-show="MainCtrl.isAuth"
+                 ng-click="MainCtrl.btnLogOff()" 
+                 href="#">Sair</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row"
+         ng-cloak
+         ng-view="ng-view">
+
+    </div>
+  </div>
+
+  <script src="../../bower_modules/jquery/dist/jquery.min.js"></script>
+  <script src="../../bower_modules/angular/angular.min.js"></script>
+  <script src="../../bower_modules/angular-resource/angular-resource.min.js"></script>
+  <script src="../../bower_modules/angular-route/angular-route.min.js"></script>
+  <script src="../../bower_modules/angular-css/angular-css.min.js"></script>
+  <script src="../../bower_modules/angular-aria/angular-aria.min.js"></script>
+  <script src="../../bower_modules/angular-messages/angular-messages.min.js"></script>
+  <script src="../../bower_modules/angular-animate/angular-animate.min.js"></script>
+  <script src="../../bower_modules/angular-material/angular-material.min.js"></script>
+  <script src="../../bower_modules/ng-file-upload/ng-file-upload.min.js"></script>
+  <script src="../../bower_modules/chart.js/dist/Chart.js"></script>
+  <script src="../../bower_modules/angular-chart.js/dist/angular-chart.js"></script>
+  <script src="../../bower_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+  <script src="./modules/app.module.js"></script>
+  <script src="./static/js/urls.js"></script>
+
+
+  <script src="./modules/core/core.module.js"></script>
+  <script src="./modules/core/locale/locale_pt-br.js"></script>
+  <script src="./modules/core/factories/localsave.factory.js"></script>
+  <script src="./modules/core/services/request.service.js"></script>
+  <script src="./modules/core/services/messages.service.js"></script>
+  <script src="./modules/core/services/has_error.service.js"></script>
+  <script src="./modules/core/filters/titlecase.filter.js"></script>
+  <script src="./modules/core/filters/salestatus.filter.js"></script>
+  <script src="./modules/core/filters/parentalrating.filter.js"></script>
+
+  <script src="./modules/handlers/handlers.module.js"></script>
+  <script src="./modules/handlers/handlers.factory.js"></script>
+  <script src="./modules/handlers/handlers.controller.js"></script>
+  <script src="./modules/handlers/handlers.routes.js"></script>
+
+  <script src="./modules/auth/auth.module.js"></script>
+  <script src="./modules/auth/auth.routes.js"></script>
+  <script src="./modules/auth/authentication.factory.js"></script>
+  <script src="./modules/auth/authorization.factory.js"></script>
+  <script src="./modules/auth/login.controller.js"></script>
+
+  <script src="./modules/admin/admin.module.js"></script>
+  <script src="./modules/admin/admin.controller.js"></script>
+  <script src="./modules/admin/admin.routes.js"></script>
+
+  <script src="./modules/main/main.module.js"></script>
+  <script src="./modules/main/main.controller.js"></script>
+  <script src="./modules/main/main.routes.js"></script>
+
+  <script src="./modules/app.js"></script>
+
+
+</body>
+</html>
