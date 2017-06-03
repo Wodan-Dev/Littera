@@ -3,25 +3,28 @@
  */
 'use strict';
 (function (angular, litteraApp) {
-  function UsersCtrl($scope,
-                     $rootScope,
-                     $filter,
-                     $location,
-                     message,
-                     usersFactory) {
+  function BooksCtrl(
+    $scope,
+    $rootScope,
+    $routeParams,
+    $filter,
+    $location,
+    booksFactory,
+    message,
+    authentication) {
     var vm = this;
-    vm.users = [];
+    vm.books = [];
     vm.actualPage = 1;
 
-    function updateUsersList(data) {
-      let t = vm.users.length;
+    function updateBooksList(data) {
+      let t = vm.books.length;
 
       data.data.docs.map(function (item) {
-        vm.users.push(item);
+        vm.books.push(item);
       });
 
-      if (t === vm.users.length)
-        message.notification('information', 'No momento não temos mais usuários');
+      if (t === vm.books.length)
+        message.notification('information', 'No momento não temos mais livros');
 
       $rootScope.$broadcast('evt__showLoad', false);
       if (!$scope.$$phase)
@@ -29,8 +32,8 @@
     }
 
     function loadData() {
-      usersFactory.getUsers(vm.actualPage)
-        .then(updateUsersList)
+      booksFactory.getBooks(vm.actualPage)
+        .then(updateBooksList)
         .catch(function (er) {
         });
     }
@@ -44,11 +47,11 @@
       loadData();
     };
 
-    vm.btnBlockUser = function (r) {
-      usersFactory.blockUser(r._id)
+    vm.btnBlockBook = function (r) {
+      booksFactory.blockBook(r._id)
         .then(function () {
           $scope.$apply(function () {
-            r.status = false;
+            r.visible = 3;
             message.notification('information', 'Bloqueado com sucesso.');
           });
 
@@ -58,11 +61,11 @@
         });
     };
 
-    vm.btnUnlockUser = function (r) {
-      usersFactory.unlockUser(r._id)
+    vm.btnUnlockBook = function (r) {
+      booksFactory.unlockBook(r._id)
         .then(function () {
           $scope.$apply(function () {
-            r.status = true;
+            r.visible = 0;
             message.notification('information', 'Desbloqueado com sucesso.');
           });
 
@@ -72,19 +75,19 @@
         });
     };
 
-
-
   }
 
-  UsersCtrl.$inject = [
+  BooksCtrl.$inject = [
     '$scope',
     '$rootScope',
+    '$routeParams',
     '$filter',
     '$location',
-    litteraApp.modules.users.imports.message,
-    litteraApp.modules.users.factories.users
+    litteraApp.modules.books.factories.books,
+    litteraApp.modules.books.imports.message,
+    litteraApp.modules.books.imports.authentication
   ];
 
-  angular.module(litteraApp.modules.users.name)
-    .controller(litteraApp.modules.users.controllers.users.name, UsersCtrl);
+  angular.module(litteraApp.modules.books.name)
+    .controller(litteraApp.modules.books.controllers.books.name, BooksCtrl);
 }(angular, litteraApp));

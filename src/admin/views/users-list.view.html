@@ -1,0 +1,48 @@
+<div class="col-md-10 col-md-offset-1 main"
+     ng-init="UsersCtrl.init()">
+  <h1 class="page-header">Usuários</h1>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Username</th>
+          <th>E-mail</th>
+          <th>Genero</th>
+          <th>Livros Escritos</th>
+          <th>Livros Comprados</th>
+          <th>Seguindo</th>
+          <th>Seguidores</th>
+          <th>Criado em</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="r in UsersCtrl.users">
+          <td>
+            <button ng-show="!r.status"
+                    type="button"
+                    ng-click="UsersCtrl.btnUnlockUser(r)"
+                    class="btn btn-primary">Desbloquear</button>
+            <button ng-show="r.status"
+                    type="button"
+                    ng-click="UsersCtrl.btnBlockUser(r)"
+                    class="btn btn-danger">Bloquear</button>
+          </td>
+          <td ng-bind="r.name|titleCase"></td>
+          <td>@{{r.username}}</td>
+          <td ng-bind="r.email"></td>
+          <td ng-bind="r.gender|gender"></td>
+          <td ng-bind="r.written_books.length"></td>
+          <td ng-bind="r.library.length"></td>
+          <td ng-bind="r.following.length"></td>
+          <td ng-bind="r.followers.length"></td>
+          <td ng-bind="r.create_at|date:'dd/MM/yyyy HH:mm'"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block"
+          ng-click="UsersCtrl.btnLoadMore()">Mais</button>
+</div>

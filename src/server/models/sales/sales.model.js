@@ -165,6 +165,43 @@ function list(page) {
     });
 }
 
+function getCountAll() {
+  return salesModel.aggregate([
+    {
+      $group:
+      {
+        _id: 1,
+        count: { $sum: 1 }
+      }
+    }
+  ])
+  .exec();
+}
+
+function getTotalBilled() {
+  return salesModel.aggregate([
+    {
+      $match: {
+        status: 2
+      }
+    },
+    {
+      $unwind: {
+        path: '$items'
+      }
+    },
+    {
+      $group: {
+        _id: 1,
+        total: {
+          $sum: '$items.value'
+        }
+      }
+    }
+  ])
+  .exec();
+}
+
 /**
  * List the record in the DB that has the specified ObjectId
  * @param  {ObjectId} id Id which has to be listed
@@ -396,5 +433,7 @@ module.exports = {
   getSale: getSale,
   alreadyInBasket: alreadyInBasket,
   createPayPalSale: createPayPalSale,
+  getCountAll: getCountAll,
+  getTotalBilled: getTotalBilled,
   model: salesModel
 };

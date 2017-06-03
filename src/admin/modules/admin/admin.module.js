@@ -12,9 +12,11 @@
       }
     },
     routes: {
-      dashboard: litteraApp.URLS.HOME()
+      dashboard_page: litteraApp.URLS.HOME(),
+      dashboard: litteraApp.URLS.ADMIN_DASHBOARD()
     },
     factories: {
+      admin: 'adminFactory'
     },
     templates: {
       dashboard:{
@@ -22,6 +24,9 @@
       }
     },
     imports: {
+      localSave: litteraApp.core.factories.localSave,
+      request: litteraApp.core.services.request,
+      message: litteraApp.core.services.messages
     }
   };
 

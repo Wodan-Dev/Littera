@@ -1,46 +1,72 @@
-<div class="col-sm-3 col-md-2 sidebar">
-  <ul class="nav nav-sidebar">
-    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-    <li><a href="#">Reports</a></li>
-    <li><a href="#">Analytics</a></li>
-    <li><a href="#">Export</a></li>
-  </ul>
-</div>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-md-10 col-md-offset-1 main"
+     ng-init="DashboardCtrl.init()">
   <h1 class="page-header">Dashboard</h1>
 
   <div class="row placeholders">
     <div class="col-xs-6 col-sm-3 placeholder">
-      <div class="item-main">
-        <p>
-          10
-        </p>
+      <div class="item-main parental-bag-a">
+        <p ng-bind="DashboardCtrl.admin.users.count[0].count"></p>
       </div>
       <h4>Usuários</h4>
     </div>
     <div class="col-xs-6 col-sm-3 placeholder">
-      <div class="item-main">
-        <p>
-          10
-        </p>
+      <div class="item-main parental-bag-c">
+        <p ng-bind="DashboardCtrl.admin.books.count[0].count"></p>
       </div>
       <h4>Livros</h4>
     </div>
     <div class="col-xs-6 col-sm-3 placeholder">
-      <div class="item-main">
-        <p>
-          10
-        </p>
+      <div class="item-main parental-bag-d">
+        <p ng-bind="DashboardCtrl.admin.sales[0].count"></p>
       </div>
       <h4>Vendas</h4>
     </div>
     <div class="col-xs-6 col-sm-3 placeholder">
-      <div class="item-main">
-        <p>
-          10
-        </p>
+      <div class="item-main parental-bag-b">
+        <p ng-bind="DashboardCtrl.admin.profit[0].total|number:2"></p>
       </div>
-      <h4>Comentários</h4>
+      <h4>Faturamento</h4>
     </div>
   </div>
+  <h2 class="sub-header">Usuários</h2>
+  <div class="table-responsive">
+   <table class="table table-striped">
+     <thead>
+       <tr>
+         <th>Idade Miníma</th>
+         <th>Idade Máxima</th>
+         <th>Média</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td ng-bind="DashboardCtrl.admin.users.info[0].min"></td>
+         <td ng-bind="DashboardCtrl.admin.users.info[0].max"></td>
+         <td ng-bind="DashboardCtrl.admin.users.info[0].average_age"></td>
+       </tr>
+       <tr>
+     </tbody>
+   </table>
+  </div>
+  <h2 class="sub-header">Livros</h2>
+  <div class="table-responsive">
+   <table class="table table-striped">
+     <thead>
+       <tr>
+         <th>(%) Concluído Minímo</th>
+         <th>(%) Concluído Máximo</th>
+         <th>Classificação Etária</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <td ng-bind="DashboardCtrl.admin.books.info[0].min_percent"></td>
+         <td ng-bind="DashboardCtrl.admin.books.info[0].max_percent"></td>
+         <td ng-bind="DashboardCtrl.admin.books.info[0].average_parental_rating"></td>
+       </tr>
+       <tr>
+     </tbody>
+   </table>
+  </div>
+
 </div>

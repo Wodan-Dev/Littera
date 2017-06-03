@@ -168,6 +168,50 @@ function put(req, res) {
 }
 
 /**
+ * Method Post in route /block
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function postBlock(req, res) {
+  let book = {
+    _id: req.body._id || '',
+  };
+
+  validator.validateId(book._id)
+    .then(function (rId) {
+      return booksModel.updateBlock(book._id, true);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, book, err);
+    });
+}
+
+/**
+ * Method Post in route /unlock
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function postUnlock(req, res) {
+  let book = {
+    _id: req.body._id || '',
+  };
+
+  validator.validateId(book._id)
+    .then(function (rId) {
+      return booksModel.updateBlock(book._id, false);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, book, err);
+    });
+}
+
+/**
  * Method Delete in route /:id
  * @param  {Object}   req  request object
  * @param  {Object}   res  response object
@@ -189,6 +233,8 @@ function router(express, auth) {
   routes.get('/:id', getById);
   routes.get('/:id/pricing', getPrice);
   routes.post('/', auth, post);
+  routes.post('/block', postBlock);
+  routes.post('/unlock', postUnlock);
   routes.put('/', auth, put);
   routes.delete('/:id', auth, remove);
 

@@ -7,7 +7,7 @@
  * Dependencies
  */
 const core = require('../../core');
-const usersModel = require('../../../models/users');
+const usersModel = require('../../../models/users/users.model');
 const usersCtrl = require('../controller/users.controller');
 const http = core.http;
 const utils = core.utils;

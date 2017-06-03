@@ -228,6 +228,26 @@ function updateAverageStars(id) {
     });
 }
 
+function updateStatus(id, status) {
+  let query = {
+    _id: id
+  };
+
+  let opt = {
+    upsert: false,
+    new: true
+  };
+
+  return usersModel
+    .findOneAndUpdate(query, {
+      $set: {
+        modified_at: date.getDateUTC(),
+        status: status
+      }
+    }, opt)
+    .exec();
+}
+
 /**
  * Validate create
  * @param  {Object} user user object
@@ -243,6 +263,81 @@ function validateCreate(user) {
   return validator.validateSchema(user, usersSchema.newUsersCreateSchema);
 }
 
+
+function getCountAll() {
+  return usersModel.aggregate([
+    {
+      $group:
+      {
+        _id: 1,
+        count: { $sum: 1 }
+      }
+    }
+  ])
+  .exec();
+}
+
+function getAverageInfo() {
+  return usersModel.aggregate([
+    {
+      $project: {
+        date: '$dob',
+        username: '$username',
+        age: {
+          $floor: {
+            $divide: [
+              {
+                $subtract: [
+                  new Date(), '$dob'
+                ]
+              },
+              (365 * 24*60*60*1000)
+            ]
+          }
+        }
+      }
+    },
+    {
+      $match: {
+        age: {
+          $gt: 0
+        }
+      }
+    },
+    {
+      $group: {
+        _id: '1',
+        max: {
+          $max: '$age'
+        },
+        min: {
+          $min: '$age'
+        },
+        total_age: {
+          $sum: '$age'
+        },
+        count_age: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $project: {
+        max: 1,
+        min: 1,
+        average_age: {
+          $floor: {
+            $divide: [
+              '$total_age',
+              '$count_age'
+            ]
+          }
+        }
+      }
+    }
+  ])
+  .exec();
+}
 
 /**
  * Validate create
@@ -314,6 +409,7 @@ module.exports = {
   validateId: validateId,
   insert: insert,
   update: update,
+  updateStatus: updateStatus,
   remove: remove,
   list: list,
   findById: findById,
@@ -322,5 +418,7 @@ module.exports = {
   findByUserEmail: findByUserEmail,
   findRecover: findRecover,
   updateAverageStars: updateAverageStars,
+  getCountAll: getCountAll,
+  getAverageInfo: getAverageInfo,
   model: usersModel
 };

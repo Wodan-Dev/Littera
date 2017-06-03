@@ -7,13 +7,18 @@
     .config(
     function ($routeProvider) {
       $routeProvider
-        .when(litteraApp.modules.admin.routes.dashboard, {
+        .when(litteraApp.modules.admin.routes.dashboard_page, {
           controller: litteraApp.modules.admin.controllers.dashboard.name,
           controllerAs: litteraApp.modules.admin.controllers.dashboard.nameas,
           templateUrl: litteraApp.modules.admin.templates.dashboard.url,
           title: 'Dashboard',
           access: {
             requiresLogin: true
+          },
+          resolve: {
+            dashBoardData: function ($route, adminFactory) {
+              return adminFactory.getDashBoard();
+            }
           }
         });
     });

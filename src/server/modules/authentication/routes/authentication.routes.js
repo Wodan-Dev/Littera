@@ -12,6 +12,7 @@ const userModel = require('../../../models/users/users.model');
 const http = core.http;
 const config = core.config;
 const email = core.email;
+const validator = core.validator;
 const auth = core.authentication;
 const renderError = core.http.renderError;
 const crypto = core.crypto;
@@ -33,6 +34,9 @@ function get(req, res) {
         return userModel.findById(user.value._id);
     })
     .then(function(ruser) {
+      if (!ruser.status)
+        throw validator.invalidResult('username', 'Usuário está inativo');
+
       let usr = {
         _id: ruser._id,
         username: ruser.username,
@@ -79,6 +83,67 @@ function postAuth(req, res) {
       return authCtrl.loadUser(ruser.value);
     })
     .then(function(ruser) {
+      if (!ruser.value.status && ruser.value.checksum === '-')
+        throw validator.invalidResult('username', 'Usuário está inativo');
+      else if (!ruser.value.status && ruser.value.checksum !== '-')
+        throw validator.invalidResult('username', 'Recuperação de senha iniciada para esse usuário.');
+
+      return authCtrl.validatePassword(ruser.value, user.password);
+    })
+    .then(function(ruser) {
+      return auth.authenticate({
+        _id: ruser.value._id,
+        username: ruser.value.username,
+        email: ruser.value.email,
+        name: ruser.value.name,
+        dob: ruser.value.dob,
+        cover_image: ruser.value.cover_image,
+        written_books:ruser.value.written_books,
+        library: ruser.value.library,
+        wishlist: ruser.value.wishlist,
+        following: ruser.value.following,
+        followers: ruser.value.followers,
+        choices: ruser.value.choices,
+        reviews: ruser.value.reviews,
+        is_staff: ruser.value.is_staff,
+        status: ruser.value.status,
+        acepted_terms: ruser.value.acepted_terms,
+        average_stars: ruser.value.average_stars,
+        gender: ruser.value.gender
+      });
+    })
+    .then(function(ruser) {
+      http.render(res, ruser);
+    })
+    .catch(function(err) {
+      renderError(res, user, err, http.HTTP_STATUS.HTTP_400_BAD_REQUEST);
+    });
+}
+
+/**
+ * Method Post in route /admin/authenticate
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function postAdmAuth(req, res) {
+  let user = {
+    username: req.body.username || '',
+    email: req.body.email || '',
+    password: req.body.password || ''
+  };
+
+  authCtrl.validateUser(user)
+    .then(function(ruser) {
+      return authCtrl.loadUser(ruser.value);
+    })
+    .then(function(ruser) {
+      if (!ruser.value.status && ruser.value.checksum === '-')
+        throw validator.invalidResult('username', 'Usuário está inativo');
+      else if (!ruser.value.status && ruser.value.checksum !== '-')
+        throw validator.invalidResult('username', 'Recuperação de senha iniciada para esse usuário.');
+
+      if (!ruser.value.is_staff)
+        throw validator.invalidResult('username', 'Operação não permitida.');
 
       return authCtrl.validatePassword(ruser.value, user.password);
     })
@@ -164,6 +229,7 @@ function sendMail(req, res) {
     })
     .then(function (ruser) {
       ruser.checksum = ruser.username + uid(24);
+      ruser.status = false;
       userLoad = ruser;
       return userModel.update(userLoad._id, userLoad);
     })
@@ -172,7 +238,7 @@ function sendMail(req, res) {
         config.getEmailAuthUser(),
         userLoad.email,
         'Recuperação de senha',
-        'recupere sua seha através do link: http://'+
+        'Recupere sua seha através do link: http://'+
         config.getDomain() + '/#/mordor/recover/'+ userLoad.checksum);
     })
     .then(function (result) {
@@ -209,9 +275,16 @@ function postRecover(req, res) {
     .then(function (pass) {
       userLoad.password = pass;
       userLoad.checksum = '-';
+      userLoad.status = true;
       return userModel.update(userLoad._id, userLoad);
     })
     .then(function (result) {
+      email.sendPlainEmail(
+        config.getEmailAuthUser(),
+        userLoad.email,
+        'Recuperação de senha',
+        'Senha atualizada com sucesso. http://'+
+        config.getDomain() + '/#/mordor/login/');
       http.render(res, result);
     })
     .catch(function (err) {
@@ -228,6 +301,7 @@ function router(express, ath) {
   let routes = express.Router();
 
   routes.post('/authenticate', postAuth);
+  routes.post('/admin/authenticate', postAdmAuth);
   routes.get('/me', get);
   routes.post('/change', ath, changePass);
   routes.post('/forgot', sendMail);

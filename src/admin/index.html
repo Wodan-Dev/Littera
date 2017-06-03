@@ -25,6 +25,7 @@
   <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
+  <link rel="stylesheet" type="text/css" href="./static/css/animate.css">
   <link href="./bower_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./static/css/main-style.css">
   <style type="text/css">
@@ -73,10 +74,11 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a ng-show="MainCtrl.isAuth" href="#">Usuários</a></li>
-          <li><a ng-show="MainCtrl.isAuth" href="#">Livros</a></li>
+          <li><a ng-show="MainCtrl.isAuth" href="#/">Dashboard</a></li>
+          <li><a ng-show="MainCtrl.isAuth" href="#/users">Usuários</a></li>
+          <li><a ng-show="MainCtrl.isAuth" href="#/books">Livros</a></li>
           <li><a ng-show="MainCtrl.isAuth"
-                 ng-click="MainCtrl.btnLogOff()" 
+                 ng-click="MainCtrl.btnLogOff()"
                  href="#">Sair</a></li>
         </ul>
       </div>
@@ -103,6 +105,8 @@
   <script src="../../bower_modules/ng-file-upload/ng-file-upload.min.js"></script>
   <script src="../../bower_modules/chart.js/dist/Chart.js"></script>
   <script src="../../bower_modules/angular-chart.js/dist/angular-chart.js"></script>
+  <script src="../../bower_modules/moment/min/moment.min.js"></script>
+  <script src="../../bower_modules/noty/js/noty/packaged/jquery.noty.packaged.js"></script>
   <script src="../../bower_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 
@@ -119,6 +123,7 @@
   <script src="./modules/core/filters/titlecase.filter.js"></script>
   <script src="./modules/core/filters/salestatus.filter.js"></script>
   <script src="./modules/core/filters/parentalrating.filter.js"></script>
+  <script src="./modules/core/filters/gender.filter.js"></script>
 
   <script src="./modules/handlers/handlers.module.js"></script>
   <script src="./modules/handlers/handlers.factory.js"></script>
@@ -132,8 +137,19 @@
   <script src="./modules/auth/login.controller.js"></script>
 
   <script src="./modules/admin/admin.module.js"></script>
+  <script src="./modules/admin/admin.factory.js"></script>
   <script src="./modules/admin/admin.controller.js"></script>
   <script src="./modules/admin/admin.routes.js"></script>
+
+  <script src="./modules/books/books.module.js"></script>
+  <script src="./modules/books/books.factory.js"></script>
+  <script src="./modules/books/books.controller.js"></script>
+  <script src="./modules/books/books.routes.js"></script>
+
+  <script src="./modules/users/users.module.js"></script>
+  <script src="./modules/users/users.factory.js"></script>
+  <script src="./modules/users/users.controller.js"></script>
+  <script src="./modules/users/users.routes.js"></script>
 
   <script src="./modules/main/main.module.js"></script>
   <script src="./modules/main/main.controller.js"></script>

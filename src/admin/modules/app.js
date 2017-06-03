@@ -122,11 +122,13 @@
   ];
 
   angular.module(litteraApp.modules.app.name, [
+    litteraApp.core.name,
     litteraApp.modules.handlers.name,
     litteraApp.modules.main.name,
     litteraApp.modules.admin.name,
     litteraApp.modules.auth.name,
-    litteraApp.core.name,
+    litteraApp.modules.users.name,
+    litteraApp.modules.books.name,
     'ngFileUpload',
     'angularCSS',
     'ngMaterial',

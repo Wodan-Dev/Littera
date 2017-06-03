@@ -14,6 +14,7 @@ const usersModel = require('../../../models/users/users.model');
 const usersCtrl = require('../controller/users.controller');
 const http = core.http;
 const utils = core.utils;
+const validator = core.validator;
 const renderError = core.http.renderError;
 
 /**
@@ -168,6 +169,50 @@ function remove(req, res) {
 }
 
 /**
+ * Method Post in route /block
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function postBlock(req, res) {
+  let user = {
+    _id: req.body._id || '',
+  };
+
+  validator.validateId(user._id)
+    .then(function (rId) {
+      return usersModel.updateStatus(user._id, false);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, user, err);
+    });
+}
+
+/**
+ * Method Post in route /unlock
+ * @param  {Object}   req  request object
+ * @param  {Object}   res  response object
+ */
+function postUnlock(req, res) {
+  let user = {
+    _id: req.body._id || '',
+  };
+
+  validator.validateId(user._id)
+    .then(function (rId) {
+      return usersModel.updateStatus(user._id, true);
+    })
+    .then(function (result) {
+      http.render(res, result);
+    })
+    .catch(function (err) {
+      renderError(res, user, err);
+    });
+}
+
+/**
  * Create Instance to router object
  * @param  {Object} express Express
  * @return {Router}         router object with the routes
@@ -179,6 +224,8 @@ function router(express, auth) {
   routes.get('/:username', getByUserName);
   routes.get('/:id', auth, getById);
   routes.post('/', post);
+  routes.post('/block', postBlock);
+  routes.post('/unlock', postUnlock);
   routes.put('/', auth, put);
   routes.delete('/:id', auth, remove);
 

@@ -9,35 +9,21 @@
     function ($locationProvider, $routeProvider) {
       $routeProvider
         .when(litteraApp.modules.users.routes.users(':username'), {
-          controller:  litteraApp.modules.users.controllers.users.name,
-          controllerAs:  litteraApp.modules.users.controllers.users.nameas,
-          templateUrl: litteraApp.modules.users.templates.users.url,
-          title: 'Perfil',
-          access: {
-            requiresLogin: false
-          }
-        })
-        .when(litteraApp.modules.users.routes.writtenbooks_page(':username'), {
-          controller:  litteraApp.modules.users.controllers.writtenBooks.name,
-          controllerAs:  litteraApp.modules.users.controllers.writtenBooks.nameas,
-          templateUrl: litteraApp.modules.users.templates.writtenBooks.url,
-          title: 'Meus Livros',
+          controller:  litteraApp.modules.users.controllers.userDetail.name,
+          controllerAs:  litteraApp.modules.users.controllers.userDetail.nameas,
+          templateUrl: litteraApp.modules.users.templates.userDetail.url,
+          title: 'Usuário',
           access: {
             requiresLogin: true
           }
         })
-        .when(litteraApp.modules.users.routes.userDetail_page(':username'), {
-          controller:  litteraApp.modules.users.controllers.userDetail.name,
-          controllerAs:  litteraApp.modules.users.controllers.userDetail.nameas,
-          templateUrl: litteraApp.modules.users.templates.userDetail.url,
-          title: 'Perfil',
+        .when(litteraApp.modules.users.routes.users_all(), {
+          controller:  litteraApp.modules.users.controllers.users.name,
+          controllerAs:  litteraApp.modules.users.controllers.users.nameas,
+          templateUrl: litteraApp.modules.users.templates.users.url,
+          title: 'Usuários',
           access: {
-            requiresLogin: false
-          },
-          resolve: {
-            userData: function ($route, usersFactory) {
-              return usersFactory.getUserByUserName($route.current.params.username|| '-');
-            }
+            requiresLogin: true
           }
         });
     });

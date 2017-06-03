@@ -22,7 +22,8 @@
     filters: {
       titleCase: 'titleCase',
       saleStatus: 'saleStatus',
-      parentalRating: 'parentalRating'
+      parentalRating: 'parentalRating',
+      gender: 'gender'
     },
     imports: {
 

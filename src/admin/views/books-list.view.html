@@ -1,0 +1,69 @@
+<div class="col-md-10 col-md-offset-1 main"
+     ng-init="BooksCtrl.init()">
+  <h1 class="page-header">Usuários</h1>
+
+  <div class="table-responsive">
+   <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Título</th>
+          <th>Subtitulo</th>
+          <th>Classificação</th>
+          <th>Data da Publicação</th>
+          <th>Criado em</th>
+          <th>(%) Concluído</th>
+          <th>ESBN</th>
+          <th>ESBN 13</th>
+          <th>Média de estrelas</th>
+          <th>Idioma</th>
+          <th>Comentários</th>
+          <th>Avaliações</th>
+          <th>Status</th>
+          <th>Conteúdo</th>
+          <th>Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="r in BooksCtrl.books">
+          <td>
+            <button ng-show="r.visible == 3"
+                    type="button"
+                    ng-click="BooksCtrl.btnUnlockBook(r)"
+                    class="btn btn-primary">Desbloquear</button>
+            <button ng-show="r.visible != 3"
+                    type="button"
+                    ng-click="BooksCtrl.btnBlockBook(r)"
+                    class="btn btn-danger">Bloquear</button>
+          </td>
+          <td ng-bind="r.title|titleCase"></td>
+          <td ng-bind="r.subtitle|titleCase"></td>
+          <td class="parental-bag parental-bag-no-border"
+              ng-class="{
+               'parental-bag-a': r.parental_rating == 0,
+               'parental-bag-b': r.parental_rating == 1,
+               'parental-bag-c': r.parental_rating == 2,
+               'parental-bag-d': r.parental_rating == 3,
+               'parental-bag-e': r.parental_rating == 4,
+               'parental-bag-f': r.parental_rating == 5
+              }"
+              ng-bind="r.parental_rating|parentalRating"></td>
+          <td ng-bind="r.date_published|date:'dd/MM/yyyy HH:mm'"></td>
+          <td ng-bind="r.create_at|date:'dd/MM/yyyy HH:mm'"></td>
+          <td ng-bind="r.percentage"></td>
+          <td ng-bind="r.esbn"></td>
+          <td ng-bind="r.esbn_13"></td>
+          <td ng-bind="r.average_star"></td>
+          <td ng-bind="r.language"></td>
+          <td ng-bind="r.comments.length"></td>
+          <td ng-bind="r.rankings.length"></td>
+          <td ng-bind="r.status"></td>
+          <td ng-bind="r.content"></td>
+          <td ng-bind="r.download"></td>
+        </tr>
+      </tbody>
+   </table>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block"
+          ng-click="BooksCtrl.btnLoadMore()">Mais</button>
+</div>

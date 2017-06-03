@@ -23,6 +23,17 @@
       ).get({}).$promise;
     }
 
+    function getUsers(page) {
+      return $resource(BASEURLS.BASE_API +
+        litteraApp.modules.users.routes.users_all(page), {},
+        {
+          get: {
+            headers: getHeader()
+          }
+        }
+      ).get({}).$promise;
+    }
+
     function getUserByUserName(username) {
       return $resource(BASEURLS.BASE_API +
         litteraApp.modules.users.routes.users(username), {},
@@ -38,21 +49,22 @@
       return request._put(litteraApp.modules.users.routes.users(''), data);
     }
 
-    function updateImg(url, file) {
-      return request._upload(url, file);
+    function blockUser(id) {
+      return request._post(litteraApp.modules.users.routes.blockUser, { _id: id });
     }
 
-    function saveRanking(username, ranking) {
-      return request._post('/users/'+ username +'/reviews', ranking);
+    function unlockUser(id) {
+      return request._post(litteraApp.modules.users.routes.unlockUser, { _id: id });
     }
 
 
     return {
+      getUsers: getUsers,
       getUser: getUser,
       getUserByUserName: getUserByUserName,
       update: update,
-      updateImg: updateImg,
-      saveRanking: saveRanking
+      unlockUser: unlockUser,
+      blockUser: blockUser
     };
   }
 

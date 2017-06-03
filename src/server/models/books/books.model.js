@@ -53,6 +53,26 @@ function update(id, book) {
     .exec();
 }
 
+function updateBlock(id, status) {
+  let query = {
+    _id: id
+  };
+
+  let opt = {
+    upsert: false,
+    new: true
+  };
+
+  return booksModel
+    .findOneAndUpdate(query, {
+      $set: {
+        modified_at: date.getDateUTC(),
+        visible: status ? 3 : 0
+      }
+    }, opt)
+    .exec();
+}
+
 
 function updateAverageStars(id) {
 
@@ -110,6 +130,68 @@ function updateAverageStars(id) {
         .findOneAndUpdate(query, book, opt)
         .exec();
     });
+}
+
+function getCountAll() {
+  return booksModel.aggregate([
+    {
+      $group:
+      {
+        _id: 1,
+        count: { $sum: 1 }
+      }
+    }
+  ])
+  .exec();
+}
+
+
+function getAverageInfo() {
+  return booksModel.aggregate([
+    {
+      $group: {
+        _id: 1,
+        total: {
+          $sum: '$parental_rating'
+        },
+        count: {
+          $sum: 1
+        },
+        percentage_count: {
+          $sum: '$percentage'
+        },
+        min_percent: {
+          $min: '$percentage'
+        },
+        max_percent: {
+          $max: '$percentage'
+        }
+      }
+    },
+    {
+      $project: {
+        'min_percent': '$min_percent',
+        'max_percent': '$max_percent',
+        'percentage': {
+          $ceil: {
+            $divide: [
+              '$percentage_count',
+              '$count'
+            ]
+          }
+        },
+        'average_parental_rating': {
+          $ceil: {
+            $divide: [
+              '$total',
+              '$count'
+            ]
+          }
+        }
+      }
+    }
+  ])
+  .exec();
 }
 
 /**
@@ -655,6 +737,7 @@ module.exports = {
   validateUpdate: validateUpdate,
   insert: insert,
   update: update,
+  updateBlock: updateBlock,
   remove: remove,
   list: list,
   listStore: listStore,
@@ -662,5 +745,7 @@ module.exports = {
   findByIdStore: findByIdStore,
   findPrice: findPrice,
   updateAverageStars: updateAverageStars,
+  getCountAll: getCountAll,
+  getAverageInfo: getAverageInfo,
   model: booksModel
 };

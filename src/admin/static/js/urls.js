@@ -15,6 +15,17 @@
           return '/books';
       };
     },
+    BOOKS_DETAIL: function() {
+      return function (id) {
+        return '/books/' + id;
+      };
+    },
+    USER_BLOCKBOOK: function () {
+      return '/books/block';
+    },
+    USER_UNLOCKBOOK: function () {
+      return '/books/unlock';
+    },
     BOOK_CREATE: function() {
       return '/book';
     },
@@ -56,6 +67,22 @@
     USER: function () {
       return '/users';
     },
+    USER_BLOCKUSER: function () {
+      return '/users/block';
+    },
+    USER_UNLOCKUSER: function () {
+      return '/users/unlock';
+    },
+    USERS_ALL: function () {
+      return function (page) {
+        let url = '/users';
+
+        if (page)
+          url += '?page=' + page;
+
+        return url;
+      };
+    },
     USER_DETAIL_PAGE: function () {
       return function (username) {
         return '/user/'+ username;
@@ -91,7 +118,7 @@
     },
     MORDOR: {
       AUTHENTICATION: function () {
-        return '/mordor/authenticate';
+        return '/mordor/admin/authenticate';
       },
       ME: function () {
         return '/mordor/me';
@@ -201,6 +228,9 @@
     },
     ADMIN: function () {
       return '/admin';
+    },
+    ADMIN_DASHBOARD: function () {
+      return '/admin/dashboard';
     }
   };
 }(litteraApp));

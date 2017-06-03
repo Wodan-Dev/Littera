@@ -9,7 +9,7 @@
     $routeParams,
     $location,
     authFactory,
-    has_error) {
+    message) {
     let vm = this;
     vm.user = {
       username: '',
@@ -17,16 +17,7 @@
     };
 
     vm.init = function () {
-      has_error.clearError();
       authFactory.logOut();
-    };
-
-    vm.hasError = function (field) {
-      return has_error.hasError(field);
-    };
-
-    vm.getErrorMessage = function (field) {
-      return has_error.getErrorMessage(field);
     };
 
     vm.btnCreate = function () {
@@ -34,8 +25,6 @@
     };
 
     vm.btnAuthenticate = function () {
-
-      has_error.clearError();
       $rootScope.$broadcast('evt__showLoad', true);
       let token = '';
 
@@ -58,11 +47,11 @@
           $scope.$apply(function () {
             if (lst instanceof Array) {
               for (var i = 0, len = lst.length; i < len; i++) {
-                has_error.addError(lst[i].field, lst[i].message);
+                message.notification('information', lst[i].message);
               }
             }
             else {
-              has_error.addError(data.data.data.value, data.data.data.err);
+              message.notification('information', data.data.data.err);
             }
             $rootScope.$broadcast('evt__showLoad', false);
 
@@ -78,7 +67,7 @@
     '$routeParams',
     '$location',
     litteraApp.modules.auth.factories.authentication,
-    litteraApp.modules.auth.imports.has_error
+    litteraApp.modules.auth.imports.message
   ];
 
   angular.module(litteraApp.modules.auth.name)

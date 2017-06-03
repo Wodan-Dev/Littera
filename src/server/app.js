@@ -71,6 +71,7 @@ require('./modules/tags')(app, express, '/tags', auth.ensureAuthenticated);
 require('./modules/feeds')(app, express, '/feed', auth.ensureAuthenticated);
 require('./modules/store')(app, express, '/store', auth.ensureAuthenticated);
 require('./modules/uploads')(app, express, '/upload', auth.ensureAuthenticated);
+require('./modules/admin')(app, express, '/admin', auth.ensureAuthenticated);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

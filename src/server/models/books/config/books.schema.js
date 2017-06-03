@@ -82,7 +82,7 @@ const booksSchema = new db.mongoose.Schema({
   visible: {
     type: Number,
     required: true,
-    enum: [0, 1, 2]
+    enum: [0, 1, 2, 3]
   },
   language: {
     type: String,
