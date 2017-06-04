@@ -22,11 +22,13 @@ const userModel = require('../../../models/users/users.model');
  */
 function loadUser(user) {
   return new Promise(function (resolve, reject) {
-    let value = user.email;
-    let prot = userModel.findByUserEmail;
-    if (user.username) {
+    let prot = {};
+    let value = user.username;
+    if (checkField.isEmail(user.username)) {
+      prot = userModel.findByUserEmail;
+    }
+    else {
       prot = userModel.findByUserName;
-      value = user.username;
     }
 
     prot(value)

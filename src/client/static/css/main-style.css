@@ -706,11 +706,11 @@ header .nav-user {
 
 
 @media only screen and (max-width: 950px) {
-  .column-half {
+  /*.column-half {
     width: 98%;
-    margin-top: .625rem; /* 10px */
+    margin-top: .625rem;
 
-  }
+  }*/
 
   .column {
     margin-top: .625rem; /* 10px */
