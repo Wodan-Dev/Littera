@@ -21,7 +21,8 @@
     vm.cbeGender = [
       { desc:'Não especificado', id: 0 },
       { desc:'Masculino', id: 1 },
-      { desc:'Feminino', id: 2 }
+      { desc:'Feminino', id: 2 },
+      { desc:'Outro', id: 3 },
     ];
 
     vm.cbeMonths =[
@@ -309,4 +310,3 @@
   angular.module(litteraApp.modules.users.name)
     .controller(litteraApp.modules.users.controllers.users.name, UsersCtrl);
 }(angular, litteraApp));
-

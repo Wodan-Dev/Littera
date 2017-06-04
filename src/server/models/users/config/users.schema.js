@@ -132,7 +132,7 @@ usersSchema.plugin(db.mongoosePaginate);
  */
 const usersCreateSchema = schema({
   name: models.stringField(true).min(5).max(100),
-  gender: models.numberField(true).integer().min(0).max(2),
+  gender: models.numberField(true).integer().min(0).max(3),
   cover_image: models.stringField(false),
   dob: models.dateField(true),
   average_stars: models.numberField(true).min(0).max(5),
@@ -147,7 +147,7 @@ const usersCreateSchema = schema({
 const usersUpdateSchema = schema({
   _id: models.stringField(true),
   name: models.stringField(true).min(5).max(100),
-  gender: models.numberField(true).integer().min(0).max(2),
+  gender: models.numberField(true).integer().min(0).max(3),
   cover_image: models.stringField(false),
   dob: models.dateField(false),
   average_stars: models.numberField(true).min(0).max(5),
